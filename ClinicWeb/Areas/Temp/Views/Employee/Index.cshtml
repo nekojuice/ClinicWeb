@@ -1,9 +1,7 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    ViewData["Title"] = "Index";
 }
-@section Styles
+@section ModulesStyles
 {
     <!-- iCheck -->
     <link href="~/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
@@ -15,7 +13,9 @@
     <!-- bootstrap-daterangepicker -->
     <link href="~/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
 }
-
+@section Styles
+{
+}
 
 <!-- top tiles -->
 <div class="row" style="display: inline-block;">
@@ -727,7 +727,7 @@
     </div>
 </div>
 
-@section Scripts
+@section Modules
 {
     <!-- Chart.js -->
     <script src="~/vendors/Chart.js/dist/Chart.min.js"></script>
@@ -758,4 +758,8 @@
     <!-- bootstrap-daterangepicker -->
     <script src="~/vendors/moment/min/moment.min.js"></script>
     <script src="~/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+}
+
+@section Scripts
+{
 }
