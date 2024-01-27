@@ -143,5 +143,17 @@ namespace ClinicWeb.Areas.Temp.Controllers
         {
             return View();
         }
+        public IActionResult Tables_dynamic()
+        {
+            return View();
+        }
+        public IActionResult Typography()
+        {
+            return View();
+        }
+        public IActionResult Widgets()
+        {
+            return View();
+        }
     }
 }
