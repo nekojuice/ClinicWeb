@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>@ViewData["Title"] | XX診所 </title>
+    <title>@ViewData["Title"] | ☆☆婦幼診所 </title>
 
     <!-- Bootstrap -->
     <link href="~/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -15,14 +15,15 @@
     <link href="~/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- NProgress -->
     <link href="~/vendors/nprogress/nprogress.css" rel="stylesheet">
-    
+
     @await RenderSectionAsync("ModulesStyles", required: false)
-    
+
     <!-- Custom Theme Style -->
     <link href="~/build/css/custom.min.css" rel="stylesheet">
-    
+    <link href="~/css/clinicStyle.css" rel="stylesheet" asp-append-version="true">
+
     @await RenderSectionAsync("Styles", required: false)
-    
+
 </head>
 
 <body class="nav-md">
@@ -31,7 +32,7 @@
             <div class="col-md-3 left_col">
                 <div class="left_col scroll-view">
                     <div class="navbar nav_title" style="border: 0;">
-                        <a asp-action="Index" class="site_title"><i class="fa fa-paw"></i> <span>Gentelella Alela!</span></a>
+                        <a asp-action="Index" class="site_title"><img src="~/images/logo.png" class="logoimg" /> <span>☆☆婦幼診所</span></a>
                     </div>
 
                     <div class="clearfix"></div>
@@ -42,8 +43,8 @@
                             <img src="~/images/img.jpg" alt="..." class="img-circle profile_img">
                         </div>
                         <div class="profile_info">
-                            <span>Welcome,</span>
-                            <h2>John Doe</h2>
+                            <span>醫師</span>
+                            <h2>黃貓咪</h2>
                         </div>
                         <div class="clearfix"></div>
                     </div>
@@ -54,117 +55,76 @@
                     <!-- sidebar menu -->
                     <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
                         <div class="menu_section">
-                            <h3>General</h3>
+                            <h3>功能列表</h3>
                             <ul class="nav side-menu">
                                 <li>
-                                    <a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
+                                    <a><i class="fa fa-home"></i> 會員管理 <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
-                                        <li><a asp-action="Index">Dashboard</a></li>
-                                        <li><a asp-action="Index2">Dashboard2</a></li>
-                                        <li><a asp-action="Index3">Dashboard3</a></li>
+                                        <li><a asp-action="Index">一個連結1</a></li>
+                                        <li><a asp-action="Index2">一個連結2</a></li>
                                     </ul>
                                 </li>
                                 <li>
-                                    <a><i class="fa fa-edit"></i> Forms <span class="fa fa-chevron-down"></span></a>
+                                    <a><i class="fa fa-edit"></i> 差勤管理 <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
-                                        <li><a asp-action="Form">General Form</a></li>
-                                        <li><a asp-action="Form_advanced">Advanced Components</a></li>
-                                        <li><a asp-action="Form_validation">Form Validation</a></li>
-                                        <li><a asp-action="Form_wizards">Form Wizard</a></li>
-                                        <li><a asp-action="Form_upload">Form Upload</a></li>
-                                        <li><a asp-action="Form_buttons">Form Buttons</a></li>
+                                        <li><a asp-action="Index3">一個連結3</a></li>
+                                        <li><a asp-action="Index4">一個連結4</a></li>
                                     </ul>
                                 </li>
                                 <li>
-                                    <a><i class="fa fa-desktop"></i> UI Elements <span class="fa fa-chevron-down"></span></a>
+                                    <a><i class="fa fa-desktop"></i> 掛號系統 <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
-                                        <li><a asp-action="General_elements">General Elements</a></li>
-                                        <li><a asp-action="Media_gallery">Media Gallery</a></li>
-                                        <li><a asp-action="Typography">Typography</a></li>
-                                        <li><a asp-action="Icons">Icons</a></li>
-                                        <li><a asp-action="Glyphicons">Glyphicons</a></li>
-                                        <li><a asp-action="Widgets">Widgets</a></li>
-                                        <li><a asp-action="Invoice">Invoice</a></li>
-                                        <li><a asp-action="Inbox">Inbox</a></li>
-                                        <li><a asp-action="Calendar">Calendar</a></li>
+                                        <li><a asp-action="Index5">一個連結5</a></li>
+                                        <li><a asp-action="Index6">一個連結6</a></li>
                                     </ul>
                                 </li>
                                 <li>
-                                    <a><i class="fa fa-table"></i> Tables <span class="fa fa-chevron-down"></span></a>
+                                    <a><i class="fa fa-table"></i> 排班系統 <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
-                                        <li><a asp-action="Tables">Tables</a></li>
-                                        <li><a asp-action="Tables_dynamic">Table Dynamic</a></li>
+                                        <li><a asp-action="Index7">一個連結7</a></li>
+                                        <li><a asp-action="Index8">一個連結8</a></li>
                                     </ul>
                                 </li>
                                 <li>
-                                    <a><i class="fa fa-bar-chart-o"></i> Data Presentation <span class="fa fa-chevron-down"></span></a>
+                                    <a><i class="fa fa-bar-chart-o"></i> 病例系統 <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
-                                        <li><a asp-action="Chartjs">Chart JS</a></li>
-                                        <li><a asp-action="Chartjs2">Chart JS2</a></li>
-                                        <li><a asp-action="Morisjs">Moris JS</a></li>
-                                        <li><a asp-action="Echarts">ECharts</a></li>
-                                        <li><a asp-action="Other_charts">Other Charts</a></li>
+                                        <li><a asp-action="Index9">一個連結9</a></li>
+                                        <li><a asp-action="Index10">一個連結10</a></li>
                                     </ul>
                                 </li>
                                 <li>
-                                    <a><i class="fa fa-clone"></i>Layouts (裡面沒東西) <span class="fa fa-chevron-down"></span></a>
+                                    <a><i class="fa fa-clone"></i> 藥師系統 <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
-                                        <li><a asp-action="Fixed_sidebar">Fixed Sidebar</a></li>
-                                        <li><a asp-action="Fixed_footer">Fixed Footer</a></li>
+                                        <li><a asp-action="Index11">一個連結11</a></li>
+                                        <li><a asp-action="Index12">一個連結12</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-clone"></i> 商城管理 <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a asp-action="Index13">一個連結13</a></li>
+                                        <li><a asp-action="Index14">一個連結14</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-clone"></i> 設施管理 <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a asp-action="Index15">一個連結15</a></li>
+                                        <li><a asp-action="Index16">一個連結16</a></li>
                                     </ul>
                                 </li>
                             </ul>
                         </div>
                         <div class="menu_section">
-                            <h3>Live On</h3>
+                            <h3>額外功能</h3>
                             <ul class="nav side-menu">
                                 <li>
-                                    <a><i class="fa fa-bug"></i> Additional Pages <span class="fa fa-chevron-down"></span></a>
+                                    <a><i class="fa fa-bug"></i> 一個摺疊區 <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
-                                        <li><a asp-action="E_commerce">E-commerce</a></li>
-                                        <li><a asp-action="Project">Project</a></li>
-                                        <li><a asp-action="Project_detail">Project Detail</a></li>
-                                        <li><a asp-action="Contacts">Contacts</a></li>
-                                        <li><a asp-action="Profile">Profile</a></li>
+                                        <li><a asp-action="AAA">一個連結</a></li>
+                                        <li><a asp-action="AAA">一個連結</a></li>
                                     </ul>
                                 </li>
-                                <li>
-                                    <a><i class="fa fa-windows"></i> Extras <span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu">
-                                        <li><a asp-action="Page_403">403 Error</a></li>
-                                        <li><a asp-action="Page_404">404 Error</a></li>
-                                        <li><a asp-action="Page_500">500 Error</a></li>
-                                        <li><a asp-action="Plain_page">Plain Page</a></li>
-                                        <li><a asp-action="Login">Login Page</a></li>
-                                        <li><a asp-action="Pricing_tables">Pricing Tables</a></li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a><i class="fa fa-sitemap"></i> Multilevel Menu <span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu">
-                                        <li>
-                                            <a href="#level1_1">Level One</a>
-                                        </li>
-                                        <li>
-                                            <a>Level One<span class="fa fa-chevron-down"></span></a>
-                                            <ul class="nav child_menu">
-                                                <li class="sub_menu">
-                                                    <a href="level2.html">Level Two</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_1">Level Two</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#level2_2">Level Two</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <a href="#level1_2">Level One</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li><a href="javascript:void(0)"><i class="fa fa-laptop"></i> Landing Page <span class="label label-success pull-right">Coming Soon</span></a></li>
                             </ul>
                         </div>
 
@@ -199,7 +159,7 @@
                         <ul class=" navbar-right">
                             <li class="nav-item dropdown open" style="padding-left: 15px;">
                                 <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
-                                    <img src="~/images/img.jpg" alt="">John Doe
+                                    <img src="~/images/img.jpg" alt="">黃貓咪
                                 </a>
                                 <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" asp-action="Profile"> Profile</a>
@@ -310,7 +270,7 @@
 
     <!-- Custom Theme Scripts -->
     <script src="~/build/js/custom.min.js"></script>
-    
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

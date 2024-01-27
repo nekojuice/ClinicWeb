@@ -26,47 +26,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\HtmlTemplate\calendar.html" />
-    <None Include="wwwroot\HtmlTemplate\chartjs.html" />
-    <None Include="wwwroot\HtmlTemplate\chartjs2.html" />
-    <None Include="wwwroot\HtmlTemplate\contacts.html" />
-    <None Include="wwwroot\HtmlTemplate\echarts.html" />
-    <None Include="wwwroot\HtmlTemplate\e_commerce.html" />
-    <None Include="wwwroot\HtmlTemplate\fixed_footer.html" />
-    <None Include="wwwroot\HtmlTemplate\fixed_sidebar.html" />
-    <None Include="wwwroot\HtmlTemplate\form.html" />
-    <None Include="wwwroot\HtmlTemplate\form_advanced.html" />
-    <None Include="wwwroot\HtmlTemplate\form_buttons.html" />
-    <None Include="wwwroot\HtmlTemplate\form_upload.html" />
-    <None Include="wwwroot\HtmlTemplate\form_validation.html" />
-    <None Include="wwwroot\HtmlTemplate\form_wizards.html" />
-    <None Include="wwwroot\HtmlTemplate\general_elements.html" />
-    <None Include="wwwroot\HtmlTemplate\glyphicons.html" />
-    <None Include="wwwroot\HtmlTemplate\icons.html" />
-    <None Include="wwwroot\HtmlTemplate\inbox.html" />
-    <None Include="wwwroot\HtmlTemplate\index.html" />
-    <None Include="wwwroot\HtmlTemplate\index2.html" />
-    <None Include="wwwroot\HtmlTemplate\index3.html" />
-    <None Include="wwwroot\HtmlTemplate\invoice.html" />
-    <None Include="wwwroot\HtmlTemplate\level2.html" />
-    <None Include="wwwroot\HtmlTemplate\login.html" />
-    <None Include="wwwroot\HtmlTemplate\map.html" />
-    <None Include="wwwroot\HtmlTemplate\media_gallery.html" />
-    <None Include="wwwroot\HtmlTemplate\morisjs.html" />
-    <None Include="wwwroot\HtmlTemplate\other_charts.html" />
-    <None Include="wwwroot\HtmlTemplate\page_403.html" />
-    <None Include="wwwroot\HtmlTemplate\page_404.html" />
-    <None Include="wwwroot\HtmlTemplate\page_500.html" />
-    <None Include="wwwroot\HtmlTemplate\plain_page.html" />
-    <None Include="wwwroot\HtmlTemplate\pricing_tables.html" />
-    <None Include="wwwroot\HtmlTemplate\profile.html" />
-    <None Include="wwwroot\HtmlTemplate\projects.html" />
-    <None Include="wwwroot\HtmlTemplate\project_detail.html" />
-    <None Include="wwwroot\HtmlTemplate\tables.html" />
-    <None Include="wwwroot\HtmlTemplate\tables_dynamic.html" />
-    <None Include="wwwroot\HtmlTemplate\typography.html" />
-    <None Include="wwwroot\HtmlTemplate\widgets.html" />
-    <None Include="wwwroot\HtmlTemplate\xx.html" />
     <None Include="wwwroot\vendors\bootstrap\.github\CODEOWNERS" />
     <None Include="wwwroot\vendors\bootstrap\.github\CONTRIBUTING.md" />
     <None Include="wwwroot\vendors\bootstrap\.github\ISSUE_TEMPLATE\bug.md" />
@@ -247,6 +206,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Employee\Data\" />
+    <Folder Include="Areas\Employee\Models\" />
     <Folder Include="Areas\Temp\Data\" />
     <Folder Include="Areas\Temp\Models\" />
   </ItemGroup>
