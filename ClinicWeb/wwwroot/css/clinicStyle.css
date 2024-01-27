@@ -10,20 +10,44 @@ body {
 
 .nav_title {
     background: #CC9999;
+    font-weight: bold;
 }
 
-.nav_menu {
-    background: #FFCCCC;
+    .nav_title .site_title span {
+        font-weight: bold;
+    }
+
+    .nav_menu {
+        background: #FFCCCC;
+    }
+
+.nav.side-menu {
+    font-size: 1.4em;
+}
+
+.menu_section h3 {
+    font-size: 1.5em;
 }
 
 .nav.side-menu > li.current-page, .nav.side-menu > li.active {
     border-right: 5px solid #FF6600;
 }
 
+.nav.side-menu > li > a {
+    font-weight: bold;
+    text-shadow: 0.1em 0.1em 0.2em black;
+}
+
 .nav.side-menu > li.active > a {
     background: #CC9999;
     text-shadow: 0.1em 0.1em 0.2em black;
 }
+/*摺疊區內部連結*/
+.nav.side-menu > li > ul.nav.child_menu > li > a {
+    font-size: 0.8em;
+    font-weight: bold;
+}
+
 
 .sidebar-footer {
     background: #E9B4B4;
@@ -32,6 +56,7 @@ body {
     .sidebar-footer > a {
         background: #E9B4B4;
     }
+
         .sidebar-footer > a:hover {
             background: #FFE4E1;
         }
@@ -49,6 +74,7 @@ body {
     font-weight: bold;
     font-size: 1.4em;
 }
+
 .profile_info h2 {
     font-weight: bold;
     font-size: 1.4em;
@@ -60,9 +86,10 @@ body {
 body .container.body .right_col {
     background: #FFE4E1;
 }
- 
+
 /*自己新增*/
 /*左上logo圖片*/
 .logoimg {
-    height:36px;
+    height: 36px;
+    margin-left: 6px;
 }

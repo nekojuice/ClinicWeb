@@ -1,0 +1,13 @@
+﻿@model ScheduleClinicInfo
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="mb-3">
+    <label asp-for="Date" class="form-label">掛號月份: </label>
+    <select asp-for="Date" class="form-control" asp-items="@ViewBag.Date">
+        <option>--請選擇--</option>
+    </select>
+</div>
+
+@* <partial name="_ClinicInfoPartial" /> *@
