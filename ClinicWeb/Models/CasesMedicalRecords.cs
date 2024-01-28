@@ -2,30 +2,47 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace ClinicWeb.Models;
 
+[Table("Cases_Medical_Records")]
 public partial class CasesMedicalRecords
 {
+    [Column("Case_ID")]
     public int CaseId { get; set; }
 
+    [Key]
+    [Column("MR_Id")]
     public int MrId { get; set; }
 
+    [Column("Clinic_ID")]
     public int ClinicId { get; set; }
 
+    [Column("BP")]
+    [StringLength(50)]
     public string Bp { get; set; }
 
     public int? Pulse { get; set; }
 
+    [Column("BT")]
     public double? Bt { get; set; }
 
+    [Column("CC")]
     public string Cc { get; set; }
 
+    [Required]
     public string Disposal { get; set; }
 
     public string Prescribe { get; set; }
 
+    [ForeignKey("CaseId")]
+    [InverseProperty("CasesMedicalRecords")]
     public virtual CasesMainCase Case { get; set; }
 
+    [ForeignKey("ClinicId")]
+    [InverseProperty("CasesMedicalRecords")]
     public virtual ScheduleClinicInfo Clinic { get; set; }
 }

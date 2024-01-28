@@ -2,20 +2,34 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace ClinicWeb.Models;
 
+[PrimaryKey("PrescriptionId", "DrugId")]
+[Table("Cases_Prescriptionlist")]
 public partial class CasesPrescriptionlist
 {
+    [Key]
+    [Column("Prescription_ID")]
     public int PrescriptionId { get; set; }
 
+    [Key]
+    [Column("Drug_ID")]
     public int DrugId { get; set; }
 
     public int Days { get; set; }
 
+    [Column("Total_Amount")]
     public int TotalAmount { get; set; }
 
+    [ForeignKey("DrugId")]
+    [InverseProperty("CasesPrescriptionlist")]
     public virtual PharmacyTMedicinesList Drug { get; set; }
 
+    [ForeignKey("PrescriptionId")]
+    [InverseProperty("CasesPrescriptionlist")]
     public virtual CasesPrescription Prescription { get; set; }
 }

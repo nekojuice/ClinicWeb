@@ -2,28 +2,48 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace ClinicWeb.Models;
 
+[Table("Cases_NewBornList")]
 public partial class CasesNewBornList
 {
+    [Column("Member_ID")]
     public int MemberId { get; set; }
 
+    [Key]
+    [Column("NewBorn_ID")]
     public int NewBornId { get; set; }
 
+    [Required]
+    [StringLength(50)]
     public string Name { get; set; }
 
+    [Column("Birth_Date", TypeName = "datetime")]
     public DateTime BirthDate { get; set; }
 
     public bool Gender { get; set; }
 
+    [Required]
+    [Column("Blood_Type")]
+    [StringLength(50)]
     public string BloodType { get; set; }
 
+    [Column("ICE_Name")]
+    [StringLength(50)]
     public string IceName { get; set; }
 
+    [Column("ICE_Number")]
+    [StringLength(50)]
     public string IceNumber { get; set; }
 
+    [ForeignKey("MemberId")]
+    [InverseProperty("CasesNewBornList")]
     public virtual MemberMemberList Member { get; set; }
 
+    [InverseProperty("NewBorn")]
     public virtual ICollection<MemberCare> MemberCare { get; set; } = new List<MemberCare>();
 }

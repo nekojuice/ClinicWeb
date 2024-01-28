@@ -2,20 +2,32 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace ClinicWeb.Models;
 
+[Table("tCouponWallet")]
 public partial class TCouponWallet
 {
+    [Key]
     public int Id { get; set; }
 
+    [Column("fUsed")]
     public bool FUsed { get; set; }
 
+    [Column("fCouponId")]
     public int FCouponId { get; set; }
 
+    [Column("fMemberId")]
     public int FMemberId { get; set; }
 
+    [ForeignKey("FCouponId")]
+    [InverseProperty("TCouponWallet")]
     public virtual TCoupon FCoupon { get; set; }
 
+    [ForeignKey("FMemberId")]
+    [InverseProperty("TCouponWallet")]
     public virtual MemberMemberList FMember { get; set; }
 }

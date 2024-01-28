@@ -2,12 +2,35 @@
 body {
     background: #CC9999;
 }
+/*--------------*/
 /*左側nav欄*/
 .left_col {
     background: #CC9999;
     text-shadow: 0.1em 0.1em 0.2em black;
+    /*position: fixed;*/
 }
 
+/*fixed時，會導致nav摺疊狀態 點選的子選單被消失，需要改javascript*/
+/*.nav-sm div.left_col.scroll-view {
+    width: 70px;
+}
+
+.scroll-view {
+    height: 100%;
+    overflow-y: scroll;
+}
+
+    .scroll-view::-webkit-scrollbar {
+        width: 0;
+        height: 0;
+    }
+*/
+/*左側摺疊時 摺疊區點選出現的子選單*/
+.nav-sm ul.nav.child_menu {
+    background: #E9B4B4;
+}
+
+/*nav個人資料*/
 .nav_title {
     background: #CC9999;
     font-weight: bold;
@@ -17,16 +40,17 @@ body {
         font-weight: bold;
     }
 
-    .nav_menu {
-        background: #FFCCCC;
-    }
-
 .nav.side-menu {
     font-size: 1.4em;
 }
 
 .menu_section h3 {
     font-size: 1.5em;
+}
+
+/*摺疊區點選時右側橘線*/
+.nav-sm .nav.child_menu li.active, .nav-sm .nav.side-menu li.active-sm {
+    border-right: 5px solid #FF6600;
 }
 
 .nav.side-menu > li.current-page, .nav.side-menu > li.active {
@@ -42,13 +66,14 @@ body {
     background: #CC9999;
     text-shadow: 0.1em 0.1em 0.2em black;
 }
-/*摺疊區內部連結*/
-.nav.side-menu > li > ul.nav.child_menu > li > a {
-    font-size: 0.8em;
-    font-weight: bold;
+
+/*左上診所logo圖片*/
+.logoimg {
+    height: 36px;
+    margin-left: 6px;
 }
 
-
+/*下方浮動小按鈕 登出那些*/
 .sidebar-footer {
     background: #E9B4B4;
 }
@@ -61,14 +86,21 @@ body {
             background: #FFE4E1;
         }
 
-.nav-sm ul.nav.child_menu {
-    background: #E9B4B4;
+/*字體自型*/
+/*摺疊時文字 不能再大了*/
+.nav-sm .nav.side-menu li a i {
+    font-size: 3em !important;
 }
-
+/*摺疊區內部連結*/
+.nav.side-menu > li > ul.nav.child_menu > li > a {
+    font-size: 0.8em;
+    font-weight: bold;
+}
+/*標題*/
 .site_title > span {
     font-size: 1.2em;
 }
-
+/*個人資料*/
 .profile_info span {
     color: #FFD700;
     font-weight: bold;
@@ -79,17 +111,15 @@ body {
     font-weight: bold;
     font-size: 1.4em;
 }
+/*左側nav欄*/
+/*--------------*/
 
-/*render page粉紅底色*/
-/*不妥時render page的各別style改成白色，比如放沒有去背的圖片*/
-/*複製下面那坨*/
+/*renderbody區域底色*/
 body .container.body .right_col {
     background: #FFE4E1;
 }
 
-/*自己新增*/
-/*左上logo圖片*/
-.logoimg {
-    height: 36px;
-    margin-left: 6px;
+/*上方狀態欄*/
+.nav_menu {
+    background: #FFCCCC;
 }

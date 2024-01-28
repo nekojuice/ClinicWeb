@@ -2,18 +2,29 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace ClinicWeb.Models;
 
+[Table("Pharmacy_tTypeDetails")]
 public partial class PharmacyTTypeDetails
 {
+    [Key]
     public int Id { get; set; }
 
+    [Column("fId_Drug")]
     public int FIdDrug { get; set; }
 
+    [Column("fId_Tpye")]
     public int FIdTpye { get; set; }
 
+    [ForeignKey("FIdDrug")]
+    [InverseProperty("PharmacyTTypeDetails")]
     public virtual PharmacyTMedicinesList FIdDrugNavigation { get; set; }
 
+    [ForeignKey("FIdTpye")]
+    [InverseProperty("PharmacyTTypeDetails")]
     public virtual PharmacyTTypeList FIdTpyeNavigation { get; set; }
 }

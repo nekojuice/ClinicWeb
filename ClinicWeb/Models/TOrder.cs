@@ -2,56 +2,102 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace ClinicWeb.Models;
 
+[Table("tOrder")]
 public partial class TOrder
 {
+    [Key]
     public int Id { get; set; }
 
+    [Required]
+    [Column("fOrderId")]
+    [StringLength(50)]
     public string FOrderId { get; set; }
 
+    [Column("fOrderDate", TypeName = "datetime")]
     public DateTime FOrderDate { get; set; }
 
+    [Column("fCheckPayDate", TypeName = "datetime")]
     public DateTime? FCheckPayDate { get; set; }
 
+    [Column("fShipDate", TypeName = "datetime")]
     public DateTime? FShipDate { get; set; }
 
+    [Column("fGetDate", TypeName = "datetime")]
     public DateTime? FGetDate { get; set; }
 
+    [Column("fShipPrice")]
     public int FShipPrice { get; set; }
 
+    [Column("fOrderPrice")]
     public int FOrderPrice { get; set; }
 
+    [Required]
+    [Column("fReceiverName")]
+    [StringLength(50)]
     public string FReceiverName { get; set; }
 
+    [Required]
+    [Column("fReceiverPhone")]
+    [StringLength(50)]
     public string FReceiverPhone { get; set; }
 
+    [Required]
+    [Column("fReceiverAddress")]
+    [StringLength(50)]
     public string FReceiverAddress { get; set; }
 
+    [Column("fMemo")]
+    [StringLength(50)]
     public string FMemo { get; set; }
 
+    [Column("fAccountFiveNumber")]
+    [StringLength(50)]
     public string FAccountFiveNumber { get; set; }
 
+    [Required]
+    [Column("fPayType")]
+    [StringLength(50)]
     public string FPayType { get; set; }
 
+    [Required]
+    [Column("fShipType")]
+    [StringLength(50)]
     public string FShipType { get; set; }
 
+    [Column("fMemberId")]
     public int FMemberId { get; set; }
 
+    [Column("fCouponIdforAmount")]
     public int? FCouponIdforAmount { get; set; }
 
+    [Column("fCouponIdforPercent")]
     public int? FCouponIdforPercent { get; set; }
 
+    [Column("fCouponIdforShip")]
     public int? FCouponIdforShip { get; set; }
 
+    [ForeignKey("FCouponIdforAmount")]
+    [InverseProperty("TOrderFCouponIdforAmountNavigation")]
     public virtual TCoupon FCouponIdforAmountNavigation { get; set; }
 
+    [ForeignKey("FCouponIdforPercent")]
+    [InverseProperty("TOrderFCouponIdforPercentNavigation")]
     public virtual TCoupon FCouponIdforPercentNavigation { get; set; }
 
+    [ForeignKey("FCouponIdforShip")]
+    [InverseProperty("TOrderFCouponIdforShipNavigation")]
     public virtual TCoupon FCouponIdforShipNavigation { get; set; }
 
+    [ForeignKey("FMemberId")]
+    [InverseProperty("TOrder")]
     public virtual MemberMemberList FMember { get; set; }
 
+    [InverseProperty("FOrder")]
     public virtual ICollection<TOrderDetail> TOrderDetail { get; set; } = new List<TOrderDetail>();
 }

@@ -2,30 +2,51 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace ClinicWeb.Models;
 
+[Table("Attendance_tExpenseRequests")]
 public partial class AttendanceTExpenseRequests
 {
+    [Key]
+    [Column("fRequestID")]
     public int FRequestId { get; set; }
 
+    [Column("fEmployeeID")]
     public int FEmployeeId { get; set; }
 
+    [Column("fExpenseTypeID")]
     public int FExpenseTypeId { get; set; }
 
+    [Column("fAmount", TypeName = "money")]
     public decimal? FAmount { get; set; }
 
+    [Column("fRequestDate", TypeName = "datetime")]
     public DateTime? FRequestDate { get; set; }
 
+    [Column("fExpenseDate", TypeName = "datetime")]
     public DateTime? FExpenseDate { get; set; }
 
+    [Column("fRequestsDescription")]
+    [StringLength(200)]
     public string FRequestsDescription { get; set; }
 
+    [Column("fApprovalStatus")]
+    [StringLength(50)]
     public string FApprovalStatus { get; set; }
 
+    [Column("fPayStatus")]
+    [StringLength(50)]
     public string FPayStatus { get; set; }
 
+    [ForeignKey("FEmployeeId")]
+    [InverseProperty("AttendanceTExpenseRequests")]
     public virtual MemberEmployeeList FEmployee { get; set; }
 
+    [ForeignKey("FExpenseTypeId")]
+    [InverseProperty("AttendanceTExpenseRequests")]
     public virtual AttendanceTExpenseTypes FExpenseType { get; set; }
 }

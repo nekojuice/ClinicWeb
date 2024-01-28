@@ -2,24 +2,40 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace ClinicWeb.Models;
 
+[Table("Attendance_tAttendance")]
 public partial class AttendanceTAttendance
 {
+    [Key]
+    [Column("fAttendanceID")]
     public int FAttendanceId { get; set; }
 
+    [Column("fEmployeeID")]
     public int FEmployeeId { get; set; }
 
+    [Column("fCheckInTime", TypeName = "datetime")]
     public DateTime? FCheckInTime { get; set; }
 
+    [Column("fCheckOutTime", TypeName = "datetime")]
     public DateTime? FCheckOutTime { get; set; }
 
+    [Column("fAttendanceCIS")]
+    [StringLength(10)]
     public string FAttendanceCis { get; set; }
 
+    [Column("fWorkDate", TypeName = "date")]
     public DateTime? FWorkDate { get; set; }
 
+    [Column("fAttendanceCOS")]
+    [StringLength(10)]
     public string FAttendanceCos { get; set; }
 
+    [ForeignKey("FEmployeeId")]
+    [InverseProperty("AttendanceTAttendance")]
     public virtual MemberEmployeeList FEmployee { get; set; }
 }

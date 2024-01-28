@@ -2,19 +2,31 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace ClinicWeb.Models;
 
+[Table("Schedule_ClinicInfo")]
 public partial class ScheduleClinicInfo
 {
+    [Key]
+    [Column("ClinicInfo_ID")]
     public int ClinicInfoId { get; set; }
 
+    [Column("doctor_ID")]
     public int DoctorId { get; set; }
 
+    [Column("ClincRoom_ID")]
     public int ClincRoomId { get; set; }
 
+    [Required]
+    [Column("date")]
+    [StringLength(50)]
     public string Date { get; set; }
 
+    [Column("ClinicTime_ID")]
     public int ClinicTimeId { get; set; }
 
     public int? LeaveStatus { get; set; }
@@ -23,15 +35,24 @@ public partial class ScheduleClinicInfo
 
     public int? JumpStatus { get; set; }
 
+    [InverseProperty("Clinic")]
     public virtual ICollection<ApptClinicList> ApptClinicList { get; set; } = new List<ApptClinicList>();
 
+    [InverseProperty("Clinic")]
     public virtual ICollection<CasesMedicalRecords> CasesMedicalRecords { get; set; } = new List<CasesMedicalRecords>();
 
+    [ForeignKey("ClincRoomId")]
+    [InverseProperty("ScheduleClinicInfo")]
     public virtual RoomList ClincRoom { get; set; }
 
+    [ForeignKey("ClinicTimeId")]
+    [InverseProperty("ScheduleClinicInfo")]
     public virtual ScheduleClinicTime ClinicTime { get; set; }
 
+    [ForeignKey("DoctorId")]
+    [InverseProperty("ScheduleClinicInfo")]
     public virtual MemberEmployeeList Doctor { get; set; }
 
+    [InverseProperty("Clinic")]
     public virtual ICollection<ScheduleNurseSchedule> ScheduleNurseSchedule { get; set; } = new List<ScheduleNurseSchedule>();
 }

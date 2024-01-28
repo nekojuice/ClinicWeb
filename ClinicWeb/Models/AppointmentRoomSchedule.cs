@@ -2,30 +2,50 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace ClinicWeb.Models;
 
+[Table("Appointment_Room_Schedule")]
 public partial class AppointmentRoomSchedule
 {
+    [Key]
+    [Column("Appointment_ID")]
     public int AppointmentId { get; set; }
 
+    [Column("Room_ID")]
     public int? RoomId { get; set; }
 
+    [Column("Member_ID")]
     public int? MemberId { get; set; }
 
+    [StringLength(50)]
     public string StartDate { get; set; }
 
+    [StringLength(50)]
     public string EndDate { get; set; }
 
+    [Column("Doctor_ID")]
     public int? DoctorId { get; set; }
 
+    [Column("Nurse_ID")]
     public int? NurseId { get; set; }
 
+    [ForeignKey("DoctorId")]
+    [InverseProperty("AppointmentRoomScheduleDoctor")]
     public virtual MemberEmployeeList Doctor { get; set; }
 
+    [ForeignKey("MemberId")]
+    [InverseProperty("AppointmentRoomSchedule")]
     public virtual MemberMemberList Member { get; set; }
 
+    [ForeignKey("NurseId")]
+    [InverseProperty("AppointmentRoomScheduleNurse")]
     public virtual MemberEmployeeList Nurse { get; set; }
 
+    [ForeignKey("RoomId")]
+    [InverseProperty("AppointmentRoomSchedule")]
     public virtual RoomList Room { get; set; }
 }

@@ -2,58 +2,98 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace ClinicWeb.Models;
 
+[Table("Member_EmployeeList")]
 public partial class MemberEmployeeList
 {
+    [Key]
+    [Column("Emp_ID")]
     public int EmpId { get; set; }
 
+    [Column("Staff_Number")]
     public int StaffNumber { get; set; }
 
+    [Required]
+    [StringLength(50)]
     public string Name { get; set; }
 
     public bool Gender { get; set; }
 
+    [Required]
+    [Column("Blood_Type")]
+    [StringLength(50)]
     public string BloodType { get; set; }
 
+    [Required]
+    [Column("National_ID")]
+    [StringLength(50)]
     public string NationalId { get; set; }
 
+    [Required]
+    [StringLength(50)]
     public string Address { get; set; }
 
+    [Required]
+    [Column("Contact_Address")]
+    [StringLength(50)]
     public string ContactAddress { get; set; }
 
+    [Required]
+    [StringLength(50)]
     public string Phone { get; set; }
 
+    [Column("Birth_Date", TypeName = "datetime")]
     public DateTime BirthDate { get; set; }
 
+    [Required]
+    [Column("Emp_Type")]
+    [StringLength(50)]
     public string EmpType { get; set; }
 
+    [StringLength(50)]
     public string Department { get; set; }
 
+    [Column("Emp_Password")]
+    [StringLength(50)]
     public string EmpPassword { get; set; }
 
     public byte[] EmpPhoto { get; set; }
 
+    [InverseProperty("Doctor")]
     public virtual ICollection<AppointmentRoomSchedule> AppointmentRoomScheduleDoctor { get; set; } = new List<AppointmentRoomSchedule>();
 
+    [InverseProperty("Nurse")]
     public virtual ICollection<AppointmentRoomSchedule> AppointmentRoomScheduleNurse { get; set; } = new List<AppointmentRoomSchedule>();
 
+    [InverseProperty("FEmployee")]
     public virtual ICollection<AttendanceTAttendance> AttendanceTAttendance { get; set; } = new List<AttendanceTAttendance>();
 
+    [InverseProperty("FEmployee")]
     public virtual ICollection<AttendanceTExpenseRequests> AttendanceTExpenseRequests { get; set; } = new List<AttendanceTExpenseRequests>();
 
+    [InverseProperty("FEmployee")]
     public virtual ICollection<AttendanceTLeave> AttendanceTLeave { get; set; } = new List<AttendanceTLeave>();
 
+    [InverseProperty("Doctor")]
     public virtual ICollection<ScheduleClinicInfo> ScheduleClinicInfo { get; set; } = new List<ScheduleClinicInfo>();
 
+    [InverseProperty("Doctor")]
     public virtual ICollection<ScheduleClinicSchedule> ScheduleClinicSchedule { get; set; } = new List<ScheduleClinicSchedule>();
 
+    [InverseProperty("Emp")]
     public virtual ICollection<ScheduleNurseSchedule> ScheduleNurseSchedule { get; set; } = new List<ScheduleNurseSchedule>();
 
+    [InverseProperty("Emp")]
     public virtual ICollection<SchedulePharmacistSchedule> SchedulePharmacistSchedule { get; set; } = new List<SchedulePharmacistSchedule>();
 
+    [InverseProperty("Emp")]
     public virtual ICollection<ScheduleStaffSchedule> ScheduleStaffSchedule { get; set; } = new List<ScheduleStaffSchedule>();
 
+    [InverseProperty("Emp")]
     public virtual ICollection<ScheduleWardNurseSchedule> ScheduleWardNurseSchedule { get; set; } = new List<ScheduleWardNurseSchedule>();
 }

@@ -2,14 +2,23 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace ClinicWeb.Models;
 
+[Table("Attendance_tLeaveTypes")]
 public partial class AttendanceTLeaveTypes
 {
+    [Key]
+    [Column("fLeaveTypeID")]
     public int FLeaveTypeId { get; set; }
 
+    [Column("fLeaveTypeName")]
+    [StringLength(50)]
     public string FLeaveTypeName { get; set; }
 
+    [InverseProperty("FLeaveType")]
     public virtual ICollection<AttendanceTLeave> AttendanceTLeave { get; set; } = new List<AttendanceTLeave>();
 }

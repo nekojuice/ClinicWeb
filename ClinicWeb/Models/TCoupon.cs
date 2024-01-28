@@ -2,34 +2,56 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace ClinicWeb.Models;
 
+[Table("tCoupon")]
 public partial class TCoupon
 {
+    [Key]
     public int Id { get; set; }
 
+    [Required]
+    [Column("fName")]
+    [StringLength(50)]
     public string FName { get; set; }
 
+    [Required]
+    [Column("fCategory")]
+    [StringLength(50)]
     public string FCategory { get; set; }
 
+    [Column("fPicture", TypeName = "image")]
     public byte[] FPicture { get; set; }
 
+    [Column("fValue")]
     public int FValue { get; set; }
 
+    [Column("fCriteria")]
     public int FCriteria { get; set; }
 
+    [Column("fDescription")]
+    [StringLength(50)]
     public string FDescription { get; set; }
 
+    [Column("fStartDate", TypeName = "date")]
     public DateTime FStartDate { get; set; }
 
+    [Column("fEndDate", TypeName = "date")]
     public DateTime FEndDate { get; set; }
 
+    [InverseProperty("FCoupon")]
     public virtual ICollection<TCouponWallet> TCouponWallet { get; set; } = new List<TCouponWallet>();
 
+    [InverseProperty("FCouponIdforAmountNavigation")]
     public virtual ICollection<TOrder> TOrderFCouponIdforAmountNavigation { get; set; } = new List<TOrder>();
 
+    [InverseProperty("FCouponIdforPercentNavigation")]
     public virtual ICollection<TOrder> TOrderFCouponIdforPercentNavigation { get; set; } = new List<TOrder>();
 
+    [InverseProperty("FCouponIdforShipNavigation")]
     public virtual ICollection<TOrder> TOrderFCouponIdforShipNavigation { get; set; } = new List<TOrder>();
 }

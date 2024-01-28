@@ -180,14 +180,14 @@
          "ObjectType": 0
       }
    ],
-   "UiHint": "desktop-rae7e6c.ClinicSys.dbo",
+   "UiHint": "nkj12700.ClinicSys.dbo",
    "UncountableWords": null,
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": false,
    "UseDateOnlyTimeOnly": false,
    "UseDbContextSplitting": false,
    "UseDecimalDataAnnotationForSprocResult": true,
-   "UseFluentApiOnly": true,
+   "UseFluentApiOnly": false,
    "UseHandleBars": false,
    "UseHierarchyId": false,
    "UseInflector": false,

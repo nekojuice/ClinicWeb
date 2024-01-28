@@ -2,26 +2,43 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace ClinicWeb.Models;
 
+[Table("Cases_TestReport")]
 public partial class CasesTestReport
 {
+    [Column("Case_ID")]
     public int CaseId { get; set; }
 
+    [Key]
+    [Column("Report_ID")]
     public int ReportId { get; set; }
 
+    [Column("Test_Date", TypeName = "datetime")]
     public DateTime TestDate { get; set; }
 
+    [Column("Report_Date", TypeName = "datetime")]
     public DateTime? ReportDate { get; set; }
 
+    [Required]
+    [Column("Test_Name")]
+    [StringLength(50)]
     public string TestName { get; set; }
 
+    [StringLength(50)]
     public string Result { get; set; }
 
+    [StringLength(50)]
     public string Attachment { get; set; }
 
+    [StringLength(50)]
     public string ImagePath { get; set; }
 
+    [ForeignKey("CaseId")]
+    [InverseProperty("CasesTestReport")]
     public virtual CasesMainCase Case { get; set; }
 }

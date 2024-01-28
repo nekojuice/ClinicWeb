@@ -2,14 +2,24 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace ClinicWeb.Models;
 
+[Table("Appt_PatientState_Ref")]
 public partial class ApptPatientStateRef
 {
+    [Key]
+    [Column("PatientState_ID")]
     public int PatientStateId { get; set; }
 
+    [Required]
+    [Column("PatientState_Name")]
+    [StringLength(50)]
     public string PatientStateName { get; set; }
 
+    [InverseProperty("PatientState")]
     public virtual ICollection<ApptClinicList> ApptClinicList { get; set; } = new List<ApptClinicList>();
 }

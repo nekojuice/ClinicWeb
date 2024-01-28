@@ -1,6 +1,8 @@
 ﻿using ClinicWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ClinicWeb.Areas.Employee.Controllers
@@ -18,33 +20,58 @@ namespace ClinicWeb.Areas.Employee.Controllers
             ViewBag.Date = new SelectList(_context.ScheduleClinicInfo
                 .Select(tSchedule => tSchedule.Date.Substring(0, 7))
                 .Distinct());
-            //_context.ScheduleClinicInfo
+			//_context.ScheduleClinicInfo
 
-            //.GroupBy(x => x.Date)
+			//.GroupBy(x => x.Date)
 
-            //.Select(x => new
-            //{
-            //    日期資料 = x.First().Date.Substring(0, 7),
-            //    日期 = x.First().Date.Substring(0, 7),
-            //}), "日期資料", "日期");
+			//.Select(x => new
+			//{
+			//    日期資料 = x.First().Date.Substring(0, 7),
+			//    日期 = x.First().Date.Substring(0, 7),
+			//}), "日期資料", "日期");
+			ViewBag.Department = new SelectList(_context.MemberEmployeeList
+				.Select(x => x.Department)
+				.Distinct());
 
-            return View();
+			return View();
         }
 
-        [Route("{area}/{controller}/{action}/{month}")]
-        public IActionResult ClinicInfoPartial(string month)
+        [Route("{area}/{controller}/{action}/{year}/{month}")]
+        public IActionResult ClinicInfo(string year, string month)
         {
-            var result = from x in _context.ScheduleClinicInfo
-                         where x.Date.StartsWith(month)
+            var apptableMonth = from x in _context.ScheduleClinicInfo
+                         where x.Date.StartsWith($"{year}/{month}")
                          select x;
-            if (result == null)
+			if (apptableMonth == null)
             {
                 return NotFound();
             }
             else
             {
-                return PartialView("_ClinicInfoPartial", result);
+                return PartialView("_ClinicInfoPartial", apptableMonth);
             }
+        }
+
+        [Route("{area}/{controller}/{action}/{year}/{month}")]
+        //[HttpPost]
+        public JsonResult Jsontest(string year, string month)
+        {
+            return Json(_context.ScheduleClinicInfo
+                .Where(x => x.Date.StartsWith($"{year}/{month}"))
+                .Include(x => x.Doctor)
+                .Include(x => x.ClincRoom)
+                .Include(x => x.ClinicTime)
+                .Include(x => x.ApptClinicList)
+                .Select(x => new
+                {
+                    id = x.ClinicInfoId,
+                    日期 = x.Date,
+                    時段 = x.ClinicTime.ClinicShifts,
+                    科別 = x.Doctor.Department,
+                    醫師名稱 = x.Doctor.Name,
+                    上限人數 = x.RegistrationLimit,
+                    預約人數 = x.ApptClinicList.Count,
+                }));
         }
     }
 }

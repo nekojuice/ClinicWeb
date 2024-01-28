@@ -2,16 +2,29 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace ClinicWeb.Models;
 
+[Table("Pharmacy_tClinicalUseList")]
 public partial class PharmacyTClinicalUseList
 {
+    [Key]
+    [Column("fId_ClinicalUse")]
     public int FIdClinicalUse { get; set; }
 
+    [Required]
+    [Column("fClinicalUseCode")]
+    [StringLength(10)]
     public string FClinicalUseCode { get; set; }
 
+    [Required]
+    [Column("fClinicalUse")]
+    [StringLength(20)]
     public string FClinicalUse { get; set; }
 
+    [InverseProperty("FIdClicicalUseNavigation")]
     public virtual ICollection<PharmacyTClinicalUseDetails> PharmacyTClinicalUseDetails { get; set; } = new List<PharmacyTClinicalUseDetails>();
 }

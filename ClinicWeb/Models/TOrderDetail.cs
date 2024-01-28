@@ -2,20 +2,32 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace ClinicWeb.Models;
 
+[Table("tOrderDetail")]
 public partial class TOrderDetail
 {
+    [Key]
     public int Id { get; set; }
 
+    [Column("fAmount")]
     public int FAmount { get; set; }
 
+    [Column("fOrderId")]
     public int FOrderId { get; set; }
 
+    [Column("fProductId")]
     public int FProductId { get; set; }
 
+    [ForeignKey("FOrderId")]
+    [InverseProperty("TOrderDetail")]
     public virtual TOrder FOrder { get; set; }
 
+    [ForeignKey("FProductId")]
+    [InverseProperty("TOrderDetail")]
     public virtual TProduct FProduct { get; set; }
 }

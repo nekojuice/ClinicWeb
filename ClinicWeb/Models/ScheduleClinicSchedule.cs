@@ -2,24 +2,40 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace ClinicWeb.Models;
 
+[Table("Schedule_ClinicSchedule")]
 public partial class ScheduleClinicSchedule
 {
+    [Key]
+    [Column("Schedule_ID")]
     public int ScheduleId { get; set; }
 
+    [Column("Doctor_ID")]
     public int DoctorId { get; set; }
 
+    [Column("week")]
     public int Week { get; set; }
 
+    [Column("time_ID")]
     public int TimeId { get; set; }
 
+    [Column("Room_ID")]
     public int RoomId { get; set; }
 
+    [ForeignKey("DoctorId")]
+    [InverseProperty("ScheduleClinicSchedule")]
     public virtual MemberEmployeeList Doctor { get; set; }
 
+    [ForeignKey("RoomId")]
+    [InverseProperty("ScheduleClinicSchedule")]
     public virtual RoomList Room { get; set; }
 
+    [ForeignKey("TimeId")]
+    [InverseProperty("ScheduleClinicSchedule")]
     public virtual ScheduleClinicTime Time { get; set; }
 }

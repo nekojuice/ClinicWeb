@@ -2,28 +2,44 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace ClinicWeb.Models;
 
+[Table("Appt_ClinicList")]
 public partial class ApptClinicList
 {
+    [Key]
+    [Column("ClinicList_ID")]
     public int ClinicListId { get; set; }
 
+    [Column("Clinic_ID")]
     public int ClinicId { get; set; }
 
     public int ClinicNumber { get; set; }
 
+    [Column("Member_ID")]
     public int MemberId { get; set; }
 
+    [Column("PatientState_ID")]
     public int PatientStateId { get; set; }
 
     public bool IsCancelled { get; set; }
 
+    [Column("IsVIP")]
     public bool IsVip { get; set; }
 
+    [ForeignKey("ClinicId")]
+    [InverseProperty("ApptClinicList")]
     public virtual ScheduleClinicInfo Clinic { get; set; }
 
+    [ForeignKey("MemberId")]
+    [InverseProperty("ApptClinicList")]
     public virtual MemberMemberList Member { get; set; }
 
+    [ForeignKey("PatientStateId")]
+    [InverseProperty("ApptClinicList")]
     public virtual ApptPatientStateRef PatientState { get; set; }
 }

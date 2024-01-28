@@ -2,28 +2,47 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace ClinicWeb.Models;
 
+[Table("tProduct")]
 public partial class TProduct
 {
+    [Key]
     public int Id { get; set; }
 
+    [Required]
+    [Column("fName")]
+    [StringLength(50)]
     public string FName { get; set; }
 
+    [Required]
+    [Column("fCategory")]
+    [StringLength(50)]
     public string FCategory { get; set; }
 
+    [Column("fPicture", TypeName = "image")]
     public byte[] FPicture { get; set; }
 
+    [Column("fPrice")]
     public int FPrice { get; set; }
 
+    [Column("fDescription")]
+    [StringLength(50)]
     public string FDescription { get; set; }
 
+    [Column("fStartDate", TypeName = "date")]
     public DateTime FStartDate { get; set; }
 
+    [Column("fEndDate", TypeName = "date")]
     public DateTime FEndDate { get; set; }
 
+    [InverseProperty("FProduct")]
     public virtual ICollection<TCart> TCart { get; set; } = new List<TCart>();
 
+    [InverseProperty("FProduct")]
     public virtual ICollection<TOrderDetail> TOrderDetail { get; set; } = new List<TOrderDetail>();
 }

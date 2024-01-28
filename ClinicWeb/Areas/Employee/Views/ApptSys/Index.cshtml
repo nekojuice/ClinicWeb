@@ -1,13 +1,145 @@
-﻿@model ScheduleClinicInfo
-@{
-    ViewData["Title"] = "Index";
+﻿@{
+	ViewData["Title"] = "掛號管理系統";
+}
+@section ModulesStyles
+{
+	<!-- iCheck -->
+	<link href="~/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+	<!-- Datatables -->
+
+	<link href="~/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+	<link href="~/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+	<link href="~/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+	<link href="~/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+	<link href="~/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+
 }
 
-<div class="mb-3">
-    <label asp-for="Date" class="form-label">掛號月份: </label>
-    <select asp-for="Date" class="form-control" asp-items="@ViewBag.Date">
-        <option>--請選擇--</option>
-    </select>
-</div>
+<partial name="_ClinicInfoPartial" />
 
-@* <partial name="_ClinicInfoPartial" /> *@
+
+
+@section Scripts
+{
+	<script>
+		$("#Date").change(() => {
+			if ($("#Date").val() != '--請選擇--') {
+				QueryData();
+			}
+			else {
+				$('#clinicDataTable').dataTable({
+					destroy: true,
+					columns: [
+						{ "data": "id", "visible": false },
+						{ "data": "日期" },
+						{ "data": "時段" },
+						{ "data": "科別" },
+						{ "data": "醫師名稱" },
+						{ "data": "上限人數" },
+						{ "data": "預約人數" }
+					]
+				});
+			}
+		});
+
+		function GetTable() {
+			fetch("/Employee/ApptSys/ClinicInfo/" + $("#Date").val())
+				.then((response) => { return response.text(); })
+				.then((data) => { $("#clinicDataDiv").html(data); })
+				.then((x) => { QueryData(); })
+				.catch()
+		}
+
+		function QueryData() {
+			$('#clinicDataTable').dataTable({
+				ajax: {
+					type: 'GET',
+					url: ("/Employee/ApptSys/Jsontest/" + $("#Date").val()),
+					dataSrc: function (json) { return json; }
+				},
+				destroy: true,
+				columns: [
+					{ "data": "id", "visible": false },
+					{ "data": "日期" },
+					{ "data": "時段" },
+					{ "data": "科別" },
+					{ "data": "醫師名稱" },
+					{ "data": "上限人數" },
+					{ "data": "預約人數" }
+				],
+				fixedHeader: {
+					header: true
+				},
+				language: {
+					url: "https://cdn.datatables.net/plug-ins/1.13.7/i18n/zh-HANT.json"
+				}
+			});
+			searchDept()
+		}
+
+		$("#Doctor_Department").change(() => { searchDept() });
+
+		function searchDept() {
+			if ($("#Doctor_Department").val() == '全部') {
+				$('#clinicDataTable').DataTable().column(3).search("").draw();
+			}
+			else {
+				$('#clinicDataTable').DataTable().column(3).search($("#Doctor_Department").val()).draw();
+			}
+		}
+	</script>
+
+	@*     <script>
+        $(document).ready(function () {
+            $('#clinicDataTable').DataTable({
+                "proccessing": true,
+                "serverSide": true,
+                "ajax": {
+                    url: "/customers",
+                    type: 'POST',
+                    headers: { 'RequestVerificationToken': $('@Html.AntiForgeryToken()').val() }
+                },
+                "columnDefs": [
+                    {
+                        "targets": -1,
+                        "data": null,
+                        "render": function (data, type, row, meta) {
+                            return '<a href="/customers/edit?id=' + row.id + '">Edit</a> | <a href="/customers/details?id=' + row.id + '">Details</a> | <a href="/customers/delete?id=' + row.id + '">Delete</a>';
+                        },
+                        "sortable": false
+                    },
+                    { "name": "Id", "data": "id", "targets": 0, "visible": false },
+                    { "name": "Name", "data": "name", "targets": 1 },
+                    { "name": "PhoneNumber", "data": "phoneNumber", "targets": 2 },
+                    { "name": "Address", "data": "address", "targets": 3 },
+                    { "name": "PostalCode", "data": "postalCode", "targets": 4 }
+                ],
+                "order": [[0, "desc"]]
+            });
+        });
+    </script> *@
+
+}
+@section Modules
+{
+	<!-- iCheck -->
+	<script src="~/vendors/iCheck/icheck.min.js"></script>
+	<!-- Datatables -->
+	<script src="~/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+	@* <script src="~/lib/datatables/js/jquery.datatables.min.js"></script> *@
+	<script src="~/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+	<script src="~/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+	<script src="~/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+	<script src="~/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+	<script src="~/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+	<script src="~/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+	<script src="~/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+	<script src="~/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+	<script src="~/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+	<script src="~/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+	<script src="~/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+	<script src="~/vendors/jszip/dist/jszip.min.js"></script>
+	<script src="~/vendors/pdfmake/build/pdfmake.min.js"></script>
+	<script src="~/vendors/pdfmake/build/vfs_fonts.js"></script>
+
+}
