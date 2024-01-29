@@ -33,6 +33,12 @@
 					</select>
 				</div>
 				<div class="col-md-4">
+					<label asp-for="ClinicTime.ClinicShifts" class="form-label">時段: </label>
+					<select asp-for="ClinicTime.ClinicShifts" class="form-control" asp-items="@ViewBag.ClinicShifts">
+						<option>全部</option>
+					</select>
+				</div>
+				<div class="col-md-4">
 					<label asp-for="Doctor.Department" class="form-label">科別: </label>
 					<select asp-for="Doctor.Department" class="form-control" asp-items="@ViewBag.Department">
 						<option>全部</option>
