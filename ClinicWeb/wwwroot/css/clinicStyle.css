@@ -129,10 +129,11 @@ body .container.body .right_col {
 /*摺疊型態*/
 .nav-sm .container.body .col-md-3.left_col {
     min-height: 100%;
-    width: 70px;
+    width: 0px;
     padding: 0;
     z-index: 9999;
     position: absolute;
+    display: none; /*mod*/
 }
 
     .nav-sm .container.body .col-md-3.left_col.menu_fixed {
@@ -151,7 +152,7 @@ body .container.body .right_col {
 
 .nav-sm .container.body .right_col {
     padding: 10px 20px;
-    margin-left: 70px;
+    margin-left: 0px; /*mod*/
     z-index: 2;
 }
 
@@ -170,7 +171,7 @@ body .container.body .right_col {
 
 .nav-sm .main_container .top_nav {
     display: block;
-    margin-left: 70px;
+    margin-left: 0px; /*mod*/
     z-index: 2;
 }
 
@@ -228,5 +229,10 @@ body .container.body .right_col {
 
 .nav-sm .profile {
     display: none;
+}
+
+
+.nav-sm footer {
+    margin-left: 0px; /*mod*/
 }
 /*摺疊型態*/
