@@ -126,11 +126,10 @@ body .container.body .right_col {
 
 
 
-/*摺疊型態*/
+/*摺疊型態 完全隱藏*/
 .nav-sm .container.body .col-md-3.left_col {
     display: none; /*mod*/
 }
-
 
 .nav-sm .container.body .right_col {
     margin-left: 0px; /*mod*/
@@ -146,77 +145,6 @@ body .container.body .right_col {
 /*摺疊型態*/
 
 /*擴充手機選單*/
-/*.nav-sm .nav.side-menu-patch li a {
-    text-align: center !important;
-    font-weight: 400;
-    font-size: 10px;
-    padding: 10px 5px;
-}
-
-.nav-sm .nav.child_menu li.active,
-.nav-sm .nav.side-menu-patch li.active-sm {
-    border-right: 5px solid #1ABB9C;
-}
-
-    .nav-sm ul.nav.child_menu ul,
-    .nav-sm .nav.side-menu-patch li.active-sm ul ul {
-        position: static;
-        width: 200px;
-        background: none;
-    }
-
-.nav-sm > .nav.side-menu-patch > li.active-sm > a {
-    color: #1ABB9C !important;
-}
-
-.nav-sm .nav.side-menu-patch li a i.toggle-up {
-    display: none !important;
-}
-
-.nav-sm .nav.side-menu-patch li a i {
-    font-size: 25px !important;
-    text-align: center;
-    width: 100% !important;
-    margin-bottom: 5px;
-}
-
-.nav.side-menu-patch > li {
-    position: relative;
-    display: block;
-    cursor: pointer;
-}
-
-    .nav.side-menu-patch > li > a {
-        margin-bottom: 6px;
-    }
-
-        .nav.side-menu-patch > li > a:hover {
-            color: #F2F5F7 !important;
-        }
-
-        .nav.side-menu-patch > li > a:hover, .nav > li > a:focus {
-            text-decoration: none;
-            background: transparent;
-        }
-
-    .nav.side-menu-patch > li > a, .nav.child_menu > li > a {
-        color: #E7E7E7;
-        font-weight: 500;
-    }
-
-    .nav.side-menu-patch > li.current-page, .nav.side-menu-patch > li.active {
-        border-right: 5px solid #1ABB9C;
-    }
-
-        .nav.side-menu-patch > li.active > a {
-             text-shadow: rgba(0, 0, 0, 0.25) 0 -1px 0;
-           background: -webkit-gradient(linear, left top, left bottom, from(#334556), to(#2C4257)), #2A3F54;
-            background: linear-gradient(#334556, #2C4257), #2A3F54;
-            -webkit-box-shadow: rgba(0, 0, 0, 0.25) 0 1px 0, inset rgba(255, 255, 255, 0.16) 0 1px 0;
-            box-shadow: rgba(0, 0, 0, 0.25) 0 1px 0, inset rgba(255, 255, 255, 0.16) 0 1px 0;*/
-}
-/*擴充手機選單*/
-
 .nav-sm span.fa {
     display: inline-block;
 }
@@ -255,3 +183,4 @@ body .container.body .right_col {
     z-index:500;
     width:100%;
 }
+/*擴充手機選單*/

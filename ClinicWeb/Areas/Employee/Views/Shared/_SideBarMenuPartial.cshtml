@@ -1,58 +1,93 @@
-﻿<li>
+﻿@{
+	ViewData["AREA"] = @ViewContext.RouteData.Values["area"]?.ToString(); //用這個可以抓當前路由
+}
+<li>
 	<a asp-area="Employee" asp-controller="Main" asp-action="Index"><i class="fa fa-home"></i> 後台首頁 </a>
 </li>
-<li>
+<li @if (ViewBag.AREA == "Member")
+	@("class=active")
+>
 	<a><i class="fa fa-users"></i> 會員管理 <span class="fa fa-chevron-down"></span></a>
-	<ul class="nav child_menu">
+	<ul class="nav child_menu" @if (ViewBag.AREA == "Member")
+		@("style=display:block;")
+>
 		<li><a asp-area="Member" asp-controller="Home" asp-action="Index">功能首頁</a></li>
 		<li><a asp-area="Member" asp-controller="Home" asp-action="Index2">連結模板</a></li>
 	</ul>
 </li>
-<li>
+<li @if (ViewBag.AREA == "Attend")
+	@("class=active")
+>
 	<a><i class="fa fa-suitcase"></i> 差勤管理 <span class="fa fa-chevron-down"></span></a>
-	<ul class="nav child_menu">
+	<ul class="nav child_menu" @if (ViewBag.AREA == "Attend")
+		@("style=display:block;")
+>
 		<li><a asp-area="Attend" asp-controller="Home" asp-action="Index">功能首頁</a></li>
 		<li><a asp-area="Attend" asp-controller="Home" asp-action="Index2">連結模板</a></li>
 	</ul>
 </li>
-<li>
+<li @if (ViewBag.AREA == "Appointment")
+	@("class=active")
+>
 	<a><i class="fa fa-desktop"></i> 掛號系統 <span class="fa fa-chevron-down"></span></a>
-	<ul class="nav child_menu">
+	<ul class="nav child_menu" @if (ViewBag.AREA == "Appointment")
+		@("style=display:block;")
+>
 		<li><a asp-area="Appointment" asp-controller="ApptSys" asp-action="Index">掛號管理系統</a></li>
 		<li><a asp-area="Appointment" asp-controller="ApptSys" asp-action="ClinicInfoPartial">查詢病患掛號</a></li>
 	</ul>
 </li>
-<li>
+<li @if (ViewBag.AREA == "Schedule")
+	@("class=active")
+>
 	<a><i class="fa fa-calendar"></i> 排班系統 <span class="fa fa-chevron-down"></span></a>
-	<ul class="nav child_menu">
+	<ul class="nav child_menu" @if (ViewBag.AREA == "Schedule")
+		@("style=display:block;")
+>
 		<li><a asp-area="Schedule" asp-controller="Home" asp-action="Index">功能首頁</a></li>
 		<li><a asp-area="Schedule" asp-controller="Home" asp-action="Index2">連結模板</a></li>
 	</ul>
 </li>
-<li>
+<li @if (ViewBag.AREA == "Cases")
+	@("class=active")
+>
 	<a><i class="fa fa-edit"></i> 病例系統 <span class="fa fa-chevron-down"></span></a>
-	<ul class="nav child_menu">
+	<ul class="nav child_menu" @if (ViewBag.AREA == "Cases")
+		@("style=display:block;")
+>
 		<li><a asp-area="Cases" asp-controller="Home" asp-action="Index">功能首頁</a></li>
 		<li><a asp-area="Cases" asp-controller="Home" asp-action="Index2">連結模板</a></li>
 	</ul>
 </li>
-<li>
+<li @if (ViewBag.AREA == "Drugs")
+	@("class=active")
+>
 	<a><i class="fa fa-flask"></i> 藥師系統 <span class="fa fa-chevron-down"></span></a>
-	<ul class="nav child_menu">
+	<ul class="nav child_menu" @if (ViewBag.AREA == "Drugs")
+		@("style=display:block;")
+>
 		<li><a asp-area="Drugs" asp-controller="Home" asp-action="Index">功能首頁</a></li>
 		<li><a asp-area="Drugs" asp-controller="Home" asp-action="Index2">連結模板</a></li>
 	</ul>
 </li>
-<li>
+<li @if (ViewBag.AREA == "Shop")
+	@("class=active")
+>
 	<a><i class="fa fa-shopping-cart"></i> 商城管理 <span class="fa fa-chevron-down"></span></a>
-	<ul class="nav child_menu">
+	<ul class="nav child_menu" @if (ViewBag.AREA == "Shop")
+		@("style=display:block;")
+>
 		<li><a asp-area="Shop" asp-controller="Home" asp-action="Index">功能首頁</a></li>
 		<li><a asp-area="Shop" asp-controller="Home" asp-action="Index2">連結模板</a></li>
 	</ul>
 </li>
-<li>
+<li @if (ViewBag.AREA == "Room")
+	@("class=active")
+>
 	<a><i class="fa fa-cubes"></i> 設施管理 <span class="fa fa-chevron-down"></span></a>
-	<ul class="nav child_menu">
+	<ul class="nav child_menu" @if (ViewBag.AREA == "Room")
+		@("style=display:block;")
+>
 		<li><a asp-area="Room" asp-controller="Home" asp-action="Index">功能首頁</a></li>
 		<li><a asp-area="Room" asp-controller="Home" asp-action="Index2">連結模板</a></li>
 	</ul>
