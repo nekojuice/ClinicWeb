@@ -207,8 +207,31 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Appointment\Data\" />
+    <Folder Include="Areas\Appointment\Models\" />
+    <Folder Include="Areas\Appointment\Views\" />
+    <Folder Include="Areas\Attend\Controllers\" />
+    <Folder Include="Areas\Attend\Data\" />
+    <Folder Include="Areas\Attend\Models\" />
+    <Folder Include="Areas\Attend\Views\" />
+    <Folder Include="Areas\Cases\Controllers\" />
+    <Folder Include="Areas\Cases\Data\" />
+    <Folder Include="Areas\Cases\Models\" />
+    <Folder Include="Areas\Cases\Views\" />
     <Folder Include="Areas\Employee\Data\" />
     <Folder Include="Areas\Employee\Models\" />
+    <Folder Include="Areas\Member\Controllers\" />
+    <Folder Include="Areas\Member\Data\" />
+    <Folder Include="Areas\Member\Models\" />
+    <Folder Include="Areas\Member\Views\" />
+    <Folder Include="Areas\Schedule\Controllers\" />
+    <Folder Include="Areas\Schedule\Data\" />
+    <Folder Include="Areas\Schedule\Models\" />
+    <Folder Include="Areas\Schedule\Views\" />
+    <Folder Include="Areas\Shop\Controllers\" />
+    <Folder Include="Areas\Shop\Data\" />
+    <Folder Include="Areas\Shop\Models\" />
+    <Folder Include="Areas\Shop\Views\" />
     <Folder Include="Areas\Temp\Data\" />
     <Folder Include="Areas\Temp\Models\" />
   </ItemGroup>
