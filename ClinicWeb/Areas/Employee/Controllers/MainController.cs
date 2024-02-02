@@ -9,5 +9,9 @@ namespace ClinicWeb.Areas.Employee.Controllers
         {
             return View();
         }
-    }
+		public IActionResult Login()
+		{
+			return View("~/Areas/Employee/Views/Main/Login/Login.cshtml");
+		}
+	}
 }

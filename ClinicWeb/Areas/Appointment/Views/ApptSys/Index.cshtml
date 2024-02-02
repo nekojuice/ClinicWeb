@@ -43,7 +43,7 @@
 		});
 
 		function GetTable() {
-			fetch("/Employee/ApptSys/ClinicInfo/" + $("#Date").val())
+			fetch("/Appointment/ApptSys/ClinicInfo/" + $("#Date").val())
 				.then((response) => { return response.text(); })
 				.then((data) => { $("#clinicDataDiv").html(data); })
 				.then((x) => { QueryData(); })
@@ -54,7 +54,7 @@
 			$('#clinicDataTable').dataTable({
 				ajax: {
 					type: 'GET',
-					url: ("/Employee/ApptSys/Jsontest/" + $("#Date").val()),
+					url: ("/Appointment/ApptSys/Jsontest/" + $("#Date").val()),
 					dataSrc: function (json) { return json; }
 				},
 				destroy: true,
