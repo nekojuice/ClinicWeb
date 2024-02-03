@@ -1,0 +1,38 @@
+[
+  {
+    "outputFileName": "wwwroot/build/js/custom.min.js",
+    "inputFiles": [
+      "wwwroot/build/js/custom.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/css/clinicStyle.min.css",
+    "inputFiles": [
+      "wwwroot/css/clinicStyle.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/build/js/custom_extend_nkj.min.js",
+    "inputFiles": [
+      "wwwroot/build/js/custom_extend_nkj.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/vendors/fastclick/lib/fastclick.min.js",
+    "inputFiles": [
+      "wwwroot/vendors/fastclick/lib/fastclick.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/vendors/nprogress/nprogress.min.js",
+    "inputFiles": [
+      "wwwroot/vendors/nprogress/nprogress.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/vendors/nprogress/nprogress.min.css",
+    "inputFiles": [
+      "wwwroot/vendors/nprogress/nprogress.css"
+    ]
+  }
+]

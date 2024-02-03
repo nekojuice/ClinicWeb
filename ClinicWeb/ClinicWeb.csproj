@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="bundleconfig.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="wwwroot\vendors\parsleyjs\bower_components\bootstrap\bower.json" />
     <Content Include="wwwroot\vendors\parsleyjs\bower_components\bootstrap\dist\css\bootstrap-theme.css" />
     <Content Include="wwwroot\vendors\parsleyjs\bower_components\bootstrap\dist\css\bootstrap-theme.min.css" />
@@ -26,6 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="bundleconfig.json" />
     <None Include="wwwroot\vendors\bootstrap\.github\CODEOWNERS" />
     <None Include="wwwroot\vendors\bootstrap\.github\CONTRIBUTING.md" />
     <None Include="wwwroot\vendors\bootstrap\.github\ISSUE_TEMPLATE\bug.md" />
@@ -228,6 +233,7 @@
     <Folder Include="Areas\Shop\Models\" />
     <Folder Include="Areas\Temp\Data\" />
     <Folder Include="Areas\Temp\Models\" />
+    <Folder Include="wwwroot\js\" />
     <Folder Include="wwwroot\msit155e\css\Attend\" />
     <Folder Include="wwwroot\msit155e\css\Attend\" />
     <Folder Include="wwwroot\msit155e\css\Appointment\" />
