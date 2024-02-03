@@ -18,18 +18,12 @@ namespace ClinicWeb.Areas.Appointment.Controllers
             ViewBag.Date = new SelectList(_context.ScheduleClinicInfo
                 .Select(tSchedule => tSchedule.Date.Substring(0, 7))
                 .Distinct());
-            //_context.ScheduleClinicInfo
 
-            //.GroupBy(x => x.Date)
-
-            //.Select(x => new
-            //{
-            //    日期資料 = x.First().Date.Substring(0, 7),
-            //    日期 = x.First().Date.Substring(0, 7),
-            //}), "日期資料", "日期");
             ViewBag.Department = new SelectList(_context.MemberEmployeeList
                 .Select(x => x.Department)
                 .Distinct());
+
+            ViewBag.TimeShift = new SelectList(_context.ScheduleClinicTime.Select(x=>x.ClinicShifts));
 
             return View();
         }
