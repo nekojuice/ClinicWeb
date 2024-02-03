@@ -12,113 +12,20 @@
 	<link href="~/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
 	<link href="~/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
 	<link href="~/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
-
+}
+@section Styles
+{
+	<link href="~/msit155e/css/appointment/clinicinfo.css" rel="stylesheet" asp-append-version="true"/>
 }
 
 <partial name="_ClinicInfoPartial" />
+<partial name="_ApptRecordPartial" />
 
 
 
 @section Scripts
 {
-	<script>
-		$("#Date").change(() => {
-			if ($("#Date").val() != '--請選擇--') {
-				QueryData();
-			}
-			else {
-				$('#clinicDataTable').dataTable({
-					destroy: true,
-					columns: [
-						{ "data": "id", "visible": false },
-						{ "data": "日期" },
-						{ "data": "時段" },
-						{ "data": "科別" },
-						{ "data": "醫師名稱" },
-						{ "data": "上限人數" },
-						{ "data": "預約人數" }
-					]
-				});
-			}
-		});
-
-		function GetTable() {
-			fetch("/Appointment/ApptSys/ClinicInfo/" + $("#Date").val())
-				.then((response) => { return response.text(); })
-				.then((data) => { $("#clinicDataDiv").html(data); })
-				.then((x) => { QueryData(); })
-				.catch()
-		}
-
-		function QueryData() {
-			$('#clinicDataTable').dataTable({
-				ajax: {
-					type: 'GET',
-					url: ("/Appointment/ApptSys/Jsontest/" + $("#Date").val()),
-					dataSrc: function (json) { return json; }
-				},
-				destroy: true,
-				columns: [
-					{ "data": "id", "visible": false },
-					{ "data": "日期" },
-					{ "data": "時段" },
-					{ "data": "科別" },
-					{ "data": "醫師名稱" },
-					{ "data": "上限人數" },
-					{ "data": "預約人數" }
-				],
-				fixedHeader: {
-					header: true
-				},
-				language: {
-					url: "https://cdn.datatables.net/plug-ins/1.13.7/i18n/zh-HANT.json"
-				}
-			});
-			searchDept()
-		}
-
-		$("#Doctor_Department").change(() => { searchDept() });
-
-		function searchDept() {
-			if ($("#Doctor_Department").val() == '全部') {
-				$('#clinicDataTable').DataTable().column(3).search("").draw();
-			}
-			else {
-				$('#clinicDataTable').DataTable().column(3).search($("#Doctor_Department").val()).draw();
-			}
-		}
-	</script>
-
-	@*     <script>
-        $(document).ready(function () {
-            $('#clinicDataTable').DataTable({
-                "proccessing": true,
-                "serverSide": true,
-                "ajax": {
-                    url: "/customers",
-                    type: 'POST',
-                    headers: { 'RequestVerificationToken': $('@Html.AntiForgeryToken()').val() }
-                },
-                "columnDefs": [
-                    {
-                        "targets": -1,
-                        "data": null,
-                        "render": function (data, type, row, meta) {
-                            return '<a href="/customers/edit?id=' + row.id + '">Edit</a> | <a href="/customers/details?id=' + row.id + '">Details</a> | <a href="/customers/delete?id=' + row.id + '">Delete</a>';
-                        },
-                        "sortable": false
-                    },
-                    { "name": "Id", "data": "id", "targets": 0, "visible": false },
-                    { "name": "Name", "data": "name", "targets": 1 },
-                    { "name": "PhoneNumber", "data": "phoneNumber", "targets": 2 },
-                    { "name": "Address", "data": "address", "targets": 3 },
-                    { "name": "PostalCode", "data": "postalCode", "targets": 4 }
-                ],
-                "order": [[0, "desc"]]
-            });
-        });
-    </script> *@
-
+	<script src="~/msit155e/js/Appointment/clinicInfo.js" asp-append-version="true"></script>
 }
 @section Modules
 {

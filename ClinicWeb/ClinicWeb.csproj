@@ -236,7 +236,6 @@
     <Folder Include="wwwroot\js\" />
     <Folder Include="wwwroot\msit155e\css\Attend\" />
     <Folder Include="wwwroot\msit155e\css\Attend\" />
-    <Folder Include="wwwroot\msit155e\css\Appointment\" />
     <Folder Include="wwwroot\msit155e\css\Cases\" />
     <Folder Include="wwwroot\msit155e\css\Drugs\" />
     <Folder Include="wwwroot\msit155e\css\Member\" />
@@ -251,7 +250,6 @@
     <Folder Include="wwwroot\msit155e\images\Room\" />
     <Folder Include="wwwroot\msit155e\images\Schedule\" />
     <Folder Include="wwwroot\msit155e\images\Shop\" />
-    <Folder Include="wwwroot\msit155e\js\Appointment\" />
     <Folder Include="wwwroot\msit155e\js\Attend\" />
     <Folder Include="wwwroot\msit155e\js\Cases\" />
     <Folder Include="wwwroot\msit155e\js\Drugs\" />
