@@ -76,7 +76,8 @@ function searchTime() {
 let $ClinicTBODY = $("#clinicDataTable tbody")
 $ClinicTBODY.on('mousedown', 'tr', function () {
     let index = $('#clinicDataTable').DataTable().row(this).index();
-    if (!index) { return; }
+    if (!index) { return; } //忽略無選擇時
+    if ($(this).hasClass('selected')) { return; }   //忽略選擇同一row
     //console.log(index)
     let clinicID = $('#clinicDataTable').DataTable().row(index).data().id;
 
