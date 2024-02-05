@@ -1,8 +1,19 @@
-﻿/*無法反白選擇文字*/
+﻿/*左表*/
+/*無法反白選擇文字*/
 #clinicDataTable tbody {
     user-select: none;
 }
 /*選擇時row底色*/
     #clinicDataTable tbody .selected {
+        background-color: #cce5ff;
+    }
+
+/*右表*/
+/*無法反白選擇文字*/
+#apptDataTable tbody {
+    user-select: none;
+}
+    /*選擇時row底色*/
+    #apptDataTable tbody .selected {
         background-color: #cce5ff;
     }

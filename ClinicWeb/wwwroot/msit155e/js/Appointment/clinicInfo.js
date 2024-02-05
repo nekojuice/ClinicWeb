@@ -76,7 +76,7 @@ function searchTime() {
 let $ClinicTBODY = $("#clinicDataTable tbody")
 $ClinicTBODY.on('mousedown', 'tr', function () {
     let index = $('#clinicDataTable').DataTable().row(this).index();
-    if (!index) { return; } //忽略無選擇時
+    if (index == null) { return; } //忽略無選擇時
     if ($(this).hasClass('selected')) { return; }   //忽略選擇同一row
     //console.log(index)
     let clinicID = $('#clinicDataTable').DataTable().row(index).data().id;
@@ -86,9 +86,24 @@ $ClinicTBODY.on('mousedown', 'tr', function () {
 
     getApptData(clinicID);
     $("#addAppt").prop("disabled", false);
+    $("#modAppt").prop("disabled", true);
 });
 
-//let $ClinicTBODY = $("#clinicDataTable tbody")
+let $ApptDataTBODY = $("#apptDataTable tbody")
+$ApptDataTBODY.on('mousedown', 'tr', function () {
+    let index = $('#apptDataTable').DataTable().row(this).index();
+    if (index == null) { return; } //忽略無選擇時
+    if ($(this).hasClass('selected')) { return; }   //忽略選擇同一row
+
+    $(this).siblings().removeClass('selected');
+    $(this).addClass('selected');
+
+    let clinicId = $('#apptDataTable').DataTable().row(index).data().clinic_id;
+    let memberId = $('#apptDataTable').DataTable().row(index).data().member_id;
+    console.log(clinicId + " - " + memberId + " / " + index)
+
+    $("#modAppt").prop("disabled", false);
+});
 
 //右表
 function getApptData(clinicID) {
