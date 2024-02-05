@@ -86,5 +86,10 @@ namespace ClinicWeb.Areas.Appointment.Controllers
 					看診狀態 = x.PatientState.PatientStateName
 				}));
 		}
+
+		public IActionResult test1()
+		{
+			return View();
+		}
 	}
 }
