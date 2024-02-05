@@ -88,6 +88,7 @@ $ClinicTBODY.on('mousedown', 'tr', function () {
     $("#addAppt").prop("disabled", false);
 });
 
+//let $ClinicTBODY = $("#clinicDataTable tbody")
 
 //右表
 function getApptData(clinicID) {
