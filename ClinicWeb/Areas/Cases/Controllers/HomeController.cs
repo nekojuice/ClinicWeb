@@ -9,5 +9,9 @@ namespace ClinicWeb.Areas.Cases.Controllers
 		{
 			return View();
 		}
-	}
+        public IActionResult main()
+        {
+            return View();
+        }
+    }
 }
