@@ -7,6 +7,7 @@ Temp:
 
 ctrl+F尋找網頁上相關文字，整個div複製
 
+
 Employee:  
 
 後台公用Area，目前放置_Layout, _SideBarMenuPartial, ErrorPages, Login
@@ -15,6 +16,12 @@ Employee:
 
 需要新增連結請直接改_SideBarMenuPartial
 
+
 其餘Areas:
 
 各項功能
+
+
+wwwroot/msit155e
+
+專題的js/css/images靜態文件，3種檔案類型皆已創建8個資料夾
