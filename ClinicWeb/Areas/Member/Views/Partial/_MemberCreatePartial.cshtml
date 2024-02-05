@@ -14,7 +14,6 @@
 	<link href="~/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
 }
 
-
 <div class="x_panel">
 	<div class="x_title">
 		<h2>新增會員</h2>
@@ -131,63 +130,33 @@
 			<div class="form-group row">
 				<label class="control-label col-md-3 col-sm-3 ">啟用</label>
 				<div class="col-md-9 col-sm-9 ">
+				<div class="col-md-9 col-sm-9 ">
 					<div class="">
 						<label>
-							<input type="checkbox" class="js-switch" checked="" data-switchery="true" style="display: none;"><span class="switchery switchery-default" style="background-color: rgb(38, 185, 154); border-color: rgb(38, 185, 154); box-shadow: rgb(38, 185, 154) 0px 0px 0px 10.5px inset; transition: border 0.4s ease 0s, box-shadow 0.4s ease 0s, background-color 1.2s ease 0s;"><small style="left: 12px; background-color: rgb(255, 255, 255); transition: background-color 0.4s ease 0s, left 0.2s ease 0s;"></small></span> Checked
+							<input type="checkbox" class="js-switch" checked />
 						</label>
 					</div>
-					<div class="">
-						<label>
-							<input type="checkbox" class="js-switch" data-switchery="true" style="display: none;"><span class="switchery switchery-default" style="box-shadow: rgb(223, 223, 223) 0px 0px 0px 0px inset; border-color: rgb(223, 223, 223); background-color: rgb(255, 255, 255); transition: border 0.4s ease 0s, box-shadow 0.4s ease 0s;"><small style="left: 0px; transition: background-color 0.4s ease 0s, left 0.2s ease 0s;"></small></span> Unchecked
-						</label>
-					</div>
+
+				</div>
 				
 				</div>
 			</div>
 
-		<div class="form-group row">
-			<label class="control-label col-md-3 col-sm-3 ">Switch</label>
-			<div class="col-md-9 col-sm-9 ">
-				<div class="">
-					<label>
-						<input type="checkbox" class="js-switch" checked /> Checked
-					</label>
-				</div>
-				<div class="">
-					<label>
-						<input type="checkbox" class="js-switch" /> Unchecked
-					</label>
-				</div>
-				<div class="">
-					<label>
-						<input type="checkbox" class="js-switch" disabled="disabled" /> Disabled
-					</label>
-				</div>
-				<div class="">
-					<label>
-						<input type="checkbox" class="js-switch" disabled="disabled" checked="checked" /> Disabled Checked
-					</label>
-				</div>
-			</div>
-		</div>
-			<form/>
+		
+		
+			
 
 
 
 
 
-			<div class="form-group row">
-				<label class="col-form-label col-md-3 col-sm-3 ">Default Input</label>
-				<div class="col-md-9 col-sm-9 ">
-					<input type="text" class="form-control" placeholder="Default Input">
-				</div>
-			</div>
+			
 
 			
             <!--選生日-->
 			<div class="form-group row">
 				<label class="col-form-label col-md-3 col-sm-3 ">
-					Date Of Birth <span class="required">*</span>
+					生日 <span class="required"></span>
 				</label>
 				
 				<div class="col-md-9 col-sm-9 ">
@@ -204,14 +173,16 @@
 			<div class="ln_solid"></div>
 			<div class="form-group row">
 				<div class="col-md-9 col-sm-9  offset-md-3">
-					<button type="button" class="btn btn-primary">Cancel</button>
-					<button class="btn btn-primary" type="reset">Reset</button>
-					<button type="submit" class="btn btn-success">Submit</button>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary">Save </button>
+			</div>
 				</div>
 			</div>
 
 	</div>
 </div>
+<form />
 
 <script>
 	function hideshow() {
@@ -234,7 +205,7 @@
 </script>
 
 @section Modules
-	{
+{
 	<!-- bootstrap-progressbar -->
 	<script src="~/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
 	<!-- iCheck -->

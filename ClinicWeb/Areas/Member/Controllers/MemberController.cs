@@ -29,9 +29,9 @@ namespace ClinicWeb.Areas.Member.Controllers
             return Json(_context.MemberMemberList
                 .Select(x => new
                 {
-                    會員id=x.MemberId,
-                    會員編號 = "",
-                    姓名 = "",
+                    //會員id=x.MemberId,
+                    會員編號 = x.MemberNumber,
+                    姓名 = x.Name,
                     性別=x.Gender?"男":"女",
                     血型 = x.BloodType,
                     身分證字號 =x.NationalId,
@@ -39,11 +39,12 @@ namespace ClinicWeb.Areas.Member.Controllers
 					地址 = x.Address,
                     緊急聯絡人 = x.IceName,
                     信箱 = x.MemEmail,
-			
 
-					//啟用=x.Verification?"啟用":"未啟用"(不知為啥弄不出來 一直說有錯)
 
-				}
+                    啟用 = (bool)x.Verification ? "啟用" : "未啟用"          
+                    //已經解決 性別不用這樣寫是為性別不允許null
+
+                }
 				));
         }
 

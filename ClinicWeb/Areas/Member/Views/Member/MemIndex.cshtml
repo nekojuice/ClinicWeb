@@ -13,6 +13,17 @@
     <link href="~/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
     <link href="~/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
     <link href="~/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+
+    <!-- bootstrap-wysiwyg -->
+    <link href="~/vendors/google-code-prettify/bin/prettify.min.css" rel="stylesheet">
+    <!-- Select2 -->
+    <link href="~/vendors/select2/dist/css/select2.min.css" rel="stylesheet">
+    <!-- Switchery -->
+    <link href="~/vendors/switchery/dist/switchery.min.css" rel="stylesheet">
+    <!-- starrr -->
+    <link href="~/vendors/starrr/dist/starrr.css" rel="stylesheet">
+    <!-- bootstrap-daterangepicker -->
+    <link href="~/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
 }
 <div class="x_panel">
     <!--文字會員資料表處那排-->
@@ -40,21 +51,9 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="dataTables_length" id="datatable_length">
-                                    <label>
-                                        Show
-                                        <select name="datatable_length" aria-controls="datatable" class="form-control input-sm">
-                                            <option value="10">10</option>
-                                            <option value="25">25</option>
-                                            <option value="50">50</option>
-                                            <option value="100">100</option>
-                                        </select> entries
-                                    </label>
+                                   
                                 </div>
-                            </div><div class="col-sm-6">
-                                <div id="datatable_filter" class="dataTables_filter">
-                                    <label>Search:<input type="search" class="form-control input-sm" placeholder="" aria-controls="datatable"></label>
-                                </div>
-                            </div>
+                            
                         </div>
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#MemCreate">新增會員</button>
 
@@ -63,10 +62,7 @@
                                 <div class="modal-content">
                                       <partial name="~/Areas/Member/Views/Partial/_MemberCreatePartial.cshtml" />
                                     <!-- 这里的内容将由 JavaScript 动态加载 -->
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary">Save changes</button>
-                                    </div>
+                                    
 
                                 </div>
                             </div>
@@ -131,11 +127,16 @@
                                     </thead>
 
 
-                                    <tbody>
+                                    
                                     </tbody>
                                 </table>
                             </div>
-                        </div><div class="row"><div class="col-sm-5"><div class="dataTables_info" id="datatable_info" role="status" aria-live="polite">Showing 1 to 10 of 57 entries</div></div><div class="col-sm-7"><div class="dataTables_paginate paging_simple_numbers" id="datatable_paginate"><ul class="pagination"><li class="paginate_button previous disabled" id="datatable_previous"><a href="#" aria-controls="datatable" data-dt-idx="0" tabindex="0">Previous</a></li><li class="paginate_button active"><a href="#" aria-controls="datatable" data-dt-idx="1" tabindex="0">1</a></li><li class="paginate_button "><a href="#" aria-controls="datatable" data-dt-idx="2" tabindex="0">2</a></li><li class="paginate_button "><a href="#" aria-controls="datatable" data-dt-idx="3" tabindex="0">3</a></li><li class="paginate_button "><a href="#" aria-controls="datatable" data-dt-idx="4" tabindex="0">4</a></li><li class="paginate_button "><a href="#" aria-controls="datatable" data-dt-idx="5" tabindex="0">5</a></li><li class="paginate_button "><a href="#" aria-controls="datatable" data-dt-idx="6" tabindex="0">6</a></li><li class="paginate_button next" id="datatable_next"><a href="#" aria-controls="datatable" data-dt-idx="7" tabindex="0">Next</a></li></ul></div></div></div>
+                        </div><div class="row">
+                            
+                            
+                               
+                               
+                                <li class="paginate_button next" id="datatable_next"><a href="#" aria-controls="datatable" data-dt-idx="7" tabindex="0"></a></li></ul></div></div></div>
                     </div>
                 </div>
             </div>
@@ -161,7 +162,7 @@
 
                     { "data": "性別" },
                     { "data": "血型" },
-                    { "data": "身分證字號" }
+                    { "data": "身分證字號" },
                    { "data": "聯絡電話" },
                     { "data": "地址" },
                     { "data": "緊急聯絡人" },
@@ -206,5 +207,7 @@
     <script src="~/vendors/jszip/dist/jszip.min.js"></script>
     <script src="~/vendors/pdfmake/build/pdfmake.min.js"></script>
     <script src="~/vendors/pdfmake/build/vfs_fonts.js"></script>
+    <!-- Switchery -->
+    <script src="~/vendors/switchery/dist/switchery.min.js"></script>
 
 }
