@@ -15,8 +15,11 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
-//³]©w³s±µ¦r¦ê
-builder.Services.AddDbContext<ClinicSysContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ClinicSys")));
+//è¨­å®šé€£ç·šå­—ä¸²
+//builder.Services.AddDbContext<ClinicSysContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ClinicSys")));
+//å¼·åˆ¶ä»–ç”¨æˆ‘è‡ªå·±ç”Ÿçš„
+builder.Services.AddDbContext<ClinicWeb.Areas.Member.Models.ClinicSysContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ClinicSys")));
+
 
 //NewtonsoftJson
 builder.Services.AddControllers().AddNewtonsoftJson();

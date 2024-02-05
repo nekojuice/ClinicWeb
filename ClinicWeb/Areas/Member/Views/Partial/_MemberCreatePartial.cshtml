@@ -1,0 +1,263 @@
+﻿@section ModulesStyles
+{
+	<!-- iCheck -->
+	<link href="~/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+	<!-- bootstrap-wysiwyg -->
+	<link href="~/vendors/google-code-prettify/bin/prettify.min.css" rel="stylesheet">
+	<!-- Select2 -->
+	<link href="~/vendors/select2/dist/css/select2.min.css" rel="stylesheet">
+	<!-- Switchery -->
+	<link href="~/vendors/switchery/dist/switchery.min.css" rel="stylesheet">
+	<!-- starrr -->
+	<link href="~/vendors/starrr/dist/starrr.css" rel="stylesheet">
+	<!-- bootstrap-daterangepicker -->
+	<link href="~/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+}
+
+
+<div class="x_panel">
+	<div class="x_title">
+		<h2>新增會員</h2>
+		
+		<div class="clearfix"></div>
+	</div>
+	<div class="x_content">
+		<br>
+		<form class="form-label-left input_mask"/>
+			<!--會員編號 希望自動顯示-->
+			<div class="col-md-6 col-sm-6  form-group has-feedback">
+				<input type="text" class="form-control has-feedback-left" id="inputSuccess2" placeholder="會員編號">
+				<span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+			</div>
+			<!--姓名-->
+			<div class="col-md-6 col-sm-6  form-group has-feedback">
+				<input type="text" class="form-control" id="inputSuccess3" placeholder="姓名">
+				<span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+			</div>
+			<!--信箱-->
+			<div class="col-md-6 col-sm-6  form-group has-feedback">
+				<input type="email" class="form-control has-feedback-left" id="inputSuccess4" placeholder="信箱">
+				<span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
+			</div>
+			<!--填上電話-->
+			<div class="col-md-6 col-sm-6  form-group has-feedback">
+				<input type="tel" class="form-control" id="inputSuccess5" placeholder="連絡電話">
+				<span class="fa fa-phone form-control-feedback right" aria-hidden="true"></span>
+			</div>
+
+			<!--性別-->
+
+		<div class="form-group row">
+			<label class="control-label col-md-3 col-sm-3 ">性別</label>
+			<div class="col-md-9 col-sm-9 ">
+				<select class="form-control">
+					<option value="">---請選擇---</option>
+					<option value="true">男</option>
+					<option value="false">女</option>
+					
+				</select>
+			</div>
+		</div>
+
+			<!--血型-->
+			<div class="form-group row">
+				<label class="control-label col-md-3 col-sm-3 ">血型</label>
+				<div class="col-md-9 col-sm-9 ">
+					<select class="form-control">
+						<option value="">---請選擇---</option>
+						<option>A</option>
+						<option>B</option>
+						<option>O</option>
+						<option>AB</option>
+					</select>
+				</div>
+			</div>
+
+			<!--身分證字號-->
+			<div class="form-group row">
+				<label class="col-form-label col-md-3 col-sm-3 ">Default Input</label>
+				<div class="col-md-9 col-sm-9 ">
+					<input type="text" class="form-control" placeholder="身分證字號">
+				</div>
+			</div>
+			<!--戶籍地址-->
+			<div class="form-group row">
+				<label class="col-form-label col-md-3 col-sm-3 ">Default Input</label>
+				<div class="col-md-9 col-sm-9 ">
+					<input type="text" class="form-control" placeholder="戶籍地址">
+				</div>
+			</div>
+			<!--聯絡地址-->
+			<div class="form-group row">
+				<label class="col-form-label col-md-3 col-sm-3 ">Default Input</label>
+				<div class="col-md-9 col-sm-9 ">
+					<input type="text" class="form-control" placeholder="聯絡地址">
+				</div>
+			</div>
+			<!--緊急聯絡人-->
+			<div class="form-group row">
+				<label class="col-form-label col-md-3 col-sm-3 ">Default Input</label>
+				<div class="col-md-9 col-sm-9 ">
+					<input type="text" class="form-control" placeholder="緊急聯絡人">
+				</div>
+			</div>
+			<!--緊急聯絡人電話-->
+			<div class="form-group row">
+				<label class="col-form-label col-md-3 col-sm-3 ">緊急聯絡人電話</label>
+				<div class="col-md-9 col-sm-9 ">
+					<input type="text" class="form-control" placeholder="緊急聯絡人電話">
+				</div>
+			</div>
+			
+            <!--會員密碼-->
+			<div class="form-group row">
+                               @*  <input class="form-control" type="password" id="password1" name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&amp;*]).{8,}" title="Minimum 8 Characters Including An Upper And Lower Case Letter, A Number And A Unique Character" required=""> *@
+		
+			
+				<label class="col-form-label col-md-3 col-sm-3 ">會員密碼</label>
+				<div class="col-md-9 col-sm-9 ">
+					<input class="form-control" type="password" id="password1" name="password" title="Minimum 8 Characters Including An Upper And Lower Case Letter, A Number And A Unique Character" required="">
+					<span style="position: absolute;right:15px;top:7px;" onclick="hideshow()">
+						<i id="slash" class="fa fa-eye-slash" style="display: none;"></i>
+						<i id="eye" class="fa fa-eye" style="display: block;"></i>
+					</span>
+				</div>
+			</div>
+
+
+
+
+			<!--啟用權限-->
+			<div class="form-group row">
+				<label class="control-label col-md-3 col-sm-3 ">啟用</label>
+				<div class="col-md-9 col-sm-9 ">
+					<div class="">
+						<label>
+							<input type="checkbox" class="js-switch" checked="" data-switchery="true" style="display: none;"><span class="switchery switchery-default" style="background-color: rgb(38, 185, 154); border-color: rgb(38, 185, 154); box-shadow: rgb(38, 185, 154) 0px 0px 0px 10.5px inset; transition: border 0.4s ease 0s, box-shadow 0.4s ease 0s, background-color 1.2s ease 0s;"><small style="left: 12px; background-color: rgb(255, 255, 255); transition: background-color 0.4s ease 0s, left 0.2s ease 0s;"></small></span> Checked
+						</label>
+					</div>
+					<div class="">
+						<label>
+							<input type="checkbox" class="js-switch" data-switchery="true" style="display: none;"><span class="switchery switchery-default" style="box-shadow: rgb(223, 223, 223) 0px 0px 0px 0px inset; border-color: rgb(223, 223, 223); background-color: rgb(255, 255, 255); transition: border 0.4s ease 0s, box-shadow 0.4s ease 0s;"><small style="left: 0px; transition: background-color 0.4s ease 0s, left 0.2s ease 0s;"></small></span> Unchecked
+						</label>
+					</div>
+				
+				</div>
+			</div>
+
+		<div class="form-group row">
+			<label class="control-label col-md-3 col-sm-3 ">Switch</label>
+			<div class="col-md-9 col-sm-9 ">
+				<div class="">
+					<label>
+						<input type="checkbox" class="js-switch" checked /> Checked
+					</label>
+				</div>
+				<div class="">
+					<label>
+						<input type="checkbox" class="js-switch" /> Unchecked
+					</label>
+				</div>
+				<div class="">
+					<label>
+						<input type="checkbox" class="js-switch" disabled="disabled" /> Disabled
+					</label>
+				</div>
+				<div class="">
+					<label>
+						<input type="checkbox" class="js-switch" disabled="disabled" checked="checked" /> Disabled Checked
+					</label>
+				</div>
+			</div>
+		</div>
+			<form/>
+
+
+
+
+
+			<div class="form-group row">
+				<label class="col-form-label col-md-3 col-sm-3 ">Default Input</label>
+				<div class="col-md-9 col-sm-9 ">
+					<input type="text" class="form-control" placeholder="Default Input">
+				</div>
+			</div>
+
+			
+            <!--選生日-->
+			<div class="form-group row">
+				<label class="col-form-label col-md-3 col-sm-3 ">
+					Date Of Birth <span class="required">*</span>
+				</label>
+				
+				<div class="col-md-9 col-sm-9 ">
+					<input class="date-picker form-control" placeholder="dd-mm-yyyy" type="text" required="required" onfocus="this.type='date'" onmouseover="this.type='date'" onclick="this.type='date'" onblur="this.type='text'" onmouseout="timeFunctionLong(this)">
+					<script>
+						function timeFunctionLong(input) {
+							setTimeout(function () {
+								input.type = 'text';
+							}, 60000);
+						}
+					</script>
+				</div>
+			</div>
+			<div class="ln_solid"></div>
+			<div class="form-group row">
+				<div class="col-md-9 col-sm-9  offset-md-3">
+					<button type="button" class="btn btn-primary">Cancel</button>
+					<button class="btn btn-primary" type="reset">Reset</button>
+					<button type="submit" class="btn btn-success">Submit</button>
+				</div>
+			</div>
+
+	</div>
+</div>
+
+<script>
+	function hideshow() {
+		var password = document.getElementById("password1");
+		var slash = document.getElementById("slash");
+		var eye = document.getElementById("eye");
+
+		if (password.type === 'password') {
+			password.type = "text";
+			slash.style.display = "block";
+			eye.style.display = "none";
+		}
+		else {
+			password.type = "password";
+			slash.style.display = "none";
+			eye.style.display = "block";
+		}
+
+	}
+</script>
+
+@section Modules
+	{
+	<!-- bootstrap-progressbar -->
+	<script src="~/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+	<!-- iCheck -->
+	<script src="~/vendors/iCheck/icheck.min.js"></script>
+	<!-- bootstrap-daterangepicker -->
+	<script src="~/vendors/moment/min/moment.min.js"></script>
+	<script src="~/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+	<!-- bootstrap-wysiwyg -->
+	<script src="~/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>
+	<script src="~/vendors/jquery.hotkeys/jquery.hotkeys.js"></script>
+	<script src="~/vendors/google-code-prettify/src/prettify.js"></script>
+	<!-- jQuery Tags Input -->
+	<script src="~/vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
+	<!-- Switchery -->
+	<script src="~/vendors/switchery/dist/switchery.min.js"></script>
+	<!-- Select2 -->
+	<script src="~/vendors/select2/dist/js/select2.full.min.js"></script>
+	<!-- Parsley -->
+	<script src="~/vendors/parsleyjs/dist/parsley.min.js"></script>
+	<!-- Autosize -->
+	<script src="~/vendors/autosize/dist/autosize.min.js"></script>
+	<!-- jQuery autocomplete -->
+	<script src="~/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js"></script>
+	<!-- starrr -->
+	<script src="~/vendors/starrr/dist/starrr.js"></script>
+}
