@@ -29,7 +29,7 @@ namespace ClinicWeb.Areas.Member.Controllers
             return Json(_context.MemberMemberList
                 .Select(x => new
                 {
-                    //會員id=x.MemberId,
+                    會員id = x.MemberId,
                     會員編號 = x.MemberNumber,
                     姓名 = x.Name,
                     性別=x.Gender?"男":"女",

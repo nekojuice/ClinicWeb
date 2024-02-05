@@ -1,18 +1,4 @@
-﻿@section ModulesStyles
-{
-	<!-- iCheck -->
-	<link href="~/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
-	<!-- bootstrap-wysiwyg -->
-	<link href="~/vendors/google-code-prettify/bin/prettify.min.css" rel="stylesheet">
-	<!-- Select2 -->
-	<link href="~/vendors/select2/dist/css/select2.min.css" rel="stylesheet">
-	<!-- Switchery -->
-	<link href="~/vendors/switchery/dist/switchery.min.css" rel="stylesheet">
-	<!-- starrr -->
-	<link href="~/vendors/starrr/dist/starrr.css" rel="stylesheet">
-	<!-- bootstrap-daterangepicker -->
-	<link href="~/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
-}
+﻿
 
 <div class="x_panel">
 	<div class="x_title">
@@ -22,7 +8,7 @@
 	</div>
 	<div class="x_content">
 		<br>
-		<form class="form-label-left input_mask"/>
+		<form id="memberForm" class="form-label-left input_mask" />
 			<!--會員編號 希望自動顯示-->
 			<div class="col-md-6 col-sm-6  form-group has-feedback">
 				<input type="text" class="form-control has-feedback-left" id="inputSuccess2" placeholder="會員編號">
@@ -174,8 +160,9 @@
 			<div class="form-group row">
 				<div class="col-md-9 col-sm-9  offset-md-3">
 			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary">Save </button>
+					<button id="closeButton" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button id="saveButton" type="button" class="btn btn-primary">Save</button>
+
 			</div>
 				</div>
 			</div>
@@ -184,51 +171,4 @@
 </div>
 <form />
 
-<script>
-	function hideshow() {
-		var password = document.getElementById("password1");
-		var slash = document.getElementById("slash");
-		var eye = document.getElementById("eye");
 
-		if (password.type === 'password') {
-			password.type = "text";
-			slash.style.display = "block";
-			eye.style.display = "none";
-		}
-		else {
-			password.type = "password";
-			slash.style.display = "none";
-			eye.style.display = "block";
-		}
-
-	}
-</script>
-
-@section Modules
-{
-	<!-- bootstrap-progressbar -->
-	<script src="~/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
-	<!-- iCheck -->
-	<script src="~/vendors/iCheck/icheck.min.js"></script>
-	<!-- bootstrap-daterangepicker -->
-	<script src="~/vendors/moment/min/moment.min.js"></script>
-	<script src="~/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
-	<!-- bootstrap-wysiwyg -->
-	<script src="~/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>
-	<script src="~/vendors/jquery.hotkeys/jquery.hotkeys.js"></script>
-	<script src="~/vendors/google-code-prettify/src/prettify.js"></script>
-	<!-- jQuery Tags Input -->
-	<script src="~/vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
-	<!-- Switchery -->
-	<script src="~/vendors/switchery/dist/switchery.min.js"></script>
-	<!-- Select2 -->
-	<script src="~/vendors/select2/dist/js/select2.full.min.js"></script>
-	<!-- Parsley -->
-	<script src="~/vendors/parsleyjs/dist/parsley.min.js"></script>
-	<!-- Autosize -->
-	<script src="~/vendors/autosize/dist/autosize.min.js"></script>
-	<!-- jQuery autocomplete -->
-	<script src="~/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js"></script>
-	<!-- starrr -->
-	<script src="~/vendors/starrr/dist/starrr.js"></script>
-}
