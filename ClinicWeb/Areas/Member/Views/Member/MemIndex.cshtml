@@ -14,7 +14,7 @@
     <link href="~/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
     <link href="~/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
 
-    @* <!-- bootstrap-wysiwyg -->
+                            @* <!-- bootstrap-wysiwyg -->
     <link href="~/vendors/google-code-prettify/bin/prettify.min.css" rel="stylesheet"> *@
     <!-- Select2 -->
     <link href="~/vendors/select2/dist/css/select2.min.css" rel="stylesheet">
@@ -65,14 +65,6 @@
                             </div>
                         </div>
 
-
-
-
-
-
-
-
-
                         @*  MemEdit為了打開彈跳視窗 *@
                         <div class="modal fade" id="MemEdit" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
 
@@ -120,7 +112,6 @@
                                                 地址
                                                 @*  @Html.DisplayNameFor(model => model.Address) *@
                                             </th>
-
                                             <th>
                                                 緊急聯絡人
                                                 @* @Html.DisplayNameFor(model => model.Phone) *@
@@ -139,22 +130,13 @@
 
                                             </th>
                                         </tr>
-
-
                                     </thead>
-
-
-
-
                                 </table>
                             </div>
                         </div>
                         <div class="row">
-
-
-
-
-                            <li class="paginate_button next" id="datatable_next"><a href="#" aria-controls="datatable" data-dt-idx="7" tabindex="0"></a></li>
+                            @*這是啥咪?*@
+                            @* <li class="paginate_button next" id="datatable_next"><a href="#" aria-controls="datatable" data-dt-idx="7" tabindex="0"></a></li> *@
                         </div>
                     </div>
                 </div>
@@ -163,7 +145,31 @@
     </div>
 </div>
 
+@section Modules
+{
+    <!-- iCheck -->
+    <script src="~/vendors/iCheck/icheck.min.js"></script>
+    <!-- Datatables -->
+    <script src="~/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    @* <script src="~/lib/datatables/js/jquery.datatables.min.js"></script> *@
+    <script src="~/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+    <script src="~/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="~/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="~/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+    <script src="~/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+    <script src="~/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="~/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+    <script src="~/vendors/jszip/dist/jszip.min.js"></script>
+    <script src="~/vendors/pdfmake/build/pdfmake.min.js"></script>
+    <script src="~/vendors/pdfmake/build/vfs_fonts.js"></script>
+    <!-- Switchery -->
+    <script src="~/vendors/switchery/dist/switchery.min.js"></script>
 
+}
 @section Scripts {
     <script>
         function QueryMemberInfo() {
@@ -209,118 +215,73 @@
         }
         QueryMemberInfo();
 
-    </script>
-}
 
-@section Modules
-        {
-    <!-- iCheck -->
-    <script src="~/vendors/iCheck/icheck.min.js"></script>
-    <!-- Datatables -->
-    <script src="~/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
-    @* <script src="~/lib/datatables/js/jquery.datatables.min.js"></script> *@
-    <script src="~/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-    <script src="~/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-    <script src="~/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
-    <script src="~/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
-    <script src="~/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
-    <script src="~/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
-    <script src="~/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
-    <script src="~/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
-    <script src="~/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-    <script src="~/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
-    <script src="~/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
-    <script src="~/vendors/jszip/dist/jszip.min.js"></script>
-    <script src="~/vendors/pdfmake/build/pdfmake.min.js"></script>
-    <script src="~/vendors/pdfmake/build/vfs_fonts.js"></script>
-    <!-- Switchery -->
-    <script src="~/vendors/switchery/dist/switchery.min.js"></script>
+        function hideshow() {
+            var password = document.getElementById("password1");
+            var slash = document.getElementById("slash");
+            var eye = document.getElementById("eye");
 
-}
+            if (password.type === 'password') {
+                password.type = "text";
+                slash.style.display = "block";
+                eye.style.display = "none";
+            }
+            else {
+                password.type = "password";
+                slash.style.display = "none";
+                eye.style.display = "block";
+            }
 
-<script>
-    function hideshow() {
-        var password = document.getElementById("password1");
-        var slash = document.getElementById("slash");
-        var eye = document.getElementById("eye");
-
-        if (password.type === 'password') {
-            password.type = "text";
-            slash.style.display = "block";
-            eye.style.display = "none";
-        }
-        else {
-            password.type = "password";
-            slash.style.display = "none";
-            eye.style.display = "block";
         }
 
-    }
+        document.getElementById('closeButton').addEventListener('click', function () {
+            clearForm();
+        });
 
-    document.getElementById('closeButton').addEventListener('click', function () {
-        clearForm();
-    });
-
-    document.getElementById('saveButton').addEventListener('click', function () {
-        clearForm();
-    });
+        document.getElementById('saveButton').addEventListener('click', function () {
+            clearForm();
+        });
 
 
-    function clearForm() {
-        document.getElementById('memberForm').reset();
+        function clearForm() {
+            document.getElementById('memberForm').reset();
 
-    }
+        }
 
-    async function handleButtonClick(memberId) {
-        // 发送 AJAX 请求以获取部分视图
+        async function handleButtonClick(memberId) {
+            // 发送 AJAX 请求以获取部分视图
 
-        const response = await fetch(`@Url.Content("~/Member/Member/MemberEdit")?memberId=${memberId}`)
-        const data = await response.text();
-        console.log(data);
+            const response = await fetch(`@Url.Content("~/Member/Member/MemberEdit")?memberId=${memberId}`)
+            const data = await response.text();
+            //console.log(data);   
 
-        const showplace = document.getElementById("memberedit");
-        showplace.innerHTML = data;
-        // $.get("/Member/MemberEdit", { memberId: memberId }, function (data) {
-        //     // 在加载的部分视图中显示成员的编辑表单
-        //     $("#partialContainer").html(data);
-        // });
+            const showplace = document.getElementById("memberedit");
+            showplace.innerHTML = data;
+            // $.get("/Member/MemberEdit", { memberId: memberId }, function (data) {
+            //     // 在加载的部分视图中显示成员的编辑表单
+            //     $("#partialContainer").html(data);
+            // });
 
-        //控制編輯按鈕地確認權限的滑輪swichery 一定要寫在請求資料後
-        var switcheryOptions = {
-            color: '#64bd63', // 當checked時的背景顏色
-            secondaryColor: '#dfdfdf', // unchecked時的背景顏色
-            jackColor: '#fff', // checked時的按鈕顏色
-            jackSecondaryColor: null, // uncheck時的按鈕顏色
-            className: 'switchery', // class名稱
-            disabled: false, // 是否設為disabled
-            disabledOpacity: 0.5, // 當設為disabled時的透明度
-            speed: '0.1s', // 開關切換的速度
-            size: 'default' // 開關大小(small, default, large)
-        };
-        new Switchery(document.getElementById('vertificationformem'), switcheryOptions);
-    }
-  
+            //控制編輯按鈕地確認權限的滑輪swichery 一定要寫在請求資料後
+            var switcheryOptions = {
+                color: '#64bd63', // 當checked時的背景顏色
+                secondaryColor: '#dfdfdf', // unchecked時的背景顏色
+                jackColor: '#fff', // checked時的按鈕顏色
+                jackSecondaryColor: null, // uncheck時的按鈕顏色
+                className: 'switchery', // class名稱
+                disabled: false, // 是否設為disabled
+                disabledOpacity: 0.5, // 當設為disabled時的透明度
+                speed: '0.1s', // 開關切換的速度
+                size: 'default' // 開關大小(small, default, large)
+            };
+            new Switchery(document.getElementById('vertificationformem'), switcheryOptions);
 
-    //控制編輯按鈕地確認權限的滑輪swichery 一定要寫在請求資料後
-        var switcheryOptions = {
-        color: '#64bd63', // 當checked時的背景顏色
-        secondaryColor: '#dfdfdf', // unchecked時的背景顏色
-        jackColor: '#fff', // checked時的按鈕顏色
-        jackSecondaryColor: null, // uncheck時的按鈕顏色
-        className: 'switchery', // class名稱
-        disabled: false, // 是否設為disabled
-        disabledOpacity: 0.5, // 當設為disabled時的透明度
-        speed: '0.1s', // 開關切換的速度
-        size: 'default' // 開關大小(small, default, large)
-    };
-    new Switchery(document.getElementById('vertificationformem'), switcheryOptions);
-    //formdata傳資料
+            //註冊按鈕事件 要再生成編輯partial之後再加上 不然抓不到這個按鈕事件
+            buttonEventFunc()
+        }
+        function buttonEventFunc() {
 
-
-    //編輯表單要來傳資料
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            document.getElementById("memedit").addEventListener("submit", function (event) {
+            document.getElementById("_MemberEditPartial").addEventListener("submit", function (event) {
                 event.preventDefault(); // 防止表單默認提交行為
 
                 // 獲取表單元素
@@ -338,8 +299,6 @@
                 // 打印表單數據到控制台
                 console.log(formDataObject);
             });
-        });
-</script>
-
-
-</script>
+        }
+    </script>
+}
