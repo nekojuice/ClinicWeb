@@ -88,21 +88,40 @@ namespace ClinicWeb.Areas.Member.Controllers
         public IActionResult MemberEdit(int memberId)
         {
             var member = _context.MemberMemberList.Where(m => m.MemberId == memberId).FirstOrDefault();
-                if(member == null) { return Content("123"); }
+            if (member == null) { return Content("123"); }
             MemberViewModel memVM = new MemberViewModel
             {
                 // 將原始模型的屬性賦值給 ViewModel
                 MemberIdVW = member.MemberId,
                 MemberNumberVW = member.MemberNumber,
                 NameVW = member.Name,
-                GenderVW = member.Gender
+                GenderVW = member.Gender,
+                BloodTypeVW = member.BloodType,
+                NationalIdVW = member.NationalId,
+                AddressVW = member.Address,
+                ContactAddressVW = member.ContactAddress,
+                PhoneVW = member.Phone,
+                BirthDateVW = member.BirthDate,
+                IceNameVW = member.IceName,
+                MemPasswordVW = member.MemPassword,
+                MemEmailVW = member.MemEmail,
+                VerificationVW = member.Verification,
+
+
                 // 以上為測試欄位
             };
             return PartialView("~/Areas/Member/Views/Partial/_MemberEditPartial.cshtml", memVM);
         }
 
 
-
+        //把會員編輯好的資料送回資料庫
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("MemberId,MemberNumber,Name,Gender,BloodType,NationalId,Address,ContactAddress,Phone,BirthDate,IceName,MemPassword,MemEmail,Verification,IsEnabled")] MemberMemberList member)
+        {
+            
+            return View(member);
+        }
 
     }
 }

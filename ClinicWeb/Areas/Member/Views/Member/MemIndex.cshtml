@@ -14,8 +14,8 @@
     <link href="~/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
     <link href="~/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
 
-    <!-- bootstrap-wysiwyg -->
-    <link href="~/vendors/google-code-prettify/bin/prettify.min.css" rel="stylesheet">
+    @* <!-- bootstrap-wysiwyg -->
+    <link href="~/vendors/google-code-prettify/bin/prettify.min.css" rel="stylesheet"> *@
     <!-- Select2 -->
     <link href="~/vendors/select2/dist/css/select2.min.css" rel="stylesheet">
     <!-- Switchery -->
@@ -79,212 +79,267 @@
                             <div class="modal-dialog modal-lg">
                                 @*  memberedit為了填入過來的資料 *@
                                 <div class="modal-content" id="memberedit">
-
                                 </div>
                             </div>
                         </div>
-                                <div class="row">
+                        <div class="row">
 
 
-                                    <!--表格處-->
-                                    <div class="col-sm-12">
-                                        <table id="memdatatable" class="table table-striped table-bordered dataTable no-footer" style="width: 100%;" role="grid" aria-describedby="datatable_info">
-                                            <thead>
-                                                <tr>
-                                                    <th style="display:none">
-                                                        會員id
-                                                    </th>
-                                                    <th>
-                                                        會員編號
-                                                        @*  @Html.DisplayNameFor(model => model.MemberNumber) *@
-                                                    </th>
-                                                    <th>
-                                                        姓名
-                                                        @*  @Html.DisplayNameFor(model => model.Name) *@
-                                                    </th>
-                                                    <th>
-                                                        性別
-                                                        @* @Html.DisplayNameFor(model => model.Gender) *@
-                                                    </th>
-                                                    <th>
-                                                        血型
-                                                        @* @Html.DisplayNameFor(model => model.BloodType) *@
-                                                    </th>
-                                                    <th>
-                                                        身分證字號
-                                                    </th>
-                                                    <th>
-                                                        聯絡電話
-                                                        @*  @Html.DisplayNameFor(model => model.NationalId) *@
-                                                    </th>
-                                                    <th>
-                                                        地址
-                                                        @*  @Html.DisplayNameFor(model => model.Address) *@
-                                                    </th>
+                            <!--表格處-->
+                            <div class="col-sm-12">
+                                <table id="memdatatable" class="table table-striped table-bordered dataTable no-footer" style="width: 100%;" role="grid" aria-describedby="datatable_info">
+                                    <thead>
+                                        <tr>
+                                            <th style="display:none">
+                                                會員id
+                                            </th>
+                                            <th>
+                                                會員編號
+                                                @*  @Html.DisplayNameFor(model => model.MemberNumber) *@
+                                            </th>
+                                            <th>
+                                                姓名
+                                                @*  @Html.DisplayNameFor(model => model.Name) *@
+                                            </th>
+                                            <th>
+                                                性別
+                                                @* @Html.DisplayNameFor(model => model.Gender) *@
+                                            </th>
+                                            <th>
+                                                血型
+                                                @* @Html.DisplayNameFor(model => model.BloodType) *@
+                                            </th>
+                                            <th>
+                                                身分證字號
+                                            </th>
+                                            <th>
+                                                聯絡電話
+                                                @*  @Html.DisplayNameFor(model => model.NationalId) *@
+                                            </th>
+                                            <th>
+                                                地址
+                                                @*  @Html.DisplayNameFor(model => model.Address) *@
+                                            </th>
 
-                                                    <th>
-                                                        緊急聯絡人
-                                                        @* @Html.DisplayNameFor(model => model.Phone) *@
-                                                    </th>
-                                                    <th>
-                                                        信箱
-                                                        @* @Html.DisplayNameFor(model => model.BirthDate) *@
-                                                    </th>
-                                                    <th>
-                                                        啟用
-                                                        @*  @Html.DisplayNameFor(model => model.MemberNumber) *@
-                                                    </th>
-                                                    <th style="text-align">
-                                                        修改
-                                                        <div id="partialContainer"></div>
+                                            <th>
+                                                緊急聯絡人
+                                                @* @Html.DisplayNameFor(model => model.Phone) *@
+                                            </th>
+                                            <th>
+                                                信箱
+                                                @* @Html.DisplayNameFor(model => model.BirthDate) *@
+                                            </th>
+                                            <th>
+                                                啟用
+                                                @*  @Html.DisplayNameFor(model => model.MemberNumber) *@
+                                            </th>
+                                            <th style="text-align">
+                                                修改
+                                                <div id="partialContainer"></div>
 
-                                                    </th>
-                                                </tr>
-
-
-                                            </thead>
+                                            </th>
+                                        </tr>
 
 
-
-
-                                        </table>
-                                    </div>
-                                </div>
-                                <div class="row">
+                                    </thead>
 
 
 
 
-                                    <li class="paginate_button next" id="datatable_next"><a href="#" aria-controls="datatable" data-dt-idx="7" tabindex="0"></a></li>
-                                </div>
+                                </table>
                             </div>
+                        </div>
+                        <div class="row">
+
+
+
+
+                            <li class="paginate_button next" id="datatable_next"><a href="#" aria-controls="datatable" data-dt-idx="7" tabindex="0"></a></li>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+</div>
 
 
-        @section Scripts {
-            <script>
-                function QueryMemberInfo() {
-                    $('#memdatatable').dataTable({
-                        ajax: {
-                            type: 'GET',
-                            url: ("/Member/Member/MemberGetdata"),
-                            dataSrc: function (json) { return json; }
-                        },
-                        destroy: true,
-                        columns: [
-                            // { "data": "id", "visible": false },
-                            { "data": "會員id", "visible": false },
-                            { "data": "會員編號" },
-                            { "data": "姓名" },
+@section Scripts {
+    <script>
+        function QueryMemberInfo() {
+            $('#memdatatable').dataTable({
+                ajax: {
+                    type: 'GET',
+                    url: ("/Member/Member/MemberGetdata"),
+                    dataSrc: function (json) { return json; }
+                },
+                destroy: true,
+                columns: [
+                    // { "data": "id", "visible": false },
+                    { "data": "會員id", "visible": false },
+                    { "data": "會員編號" },
+                    { "data": "姓名" },
 
-                            { "data": "性別" },
-                            { "data": "血型" },
-                            { "data": "身分證字號" },
-                            { "data": "聯絡電話" },
-                            { "data": "地址" },
-                            { "data": "緊急聯絡人" },
-                            { "data": "信箱" },
-                            { "data": "啟用" },
-                            {
-                                "data": "修改", "render": function (data, type, row) {
-                                    return '<button type="button" class="btn btn-primary" data-target="#MemEdit" onclick="handleButtonClick(' + row.會員id + ')">修改</button>';
-                                }
-                            }
+                    { "data": "性別" },
+                    { "data": "血型" },
+                    { "data": "身分證字號" },
+                    { "data": "聯絡電話" },
+                    { "data": "地址" },
+                    { "data": "緊急聯絡人" },
+                    { "data": "信箱" },
+                    { "data": "啟用" },
+                    {
+                        "data": "修改", "render": function (data, type, row) {
+                            return '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#MemEdit" onclick="handleButtonClick(' + row.會員id + ')">修改</button>';
+
+                        }
+                    }
 
 
-                        ],
-                        fixedHeader: {
-                            header: true
-                        },
-                        language: {
-                            url: "https://cdn.datatables.net/plug-ins/1.13.7/i18n/zh-HANT.json"
-                        },
-                        order: [[1, 'asc']]
-                    });
+                ],
+                fixedHeader: {
+                    header: true
+                },
+                language: {
+                    url: "https://cdn.datatables.net/plug-ins/1.13.7/i18n/zh-HANT.json"
+                },
+                order: [[1, 'asc']]
+            });
 
-                }
-                QueryMemberInfo();
-
-            </script>
         }
+        QueryMemberInfo();
 
-        @section Modules
+    </script>
+}
+
+@section Modules
         {
-            <!-- iCheck -->
-            <script src="~/vendors/iCheck/icheck.min.js"></script>
-            <!-- Datatables -->
-            <script src="~/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
-            @* <script src="~/lib/datatables/js/jquery.datatables.min.js"></script> *@
-            <script src="~/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-            <script src="~/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-            <script src="~/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
-            <script src="~/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
-            <script src="~/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
-            <script src="~/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
-            <script src="~/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
-            <script src="~/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
-            <script src="~/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-            <script src="~/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
-            <script src="~/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
-            <script src="~/vendors/jszip/dist/jszip.min.js"></script>
-            <script src="~/vendors/pdfmake/build/pdfmake.min.js"></script>
-            <script src="~/vendors/pdfmake/build/vfs_fonts.js"></script>
-            <!-- Switchery -->
-            <script src="~/vendors/switchery/dist/switchery.min.js"></script>
+    <!-- iCheck -->
+    <script src="~/vendors/iCheck/icheck.min.js"></script>
+    <!-- Datatables -->
+    <script src="~/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    @* <script src="~/lib/datatables/js/jquery.datatables.min.js"></script> *@
+    <script src="~/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+    <script src="~/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="~/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="~/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+    <script src="~/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+    <script src="~/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="~/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+    <script src="~/vendors/jszip/dist/jszip.min.js"></script>
+    <script src="~/vendors/pdfmake/build/pdfmake.min.js"></script>
+    <script src="~/vendors/pdfmake/build/vfs_fonts.js"></script>
+    <!-- Switchery -->
+    <script src="~/vendors/switchery/dist/switchery.min.js"></script>
 
+}
+
+<script>
+    function hideshow() {
+        var password = document.getElementById("password1");
+        var slash = document.getElementById("slash");
+        var eye = document.getElementById("eye");
+
+        if (password.type === 'password') {
+            password.type = "text";
+            slash.style.display = "block";
+            eye.style.display = "none";
+        }
+        else {
+            password.type = "password";
+            slash.style.display = "none";
+            eye.style.display = "block";
         }
 
-        <script>
-            function hideshow() {
-                var password = document.getElementById("password1");
-                var slash = document.getElementById("slash");
-                var eye = document.getElementById("eye");
+    }
 
-                if (password.type === 'password') {
-                    password.type = "text";
-                    slash.style.display = "block";
-                    eye.style.display = "none";
-                }
-                else {
-                    password.type = "password";
-                    slash.style.display = "none";
-                    eye.style.display = "block";
-                }
+    document.getElementById('closeButton').addEventListener('click', function () {
+        clearForm();
+    });
 
-            }
+    document.getElementById('saveButton').addEventListener('click', function () {
+        clearForm();
+    });
 
-            document.getElementById('closeButton').addEventListener('click', function () {
-                clearForm();
+
+    function clearForm() {
+        document.getElementById('memberForm').reset();
+
+    }
+
+    async function handleButtonClick(memberId) {
+        // 发送 AJAX 请求以获取部分视图
+
+        const response = await fetch(`@Url.Content("~/Member/Member/MemberEdit")?memberId=${memberId}`)
+        const data = await response.text();
+        console.log(data);
+
+        const showplace = document.getElementById("memberedit");
+        showplace.innerHTML = data;
+        // $.get("/Member/MemberEdit", { memberId: memberId }, function (data) {
+        //     // 在加载的部分视图中显示成员的编辑表单
+        //     $("#partialContainer").html(data);
+        // });
+
+        //控制編輯按鈕地確認權限的滑輪swichery 一定要寫在請求資料後
+        var switcheryOptions = {
+            color: '#64bd63', // 當checked時的背景顏色
+            secondaryColor: '#dfdfdf', // unchecked時的背景顏色
+            jackColor: '#fff', // checked時的按鈕顏色
+            jackSecondaryColor: null, // uncheck時的按鈕顏色
+            className: 'switchery', // class名稱
+            disabled: false, // 是否設為disabled
+            disabledOpacity: 0.5, // 當設為disabled時的透明度
+            speed: '0.1s', // 開關切換的速度
+            size: 'default' // 開關大小(small, default, large)
+        };
+        new Switchery(document.getElementById('vertificationformem'), switcheryOptions);
+    }
+  
+
+    //控制編輯按鈕地確認權限的滑輪swichery 一定要寫在請求資料後
+        var switcheryOptions = {
+        color: '#64bd63', // 當checked時的背景顏色
+        secondaryColor: '#dfdfdf', // unchecked時的背景顏色
+        jackColor: '#fff', // checked時的按鈕顏色
+        jackSecondaryColor: null, // uncheck時的按鈕顏色
+        className: 'switchery', // class名稱
+        disabled: false, // 是否設為disabled
+        disabledOpacity: 0.5, // 當設為disabled時的透明度
+        speed: '0.1s', // 開關切換的速度
+        size: 'default' // 開關大小(small, default, large)
+    };
+    new Switchery(document.getElementById('vertificationformem'), switcheryOptions);
+    //formdata傳資料
+
+
+    //編輯表單要來傳資料
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("memedit").addEventListener("submit", function (event) {
+                event.preventDefault(); // 防止表單默認提交行為
+
+                // 獲取表單元素
+                var form = event.target;
+
+                // 獲取表單數據
+                var formData = new FormData(form);
+
+                // 將數據轉換為對象
+                var formDataObject = {};
+                formData.forEach(function (value, key) {
+                    formDataObject[key] = value;
+                });
+
+                // 打印表單數據到控制台
+                console.log(formDataObject);
             });
-
-            document.getElementById('saveButton').addEventListener('click', function () {
-                clearForm();
-            });
+        });
+</script>
 
 
-            function clearForm() {
-                document.getElementById('memberForm').reset();
-
-            }
-
-            async function handleButtonClick(memberId) {
-                // 发送 AJAX 请求以获取部分视图
-
-                const response = await fetch(`@Url.Content("~/Member/Member/MemberEdit")?memberId=${memberId}`)
-                const data = response.text();
-                console.log(data);
-
-                const showplace = document.getElementById("memberedit");
-                showplace.innerHTML = data;
-                // $.get("/Member/MemberEdit", { memberId: memberId }, function (data) {
-                //     // 在加载的部分视图中显示成员的编辑表单
-                //     $("#partialContainer").html(data);
-                // });
-            }
-            handleButtonClick();
-
-        </script>
+</script>
