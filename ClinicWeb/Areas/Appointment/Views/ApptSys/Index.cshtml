@@ -1,52 +1,142 @@
 ﻿@{
-	ViewData["Title"] = "掛號管理系統";
+    ViewData["Title"] = "掛號管理系統";
 }
 @section ModulesStyles
 {
-	<!-- iCheck -->
-	<link href="~/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
-	<!-- Datatables -->
+    <!-- iCheck -->
+    <link href="~/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+    <!-- Datatables -->
 
-	<link href="~/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
-	<link href="~/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
-	<link href="~/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
-	<link href="~/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
-	<link href="~/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+    <link href="~/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="~/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+    <link href="~/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+    <link href="~/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+    <link href="~/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
 }
 @section Styles
 {
-	<link href="~/msit155e/css/appointment/clinicinfo.css" rel="stylesheet" asp-append-version="true"/>
+    <link href="~/msit155e/css/appointment/clinicinfo.css" rel="stylesheet" asp-append-version="true" />
 }
 
 <partial name="_ClinicInfoPartial" />
 <partial name="_ApptRecordPartial" />
 
+@*跳小窗*@
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="x_panel">
+                <div class="x_content">
+
+                    <br />
+                    <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                        <div class="item form-group">
+                            <label for="memberNationalIdSearch">搜尋病患</label>
+                        </div>
+
+                        <div class="item form-group">
+                            <div class="col-md-6 col-sm-6  form-group has-feedback">
+                                <input type="text" class="form-control has-feedback-left" id="memberNationalIdSearch" placeholder="身分證字號">
+                                <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                            </div>
+                        </div>
+                        <div class="item form-group">
+                            <div class="col-md-6 col-sm-6  form-group has-feedback" id="memberNationalIdSearchData" style="display:block">
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">
+                                First Name <span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 ">
+                                <input type="text" id="first-name" required="required" class="form-control ">
+                            </div>
+                        </div>
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="last-name">
+                                Last Name <span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 ">
+                                <input type="text" id="last-name" name="last-name" required="required" class="form-control">
+                            </div>
+                        </div>
+                        <div class="item form-group">
+                            <label for="middle-name" class="col-form-label col-md-3 col-sm-3 label-align">Middle Name / Initial</label>
+                            <div class="col-md-6 col-sm-6 ">
+                                <input id="middle-name" class="form-control" type="text" name="middle-name">
+                            </div>
+                        </div>
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align">Gender</label>
+                            <div class="col-md-6 col-sm-6 ">
+                                <div id="gender" class="btn-group" data-toggle="buttons">
+                                    <label class="btn btn-secondary" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+                                        <input type="radio" name="gender" value="male" class="join-btn"> &nbsp; Male &nbsp;
+                                    </label>
+                                    <label class="btn btn-primary" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+                                        <input type="radio" name="gender" value="female" class="join-btn"> Female
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align">
+                                Date Of Birth <span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 ">
+                                <input id="birthday" class="date-picker form-control" placeholder="dd-mm-yyyy" type="text" required="required" type="text" onfocus="this.type='date'" onmouseover="this.type='date'" onclick="this.type='date'" onblur="this.type='text'" onmouseout="timeFunctionLong(this)">
+                                <script>
+                                    function timeFunctionLong(input) {
+                                        setTimeout(function () {
+                                            input.type = 'text';
+                                        }, 60000);
+                                    }
+                                </script>
+                            </div>
+                        </div>
+                        <div class="ln_solid"></div>
+                        <div class="item form-group">
+                            <div class="col-md-6 col-sm-6 offset-md-3">
+                                <button class="btn btn-primary" type="button">Cancel</button>
+                                <button class="btn btn-primary" type="reset">Reset</button>
+                                <button type="submit" class="btn btn-success">Submit</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
 
 
 @section Scripts
 {
-	<script src="~/msit155e/js/Appointment/clinicInfo.js" asp-append-version="true"></script>
+    <script src="~/msit155e/js/Appointment/clinicInfo.js" asp-append-version="true"></script>
 }
 @section Modules
 {
-	<!-- iCheck -->
-	<script src="~/vendors/iCheck/icheck.min.js"></script>
-	<!-- Datatables -->
-	<script src="~/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
-	@* <script src="~/lib/datatables/js/jquery.datatables.min.js"></script> *@
-	<script src="~/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-	<script src="~/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-	<script src="~/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
-	<script src="~/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
-	<script src="~/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
-	<script src="~/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
-	<script src="~/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
-	<script src="~/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
-	<script src="~/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-	<script src="~/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
-	<script src="~/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
-	<script src="~/vendors/jszip/dist/jszip.min.js"></script>
-	<script src="~/vendors/pdfmake/build/pdfmake.min.js"></script>
-	<script src="~/vendors/pdfmake/build/vfs_fonts.js"></script>
+    <!-- iCheck -->
+    <script src="~/vendors/iCheck/icheck.min.js"></script>
+    <!-- Datatables -->
+    <script src="~/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    @* <script src="~/lib/datatables/js/jquery.datatables.min.js"></script> *@
+    <script src="~/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+    <script src="~/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="~/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="~/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+    <script src="~/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+    <script src="~/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="~/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+    <script src="~/vendors/jszip/dist/jszip.min.js"></script>
+    <script src="~/vendors/pdfmake/build/pdfmake.min.js"></script>
+    <script src="~/vendors/pdfmake/build/vfs_fonts.js"></script>
 
 }

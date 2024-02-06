@@ -159,6 +159,22 @@ $(document).ready(() => {
     DateOnChange()
 })
 
+$("#memberNationalIdSearch").on('input', async () => {
+    const url = "ApptSys/MemberSnap/" + $("#memberNationalIdSearch").val();
+    const response = await fetch(url);
+    const data = await response.json();
+    
+    const dataHtml = (data.map(x => `<button onclick="searchSelect()" type="button" class="list-group-item list-group-item-action">
+    ${x.身分證字號} | ${x.姓名} | ${x.性別} | ${x.生日}</button>`)).join("")
+
+    $("#memberNationalIdSearchData").html(dataHtml)
+})
+
+//function searchMemberOnType() {
+//    const response = await fetch(`${_MemberSnapURL}+${$("#memberNationalIdSearch").val()}`)
+//    const data = await response.json()
+//    console.log(data)
+//}
 /*
 $(document).ready(function () {
     $('#clinicDataTable').DataTable({
