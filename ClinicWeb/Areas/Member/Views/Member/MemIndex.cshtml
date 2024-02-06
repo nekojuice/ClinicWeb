@@ -61,8 +61,17 @@
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                     <partial name="~/Areas/Member/Views/Partial/_MemberCreatePartial.cshtml" />
+                                </div>
+                            </div>
+                        </div>
 
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#MemCreate">新增會員</button>
+
+
+
+
+
+
+                                   
 
                                     <div class="modal fade" id="MemCreate" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
                                         <div class="modal-dialog modal-lg">
@@ -72,7 +81,7 @@
                                             </div>
                                         </div>
                                     </div>
-
+                                    <div class="modal fade" id="MemCreate" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static"></div>
                                     <div class="row">
 
 
@@ -181,7 +190,7 @@
                                 { "data": "啟用" },
                                 {
                                     "data": "修改", "render": function (data, type, row) {
-                                        return '<button type="button" class="btn btn-primary" onclick="handleButtonClick(' + row.會員id + ')">修改</button>';
+                            return '<button type="button" class="btn btn-primary" data-target="#MemEdit" onclick="handleButtonClick(' + row.會員id + ')">修改</button>';
                                     }
                                 }
 
