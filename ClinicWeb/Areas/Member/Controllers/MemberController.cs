@@ -58,18 +58,18 @@ namespace ClinicWeb.Areas.Member.Controllers
         }
         //新增會員資料
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public IActionResult MemberCreate( MemberViewModel memberMemberList)
         {
-            return Content("123");
+            //return Content("123");
 
-            //if (ModelState.IsValid)
-            //{
-            //    //加入資料庫
+            if (ModelState.IsValid)
+            {
+                //加入資料庫
 
-            //    return RedirectToAction(nameof(MemIndex));
-            //}
-            //return Content("這段如果有放_ValidationScriptsPartial 就不易被觸發");
+                return RedirectToAction(nameof(MemIndex));
+            }
+            return Content("這段如果有放_ValidationScriptsPartial 就不易被觸發");
 
             //IEnumerable<MemberViewModel> memVM = _context.MemberMemberList.Select(member => new MemberViewModel
             //{
