@@ -159,17 +159,39 @@ $(document).ready(() => {
     DateOnChange()
 })
 
-$("#memberNationalIdSearch").on('input', async () => {
+$("#memberNationalIdSearch").on('input', async (e) => {
+    //不符合規則則不查詢
+    let regexNatId = new RegExp('^[A-Za-z0-9]{1}[0-9]*$')
+    if ($("#memberNationalIdSearch").val() == "" || !regexNatId.test($("#memberNationalIdSearch").val())) {
+        $("#memberNationalIdSearchData").html("")
+        return;
+    }
     const url = "ApptSys/MemberSnap/" + $("#memberNationalIdSearch").val();
     const response = await fetch(url);
     const data = await response.json();
-    
-    const dataHtml = (data.map(x => `<button onclick="searchSelect()" type="button" class="list-group-item list-group-item-action">
+
+    //有空將顯字串改成一個個label 小標籤樣式
+    const dataHtml = (data.map(x => `<button type="button" class="list-group-item list-group-item-action" onclick="memberNationalIdSearchClick(${x.id},'${x.身分證字號} | ${x.姓名} | ${x.性別} | ${x.生日}')">
     ${x.身分證字號} | ${x.姓名} | ${x.性別} | ${x.生日}</button>`)).join("")
 
     $("#memberNationalIdSearchData").html(dataHtml)
+    $("#memberNationalIdSearchData").show()
 })
 
+//收起搜尋結果事件
+$("#addApptForm").on('click', (e) => {
+    if ($(e.target).is($("#memberNationalIdSearch"))) {
+        $("#memberNationalIdSearchData").show();
+    }
+    else { 
+        $("#memberNationalIdSearchData").hide()
+    }
+})
+//填入當前目標與執行搜尋
+function memberNationalIdSearchClick(id, searchResult) {
+    $("#memberNationalIdSearch").val(searchResult)
+    $("#memberNationalIdSearchData").hide()
+}
 //function searchMemberOnType() {
 //    const response = await fetch(`${_MemberSnapURL}+${$("#memberNationalIdSearch").val()}`)
 //    const data = await response.json()

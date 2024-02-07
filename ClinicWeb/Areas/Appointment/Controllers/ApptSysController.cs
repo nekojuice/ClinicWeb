@@ -92,7 +92,7 @@ namespace ClinicWeb.Areas.Appointment.Controllers
         public JsonResult MemberSnap(string nationalId)
         {
             return Json(_context.MemberMemberList
-                .Where(x=>x.NationalId.Contains(nationalId))
+                .Where(x => x.NationalId.Contains(nationalId))
                 .Select(x => new
                 {
                     id = x.MemberId,
@@ -102,6 +102,28 @@ namespace ClinicWeb.Areas.Appointment.Controllers
                     生日 = x.BirthDate.ToString("yyyy-MM-dd")
                 })
                 .Take(5)
+                );
+        }
+
+        public JsonResult MemberData(string id)
+        {
+            return Json(_context.MemberMemberList
+                .Where(x => x.MemberId == Convert.ToInt32(id))
+                .Select(x => new
+                {
+                    id = x.MemberId,
+                    會員號碼 = x.MemberNumber,
+                    身分證字號 = x.NationalId,
+                    姓名 = x.Name,
+                    性別 = x.Gender ? "男" : "女",
+                    生日 = x.BirthDate.ToString("yyyy-MM-dd"),
+                    血型 = x.BloodType,
+                    聯絡地址 = x.ContactAddress,
+                    連絡電話 = x.Phone,
+                    電子郵件 = x.MemEmail,
+                    緊急聯絡人 = x.IceName,
+                    緊急電話 = x.IceNumber
+                })
                 );
         }
 
