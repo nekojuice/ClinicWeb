@@ -309,20 +309,31 @@
         const btnSubmit = document.querySelector('#saveButton');
         const divInfo = document.querySelector('#div1');
 
+        //測試每個欄位抓的到值
+        const Name11 = document.querySelector('#userName');
         btnSubmit.addEventListener('click', async (event) => {
             event.preventDefault(); //停止預設行為
-
-            //FormData
-            const formData = new FormData(document.querySelector('#memberForm'));
-            const url = '@Url.Content("~/Member/Member/MemberCreate")';
-            const response = await fetch(url, {
-                "method": "POST",
-                "body": formData
-            });
-            //確定有抓到整包formdata
-            const data = await response.text();
-            divInfo.innerHTML = data;
+            console.log(Name11.value);
         })
+
+        // btnSubmit.addEventListener('click', async (event) => {
+        //     event.preventDefault(); //停止預設行為
+
+        //     //FormData
+        //     const formData = new FormData(document.querySelector('#memberForm'));
+        //     for (const pair of formData.entries()) {
+        //         console.log(pair[0]);
+        //         console.log(pair[1]);
+        //     }
+        //     // const url = '@Url.Content("~/Member/Member/MemberCreate")';
+        //     const response = await fetch(url, {
+        //         "method": "POST",
+        //         "body": formData
+        //     });
+        //     // //確定有抓到整包formdata
+        //     const data = await response.text();
+        //     divInfo.innerHTML = data;
+        // })
 
     </script>
 }
