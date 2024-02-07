@@ -2,6 +2,7 @@
 using ClinicWeb.Areas.Schedule.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ClinicWeb.Areas.Schedule.Controllers
 {
@@ -24,9 +25,12 @@ namespace ClinicWeb.Areas.Schedule.Controllers
             return Json(doctornames);
         }
 
-        
-        public IActionResult ShowThismonthSchedule(string year, string month)
+       
+        public IActionResult ShowThismonthSchedule()
         {
+            var year = DateTime.Now.Year.ToString();
+            var month = DateTime.Now.Month.ToString("D2"); 
+
             var ThismonthSchedule = _context.ScheduleClinicInfo.Where(d => d.Date.StartsWith($"{year}/{month}"))
                 .Select(x => new
                 {

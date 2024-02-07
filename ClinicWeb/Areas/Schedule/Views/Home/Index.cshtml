@@ -79,13 +79,14 @@
                                         </tr>
                                     </thead>
 
-                                    <tbody>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>61</td>
-                                            <td>2011/04/25</td>
+                                    <tbody id="tbody1">
+                                        <tr id ="thismonthvalue">
+                                            @* <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td> *@
                                         </tr>
 
                                     </tbody>
@@ -95,7 +96,9 @@
                     </div>
                 </div>
             </div>
-        </div>
+         </div>
+    </div>
+</div>
 
 
 
@@ -123,36 +126,47 @@
 
         }
 
-        @section Scripts {
+        @section Scripts
+        {
             <script>
                 const selDoctorname = document.querySelector('#selectedDoctorname');
-
+                const scheduleTableBody = document.querySelector('#tbody1');
+                
                 //下拉選單匯入醫生名
                 (async () => {
-
                     const url = '@Url.Content("~/Schedule/api/SelectedDoctorName")';
                     const response = await fetch(url);
                     const datas = await response.json();
-
-                    console.log(datas);
+                    
+                    //console.log(datas);
                     const optDoctornames = datas.map(name => `<option value=${name}>${name}</option>`);
                     selDoctorname.innerHTML = optDoctornames.join("");
-
-
                 })();
-
+                
+                
                 //匯入當月醫師班表
-                (async() => {
+                
+                (async () => {
                     const url = '@Url.Content("~/Schedule/api/ShowThismonthSchedule")';
                     const response = await fetch(url);
                     const datas = await response.json();
+                    
+                    //console.log(datas);
+                    datas.forEach(schedule => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                        <td>${schedule.日期}</td>
+                        <td>${schedule.醫師}</td>
+                        <td>${schedule.時段}</td>
+                        <td>${schedule.科別}</td>
+                        <td>${schedule.診間}</td>
+                        <td>${schedule.掛號上限}</td>
+                        `;
+                        scheduleTableBody.appendChild(row);
+                    
+                    });
 
-                    console.log(datas);
-                
-                })();
-
+            })();
 
             </script>
-
-
         }
