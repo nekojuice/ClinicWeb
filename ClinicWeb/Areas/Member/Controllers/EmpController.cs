@@ -22,7 +22,7 @@ namespace ClinicWeb.Areas.Member.Controllers
         // GET: Member/Emp
         public async Task<IActionResult> Index()
         {
-            return View() ;
+            return  View() ;
                         
         }
 

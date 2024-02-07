@@ -20,17 +20,19 @@ namespace ClinicWeb.Areas.Member.ViewModels
         [Display(Name = "姓名")]
         public string NameVW { get; set; }
 
-      
 
-        //private bool _gender;
+
+        private bool _gender;
         [Display(Name = "性別")]
-        //public bool GenderVW
-        //{
-        //    get { return _gender; }
-        //    set { _gender = value; }
-        //}
-        public bool GenderVW{ get; set; }
-        
+        public bool GenderVW
+        {
+            
+            get { return _gender; }
+            set { _gender = value; }
+        }
+        //public bool GenderVW{ get; set; }
+      
+      
 
 
 

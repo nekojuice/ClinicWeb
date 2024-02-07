@@ -57,19 +57,30 @@ namespace ClinicWeb.Areas.Member.Controllers
             return View();
         }
         //新增會員資料
-        public IActionResult MemberCreate()
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult MemberCreate( MemberViewModel memberMemberList)
         {
+            return Content("123");
 
-            IEnumerable<MemberViewModel> memVM = _context.MemberMemberList.Select(member => new MemberViewModel
-            {
-                // 將原始模型的屬性賦值給 ViewModel
-                MemberIdVW = member.MemberId,
-                MemberNumberVW = member.MemberNumber,
-                NameVW = member.Name,
-                GenderVW = member.Gender,
-                // 以上為測試欄位
-            });
-            return View("MemberBasicInfo", memVM);
+            //if (ModelState.IsValid)
+            //{
+            //    //加入資料庫
+
+            //    return RedirectToAction(nameof(MemIndex));
+            //}
+            //return Content("這段如果有放_ValidationScriptsPartial 就不易被觸發");
+
+            //IEnumerable<MemberViewModel> memVM = _context.MemberMemberList.Select(member => new MemberViewModel
+            //{
+            //    // 將原始模型的屬性賦值給 ViewModel
+            //    MemberIdVW = member.MemberId,
+            //    MemberNumberVW = member.MemberNumber,
+            //    NameVW = member.Name,
+            //    GenderVW = member.Gender,
+            //    // 以上為測試欄位
+            //});
+            //return View("MemberBasicInfo", memVM);
 
 
             //        return Json(_context.MemberMemberList
@@ -108,7 +119,6 @@ namespace ClinicWeb.Areas.Member.Controllers
                 VerificationVW = member.Verification,
 
 
-                // 以上為測試欄位
             };
             return PartialView("~/Areas/Member/Views/Partial/_MemberEditPartial.cshtml", memVM);
         }

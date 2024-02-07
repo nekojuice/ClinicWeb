@@ -253,8 +253,9 @@
 
             const response = await fetch(`@Url.Content("~/Member/Member/MemberEdit")?memberId=${memberId}`)
             const data = await response.text();
-            //console.log(data);   
+            //console.log(data);
 
+            //顯示該筆資料的編輯畫面 會自己帶入此人資料
             const showplace = document.getElementById("memberedit");
             showplace.innerHTML = data;
             // $.get("/Member/MemberEdit", { memberId: memberId }, function (data) {
@@ -279,6 +280,8 @@
             //註冊按鈕事件 要再生成編輯partial之後再加上 不然抓不到這個按鈕事件
             buttonEventFunc()
         }
+
+        //確定編輯畫面按下保存有抓到資料
         function buttonEventFunc() {
 
             document.getElementById("_MemberEditPartial").addEventListener("submit", function (event) {
@@ -300,5 +303,25 @@
                 console.log(formDataObject);
             });
         }
+
+
+        //新增會員的按下儲存後
+        const btnSubmit = document.querySelector('#saveButton');
+
+        btnSubmit.addEventListener('click', async (event) => {
+            event.preventDefault(); //停止預設行為
+
+            //FormData
+            const formData = new FormData(document.querySelector('#memberForm'));
+            const url = '@Url.Content("~/Member/Member/MemberCreate")';
+            const response = await fetch(url, {
+                "method": "POST",
+                "body": formData
+            });
+            //確定有抓到整包formdata
+            const data = await response.text();
+            console.log(data);
+        })
+
     </script>
 }
