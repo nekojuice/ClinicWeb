@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ClinicWeb.Areas.Schedule.Controllers
 {
-    [Area("Schedule")]//路由設定
+    [Area("Schedule")]//路由設定123
     public class ApiController : Controller
     {
 
