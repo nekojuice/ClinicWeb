@@ -59,17 +59,38 @@ namespace ClinicWeb.Areas.Member.Controllers
         //新增會員資料
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public IActionResult MemberCreate( MemberViewModel memberMemberList)
+        public IActionResult MemberCreate(MemberMemberList memforview, string GenderString, string VerificationString)
         {
             //return Content("123");
 
-            if (ModelState.IsValid)
+            //加入資料庫
+            if (GenderString == "true")
             {
-                //加入資料庫
-
-                return RedirectToAction(nameof(MemIndex));
+                memforview.Gender = true;
             }
-            return Content("這段如果有放_ValidationScriptsPartial 就不易被觸發");
+            else { memforview.Gender = false; }
+
+            if (VerificationString == "on")
+            {
+                memforview.Verification = true;
+            }
+            else { memforview.Verification = false; }
+
+            _context.MemberMemberList.Add(memforview);
+            _context.SaveChanges();
+
+          
+            //    }
+            return View(MemIndex);
+
+            //if (ModelState.IsValid)
+            //{
+
+
+            //    return RedirectToAction(nameof(MemIndex));
+            //}
+
+            //return Content("這段如果有放_ValidationScriptsPartial 就不易被觸發");
 
             //IEnumerable<MemberViewModel> memVM = _context.MemberMemberList.Select(member => new MemberViewModel
             //{
@@ -129,7 +150,7 @@ namespace ClinicWeb.Areas.Member.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("MemberId,MemberNumber,Name,Gender,BloodType,NationalId,Address,ContactAddress,Phone,BirthDate,IceName,MemPassword,MemEmail,Verification,IsEnabled")] MemberMemberList member)
         {
-            
+
             return View(member);
         }
 

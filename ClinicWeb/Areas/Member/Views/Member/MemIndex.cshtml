@@ -124,7 +124,7 @@
                                                 啟用
                                                 @*  @Html.DisplayNameFor(model => model.MemberNumber) *@
                                             </th>
-                                            <th style="text-align">
+                                            <th >
                                                 修改
                                                 <div id="partialContainer"></div>
 
@@ -135,8 +135,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            @*這是啥咪?*@
-                            @* <li class="paginate_button next" id="datatable_next"><a href="#" aria-controls="datatable" data-dt-idx="7" tabindex="0"></a></li> *@
+                           
                         </div>
                     </div>
                 </div>
@@ -172,6 +171,8 @@
 }
 @section Scripts {
     <script>
+
+//顯示會員主畫面資料表
         function QueryMemberInfo() {
             $('#memdatatable').dataTable({
                 ajax: {
@@ -215,7 +216,7 @@
         }
         QueryMemberInfo();
 
-
+//控制對於密碼輸入欄位眼睛的顯示
         function hideshow() {
             var password = document.getElementById("password1");
             var slash = document.getElementById("slash");
@@ -234,19 +235,10 @@
 
         }
 
-        document.getElementById('closeButton').addEventListener('click', function () {
-            clearForm();
-        });
-
-        document.getElementById('saveButton').addEventListener('click', function () {
-            clearForm();
-        });
+      
 
 
-        function clearForm() {
-            document.getElementById('memberForm').reset();
-
-        }
+ //顯示編輯畫面     
 
         async function handleButtonClick(memberId) {
             // 发送 AJAX 请求以获取部分视图
@@ -304,36 +296,50 @@
             });
         }
 
+//新增會員資料相關功能
 
         //新增會員的按下儲存後
         const btnSubmit = document.querySelector('#saveButton');
-        const divInfo = document.querySelector('#div1');
+        // const divInfo = document.querySelector('#div1');
 
         //測試每個欄位抓的到值
-        const Name11 = document.querySelector('#userName');
-        btnSubmit.addEventListener('click', async (event) => {
-            event.preventDefault(); //停止預設行為
-            console.log(Name11.value);
-        })
-
+        // const Name11 = document.querySelector('#userName');
         // btnSubmit.addEventListener('click', async (event) => {
         //     event.preventDefault(); //停止預設行為
-
-        //     //FormData
-        //     const formData = new FormData(document.querySelector('#memberForm'));
-        //     for (const pair of formData.entries()) {
-        //         console.log(pair[0]);
-        //         console.log(pair[1]);
-        //     }
-        //     // const url = '@Url.Content("~/Member/Member/MemberCreate")';
-        //     const response = await fetch(url, {
-        //         "method": "POST",
-        //         "body": formData
-        //     });
-        //     // //確定有抓到整包formdata
-        //     const data = await response.text();
-        //     divInfo.innerHTML = data;
+        //     console.log(Name11.value);
         // })
+
+        btnSubmit.addEventListener('click', async (event) => {
+            event.preventDefault(); //停止預設行為
+
+            //FormData
+            const formData = new FormData(document.querySelector('#memberForm'));
+            // for (const pair of formData.entries()) {
+            //     console.log(pair[0]);
+            //     console.log(pair[1]);
+            // }
+            const url = '@Url.Content("~/Member/Member/MemberCreate")';
+            const response = await fetch(url, {
+                "method": "POST",
+                "body": formData
+            });
+            // //確定有抓到整包formdata
+            const data = await response.text();
+            // // divInfo.innerHTML = data;
+        })
+
+        // 關閉新增會員的表單後要清上面的資料 一定要放在所有新增相關動作的後面
+        function clearForm() {
+            document.getElementById('memberForm').reset();
+
+        }
+        document.getElementById('closeButton').addEventListener('click', function () {
+            clearForm();
+        });
+
+        document.getElementById('saveButton').addEventListener('click', function () {
+            clearForm();
+        });
 
     </script>
 }
