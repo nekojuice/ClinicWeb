@@ -8,7 +8,8 @@
     </div>
     <div class="x_content">
         <br>
-        <form id="memberForm" class="form-label-left input_mask" />
+        <form id="memberForm" class="form-label-left input_mask">
+           
         <!--會員編號 希望自動顯示-->
         <div class="col-md-6 col-sm-6  form-group has-feedback">
             <input name="MemberNumberVW" type="text" class="form-control has-feedback-left" id="inputSuccess2" placeholder="@Html.DisplayNameFor(model => model.MemberNumberVW)">
@@ -167,8 +168,9 @@
             </div>                                                                                                          
         </div>
 
-        <form />
-
+            @* 老師要把資料顯示在表格下方 *@
+            <div class="alert alert-info" id="div1"></div>
+        </form>
     </div>
 </div>
 
