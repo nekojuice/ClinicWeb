@@ -1,0 +1,111 @@
+﻿<div class="modal fade addApptModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" data-backdrop="static" id="addApptForm">
+    @* data-keyboard="false" *@
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="x_panel">
+                <div class="x_content">
+
+                    <br />
+                    <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+
+                        <div class="item form-group">
+                            <div class="col-md-12 col-sm-12">
+                                <button type="button" onclick="addApptFormClose()" class="x_btn_border pull-right" tabindex="-1"><i class="fa fa-close"></i></button>
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
+                            <label for="memberNationalIdSearch" class="col-form-label col-md-2 col-sm-2 label-align">搜尋病患</label>
+                            <div class="col-md-8 col-sm-8  form-group has-feedback">
+                                <input type="text" class="form-control has-feedback-left" id="memberNationalIdSearch" placeholder="身分證字號" autocomplete="off">
+                                <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+
+                                @*搜尋選單*@
+                                <div class="form-horizontal form-label-left item form-group" style="position:fixed;z-index:500;">
+                                    <div class="form-group has-feedback" id="memberNationalIdSearchData" style="display:none;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-12 col-sm-12 form-group"><hr /></div>
+
+                        <div class="col-md-12 col-sm-12 form-group"><h4>確認病患資訊</h4></div>
+
+                        @*會員id*@
+                        <input type="text" id="AddApptMemberId" readonly="readonly" autocomplete="off" tabindex="-1" style="display:none">
+
+                        <label class="col-form-label col-md-2 col-sm-2 label-align">會員號碼</label>
+                        <div class="col-md-4 col-sm-4 form-group has-feedback">
+                            <input type="text" id="AddApptMemberNumber" readonly="readonly" class="form-control input_noborder" autocomplete="off" tabindex="-1">
+                        </div>
+
+                        <label class="col-form-label col-md-2 col-sm-2 label-align">身分證字號</label>
+                        <div class="col-md-4 col-sm-4 form-group has-feedback">
+                            <input type="text" id="AddApptNationalId" readonly="readonly" class="form-control input_noborder" autocomplete="off" tabindex="-1">
+                        </div>
+
+                        <label class="col-form-label col-md-2 col-sm-2 label-align">姓名</label>
+                        <div class="col-md-4 col-sm-4 form-group has-feedback">
+                            <input type="text" id="AddApptName" readonly="readonly" class="form-control input_noborder" autocomplete="off" tabindex="-1">
+                        </div>
+
+                        <label class="col-form-label col-md-2 col-sm-2 label-align">性別</label>
+                        <div class="col-md-4 col-sm-4 form-group has-feedback">
+                            <input type="text" id="AddApptGender" readonly="readonly" class="form-control input_noborder" autocomplete="off" tabindex="-1">
+                        </div>
+
+                        <label class="col-form-label col-md-2 col-sm-2 label-align">生日</label>
+                        <div class="col-md-4 col-sm-4 form-group has-feedback">
+                            <input type="text" id="AddApptBirthDate" readonly="readonly" class="form-control input_noborder" autocomplete="off" tabindex="-1">
+                        </div>
+
+                        <label class="col-form-label col-md-2 col-sm-2 label-align">血型</label>
+                        <div class="col-md-4 col-sm-4 form-group has-feedback">
+                            <input type="text" id="AddApptBloodType" readonly="readonly" class="form-control input_noborder" autocomplete="off" tabindex="-1">
+                        </div>
+
+                        <label class="col-form-label col-md-2 col-sm-2 label-align">聯絡地址</label>
+                        <div class="col-md-10 col-sm-10 form-group has-feedback">
+                            <input type="text" id="AddApptContactAddress" readonly="readonly" class="form-control input_noborder" autocomplete="off" tabindex="-1">
+                        </div>
+
+                        <label class="col-form-label col-md-2 col-sm-2 label-align">連絡電話</label>
+                        <div class="col-md-4 col-sm-4 form-group has-feedback">
+                            <input type="text" id="AddApptPhone" readonly="readonly" class="form-control input_noborder" autocomplete="off" tabindex="-1">
+                        </div>
+
+                        <label class="col-form-label col-md-2 col-sm-2 label-align">電子郵件</label>
+                        <div class="col-md-4 col-sm-4 form-group has-feedback">
+                            <input type="text" id="AddApptMemEmail" readonly="readonly" class="form-control input_noborder" autocomplete="off" tabindex="-1">
+                        </div>
+
+                        <label class="col-form-label col-md-2 col-sm-2 label-align">緊急聯絡人</label>
+                        <div class="col-md-4 col-sm-4 form-group has-feedback">
+                            <input type="text" id="AddApptIceName" readonly="readonly" class="form-control input_noborder" autocomplete="off" tabindex="-1">
+                        </div>
+
+                        <label class="col-form-label col-md-2 col-sm-2 label-align">緊急電話</label>
+                        <div class="col-md-4 col-sm-4 form-group has-feedback">
+                            <input type="text" id="AddApptIceNumber" readonly="readonly" class="form-control input_noborder" autocomplete="off" tabindex="-1">
+                        </div>
+
+                        <div class="col-md-12 col-sm-12 form-group"><hr /></div>
+
+                        <label class="col-md-6 col-sm-6">
+                            <input type="checkbox" class="js-switch" id="AddApptIsVIP" /> 優待插號看診
+                        </label>
+                        <div class="col-md-4 col-sm-4">
+                            <h6 class="alert alert-danger alert-dismissible" id="addApptIsDuplicate" style="visibility:hidden;">此病患已重複掛號</h6>
+                        </div>
+                        <div class="col-md-2 col-sm-2 form-group">
+                            <button type="button" class="btn btn-success pull-right" id="btnAddAppt" onclick="AddAppt()">新增掛號</button>
+                            <img src="~/msit155e/images/appointment/loading.gif" height="37" id="addApptLoading" style="margin-left:38px;position:fixed;visibility:hidden;" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

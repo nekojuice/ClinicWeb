@@ -72,25 +72,25 @@ function searchTime() {
         $('#clinicDataTable').DataTable().column(2).search($("#ClinicTime_ClinicShifts").val()).draw();
     }
 }
+let clinicIdSelected;
 //左表點擊事件
-let $ClinicTBODY = $("#clinicDataTable tbody")
-$ClinicTBODY.on('mousedown', 'tr', function () {
+$("#clinicDataTable tbody").on('mousedown', 'tr', function () {
     let index = $('#clinicDataTable').DataTable().row(this).index();
     if (index == null) { return; } //忽略無選擇時
     if ($(this).hasClass('selected')) { return; }   //忽略選擇同一row
     //console.log(index)
-    let clinicID = $('#clinicDataTable').DataTable().row(index).data().id;
+    clinicIdSelected = $('#clinicDataTable').DataTable().row(index).data().id;
 
     $(this).siblings().removeClass('selected');
     $(this).addClass('selected');
 
-    getApptData(clinicID);
+    getApptData(clinicIdSelected);
     $("#addAppt").prop("disabled", false);
     $("#modAppt").prop("disabled", true);
 });
 
-let $ApptDataTBODY = $("#apptDataTable tbody")
-$ApptDataTBODY.on('mousedown', 'tr', function () {
+
+$("#apptDataTable tbody").on('mousedown', 'tr', function () {
     let index = $('#apptDataTable').DataTable().row(this).index();
     if (index == null) { return; } //忽略無選擇時
     if ($(this).hasClass('selected')) { return; }   //忽略選擇同一row
@@ -130,7 +130,8 @@ function getApptData(clinicID) {
         },
         language: {
             url: "https://cdn.datatables.net/plug-ins/1.13.7/i18n/zh-HANT.json"
-        }
+        },
+        order: [[2, 'asc']]
     });
 }
 
@@ -178,19 +179,77 @@ $("#memberNationalIdSearch").on('input', async (e) => {
     $("#memberNationalIdSearchData").show()
 })
 
+//點選搜尋欄時 文字全選反白
+$("#memberNationalIdSearch").on('focus', () => { $("#memberNationalIdSearch").select() })
+
 //收起搜尋結果事件
 $("#addApptForm").on('click', (e) => {
     if ($(e.target).is($("#memberNationalIdSearch"))) {
         $("#memberNationalIdSearchData").show();
     }
-    else { 
+    else {
         $("#memberNationalIdSearchData").hide()
     }
 })
+
 //填入當前目標與執行搜尋
-function memberNationalIdSearchClick(id, searchResult) {
+async function memberNationalIdSearchClick(id, searchResult) {
     $("#memberNationalIdSearch").val(searchResult)
     $("#memberNationalIdSearchData").hide()
+    //隱藏重複掛號警告
+    $("#addApptIsDuplicate").css('visibility', 'hidden')
+
+    const response = await fetch(`/Appointment/ApptSys/MemberData/${id}`, { method: "POST" })
+    const data = await response.json()
+    $("#AddApptMemberId").val(data[0].id)
+    $("#AddApptMemberNumber").val(data[0].memberNumber)
+    $("#AddApptNationalId").val(data[0].nationalId)
+    $("#AddApptName").val(data[0].name)
+    $("#AddApptGender").val(data[0].gender)
+    $("#AddApptBirthDate").val(data[0].birthDate)
+    $("#AddApptBloodType").val(data[0].bloodType)
+    $("#AddApptContactAddress").val(data[0].contactAddress)
+    $("#AddApptPhone").val(data[0].phone)
+    $("#AddApptMemEmail").val(data[0].memEmail)
+    $("#AddApptIceName").val(data[0].iceName)
+    $("#AddApptIceNumber").val(data[0].iceNumber)
+}
+
+async function AddAppt() {
+    const memberId = $("#AddApptMemberId").val()
+    const isVIP = $("#AddApptIsVIP").is(":checked")
+    if (!clinicIdSelected || !memberId) {
+        alert("未選擇病患或門診")
+        return
+    }
+    //loading gif
+    $("#addApptLoading").css('visibility', 'visible');
+    $("#btnAddAppt").attr('disable','disable')
+    const response = await fetch(`/Appointment/ApptSys/AddAppt/${clinicIdSelected}/${memberId}/${isVIP}`, { method: "POST" })
+    const isDuplicate = await response.text()
+    await $("#addApptLoading").css('visibility', 'hidden')
+    await $("#btnAddAppt").attr('disable', 'none')
+    console.log(isDuplicate)
+    if (isDuplicate === 'True') {
+        //重複掛號
+        $("#addApptIsDuplicate").css('visibility', 'visible')
+    }
+    else {
+        $("#addApptIsDuplicate").css('visibility', 'hidden')
+        addApptFormClose()
+        new PNotify({
+            title: '掛號成功',
+            type: 'success',
+            styling: 'bootstrap3'
+        });
+        getApptData(clinicIdSelected)
+    }
+    
+}
+
+//關閉#addApptForm視窗
+function addApptFormClose() {
+    $("#addApptForm").modal('toggle')
 }
 //function searchMemberOnType() {
 //    const response = await fetch(`${_MemberSnapURL}+${$("#memberNationalIdSearch").val()}`)

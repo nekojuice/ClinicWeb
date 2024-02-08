@@ -105,6 +105,7 @@ namespace ClinicWeb.Areas.Appointment.Controllers
                 );
         }
 
+        [HttpPost]
         public JsonResult MemberData(string id)
         {
             return Json(_context.MemberMemberList
@@ -112,19 +113,61 @@ namespace ClinicWeb.Areas.Appointment.Controllers
                 .Select(x => new
                 {
                     id = x.MemberId,
-                    會員號碼 = x.MemberNumber,
-                    身分證字號 = x.NationalId,
-                    姓名 = x.Name,
-                    性別 = x.Gender ? "男" : "女",
-                    生日 = x.BirthDate.ToString("yyyy-MM-dd"),
-                    血型 = x.BloodType,
-                    聯絡地址 = x.ContactAddress,
-                    連絡電話 = x.Phone,
-                    電子郵件 = x.MemEmail,
-                    緊急聯絡人 = x.IceName,
-                    緊急電話 = x.IceNumber
+                    MemberNumber = x.MemberNumber,
+                    NationalId = x.NationalId,
+                    Name = x.Name,
+                    Gender = x.Gender ? "男" : "女",
+                    BirthDate = x.BirthDate.ToString("yyyy-MM-dd"),
+                    BloodType = x.BloodType,
+                    ContactAddress = x.ContactAddress,
+                    Phone = x.Phone,
+                    MemEmail = x.MemEmail,
+                    IceName = x.IceName,
+                    IceNumber = x.IceNumber
                 })
                 );
+        }
+        [Route("{area}/{controller}/{action}/{clinicId}/{memberId}/{isVIP}")]
+        [HttpPost]
+        public IActionResult AddAppt(string clinicId, string memberId, string isVIP)
+        {
+            bool isDuplicate = _context.ApptClinicList
+                .Where(x => x.ClinicId == Convert.ToInt32(clinicId) && x.MemberId == Convert.ToInt32(memberId))
+                .Any();
+            if (!isDuplicate)
+            {
+                int maxClinicNumber = Convert.ToBoolean(isVIP) ? -1 : 0;
+
+                try
+                {
+                    maxClinicNumber += _context.ApptClinicList
+                                    .Where(x => x.IsVip == Convert.ToBoolean(isVIP) && x.ClinicId == Convert.ToInt32(clinicId))
+                                    .Select(x => x.ClinicNumber)
+                                    .Max();
+                }
+                catch (Exception)
+                {
+                }
+
+
+
+                Console.WriteLine($"clinicId={clinicId} memberId={memberId} isVIP={isVIP}");
+                ApptClinicList newappt = new ApptClinicList
+                {
+                    ClinicId = Convert.ToInt32(clinicId),
+                    MemberId = Convert.ToInt32(memberId),
+                    IsVip = Convert.ToBoolean(isVIP),
+                    ClinicNumber = maxClinicNumber + 2,
+                    PatientStateId = 8,
+                    IsCancelled = false
+                };
+
+                _context.ApptClinicList.Add(newappt);
+                _context.SaveChanges();
+            }
+
+
+            return Content(isDuplicate.ToString());
         }
 
         public IActionResult test1()

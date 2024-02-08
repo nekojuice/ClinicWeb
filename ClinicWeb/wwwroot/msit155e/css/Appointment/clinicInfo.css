@@ -17,3 +17,12 @@
     #apptDataTable tbody .selected {
         background-color: #cce5ff;
     }
+
+.input_noborder {
+    border: hidden;
+    background-color:transparent !important;
+}
+
+.x_btn_border {
+    border: 1px solid #ced4da;
+}
