@@ -27,7 +27,7 @@ function QueryClinicInfo() {
     $('#clinicDataTable').dataTable({
         ajax: {
             type: 'GET',
-            url: ("/Appointment/ApptSys/ClinicInfo/" + $("#Date").val()),
+            url: ("/Appointment/ApptSys/GET_ClinicInfoList/" + $("#Date").val()),
             dataSrc: function (json) { return json; }
         },
         destroy: true,
@@ -72,35 +72,35 @@ function searchTime() {
         $('#clinicDataTable').DataTable().column(2).search($("#ClinicTime_ClinicShifts").val()).draw();
     }
 }
-let clinicIdSelected;
+let _clinicIdSelected;
 //左表點擊事件
 $("#clinicDataTable tbody").on('mousedown', 'tr', function () {
     let index = $('#clinicDataTable').DataTable().row(this).index();
     if (index == null) { return; } //忽略無選擇時
     if ($(this).hasClass('selected')) { return; }   //忽略選擇同一row
     //console.log(index)
-    clinicIdSelected = $('#clinicDataTable').DataTable().row(index).data().id;
+    _clinicIdSelected = $('#clinicDataTable').DataTable().row(index).data().id;
 
     $(this).siblings().removeClass('selected');
     $(this).addClass('selected');
 
-    getApptData(clinicIdSelected);
+    getApptData(_clinicIdSelected);
     $("#addAppt").prop("disabled", false);
     $("#modAppt").prop("disabled", true);
 });
 
-
+let _index_apptDataTable;
 $("#apptDataTable tbody").on('mousedown', 'tr', function () {
-    let index = $('#apptDataTable').DataTable().row(this).index();
-    if (index == null) { return; } //忽略無選擇時
+    _index_apptDataTable = $('#apptDataTable').DataTable().row(this).index();
+    if (_index_apptDataTable == null) { return; } //忽略無選擇時
     if ($(this).hasClass('selected')) { return; }   //忽略選擇同一row
 
     $(this).siblings().removeClass('selected');
     $(this).addClass('selected');
 
-    let clinicId = $('#apptDataTable').DataTable().row(index).data().clinic_id;
-    let memberId = $('#apptDataTable').DataTable().row(index).data().member_id;
-    console.log(clinicId + " - " + memberId + " / " + index)
+    let clinicId = $('#apptDataTable').DataTable().row(_index_apptDataTable).data().clinic_id;
+    let memberId = $('#apptDataTable').DataTable().row(_index_apptDataTable).data().member_id;
+    //console.log(clinicId + " - " + memberId + " / " + index)
 
     $("#modAppt").prop("disabled", false);
 });
@@ -110,7 +110,7 @@ function getApptData(clinicID) {
     $("#apptDataTable").dataTable({
         ajax: {
             type: 'GET',
-            url: ("/Appointment/ApptSys/ApptRecord/" + clinicID),
+            url: ("/Appointment/ApptSys/GET_ApptRecordList/" + clinicID),
             dataSrc: function (json) { return json; }
         },
         destroy: true,
@@ -167,7 +167,7 @@ $("#memberNationalIdSearch").on('input', async (e) => {
         $("#memberNationalIdSearchData").html("")
         return;
     }
-    const url = "ApptSys/MemberSnap/" + $("#memberNationalIdSearch").val();
+    const url = "ApptSys/GET_MemberDataSnap/" + $("#memberNationalIdSearch").val();
     const response = await fetch(url);
     const data = await response.json();
 
@@ -199,57 +199,125 @@ async function memberNationalIdSearchClick(id, searchResult) {
     //隱藏重複掛號警告
     $("#addApptIsDuplicate").css('visibility', 'hidden')
 
-    const response = await fetch(`/Appointment/ApptSys/MemberData/${id}`, { method: "POST" })
+    const response = await fetch(`/Appointment/ApptSys/GET_MemberData/${id}`, { method: "POST" })
     const data = await response.json()
-    $("#AddApptMemberId").val(data[0].id)
-    $("#AddApptMemberNumber").val(data[0].memberNumber)
-    $("#AddApptNationalId").val(data[0].nationalId)
-    $("#AddApptName").val(data[0].name)
-    $("#AddApptGender").val(data[0].gender)
-    $("#AddApptBirthDate").val(data[0].birthDate)
-    $("#AddApptBloodType").val(data[0].bloodType)
-    $("#AddApptContactAddress").val(data[0].contactAddress)
-    $("#AddApptPhone").val(data[0].phone)
-    $("#AddApptMemEmail").val(data[0].memEmail)
-    $("#AddApptIceName").val(data[0].iceName)
-    $("#AddApptIceNumber").val(data[0].iceNumber)
+    $("#AddApptMemberId").val(data.id)
+    $("#AddApptMemberNumber").val(data.memberNumber)
+    $("#AddApptNationalId").val(data.nationalId)
+    $("#AddApptName").val(data.name)
+    $("#AddApptGender").val(data.gender)
+    $("#AddApptBirthDate").val(data.birthDate)
+    $("#AddApptBloodType").val(data.bloodType)
+    $("#AddApptContactAddress").val(data.contactAddress)
+    $("#AddApptPhone").val(data.phone)
+    $("#AddApptMemEmail").val(data.memEmail)
+    $("#AddApptIceName").val(data.iceName)
+    $("#AddApptIceNumber").val(data.iceNumber)
 }
-
+//增加新掛號
 async function AddAppt() {
     const memberId = $("#AddApptMemberId").val()
     const isVIP = $("#AddApptIsVIP").is(":checked")
-    if (!clinicIdSelected || !memberId) {
+    if (!_clinicIdSelected || !memberId) {
         alert("未選擇病患或門診")
         return
     }
     //loading gif
     $("#addApptLoading").css('visibility', 'visible');
-    $("#btnAddAppt").attr('disable','disable')
-    const response = await fetch(`/Appointment/ApptSys/AddAppt/${clinicIdSelected}/${memberId}/${isVIP}`, { method: "POST" })
-    const isDuplicate = await response.text()
+    $("#btnAddAppt").attr('disable', 'disable')
+    let result;
+    try {
+        const response = await fetch(`/Appointment/ApptSys/Add_ApptRecord/${_clinicIdSelected}/${memberId}/${isVIP}`, { method: "POST" })
+        result = await response.text()    //result= 'Fail'新增出錯失敗, 'True'重複失敗, 'False'未重複且掛號成功
+    } catch (e) {
+        $("#addApptMessage").text('新增至資料庫失敗，請洽系統管理員')
+        $("#addApptMessage").css('visibility', 'visible')
+    }
+
     await $("#addApptLoading").css('visibility', 'hidden')
     await $("#btnAddAppt").attr('disable', 'none')
-    console.log(isDuplicate)
-    if (isDuplicate === 'True') {
+    if (result === 'True') {
         //重複掛號
-        $("#addApptIsDuplicate").css('visibility', 'visible')
+        $("#addApptMessage").text('此病患已重複掛號')
+        $("#addApptMessage").css('visibility', 'visible')
     }
     else {
-        $("#addApptIsDuplicate").css('visibility', 'hidden')
+        $("#addApptMessage").css('visibility', 'hidden')
         addApptFormClose()
         new PNotify({
             title: '掛號成功',
             type: 'success',
             styling: 'bootstrap3'
         });
-        getApptData(clinicIdSelected)
+        getApptData(_clinicIdSelected)
     }
-    
 }
-
 //關閉#addApptForm視窗
 function addApptFormClose() {
     $("#addApptForm").modal('toggle')
+}
+let isCancelled = "";
+//修改選擇的掛號紀錄
+$("#modAppt").on('click', async (e) => {
+    let memberId = $('#apptDataTable').DataTable().row(_index_apptDataTable).data().member_id;
+
+    const response = await fetch(`/Appointment/ApptSys/GET_ApptRecordOne/${_clinicIdSelected}/${memberId}`, { method: "POST" });
+    const data = await response.json();
+    //const dataArray = await Object.values(data)
+    //console.log(dataArray)
+
+    //填入視窗
+    $("#ModApptMemberNumber").val(data.clinic_id)
+    $("#ModApptNationalId").val(data.member_id)
+    $("#ModApptName").val(data.姓名)
+    $("#ModApptGender").val(data.性別)
+    $("#ModApptBirthDate").val(data.生日)
+    $("#ModApptBloodType").val(data.看診狀態)
+    $("#ModApptClinicNumber").val(data.診號)
+    $("#ModApptState").val(data.身分證字號)
+    if (data.退掛 == "是") {
+        $("#ModApptIsCancelled").val("True")
+        isCancelled = "True"
+    } else {
+        $("#ModApptIsCancelled").val("False")
+        isCancelled = "False"
+    }
+})
+async function ModAppt() {
+    let putCancell = $("#ModApptIsCancelled").val() //[區域]putCancell愈更變的值, [全域]isCancelled原始的值
+    if (isCancelled == putCancell || isCancelled == "") {
+        modApptFormClose()
+        return
+    }
+
+    let memberId = $('#apptDataTable').DataTable().row(_index_apptDataTable).data().member_id;
+
+    let result;
+    try {
+        const response = await fetch(`/Appointment/ApptSys/PUT_ApptRecord_Cancelled/${_clinicIdSelected}/${memberId}/${putCancell}`, { method: "POST" });
+        result = await response.json()
+    } catch (e) {
+        $("#modApptMessage").text('新增至資料庫失敗，請洽系統管理員')
+        $("#modApptMessage").css('visibility', 'visible')
+        return
+    }
+
+    modApptFormClose()
+    new PNotify({
+        title: '修改成功',
+        type: 'success',
+        styling: 'bootstrap3'
+    });
+
+    //只重繪修改的該row
+    $('#apptDataTable').DataTable().row(_index_apptDataTable).data(result).draw();
+}
+
+//關閉#modApptForm視窗
+function modApptFormClose() {
+    $("#modApptForm").modal('toggle')
+    $("#modApptMessage").css('visibility', 'hidden')
+    isCancelled = ""
 }
 //function searchMemberOnType() {
 //    const response = await fetch(`${_MemberSnapURL}+${$("#memberNationalIdSearch").val()}`)

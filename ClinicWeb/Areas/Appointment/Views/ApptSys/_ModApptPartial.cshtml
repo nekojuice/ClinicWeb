@@ -1,0 +1,92 @@
+﻿<div class="modal fade modApptModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" data-backdrop="static" id="modApptForm">
+    @* data-keyboard="false" *@
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="x_panel">
+                <div class="x_content">
+
+                    <br />
+                    <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+
+                        <div class="item form-group">
+                            <div class="col-md-12 col-sm-12">
+                                <button type="button" onclick="modApptFormClose()" class="x_btn_border pull-right" tabindex="-1"><i class="fa fa-close"></i></button>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-12 col-sm-12 form-group"><h4>確認病患資訊</h4></div>
+
+                        @*會員id*@
+                        <input type="text" id="AddApptMemberId" readonly="readonly" autocomplete="off" tabindex="-1" style="display:none">
+
+                        <label class="col-form-label col-md-2 col-sm-2 label-align">會員號碼</label>
+                        <div class="col-md-4 col-sm-4 form-group has-feedback">
+                            <input type="text" id="ModApptMemberNumber" readonly="readonly" class="form-control input_noborder" autocomplete="off" tabindex="-1">
+                        </div>
+
+                        <label class="col-form-label col-md-2 col-sm-2 label-align">身分證字號</label>
+                        <div class="col-md-4 col-sm-4 form-group has-feedback">
+                            <input type="text" id="ModApptNationalId" readonly="readonly" class="form-control input_noborder" autocomplete="off" tabindex="-1">
+                        </div>
+
+                        <label class="col-form-label col-md-2 col-sm-2 label-align">姓名</label>
+                        <div class="col-md-4 col-sm-4 form-group has-feedback">
+                            <input type="text" id="ModApptName" readonly="readonly" class="form-control input_noborder" autocomplete="off" tabindex="-1">
+                        </div>
+
+                        <label class="col-form-label col-md-2 col-sm-2 label-align">性別</label>
+                        <div class="col-md-4 col-sm-4 form-group has-feedback">
+                            <input type="text" id="ModApptGender" readonly="readonly" class="form-control input_noborder" autocomplete="off" tabindex="-1">
+                        </div>
+
+                        <label class="col-form-label col-md-2 col-sm-2 label-align">生日</label>
+                        <div class="col-md-4 col-sm-4 form-group has-feedback">
+                            <input type="text" id="ModApptBirthDate" readonly="readonly" class="form-control input_noborder" autocomplete="off" tabindex="-1">
+                        </div>
+
+                        <label class="col-form-label col-md-2 col-sm-2 label-align">血型</label>
+                        <div class="col-md-4 col-sm-4 form-group has-feedback">
+                            <input type="text" id="ModApptBloodType" readonly="readonly" class="form-control input_noborder" autocomplete="off" tabindex="-1">
+                        </div>
+
+                        <div class="col-md-12 col-sm-12 form-group"><hr /></div>
+
+                        <label class="col-form-label col-md-2 col-sm-2 label-align">診號</label>
+                        <div class="col-md-10 col-sm-10 form-group has-feedback">
+                            <input type="text" id="ModApptClinicNumber" readonly="readonly" class="form-control input_noborder" autocomplete="off" tabindex="-1">
+                        </div>
+
+
+                        <label class="col-form-label col-md-2 col-sm-2 label-align">看診狀態</label>
+                        <div class="col-md-4 col-sm-4 form-group has-feedback">
+                            <input type="text" id="ModApptState" readonly="readonly" class="form-control input_noborder" autocomplete="off" tabindex="-1">
+                        </div>
+
+                        <label class="col-form-label col-md-2 col-sm-2 label-align">退掛狀態</label>
+                        <div class="col-md-4 col-sm-4 form-group has-feedback">
+                            <select class="form-control" id="ModApptIsCancelled">
+                                <option value="True">是</option>
+                                <option value="False">否</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-12 col-sm-12 form-group"><hr /></div>
+
+                        <div class="col-md-2 col-sm-2 form-group">
+                            <button type="button" class="btn btn-danger pull-right" id="btnDelAppt" onclick="DelAppt()">刪除紀錄</button>
+                            <img src="~/msit155e/images/appointment/loading.gif" height="37" id="addApptLoading" style="margin-left:38px;position:fixed;visibility:hidden;" />
+                        </div>
+                        <div class="col-md-8 col-sm-8">
+                            <h6 class="alert alert-danger alert-dismissible" id="modApptMessage" style="visibility:hidden;">新增至資料庫失敗，請洽系統管理員</h6>
+                        </div>
+                        <div class="col-md-2 col-sm-2 form-group">
+                            <button type="button" class="btn btn-success pull-right" id="btnModAppt" onclick="ModAppt()">確認修改</button>
+                            <img src="~/msit155e/images/appointment/loading.gif" height="37" id="addApptLoading" style="margin-left:38px;position:fixed;visibility:hidden;" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -46,7 +46,7 @@ namespace ClinicWeb.Areas.Appointment.Controllers
 
         [Route("{area}/{controller}/{action}/{year}/{month}")]
         //[HttpPost]
-        public JsonResult ClinicInfo(string year, string month)
+        public JsonResult GET_ClinicInfoList(string year, string month)
         {
             return Json(_context.ScheduleClinicInfo
                 .Where(x => x.Date.StartsWith($"{year}/{month}"))
@@ -68,7 +68,7 @@ namespace ClinicWeb.Areas.Appointment.Controllers
 
         [Route("{area}/{controller}/{action}/{id}")]
         //[HttpPost]
-        public JsonResult ApptRecord(string id)
+        public JsonResult GET_ApptRecordList(string id)
         {
             return Json(_context.ApptClinicList
                 .Where(x => x.ClinicId == Convert.ToInt32(id))
@@ -89,7 +89,7 @@ namespace ClinicWeb.Areas.Appointment.Controllers
 
         [Route("{area}/{controller}/{action}/{nationalId}")]
         //[HttpPost]
-        public JsonResult MemberSnap(string nationalId)
+        public JsonResult GET_MemberDataSnap(string nationalId)
         {
             return Json(_context.MemberMemberList
                 .Where(x => x.NationalId.Contains(nationalId))
@@ -106,7 +106,7 @@ namespace ClinicWeb.Areas.Appointment.Controllers
         }
 
         [HttpPost]
-        public JsonResult MemberData(string id)
+        public JsonResult GET_MemberData(string id)
         {
             return Json(_context.MemberMemberList
                 .Where(x => x.MemberId == Convert.ToInt32(id))
@@ -125,19 +125,21 @@ namespace ClinicWeb.Areas.Appointment.Controllers
                     IceName = x.IceName,
                     IceNumber = x.IceNumber
                 })
+                .FirstOrDefault()
                 );
         }
         [Route("{area}/{controller}/{action}/{clinicId}/{memberId}/{isVIP}")]
         [HttpPost]
-        public IActionResult AddAppt(string clinicId, string memberId, string isVIP)
+        public IActionResult Add_ApptRecord(string clinicId, string memberId, string isVIP)
         {
             bool isDuplicate = _context.ApptClinicList
                 .Where(x => x.ClinicId == Convert.ToInt32(clinicId) && x.MemberId == Convert.ToInt32(memberId))
                 .Any();
+            //非重複掛號時
             if (!isDuplicate)
             {
+                //計算診號邏輯
                 int maxClinicNumber = Convert.ToBoolean(isVIP) ? -1 : 0;
-
                 try
                 {
                     maxClinicNumber += _context.ApptClinicList
@@ -145,29 +147,70 @@ namespace ClinicWeb.Areas.Appointment.Controllers
                                     .Select(x => x.ClinicNumber)
                                     .Max();
                 }
+                catch (Exception) { }
+                //Console.WriteLine($"clinicId={clinicId} memberId={memberId} isVIP={isVIP}");
+                try
+                {
+                    ApptClinicList newappt = new ApptClinicList
+                    {
+                        ClinicId = Convert.ToInt32(clinicId),
+                        MemberId = Convert.ToInt32(memberId),
+                        IsVip = Convert.ToBoolean(isVIP),
+                        ClinicNumber = maxClinicNumber + 2,
+                        PatientStateId = 8,
+                        IsCancelled = false
+                    };
+
+                    _context.ApptClinicList.Add(newappt);
+                    _context.SaveChanges();
+                }
                 catch (Exception)
                 {
+                    return NotFound();
                 }
+            }
+            return Content(isDuplicate.ToString());
+        }
 
-
-
-                Console.WriteLine($"clinicId={clinicId} memberId={memberId} isVIP={isVIP}");
-                ApptClinicList newappt = new ApptClinicList
+        [Route("{area}/{controller}/{action}/{clinicId}/{memberId}")]
+        [HttpPost]
+        public JsonResult GET_ApptRecordOne(string clinicId, string memberId)
+        {
+            return Json(_context.ApptClinicList
+                .Where(x => x.ClinicId == Convert.ToInt32(clinicId) && x.MemberId == Convert.ToInt32(memberId))
+                .Select(x => new
                 {
-                    ClinicId = Convert.ToInt32(clinicId),
-                    MemberId = Convert.ToInt32(memberId),
-                    IsVip = Convert.ToBoolean(isVIP),
-                    ClinicNumber = maxClinicNumber + 2,
-                    PatientStateId = 8,
-                    IsCancelled = false
-                };
+                    clinic_id = x.ClinicId,
+                    member_id = x.MemberId,
+                    診號 = x.ClinicNumber,
+                    姓名 = x.Member.Name,
+                    生日 = x.Member.BirthDate.ToString("yyyy/MM/dd"),
+                    性別 = x.Member.Gender ? "男" : "女",
+                    身分證字號 = x.Member.NationalId,
+                    退掛 = x.IsCancelled ? "是" : "否",
+                    看診狀態 = x.PatientState.PatientStateName
+                })
+                .FirstOrDefault()
+                );
+        }
 
-                _context.ApptClinicList.Add(newappt);
+        [Route("{area}/{controller}/{action}/{clinicId}/{memberId}/{cancelled}")]
+        [HttpPost]
+        public IActionResult PUT_ApptRecord_Cancelled(string clinicId, string memberId, string cancelled)
+        {
+            try
+            {
+                var target = _context.ApptClinicList
+                    .Where(x => x.ClinicId == Convert.ToInt32(clinicId) && x.MemberId == Convert.ToInt32(memberId))
+                    .First();
+                target.IsCancelled = Convert.ToBoolean(cancelled);
                 _context.SaveChanges();
             }
-
-
-            return Content(isDuplicate.ToString());
+            catch (Exception)
+            {
+                return NotFound();
+            }
+            return GET_ApptRecordOne(clinicId, memberId);
         }
 
         public IActionResult test1()
