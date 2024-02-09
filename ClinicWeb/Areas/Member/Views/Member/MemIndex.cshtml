@@ -24,6 +24,10 @@
     <link href="~/vendors/starrr/dist/starrr.css" rel="stylesheet">
     <!-- bootstrap-daterangepicker -->
     <link href="~/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <!-- PNotify -->
+    <link href="~/vendors/pnotify/dist/pnotify.css" rel="stylesheet">
+    <link href="~/vendors/pnotify/dist/pnotify.buttons.css" rel="stylesheet">
+    <link href="~/vendors/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">
 }
 <div class="x_panel">
     <!--文字會員資料表處那排-->
@@ -55,7 +59,7 @@
                             </div>
 
                         </div>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#MemCreate">新增會員</button>
+                        <button id="newMembtn" type ="button" class="btn btn-primary" data-toggle="modal" data-target="#MemCreate">新增會員</button>
 
                         <div class="modal fade" id="MemCreate" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
                             <div class="modal-dialog modal-lg">
@@ -233,7 +237,121 @@
             }
 
         }
+        //新增會員資料相關功能
 
+        //顯示新增會員畫面
+        async function newMembtnClick() {
+            // 發送Ajax請求到後端控制器的動作URL以取得會員編號
+            $.ajax({
+                url: '/Member/Member/NewMember',
+                type: 'GET',
+                success: function (data) {
+                    // 成功回調函數，data是從後端返回的資料
+                    // 將會員編號設定到模態框中的相應元素中
+                    $('#nextMemberNumberInput').val(data);
+
+                    // 使用ViewBag傳遞的方式改為使用ViewBag.NextMemberNumber
+                    // 將會員編號設定到模態框中的相應元素中
+                    $('#nextMemberNumberInput').val(@ViewBag.NextMemberNumber);
+
+                    // 顯示模態框
+                    $('#MemCreate').modal('show');
+                },
+                error: function (xhr, status, error) {
+                    // 失敗回調函數，可做錯誤處理
+                    console.log(xhr.responseText);
+                }
+            });
+        }
+
+        // 綁定按鈕點擊事件
+        $('#newMembtn').click(newMembtnClick);
+
+        // //打開新增會員按鈕後 要自動帶入會員編號
+        // $(document).ready(function () {
+        //     $('#newMembtn').click(function () {
+        //         // 取得按鈕的 data-url 屬性值，即後端控制器的動作URL
+        //         var actionUrl = $(this).data('url');
+
+        //         // 發送Ajax請求到後端控制器的動作URL以取得資料
+        //         $.ajax({
+        //             url: actionUrl,
+        //             type: 'GET',
+        //             success: function (data) {
+        //                 // 成功回調函數，data是從後端返回的資料
+        //                 // 將資料設定到模態框中的相應元素中，例如：
+        //                 $('#newMembtn').val(data.NextMemberNumber);
+        //             },
+        //             error: function (xhr, status, error) {
+        //                 // 失敗回調函數，可做錯誤處理
+        //                 console.log(xhr.responseText);
+        //             }
+        //         });
+        //     });
+        // });
+
+        //新增會員的按下儲存後
+        const btnSubmit = document.querySelector('#saveButton');
+        // const divInfo = document.querySelector('#div1');
+
+        //測試每個欄位抓的到值
+        // const Name11 = document.querySelector('#userName');
+        // btnSubmit.addEventListener('click', async (event) => {
+        //     event.preventDefault(); //停止預設行為
+        //     console.log(Name11.value);
+        // })
+
+        btnSubmit.addEventListener('click', async (event) => {
+            event.preventDefault(); //停止預設行為
+
+            //FormData
+            const formData = new FormData(document.querySelector('#memberForm'));
+            // for (const pair of formData.entries()) {
+            //     console.log(pair[0]);
+            //     console.log(pair[1]);
+            // }
+            const url = '@Url.Content("~/Member/Member/MemberCreate")';
+            const response = await fetch(url, {
+                "method": "POST",
+                "body": formData
+            });
+            //確定有抓到整包formdata
+            const data = await response.text();
+            // // divInfo.innerHTML = data;
+
+
+            //新增完成之後要清除剛剛輸入的資料以及跳出新增成功樣式 並且取得最新資料
+
+            clearForm();
+
+            addMemFormClose();
+            new PNotify({
+                title: '新增成功',
+                type: 'success',
+                styling: 'bootstrap3'
+            });
+            QueryMemberInfo();
+        });
+
+
+
+        //關閉#addApptForm視窗
+        function addMemFormClose() {
+            $('#MemCreate').modal('hide');
+        }
+
+        // 關閉新增會員的表單後要清上面的資料 一定要放在所有新增相關動作的後面
+        function clearForm() {
+            document.getElementById('memberForm').reset();
+
+        }
+        document.getElementById('closeButton').addEventListener('click', function () {
+            clearForm();
+        });
+
+        document.getElementById('saveButton').addEventListener('click', function () {
+            clearForm();
+        });
 
 
 
@@ -279,18 +397,18 @@
                 event.preventDefault(); // 防止表單默認提交行為
                 vertification();//打開啟用按鍵所要做出的判斷
 
-                // 獲取被點擊資料的 ID
-                var clickedDataId = memberId// 設置被點擊資料的 ID;
+                // // 獲取被點擊資料的 ID
+                // var clickedDataId = memberId// 設置被點擊資料的 ID;
 
-                // 獲取資料所在的行號
-                var rowIndex = $("#memdatatable").DataTable().rows().eq(0).filter(function (index) {
-                    return $("#memdatatable").DataTable().cell(index, 0).data() === clickedDataId ? true : false;
-                });
+                // // 獲取資料所在的行號
+                // var rowIndex = $("#memdatatable").DataTable().rows().eq(0).filter(function (index) {
+                //     return $("#memdatatable").DataTable().cell(index, 0).data() === clickedDataId ? true : false;
+                // });
 
-                // 獲取該行號所在的頁碼
-                var page = $("#memdatatable").DataTable().page.info().page;
-                var pageSize = $("#memdatatable").DataTable().page.info().length;
-                var currentPage = Math.floor(rowIndex / pageSize);
+                // // 獲取該行號所在的頁碼
+                // var page = $("#memdatatable").DataTable().page.info().page;
+                // var pageSize = $("#memdatatable").DataTable().page.info().length;
+                // var currentPage = Math.floor(rowIndex / pageSize);
 
 
                 // memdatatable
@@ -335,50 +453,7 @@
 
 
 
-        //新增會員資料相關功能
 
-        //新增會員的按下儲存後
-        const btnSubmit = document.querySelector('#saveButton');
-        // const divInfo = document.querySelector('#div1');
-
-        //測試每個欄位抓的到值
-        // const Name11 = document.querySelector('#userName');
-        // btnSubmit.addEventListener('click', async (event) => {
-        //     event.preventDefault(); //停止預設行為
-        //     console.log(Name11.value);
-        // })
-
-        btnSubmit.addEventListener('click', async (event) => {
-            event.preventDefault(); //停止預設行為
-
-            //FormData
-            const formData = new FormData(document.querySelector('#memberForm'));
-            // for (const pair of formData.entries()) {
-            //     console.log(pair[0]);
-            //     console.log(pair[1]);
-            // }
-            const url = '@Url.Content("~/Member/Member/MemberCreate")';
-            const response = await fetch(url, {
-                "method": "POST",
-                "body": formData
-            });
-            //確定有抓到整包formdata
-            const data = await response.text();
-            // // divInfo.innerHTML = data;
-        })
-
-        // 關閉新增會員的表單後要清上面的資料 一定要放在所有新增相關動作的後面
-        function clearForm() {
-            document.getElementById('memberForm').reset();
-
-        }
-        document.getElementById('closeButton').addEventListener('click', function () {
-            clearForm();
-        });
-
-        document.getElementById('saveButton').addEventListener('click', function () {
-            clearForm();
-        });
 
     </script>
 }

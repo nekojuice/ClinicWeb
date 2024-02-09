@@ -116,7 +116,22 @@ namespace ClinicWeb.Areas.Member.Controllers
 
         }
 
-//修改會員資料的畫面顯示
+        //新增會員資料要自動帶入目前最新的會員編號
+
+        public IActionResult NewMember()
+        {
+            // 查詢目前會員編號的最大值
+            var maxMemberNumber = _context.MemberMemberList.Max(m => m.MemberNumber);
+            var nextMemberNumber = maxMemberNumber + 1;
+
+            // 將最大值加一傳遞給前端
+            ViewBag.NextMemberNumber = nextMemberNumber;
+
+            return View();
+        }
+
+
+        //修改會員資料的畫面顯示
         public async Task <IActionResult> MemberEdit(int memberId,int currentPage)
         {
             if (memberId == null || _context.MemberMemberList == null)
