@@ -55,5 +55,5 @@ public partial class ClinicSysContext : DbContext
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 
-    public DbSet<ClinicWeb.Areas.Member.ViewModels.MemberViewModel> MemberViewModel { get; set; } = default!;
+    public DbSet<ClinicWeb.Areas.Member.ViewModels.Membermetadata> MemberViewModel { get; set; } = default!;
 }

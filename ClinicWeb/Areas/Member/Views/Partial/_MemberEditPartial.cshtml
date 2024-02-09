@@ -1,97 +1,94 @@
-﻿@model ClinicWeb.Areas.Member.ViewModels.MemberViewModel
-
-<h4>MemberViewModel</h4>
+﻿@* @model ClinicWeb.Areas.Member.ViewModels.Membermetadata *@
+@model ClinicWeb.Areas.Member.Models.MemberMemberList
+<h4>修改會員資料</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="_MemberEditPartial" id="_MemberEditPartial">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="MemberIdVW" />
+            <input type="hidden" asp-for="MemberId" />
             <div class="form-group">
-                <label asp-for="MemberNumberVW" class="control-label"></label>
-                <input asp-for="MemberNumberVW" class="form-control" />
-                <span asp-validation-for="MemberNumberVW" class="text-danger"></span>
+                <label asp-for="MemberNumber" class="control-label"></label>
+                <input asp-for="MemberNumber" class="form-control" />
+                <span asp-validation-for="MemberNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="NameVW" class="control-label"></label>
-                <input asp-for="NameVW" class="form-control" />
-                <span asp-validation-for="NameVW" class="text-danger"></span>
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
             </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="GenderVW" /> @Html.DisplayNameFor(model => model.GenderVW)
-                    
-                </label>
-            </div>
+
+
+
 
 
             <div class="form-group row">
                 <label class="control-label col-md-3 col-sm-3 ">性別</label>
                 <div class="col-md-9 col-sm-9 ">
-                    <select class="form-control">
+                    <select name="GenderString" class="form-control">
                         <option value="">---請選擇---</option>
-                        <!option value='true'@if (Model.GenderVW== true) @("selected")> 男 </!option >
-                        <!option value='true'@if (Model.GenderVW== false) @("selected")> 女 </!option >
-                      
+                        <!option value='true'@if (Model.Gender == true)
+                            @("selected")
+> 男 </!option >
+                        <!option value='false'@if (Model.Gender == false)
+                            @("selected")
+> 女 </!option >
+
 
                     </select>
                 </div>
             </div>
             <div class="form-group">
-                <label asp-for="BloodTypeVW" class="control-label"></label>
-                <input asp-for="BloodTypeVW" class="form-control" />
-                <span asp-validation-for="BloodTypeVW" class="text-danger"></span>
+                <label asp-for="BloodType" class="control-label"></label>
+                <input asp-for="BloodType" class="form-control" />
+                <span asp-validation-for="BloodType" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="NationalIdVW" class="control-label"></label>
-                <input asp-for="NationalIdVW" class="form-control" />
-                <span asp-validation-for="NationalIdVW" class="text-danger"></span>
+                <label asp-for="NationalId" class="control-label"></label>
+                <input asp-for="NationalId" class="form-control" />
+                <span asp-validation-for="NationalId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="AddressVW" class="control-label"></label>
-                <input asp-for="AddressVW" class="form-control" />
-                <span asp-validation-for="AddressVW" class="text-danger"></span>
+                <label asp-for="Address" class="control-label"></label>
+                <input asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ContactAddressVW" class="control-label"></label>
-                <input asp-for="ContactAddressVW" class="form-control" />
-                <span asp-validation-for="ContactAddressVW" class="text-danger"></span>
+                <label asp-for="ContactAddress" class="control-label"></label>
+                <input asp-for="ContactAddress" class="form-control" />
+                <span asp-validation-for="ContactAddress" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PhoneVW" class="control-label"></label>
-                <input asp-for="PhoneVW" class="form-control" />
-                <span asp-validation-for="PhoneVW" class="text-danger"></span>
+                <label asp-for="Phone" class="control-label"></label>
+                <input asp-for="Phone" class="form-control" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="BirthDateVW" class="control-label"></label>
-                <input asp-for="BirthDateVW" class="form-control" />
-                <span asp-validation-for="BirthDateVW" class="text-danger"></span>
+                <label asp-for="BirthDate" class="control-label"></label>
+                <input asp-for="BirthDate" class="form-control" />
+                <span asp-validation-for="BirthDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="IceNameVW" class="control-label"></label>
-                <input asp-for="IceNameVW" class="form-control" />
-                <span asp-validation-for="IceNameVW" class="text-danger"></span>
+                <label asp-for="IceName" class="control-label"></label>
+                <input asp-for="IceName" class="form-control" />
+                <span asp-validation-for="IceName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="IceNumberVW" class="control-label"></label>
-                <input asp-for="IceNumberVW" class="form-control" />
-                <span asp-validation-for="IceNumberVW" class="text-danger"></span>
+                <label asp-for="IceNumber" class="control-label"></label>
+                <input asp-for="IceNumber" class="form-control" />
+                <span asp-validation-for="IceNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="MemPasswordVW" class="control-label"></label>
-                <input asp-for="MemPasswordVW" class="form-control" />
-                <span asp-validation-for="MemPasswordVW" class="text-danger"></span>
+                <label asp-for="MemPassword" class="control-label"></label>
+                <input asp-for="MemPassword" class="form-control" />
+                <span asp-validation-for="MemPassword" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="MemEmailVW" class="control-label"></label>
-                <input asp-for="MemEmailVW" class="form-control" />
-                <span asp-validation-for="MemEmailVW" class="text-danger"></span>
+                <label asp-for="MemEmail" class="control-label"></label>
+                <input asp-for="MemEmail" class="form-control" />
+                <span asp-validation-for="MemEmail" class="text-danger"></span>
             </div>
-           @*  <div class="form-group">
-                <label asp-for="VerificationVW" class="control-label"></label>
-                <input asp-for="VerificationVW" class="form-control" />
-                <span asp-validation-for="VerificationVW" class="text-danger"></span>
-            </div> *@
+
 
             <!--啟用權限-->
             <div class="form-group row">
@@ -100,9 +97,12 @@
                     <div class="col-md-9 col-sm-9 ">
                         <div class="">
                             <label>
-                                <input id="vertificationformem"type="checkbox" class="js-switch"  @if (Model.VerificationVW== true) @("checked") data-switchery="true" style="display: none;">
-                                
-                                    
+                                <input name="VerificationString" id="vertificationformem" type="checkbox" class="js-switch" @if (Model.Verification == true)
+                                    @("checked")
+
+                                       data-switchery="true" style="display: none;">
+
+
                             </label>
                         </div>
 
@@ -123,5 +123,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

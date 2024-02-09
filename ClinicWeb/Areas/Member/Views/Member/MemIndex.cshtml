@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ClinicWeb.Areas.Member.ViewModels.MemberViewModel>
+﻿@model IEnumerable<ClinicWeb.Areas.Member.ViewModels.Membermetadata>
 @* @model ClinicWeb.Areas.Member.ViewModels.MemberViewModel *@
 
 
@@ -124,7 +124,7 @@
                                                 啟用
                                                 @*  @Html.DisplayNameFor(model => model.MemberNumber) *@
                                             </th>
-                                            <th >
+                                            <th>
                                                 修改
                                                 <div id="partialContainer"></div>
 
@@ -135,7 +135,6 @@
                             </div>
                         </div>
                         <div class="row">
-                           
                         </div>
                     </div>
                 </div>
@@ -172,7 +171,7 @@
 @section Scripts {
     <script>
 
-//顯示會員主畫面資料表
+        //顯示會員主畫面資料表
         function QueryMemberInfo() {
             $('#memdatatable').dataTable({
                 ajax: {
@@ -216,7 +215,7 @@
         }
         QueryMemberInfo();
 
-//控制對於密碼輸入欄位眼睛的顯示
+        //控制對於密碼輸入欄位眼睛的顯示
         function hideshow() {
             var password = document.getElementById("password1");
             var slash = document.getElementById("slash");
@@ -235,10 +234,10 @@
 
         }
 
-      
 
 
- //顯示編輯畫面     
+
+        //顯示編輯畫面
 
         async function handleButtonClick(memberId) {
             // 发送 AJAX 请求以获取部分视图
@@ -273,30 +272,70 @@
             buttonEventFunc()
         }
 
+
         //確定編輯畫面按下保存有抓到資料
-        function buttonEventFunc() {
-
-            document.getElementById("_MemberEditPartial").addEventListener("submit", function (event) {
+        async function buttonEventFunc() {
+            document.getElementById("_MemberEditPartial").addEventListener("submit", async (event) => {
                 event.preventDefault(); // 防止表單默認提交行為
+                vertification();//打開啟用按鍵所要做出的判斷
 
-                // 獲取表單元素
-                var form = event.target;
+                // 獲取被點擊資料的 ID
+                var clickedDataId = memberId// 設置被點擊資料的 ID;
 
-                // 獲取表單數據
-                var formData = new FormData(form);
-
-                // 將數據轉換為對象
-                var formDataObject = {};
-                formData.forEach(function (value, key) {
-                    formDataObject[key] = value;
+                // 獲取資料所在的行號
+                var rowIndex = $("#memdatatable").DataTable().rows().eq(0).filter(function (index) {
+                    return $("#memdatatable").DataTable().cell(index, 0).data() === clickedDataId ? true : false;
                 });
 
-                // 打印表單數據到控制台
-                console.log(formDataObject);
+                // 獲取該行號所在的頁碼
+                var page = $("#memdatatable").DataTable().page.info().page;
+                var pageSize = $("#memdatatable").DataTable().page.info().length;
+                var currentPage = Math.floor(rowIndex / pageSize);
+
+
+                // memdatatable
+                const formData = new FormData(document.querySelector('#_MemberEditPartial'));
+                const url = `@Url.Content("~/Member/Member/Edit")?currentPageNumber=${currentPageNumber}`;
+                const response = await fetch(url, {
+                    "method": "POST",
+                    "body": formData
+                });
+                //確定有抓到整包formdata
+                const data = await response.text();
+
+                // // 獲取表單元素
+                // var form = event.target;
+
+                // // 獲取表單數據
+                // var formData = new FormData(form);
+
+                // // 將數據轉換為對象
+                // var formDataObject = {};
+                // formData.forEach(function (value, key) {
+                //     formDataObject[key] = value;
+                // });
+
+                // // 打印表單數據到控制台
+                // console.log(formDataObject);
             });
         }
 
-//新增會員資料相關功能
+        // 監聽checkbox的變化事件 並加上回傳值
+        function vertification() {
+            document.getElementById("vertificationformem").addEventListener("change", function (event) {
+                // 獲取checkbox的狀態
+                var isChecked = event.target.checked;
+                var valueToSend = isChecked ? "on" : "off";
+            });
+        }
+
+        //抓到該筆編輯資料所在的page
+
+
+
+
+
+        //新增會員資料相關功能
 
         //新增會員的按下儲存後
         const btnSubmit = document.querySelector('#saveButton');
@@ -323,7 +362,7 @@
                 "method": "POST",
                 "body": formData
             });
-            // //確定有抓到整包formdata
+            //確定有抓到整包formdata
             const data = await response.text();
             // // divInfo.innerHTML = data;
         })

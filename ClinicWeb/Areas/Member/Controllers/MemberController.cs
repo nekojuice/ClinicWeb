@@ -56,27 +56,27 @@ namespace ClinicWeb.Areas.Member.Controllers
             //可以指定不是這個名稱的view來顯示 return View("~Areas/Member/");
             return View();
         }
-        //新增會員資料
+//新增會員資料
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public IActionResult MemberCreate(MemberMemberList memforview, string GenderString, string VerificationString)
+        public IActionResult MemberCreate(MemberMemberList member, string GenderString, string VerificationString)
         {
             //return Content("123");
 
             //加入資料庫
             if (GenderString == "true")
             {
-                memforview.Gender = true;
+                member.Gender = true;
             }
-            else { memforview.Gender = false; }
+            else { member.Gender = false; }
 
             if (VerificationString == "on")
             {
-                memforview.Verification = true;
+                member.Verification = true;
             }
-            else { memforview.Verification = false; }
+            else { member.Verification = false; }
 
-            _context.MemberMemberList.Add(memforview);
+            _context.MemberMemberList.Add(member);
             _context.SaveChanges();
 
           
@@ -116,42 +116,106 @@ namespace ClinicWeb.Areas.Member.Controllers
 
         }
 
-        //修改會員資料的畫面顯示
-        public IActionResult MemberEdit(int memberId)
+//修改會員資料的畫面顯示
+        public async Task <IActionResult> MemberEdit(int memberId,int currentPage)
         {
-            var member = _context.MemberMemberList.Where(m => m.MemberId == memberId).FirstOrDefault();
-            if (member == null) { return Content("123"); }
-            MemberViewModel memVM = new MemberViewModel
+            if (memberId == null || _context.MemberMemberList == null)
             {
-                // 將原始模型的屬性賦值給 ViewModel
-                MemberIdVW = member.MemberId,
-                MemberNumberVW = member.MemberNumber,
-                NameVW = member.Name,
-                GenderVW = member.Gender,
-                BloodTypeVW = member.BloodType,
-                NationalIdVW = member.NationalId,
-                AddressVW = member.Address,
-                ContactAddressVW = member.ContactAddress,
-                PhoneVW = member.Phone,
-                BirthDateVW = member.BirthDate,
-                IceNameVW = member.IceName,
-                MemPasswordVW = member.MemPassword,
-                MemEmailVW = member.MemEmail,
-                VerificationVW = member.Verification,
+                return NotFound();
+            }
+
+            var memberList = await _context.MemberMemberList.FindAsync(memberId);
+            if (memberList == null)
+            {
+                return NotFound();
+            }
+            return PartialView("~/Areas/Member/Views/Partial/_MemberEditPartial.cshtml", memberList);
+            //return View(memberEmployeeList);
+
+            //var member = _context.MemberMemberList.Where(m => m.MemberId == memberId).FirstOrDefault();
+
+            //if (member == null) { return Content("123"); } 
+            //MemberViewModel memVM = new MemberViewModel
+            //{
+            //    // 將原始模型的屬性賦值給 ViewModel
+            //    MemberIdVW = member.MemberId,
+            //    MemberNumberVW = member.MemberNumber,
+            //    NameVW = member.Name,
+            //    GenderVW = member.Gender,
+            //    BloodTypeVW = member.BloodType,
+            //    NationalIdVW = member.NationalId,
+            //    AddressVW = member.Address,
+            //    ContactAddressVW = member.ContactAddress,
+            //    PhoneVW = member.Phone,
+            //    BirthDateVW = member.BirthDate,
+            //    IceNameVW = member.IceName,
+            //    MemPasswordVW = member.MemPassword,
+            //    MemEmailVW = member.MemEmail,
+            //    VerificationVW = member.Verification,
 
 
-            };
-            return PartialView("~/Areas/Member/Views/Partial/_MemberEditPartial.cshtml", memVM);
+            //};
+            //return PartialView("~/Areas/Member/Views/Partial/_MemberEditPartial.cshtml", member);
+
+        }
+
+
+
+
+        //編輯資料時檢查該筆會員id是否存在的函數
+        private bool MemberMemberListExists(int memberId)
+        {
+            return _context.MemberMemberList.Any(e => e.MemberId == memberId);
         }
 
 
         //把會員編輯好的資料送回資料庫
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MemberId,MemberNumber,Name,Gender,BloodType,NationalId,Address,ContactAddress,Phone,BirthDate,IceName,MemPassword,MemEmail,Verification,IsEnabled")] MemberMemberList member)
+/* [Bind("MemberId,MemberNumber,Name,Gender,BloodType,NationalId,Address,ContactAddress,Phone,BirthDate,IceName,MemPassword,MemEmail,Verification,IsEnabled")]*/ 
+        public async Task<IActionResult> Edit(int MemberId,MemberMemberList member, string GenderString, string VerificationString)
         {
+            if (MemberId != member.MemberId)
+            {
+                return NotFound();
+            }
 
-            return View(member);
+            //if (ModelState.IsValid)
+            //{
+                try
+                {
+                    if (GenderString == "true")
+                    {
+                        member.Gender = true;
+                    }
+                    else { member.Gender = false; }
+
+                    if (VerificationString == "on")
+                    {
+                        member.Verification = true;
+                    }
+                    else { member.Verification = false; }
+
+                    _context.Update(member);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!MemberMemberListExists(member.MemberId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                //}
+                //return RedirectToAction(nameof(Index));
+            }
+            // 取得剛剛那筆會員資料的 ID
+            int newMemberId = member.MemberId;
+            return View("~/Areas/Member/Views/_MemberIndex.cshtml",  member.MemberId);
+            //return View(member);
         }
 
     }

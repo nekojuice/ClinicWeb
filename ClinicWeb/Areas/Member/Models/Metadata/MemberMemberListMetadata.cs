@@ -1,39 +1,31 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Mvc;
 
-namespace ClinicWeb.Areas.Member.ViewModels
+namespace ClinicWeb.Areas.Member.Models
 {
-    [Area ("Member")]
-    public class Membermetadata
+    internal class MemberMemberListMetadata
     {
         [Key]
         [Column("Member_ID")]
-        public int MemberIdVW { get; set; }
+        public int MemberId { get; set; }
 
         //[Column("Member_Number")]
         [Display(Name = "會員編號")]
-        public int MemberNumberVW { get; set; }
+        public int MemberNumber { get; set; }
 
         //[Required]
         //[StringLength(50)]
         [Display(Name = "姓名")]
-        public string ?NameVW { get; set; }
+        public string? Name { get; set; }
 
 
 
-        //private bool _gender;
+       
         [Display(Name = "性別")]
-        public bool GenderVW{ get; set; }
-        public string ?GenderString {  get; set; }
+        public bool Gender { get; set; }
+        public string? GenderString { get; set; }
 
-        //為了接前台傳來的字串
-        //{
 
-        //    //get { return _gender; }
-        //    //set { _gender = value; }
-        //}
-        //public bool GenderVW{ get; set; }
 
 
 
@@ -44,58 +36,57 @@ namespace ClinicWeb.Areas.Member.ViewModels
         //[Column("Blood_Type")]
         //[StringLength(50)]
         [Display(Name = "血型")]
-        public string ?BloodTypeVW { get; set; }
+        public string? BloodType { get; set; }
 
         //[Required]
         //[Column("National_ID")]
         //[StringLength(50)]
         [Display(Name = "身分證字號")]
-        public string ?NationalIdVW { get; set; }
+        public string? NationalId { get; set; }
 
         //[Required]
         //[StringLength(50)]
         [Display(Name = "戶籍地址")]
-        public string ?AddressVW { get; set; }
+        public string? Address { get; set; }
 
         //[Required]
         //[Column("Contact_Address")]
         //[StringLength(50)]
         [Display(Name = "聯絡地址")]
-        public string ?ContactAddressVW { get; set; }
+        public string? ContactAddress { get; set; }
 
         //[Required]
         //[StringLength(50)]
         [Display(Name = "連絡電話")]
-        public string ?PhoneVW { get; set; }
+        public string? Phone { get; set; }
 
         //[Column("Birth_Date", TypeName = "datetime")]
         [Display(Name = "生日")]
-        public DateTime BirthDateVW { get; set; }
+        public DateTime BirthDate { get; set; }
 
         //[Column("ICE_Name")]
         //[StringLength(50)]
         [Display(Name = "緊急聯絡人")]
-        public string ?IceNameVW { get; set; }
+        public string? IceName { get; set; }
 
         //[Column("ICE_Number")]
         //[StringLength(50)]
         [Display(Name = "緊急聯絡人電話")]
-        public string ?IceNumberVW { get; set; }
+        public string? IceNumber { get; set; }
 
         //[Column("Mem_Password")]
         //[StringLength(50)]
         [Display(Name = "密碼")]
-        public string ?MemPasswordVW { get; set; }
+        public string? MemPassword { get; set; }
 
         //[Column("Mem_Email")]
         //[StringLength(50)]
         [Display(Name = "信箱")]
-        public string ?MemEmailVW { get; set; }
+        public string? MemEmail { get; set; }
 
 
         [Display(Name = "啟用")]
-        public bool? VerificationVW { get; set; }
+        public bool? Verification { get; set; }
         public string? VerificationString { get; set; }
-       
     }
 }
