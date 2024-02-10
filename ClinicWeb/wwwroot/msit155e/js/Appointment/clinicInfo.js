@@ -197,7 +197,7 @@ async function memberNationalIdSearchClick(id, searchResult) {
     $("#memberNationalIdSearch").val(searchResult)
     $("#memberNationalIdSearchData").hide()
     //隱藏重複掛號警告
-    $("#addApptIsDuplicate").css('visibility', 'hidden')
+    $("#addApptMessage").css('visibility', 'hidden')
 
     const response = await fetch(`/Appointment/ApptSys/GET_MemberData/${id}`, { method: "POST" })
     const data = await response.json()
@@ -244,12 +244,15 @@ async function AddAppt() {
     else {
         $("#addApptMessage").css('visibility', 'hidden')
         addApptFormClose()
+
         new PNotify({
             title: '掛號成功',
+            text: $("#AddApptName").val() + " 已掛號",
             type: 'success',
             styling: 'bootstrap3'
         });
         getApptData(_clinicIdSelected)
+        $("#modAppt").prop("disabled", "disabled");
     }
 }
 //關閉#addApptForm視窗
@@ -314,7 +317,36 @@ async function ModAppt() {
 }
 
 async function DelAppt() {
-    
+    let memberId = $('#apptDataTable').DataTable().row(_index_apptDataTable).data().member_id;
+    try {
+        const response = await fetch(`/Appointment/ApptSys/DEL_ApptRecordOne/${_clinicIdSelected}/${memberId}`, { method: "POST" });
+        if (!response.ok) {
+            throw new Error()
+        }
+        result = await response.text()
+    } catch (e) {
+        new PNotify({
+            title: '刪除失敗',
+            text: '發生錯誤，請洽系統管理員',
+            type: 'danger',
+            styling: 'bootstrap3'
+        });
+        $("#delApptMessage").text('刪除失敗，請洽系統管理員')
+        $("#delApptMessage").css('visibility', 'visible')
+        return
+    }
+    if (result =="Success") { 
+        $("#delApptForm").modal('toggle')
+        $("#modApptForm").modal('toggle')
+        getApptData(_clinicIdSelected);//還是直接傳回新表??
+        $("#modAppt").prop("disabled", "disabled");
+        new PNotify({
+            title: '刪除成功',
+            type: 'success',
+            styling: 'bootstrap3'
+        });
+    }
+
 }
 function delApptFormClose() {
     $("#delApptForm").modal('toggle')

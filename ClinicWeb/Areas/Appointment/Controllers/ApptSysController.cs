@@ -130,7 +130,7 @@ namespace ClinicWeb.Areas.Appointment.Controllers
         }
         [Route("{area}/{controller}/{action}/{clinicId}/{memberId}/{isVIP}")]
         [HttpPost]
-        public IActionResult Add_ApptRecord(string clinicId, string memberId, string isVIP)
+        public async Task<IActionResult> Add_ApptRecord(string clinicId, string memberId, string isVIP)
         {
             bool isDuplicate = _context.ApptClinicList
                 .Where(x => x.ClinicId == Convert.ToInt32(clinicId) && x.MemberId == Convert.ToInt32(memberId))
@@ -142,7 +142,7 @@ namespace ClinicWeb.Areas.Appointment.Controllers
                 int maxClinicNumber = Convert.ToBoolean(isVIP) ? -1 : 0;
                 try
                 {
-                    maxClinicNumber += _context.ApptClinicList
+                    maxClinicNumber +=  _context.ApptClinicList
                                     .Where(x => x.IsVip == Convert.ToBoolean(isVIP) && x.ClinicId == Convert.ToInt32(clinicId))
                                     .Select(x => x.ClinicNumber)
                                     .Max();
@@ -162,7 +162,7 @@ namespace ClinicWeb.Areas.Appointment.Controllers
                     };
 
                     _context.ApptClinicList.Add(newappt);
-                    _context.SaveChanges();
+                    await _context.SaveChangesAsync();
                 }
                 catch (Exception)
                 {
@@ -196,7 +196,7 @@ namespace ClinicWeb.Areas.Appointment.Controllers
 
         [Route("{area}/{controller}/{action}/{clinicId}/{memberId}/{cancelled}")]
         [HttpPost]
-        public IActionResult PUT_ApptRecord_Cancelled(string clinicId, string memberId, string cancelled)
+        public async Task<IActionResult> PUT_ApptRecord_Cancelled(string clinicId, string memberId, string cancelled)
         {
             try
             {
@@ -204,13 +204,33 @@ namespace ClinicWeb.Areas.Appointment.Controllers
                     .Where(x => x.ClinicId == Convert.ToInt32(clinicId) && x.MemberId == Convert.ToInt32(memberId))
                     .First();
                 target.IsCancelled = Convert.ToBoolean(cancelled);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
             catch (Exception)
             {
                 return NotFound();
             }
             return GET_ApptRecordOne(clinicId, memberId);
+        }
+
+        [Route("{area}/{controller}/{action}/{clinicId}/{memberId}")]
+        [HttpPost]
+        public async Task<IActionResult> DEL_ApptRecordOne(string clinicId, string memberId)
+        {
+            try
+            {
+                var target = _context.ApptClinicList
+                    .Where(x => x.ClinicId == Convert.ToInt32(clinicId) && x.MemberId == Convert.ToInt32(memberId))
+                    .First();
+                _context.ApptClinicList.Remove(target);
+                await _context.SaveChangesAsync();
+                return Content("Success");
+            }
+            catch (Exception)
+            {
+                return NotFound();
+            }
+
         }
 
         public IActionResult test1()
