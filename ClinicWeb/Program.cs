@@ -21,7 +21,7 @@ builder.Services.AddControllersWithViews();
 
 //設定連接字串
 builder.Services.AddDbContext<ClinicSysContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ClinicSys"))); //連接本地端資料庫
-//var ClinicDb = new SqlConnectionStringBuilder(builder.Configuration.GetConnectionString("ClinicSys")) //連接本組連線資料庫
+//var ClinicDb = new SqlConnectionStringBuilder(builder.Configuration.GetConnectionString("ClinicSysWAN")) //連接本組連線資料庫
 //{
 //    ServerSPN = Server,
 //    UserID = User,
