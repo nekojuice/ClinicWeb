@@ -313,6 +313,12 @@ async function ModAppt() {
     $('#apptDataTable').DataTable().row(_index_apptDataTable).data(result).draw();
 }
 
+async function DelAppt() {
+    
+}
+function delApptFormClose() {
+    $("#delApptForm").modal('toggle')
+}
 //關閉#modApptForm視窗
 function modApptFormClose() {
     $("#modApptForm").modal('toggle')
