@@ -142,7 +142,7 @@ namespace ClinicWeb.Areas.Appointment.Controllers
                 int maxClinicNumber = Convert.ToBoolean(isVIP) ? -1 : 0;
                 try
                 {
-                    maxClinicNumber +=  _context.ApptClinicList
+                    maxClinicNumber += _context.ApptClinicList
                                     .Where(x => x.IsVip == Convert.ToBoolean(isVIP) && x.ClinicId == Convert.ToInt32(clinicId))
                                     .Select(x => x.ClinicNumber)
                                     .Max();
@@ -233,6 +233,26 @@ namespace ClinicWeb.Areas.Appointment.Controllers
 
         }
 
+        [HttpPost]
+        public IActionResult GET_ClinicPatientNumber(string id)
+        {
+            try
+            {
+                return Json(_context.ScheduleClinicInfo
+                    .Where(x => x.ClinicInfoId == Convert.ToInt32(id))
+                    .Select(x => new
+                    {
+                        預約人數 = x.ApptClinicList.Count
+                    })
+                    .First()
+                    );
+            }
+            catch (Exception)
+            {
+                return NotFound();
+            }
+
+        }
         public IActionResult test1()
         {
             return View();

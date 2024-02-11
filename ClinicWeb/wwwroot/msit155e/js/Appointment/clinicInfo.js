@@ -1,4 +1,53 @@
-﻿
+﻿//初始化表格 欄位如果不變，別再destroy了
+function init_ClinicTable() {
+    if (!$.fn.DataTable.isDataTable('#apptDataTable')) {
+        $('#clinicDataTable').dataTable({
+            columns: [
+                { "data": "id", "visible": false },
+                { "data": "日期" },
+                { "data": "時段" },
+                { "data": "科別" },
+                { "data": "醫師名稱" },
+                { "data": "上限人數" },
+                { "data": "預約人數" }
+            ],
+            fixedHeader: {
+                header: true
+            },
+            language: {
+                url: "https://cdn.datatables.net/plug-ins/1.13.7/i18n/zh-HANT.json"
+            },
+            order: [[1, 'asc']]
+        });
+    }
+}
+function init_ApptTable() {
+    if (!$.fn.DataTable.isDataTable('#apptDataTable')) {
+        $("#apptDataTable").dataTable({
+            columns: [
+                { "data": "clinic_id", "visible": false },
+                { "data": "member_id", "visible": false },
+                { "data": "診號" },
+                { "data": "姓名" },
+                { "data": "生日" },
+                { "data": "性別" },
+                { "data": "身分證字號" },
+                { "data": "退掛" },
+                { "data": "看診狀態" }
+            ],
+            fixedHeader: {
+                header: true
+            },
+            language: {
+                url: "https://cdn.datatables.net/plug-ins/1.13.7/i18n/zh-HANT.json"
+            },
+            order: [[2, 'asc']]
+        });
+    }
+}
+init_ClinicTable()
+init_ApptTable()
+
 //左表
 $("#Date").change(() => {
     DateOnChange();
@@ -6,53 +55,30 @@ $("#Date").change(() => {
     $("#modAppt").prop("disabled", true);
 });
 
+//時段選擇
 function DateOnChange() {
     if ($("#Date").val() != '--請選擇--') {
+        reset_selectRowState()
         QueryClinicInfo();
     }
     else {
         $('#clinicDataTable').DataTable().clear().draw();
+        reset_selectRowState()
     }
 }
-
-//function GetTable() {
-//    fetch("/Appointment/ApptSys/ClinicInfo/" + $("#Date").val())
-//        .then((response) => { return response.text(); })
-//        .then((data) => { $("#clinicDataDiv").html(data); })
-//        .then((x) => { QueryClinicInfo(); })
-//        .catch()
-//}
-
-function QueryClinicInfo() {
-    $('#clinicDataTable').dataTable({
-        ajax: {
-            type: 'GET',
-            url: ("/Appointment/ApptSys/GET_ClinicInfoList/" + $("#Date").val()),
-            dataSrc: function (json) { return json; }
-        },
-        destroy: true,
-        columns: [
-            { "data": "id", "visible": false },
-            { "data": "日期" },
-            { "data": "時段" },
-            { "data": "科別" },
-            { "data": "醫師名稱" },
-            { "data": "上限人數" },
-            { "data": "預約人數" }
-        ],
-        fixedHeader: {
-            header: true
-        },
-        language: {
-            url: "https://cdn.datatables.net/plug-ins/1.13.7/i18n/zh-HANT.json"
-        },
-        order: [[1, 'asc']]
-    });
-    searchDept()
+//依照左點選搜尋右表的資料
+async function QueryClinicInfo() {
+    //選擇時先清空資料
+    $("#clinicDataTable").DataTable().clear();
+    //要資料
+    const selectedDate = $("#Date").val()
+    const response = await fetch(`/Appointment/ApptSys/GET_ClinicInfoList/${selectedDate}`)
+    const data = await response.json()
+    //填入資料
+    $("#clinicDataTable").DataTable().rows.add(data).draw()
 }
-
+//下拉選單 選擇科別時
 $("#Doctor_Department").change(() => { searchDept() });
-
 function searchDept() {
     if ($("#Doctor_Department").val() == '全部') {
         $('#clinicDataTable').DataTable().column(3).search("").draw();
@@ -60,10 +86,11 @@ function searchDept() {
     else {
         $('#clinicDataTable').DataTable().column(3).search($("#Doctor_Department").val()).draw();
     }
+    reset_selectRowState()
 }
 
+//下拉選單 選擇時段時
 $("#ClinicTime_ClinicShifts").change(() => { searchTime() });
-
 function searchTime() {
     if ($("#ClinicTime_ClinicShifts").val() == '全部') {
         $('#clinicDataTable').DataTable().column(2).search("").draw();
@@ -71,15 +98,29 @@ function searchTime() {
     else {
         $('#clinicDataTable').DataTable().column(2).search($("#ClinicTime_ClinicShifts").val()).draw();
     }
+    reset_selectRowState()
 }
-let _clinicIdSelected;
+
+//重置左表選擇
+function reset_selectRowState() {
+    $("#apptDataTable").DataTable().clear().draw();
+    _index_clinicDataTable == null
+    $('#clinicDataTable tr').removeClass('selected');
+    $("#addAppt").prop("disabled", true);
+}
+
+//全域變數
+let _clinicIdSelected;  //選擇的診間id
+let _index_clinicDataTable;  //左表index
+let _index_apptDataTable;  //右表index
+
 //左表點擊事件
 $("#clinicDataTable tbody").on('mousedown', 'tr', function () {
-    let index = $('#clinicDataTable').DataTable().row(this).index();
-    if (index == null) { return; } //忽略無選擇時
+    _index_clinicDataTable = $('#clinicDataTable').DataTable().row(this).index();
+    if (_index_clinicDataTable == null) { return; } //忽略無選擇時
     if ($(this).hasClass('selected')) { return; }   //忽略選擇同一row
     //console.log(index)
-    _clinicIdSelected = $('#clinicDataTable').DataTable().row(index).data().id;
+    _clinicIdSelected = $('#clinicDataTable').DataTable().row(_index_clinicDataTable).data().id;
 
     $(this).siblings().removeClass('selected');
     $(this).addClass('selected');
@@ -89,7 +130,6 @@ $("#clinicDataTable tbody").on('mousedown', 'tr', function () {
     $("#modAppt").prop("disabled", true);
 });
 
-let _index_apptDataTable;
 $("#apptDataTable tbody").on('mousedown', 'tr', function () {
     _index_apptDataTable = $('#apptDataTable').DataTable().row(this).index();
     if (_index_apptDataTable == null) { return; } //忽略無選擇時
@@ -106,35 +146,17 @@ $("#apptDataTable tbody").on('mousedown', 'tr', function () {
 });
 
 //右表
-function getApptData(clinicID) {
-    $("#apptDataTable").dataTable({
-        ajax: {
-            type: 'GET',
-            url: ("/Appointment/ApptSys/GET_ApptRecordList/" + clinicID),
-            dataSrc: function (json) { return json; }
-        },
-        destroy: true,
-        columns: [
-            { "data": "clinic_id", "visible": false },
-            { "data": "member_id", "visible": false },
-            { "data": "診號" },
-            { "data": "姓名" },
-            { "data": "生日" },
-            { "data": "性別" },
-            { "data": "身分證字號" },
-            { "data": "退掛" },
-            { "data": "看診狀態" }
-        ],
-        fixedHeader: {
-            header: true
-        },
-        language: {
-            url: "https://cdn.datatables.net/plug-ins/1.13.7/i18n/zh-HANT.json"
-        },
-        order: [[2, 'asc']]
-    });
+async function getApptData(clinicID) {
+    //選擇時先清空資料
+    $("#apptDataTable").DataTable().clear();
+    //要資料
+    const response = await fetch(`/Appointment/ApptSys/GET_ApptRecordList/${clinicID}`)
+    const data = await response.json()
+    //填入資料
+    $("#apptDataTable").DataTable().rows.add(data).draw()
 }
 
+//下拉選單 搜尋是否退掛
 $("#isCancelled").change(() => { searchIsCancelled() });
 function searchIsCancelled() {
     if ($("#isCancelled").val() == '全部') {
@@ -253,7 +275,16 @@ async function AddAppt() {
         });
         getApptData(_clinicIdSelected)
         $("#modAppt").prop("disabled", "disabled");
+
+        update_PatientNumber()
     }
+}
+//更新目前掛號數
+async function update_PatientNumber() {
+    const response = await fetch(`ApptSys/GET_ClinicPatientNumber/${_clinicIdSelected}`, { method: "POST" })
+    const result = await response.json()
+    //$('#clinicDataTable').DataTable().row(_index_clinicDataTable).data(result).draw(); //不需要整列更新
+    $('#clinicDataTable').DataTable().cell(_index_clinicDataTable, 6).data(result.預約人數).draw();
 }
 //關閉#addApptForm視窗
 function addApptFormClose() {
@@ -300,8 +331,14 @@ async function ModAppt() {
         const response = await fetch(`/Appointment/ApptSys/PUT_ApptRecord_Cancelled/${_clinicIdSelected}/${memberId}/${putCancell}`, { method: "POST" });
         result = await response.json()
     } catch (e) {
-        $("#modApptMessage").text('新增至資料庫失敗，請洽系統管理員')
-        $("#modApptMessage").css('visibility', 'visible')
+        new PNotify({
+            title: '更新資料失敗',
+            text: '發生錯誤，請洽系統管理員',
+            type: 'danger',
+            styling: 'bootstrap3'
+        });
+        //$("#modApptMessage").text('更新資料失敗，請洽系統管理員')
+        //$("#modApptMessage").css('visibility', 'visible')
         return
     }
 
@@ -313,9 +350,10 @@ async function ModAppt() {
     });
 
     //只重繪修改的該row
+    //也許要新增修改看診狀態? 所以整個row重繪
     $('#apptDataTable').DataTable().row(_index_apptDataTable).data(result).draw();
 }
-
+//刪除掛號紀錄(非退掛)
 async function DelAppt() {
     let memberId = $('#apptDataTable').DataTable().row(_index_apptDataTable).data().member_id;
     try {
@@ -335,7 +373,7 @@ async function DelAppt() {
         $("#delApptMessage").css('visibility', 'visible')
         return
     }
-    if (result =="Success") { 
+    if (result == "Success") {
         $("#delApptForm").modal('toggle')
         $("#modApptForm").modal('toggle')
         getApptData(_clinicIdSelected);//還是直接傳回新表??
@@ -345,8 +383,8 @@ async function DelAppt() {
             type: 'success',
             styling: 'bootstrap3'
         });
+        update_PatientNumber()
     }
-
 }
 function delApptFormClose() {
     $("#delApptForm").modal('toggle')
@@ -357,36 +395,3 @@ function modApptFormClose() {
     $("#modApptMessage").css('visibility', 'hidden')
     isCancelled = ""
 }
-//function searchMemberOnType() {
-//    const response = await fetch(`${_MemberSnapURL}+${$("#memberNationalIdSearch").val()}`)
-//    const data = await response.json()
-//    console.log(data)
-//}
-/*
-$(document).ready(function () {
-    $('#clinicDataTable').DataTable({
-        "proccessing": true,
-        "serverSide": true,
-        "ajax": {
-            url: "/customers",
-            type: 'POST',
-            headers: { 'RequestVerificationToken': $('@Html.AntiForgeryToken()').val() }
-        },
-        "columnDefs": [
-            {
-                "targets": -1,
-                "data": null,
-                "render": function (data, type, row, meta) {
-                    return '<a href="/customers/edit?id=' + row.id + '">Edit</a> | <a href="/customers/details?id=' + row.id + '">Details</a> | <a href="/customers/delete?id=' + row.id + '">Delete</a>';
-                },
-                "sortable": false
-            },
-            { "name": "Id", "data": "id", "targets": 0, "visible": false },
-            { "name": "Name", "data": "name", "targets": 1 },
-            { "name": "PhoneNumber", "data": "phoneNumber", "targets": 2 },
-            { "name": "Address", "data": "address", "targets": 3 },
-            { "name": "PostalCode", "data": "postalCode", "targets": 4 }
-        ],
-        "order": [[0, "desc"]]
-    });
-});*/
