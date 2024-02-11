@@ -10,14 +10,14 @@
         <br>
         <form id="memberForm" class="form-label-left input_mask">
 
-            <!--會員編號 希望自動顯示-->
-            <div class="col-md-6 col-sm-6  form-group has-feedback">
-                <input name="MemberNumber" type="text" class="form-control has-feedback-left" id="nextMemberNumberInput" value="@ViewBag.NextMemberNumber" readonly>
-                <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
-            </div>
             <!--姓名-->
+             <div class="col-md-6 col-sm-6  form-group has-feedback">
+                <input name="Name" type="text" class="form-control has-feedback-left" placeholder="姓名" @* readonly *@>
+               <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+            </div> 
+            <!--身分證字號-->
             <div class="col-md-6 col-sm-6  form-group has-feedback">
-                <input name="Name" type="text" class="form-control" id="inputName" placeholder="姓名">
+                <input name="NationalId" type="text" class="form-control" id="inputName" placeholder="身分證字號">
                 <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
             </div>
             <!--信箱-->
@@ -60,12 +60,12 @@
             </div>
 
             <!--身分證字號-->
-            <div class="form-group row">
+           @*  <div class="form-group row">
                 <label class="col-form-label col-md-3 col-sm-3 ">Default Input</label>
                 <div class="col-md-9 col-sm-9 ">
                     <input type="text" class="form-control" placeholder="身分證字號" name="NationalId">
                 </div>
-            </div>
+            </div> *@
             <!--戶籍地址-->
             <div class="form-group row">
                 <label class="col-form-label col-md-3 col-sm-3 ">Default Input</label>

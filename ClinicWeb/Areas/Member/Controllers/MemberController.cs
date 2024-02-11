@@ -50,6 +50,33 @@ namespace ClinicWeb.Areas.Member.Controllers
                 ));
         }
 
+        //修改完資料後抓取單筆資料
+        [Route("{area}/{controller}/{action}/{memberId}")]
+        [HttpPost]
+        public JsonResult MemberGetdataOne(int memberId)
+        {
+            return Json(_context.MemberMemberList
+                .Where(x => x.MemberId == Convert.ToInt32(memberId))
+                .Select(x => new
+                {
+                    會員id = x.MemberId,
+                    會員編號 = x.MemberNumber,
+                    姓名 = x.Name,
+                    性別 = x.Gender ? "男" : "女",
+                    血型 = x.BloodType,
+                    身分證字號 = x.NationalId,
+                    聯絡電話 = x.Phone,
+                    地址 = x.Address,
+                    緊急聯絡人 = x.IceName,
+                    信箱 = x.MemEmail,
+
+
+                    啟用 = (bool)x.Verification ? "啟用" : "未啟用"
+                })
+                .FirstOrDefault()
+                );
+        }
+
         //顯示多筆會員資料
         public IActionResult MemIndex()
         {
@@ -75,60 +102,21 @@ namespace ClinicWeb.Areas.Member.Controllers
                 member.Verification = true;
             }
             else { member.Verification = false; }
+            var maxMemberNumber = _context.MemberMemberList.Max(m => m.MemberNumber);
+            var nextMemberNumber = maxMemberNumber + 1;
+            member.MemberNumber = nextMemberNumber;
 
             _context.MemberMemberList.Add(member);
             _context.SaveChanges();
 
           
             //    }
-            return View(MemIndex);
+            return View("~/Areas/Member/Views/MemIndex.cshtml");
 
-            //if (ModelState.IsValid)
-            //{
-
-
-            //    return RedirectToAction(nameof(MemIndex));
-            //}
-
-            //return Content("這段如果有放_ValidationScriptsPartial 就不易被觸發");
-
-            //IEnumerable<MemberViewModel> memVM = _context.MemberMemberList.Select(member => new MemberViewModel
-            //{
-            //    // 將原始模型的屬性賦值給 ViewModel
-            //    MemberIdVW = member.MemberId,
-            //    MemberNumberVW = member.MemberNumber,
-            //    NameVW = member.Name,
-            //    GenderVW = member.Gender,
-            //    // 以上為測試欄位
-            //});
-            //return View("MemberBasicInfo", memVM);
-
-
-            //        return Json(_context.MemberMemberList
-            //.Select(x => new
-            //{
-            //	會員編號 = "",
-            //	姓名 = "",
-            //	性別 = x.Gender ? "男" : "女",
-            //	血型 = "",
-            //	身分證字號 = "",
-            //啟用=x.Verification
+            
 
         }
 
-        //新增會員資料要自動帶入目前最新的會員編號
-
-        public IActionResult NewMember()
-        {
-            // 查詢目前會員編號的最大值
-            var maxMemberNumber = _context.MemberMemberList.Max(m => m.MemberNumber);
-            var nextMemberNumber = maxMemberNumber + 1;
-
-            // 將最大值加一傳遞給前端
-            ViewBag.NextMemberNumber = nextMemberNumber;
-
-            return View();
-        }
 
 
         //修改會員資料的畫面顯示
@@ -228,9 +216,9 @@ namespace ClinicWeb.Areas.Member.Controllers
                 //return RedirectToAction(nameof(Index));
             }
             // 取得剛剛那筆會員資料的 ID
-            int newMemberId = member.MemberId;
-            return View("~/Areas/Member/Views/_MemberIndex.cshtml",  member.MemberId);
-            //return View(member);
+            int memberId = member.MemberId;
+            //return View("~/Areas/Member/Views/_MemberIndex.cshtml",  member.MemberId);
+            return MemberGetdataOne(memberId);
         }
 
     }
