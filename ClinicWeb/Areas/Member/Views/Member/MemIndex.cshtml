@@ -205,8 +205,8 @@
                     { "data": "啟用" },
                     {
                         "data": "修改", "render": function (data, type, row) {
-                            return '<button type="button"   class="fa fa-edit" data-toggle="modal" data-target="#MemEdit" onclick="handleButtonClick(' + row.會員id + ')">Edit</button>';
-                            // editButton
+                            return '<button type="button"  class="fa fa-edit indexSelector" " data-toggle="modal" data-target="#MemEdit" onclick="handleButtonClick(' + row.會員id + ')"> </button>';
+                            // editButtonS
                             // class="fa fa-edit"
 
                         }
@@ -321,10 +321,10 @@
 
         //抓到該筆編輯資料的索引
         let _index_memdatatable;
-        $("#memdatatable tbody").on('click', '.fa.fa-edit', function () {
+        $("#memdatatable tbody").on('click', '.indexSelector', function () {
             console.log('Row index: ' + $(this).closest('tr').index());
             _index_memdatatable = $(this).closest('tr').index()
-            console.log($("#memdatatable").DataTable().row(_index_memdatatable).data().會員id);
+            console.log("抓索引值的事件納編所顯示的會員id"+$("#memdatatable").DataTable().row(_index_memdatatable).data().會員id);
             let memberId = $("#memdatatable").DataTable().row(_index_memdatatable).data().會員id;
             // handleButtonClick(memberId, _index_memdatatable );
         });
@@ -332,7 +332,7 @@
         //顯示編輯畫面
 
         async function handleButtonClick(memberId, /* _index_memdatatable */) {
-            alert("這邊是顯示畫面的alert", memberId,/* _index_memdatatable */)
+            // alert("這邊是顯示畫面的alert", memberId,/* _index_memdatatable */)
             //紀錄該筆資料index
 
             
@@ -397,7 +397,7 @@
                 //     return;
                 // }
 
-                // editMemFormClose();
+                editMemFormClose();
                 new PNotify({
                     title: '修改成功',
                     type: 'success',
@@ -406,8 +406,8 @@
                 console.log("修改後這邊要抓到",_index_memdatatable);
 
                 //只重繪修改的該row
-                $('#memdatable').DataTable().row(_index_memdatatable).data(result).draw();
-                editMemFormClose();
+                $('#memdatatable').DataTable().row(_index_memdatatable).data(result).draw();
+               
             });
         }
 
