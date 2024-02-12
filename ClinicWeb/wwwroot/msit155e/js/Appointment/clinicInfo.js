@@ -240,6 +240,8 @@ async function memberNationalIdSearchClick(id, searchResult) {
 async function AddAppt() {
     const memberId = $("#AddApptMemberId").val()
     const isVIP = $("#AddApptIsVIP").is(":checked")
+    const currentPage = $('#apptDataTable').DataTable().page();//紀錄當前page
+
     if (!_clinicIdSelected || !memberId) {
         alert("未選擇病患或門診")
         return
@@ -273,10 +275,12 @@ async function AddAppt() {
             type: 'success',
             styling: 'bootstrap3'
         });
-        getApptData(_clinicIdSelected)
+        await getApptData(_clinicIdSelected)
         $("#modAppt").prop("disabled", "disabled");
 
-        update_PatientNumber()
+        await update_PatientNumber()
+        //更新重撈後更換page
+        await $('#apptDataTable').DataTable().page(currentPage).draw('page') //切換到當前page
     }
 }
 //更新目前掛號數
@@ -356,6 +360,8 @@ async function ModAppt() {
 //刪除掛號紀錄(非退掛)
 async function DelAppt() {
     let memberId = $('#apptDataTable').DataTable().row(_index_apptDataTable).data().member_id;
+    const memberName = $('#apptDataTable').DataTable().row(_index_apptDataTable).data().姓名;
+    const currentPage = $('#apptDataTable').DataTable().page();//紀錄當前page
     try {
         const response = await fetch(`/Appointment/ApptSys/DEL_ApptRecordOne/${_clinicIdSelected}/${memberId}`, { method: "POST" });
         if (!response.ok) {
@@ -380,10 +386,16 @@ async function DelAppt() {
         $("#modAppt").prop("disabled", "disabled");
         new PNotify({
             title: '刪除成功',
+            text: `${memberName} 掛號紀錄已刪除`,
             type: 'success',
             styling: 'bootstrap3'
         });
-        update_PatientNumber()
+        await update_PatientNumber()
+        //刪除重撈後切換
+        //最大頁數不可比當前頁數小，避免page沒有row
+        if ($('#apptDataTable').DataTable().page.info().pages - 1 >= currentPage) {
+            await $('#apptDataTable').DataTable().page(currentPage).draw('page') //切換到當前page
+        }
     }
 }
 function delApptFormClose() {

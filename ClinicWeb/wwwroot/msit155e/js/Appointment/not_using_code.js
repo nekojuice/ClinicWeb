@@ -1,8 +1,8 @@
 ﻿//順便作為筆記區用
 
 //bugs:
-//1. 重繪翻頁問題 現在是右表刪除時
-//2. 粉紅色bg沒有對其，用事件偵測 ?
+//1. 粉紅色bg沒有對齊，現在會自動展開，但內容減少時不會收回
+
 
 //function GetTable() {
 //    fetch("/Appointment/ApptSys/ClinicInfo/" + $("#Date").val())
