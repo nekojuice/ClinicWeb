@@ -129,7 +129,7 @@
                                                         @*  @Html.DisplayNameFor(model => model.MemberNumber) *@
                                                     </th>
                                                     <th>
-                                                        修改
+                                                        操作
                                                         <div id="partialContainer"></div>
 
                                                     </th>
@@ -204,13 +204,13 @@
                     { "data": "信箱" },
                     { "data": "啟用" },
                     {
-                        "data": "修改", "render": function (data, type, row) {
-                            return '<button type="button"  class="fa fa-edit border:none  indexSelector" style="border: none;"data-toggle="modal" data-target="#MemEdit" onclick="handleButtonClick(' + row.會員id + ')"> </button>';
-                            // editButtonS
-                            // class="fa fa-edit"
-
+                        "data": "修改",
+                        "render": function (data, type, row) {
+                            return '<button type="button" class="fa fa-edit border:none indexSelector" style="border: none;" data-toggle="modal" data-target="#MemEdit" onclick="handleButtonClick(' + row.會員id + ')"></button>' +
+                                '<button type="button" class="fa fa-file-word-o border:none indexSelector" style="border: none;" data-toggle="modal" data-target="#MemView" onclick="handleViewButtonClick(' + row.會員id + ')"></button>';
                         }
                     }
+
 
 
                 ],
@@ -374,6 +374,8 @@
 
         //確定編輯畫面按下保存有抓到資料
         async function buttonEventFunc(/* memberId, *//* _index_memdatatable */) {
+            //先抓到當前的頁碼
+            const currentPage = $('#memdatatable').DataTable().page()
             console.log("這邊是按下保存後的console log",_index_memdatatable)
             document.getElementById("_MemberEditPartial").addEventListener("submit", async (event) => {
                 event.preventDefault(); // 防止表單默認提交行為
@@ -410,8 +412,13 @@
                 });
                 console.log("修改後這邊要抓到",_index_memdatatable);
 
+               
+               
+                const currentPage = $('#memdatatable').DataTable().page()
                 //只重繪修改的該row
-                $('#memdatatable').DataTable().row(_index_memdatatable).data(result).draw();
+                $('#memdatatable').DataTable().row(_index_memdatatable).data(result);
+
+                $('#memdatatable').DataTable().page(currentPage).draw('page')
                
             });
         }
@@ -458,7 +465,7 @@
 
 
 
-
+ 
 
 
     </script>

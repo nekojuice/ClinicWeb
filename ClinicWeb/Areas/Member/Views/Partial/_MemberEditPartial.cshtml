@@ -1,27 +1,49 @@
 ﻿@* @model ClinicWeb.Areas.Member.ViewModels.Membermetadata *@
+@* @model ClinicWeb.Areas.Member.ViewModels.Membermetadata *@
 @model ClinicWeb.Areas.Member.Models.MemberMemberList
-<h4>修改會員資料</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="_MemberEditPartial" id="_MemberEditPartial">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="MemberId" />
-            <div class="form-group">
-                <label asp-for="MemberNumber" class="control-label"></label>
-                <input asp-for="MemberNumber" class="form-control" />
-                <span asp-validation-for="MemberNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
+<div class="x_panel">
+    <div class="x_title">
+        <h4>修改會員資料</h4>
+        <div class="clearfix"></div>
+    </div>
+    <hr />
+    <div class="x_content">
+        <br>
+        <form id="memberForm" class="form-label-left input_mask">
+            <!--姓名-->
+            <div class="col-md-6 col-sm-6 form-group has-feedback">
                 <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
+                <input asp-for="Name" class="form-control has-feedback-left" placeholder="姓名" />
+                <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
 
+            <!--身分證字號-->
+            <div class="col-md-6 col-sm-6 form-group has-feedback">
+                <label asp-for="NationalId" class="control-label"></label>
+                <input asp-for="NationalId" class="form-control" />
+                <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+                <span asp-validation-for="NationalId" class="text-danger"></span>
+            </div>
 
 
+             <!--信箱-->
+            <div class="col-md-6 col-sm-6 form-group has-feedback">
+                <label asp-for="MemEmail" class="control-label"></label>
+                <input asp-for="MemEmail" class="form-control" />
+                <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
+                <span asp-validation-for="MemEmail" class="text-danger"></span>
+            </div>
 
+            <!--聯絡電話-->
+            <div class="col-md-6 col-sm-6 form-group has-feedback">
+                <label asp-for="Phone" class="control-label"></label>
+                <input asp-for="Phone" class="form-control" />
+                <span class="fa fa-phone form-control-feedback right" aria-hidden="true"></span>
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
 
+            <!--性別-->
             <div class="form-group row">
                 <label class="control-label col-md-3 col-sm-3 ">性別</label>
                 <div class="col-md-9 col-sm-9 ">
@@ -30,9 +52,21 @@
                         <!option value='true'@if (Model.Gender == true)
                             @("selected")
 
+
+
+
+
+
+
                         > 男 </!option >
                         <!option value='false'@if (Model.Gender == false)
                             @("selected")
+
+
+
+
+
+
 
                         > 女 </!option >
 
@@ -40,79 +74,66 @@
                     </select>
                 </div>
             </div>
+            <!--血型-->
             <div class="form-group">
                 <label asp-for="BloodType" class="control-label"></label>
                 <input asp-for="BloodType" class="form-control" />
                 <span asp-validation-for="BloodType" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="NationalId" class="control-label"></label>
-                <input asp-for="NationalId" class="form-control" />
-                <span asp-validation-for="NationalId" class="text-danger"></span>
-            </div>
+           
+            <!--地址-->
             <div class="form-group">
                 <label asp-for="Address" class="control-label"></label>
                 <input asp-for="Address" class="form-control" />
                 <span asp-validation-for="Address" class="text-danger"></span>
             </div>
+            <!--聯絡地址-->
             <div class="form-group">
                 <label asp-for="ContactAddress" class="control-label"></label>
                 <input asp-for="ContactAddress" class="form-control" />
                 <span asp-validation-for="ContactAddress" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Phone" class="control-label"></label>
-                <input asp-for="Phone" class="form-control" />
-                <span asp-validation-for="Phone" class="text-danger"></span>
-            </div>
+           
+            <!--生日-->
             <div class="form-group">
                 <label asp-for="BirthDate" class="control-label"></label>
                 <input name="BirthDate" class="date-picker form-control" type="date" value="@Model.BirthDate.ToString("yyyy-MM-dd")" required="required" />
                 <span asp-validation-for="BirthDate" class="text-danger"></span>
             </div>
-
+            <!--緊急聯絡人-->
             <div class="form-group">
                 <label asp-for="IceName" class="control-label"></label>
                 <input asp-for="IceName" class="form-control" />
                 <span asp-validation-for="IceName" class="text-danger"></span>
             </div>
+            <!--緊急聯絡人電話-->
             <div class="form-group">
                 <label asp-for="IceNumber" class="control-label"></label>
                 <input asp-for="IceNumber" class="form-control" />
                 <span asp-validation-for="IceNumber" class="text-danger"></span>
             </div>
+            <!--會員密碼-->
             <div class="form-group">
                 <label asp-for="MemPassword" class="control-label"></label>
                 <input asp-for="MemPassword" class="form-control" />
                 <span asp-validation-for="MemPassword" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="MemEmail" class="control-label"></label>
-                <input asp-for="MemEmail" class="form-control" />
-                <span asp-validation-for="MemEmail" class="text-danger"></span>
-            </div>
-
-
+           
             <!--啟用權限-->
             <div class="form-group row">
-                <label class="control-label col-md-3 col-sm-3 ">啟用</label>
-                <div class="col-md-9 col-sm-9 ">
-                    <div class="col-md-9 col-sm-9 ">
+                <label class="control-label col-md-3 col-sm-3">啟用</label>
+                <div class="col-md-9 col-sm-9">
+                    <div class="col-md-9 col-sm-9">
                         <div class="">
                             <label>
                                 <input name="VerificationString" id="vertificationformem" type="checkbox" class="js-switch" @if (Model.Verification == true)
-                                    @("checked")
-
-                                       data-switchery="true" style="display: none;">
-
-
+                                {
+                                    <text>checked</text>
+                                } />
                             </label>
                         </div>
-
                     </div>
-
                 </div>
-
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
@@ -120,11 +141,6 @@
         </form>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
