@@ -1,7 +1,288 @@
 ﻿
 @{
-    ViewData["Title"] = "NurseSchedule";
+    ViewData["Title"] = "排班系統";
 }
 
-<h1>NurseSchedule</h1>
+@* <h1>護士班表</h1> *@
 
+@section ModulesStyles
+{
+    <!-- iCheck -->
+    <link href="~/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+    <!-- Datatables -->
+
+    <link href="~/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="~/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+    <link href="~/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+    <link href="~/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+    <link href="~/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+
+}
+
+
+<div class="">
+
+    <div class="clearfix"></div>
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 ">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>護士班表</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="#">Settings 1</a>
+                                <a class="dropdown-item" href="#">Settings 2</a>
+                            </div>
+                        </li>
+                        <li>
+                            <a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="mb-3" style="overflow: auto">
+                    <div class="col-md-3">
+                        <label class="form-label">月份: </label>
+                        <select class="form-control" id="selectedMonth">
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">護士: </label>
+                        <select class="form-control" id="selectedNursename">
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">時段: </label>
+                        <select class="form-control" id="selectedShift">
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">科別: </label>
+                        <select class="form-control" id="selectedDepartment">
+                        </select>
+                    </div>
+                </div>
+                <div class="x_content">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card-box table-responsive">
+
+                                <table id="datatable" class="table table-striped table-bordered" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            
+                                            <th>日期</th>
+                                            <th>護士</th>
+                                            <th>醫師</th>
+                                            <th>時段</th>
+                                            <th>科別</th>
+                                            <th>診間</th>
+                                            <th>掛號上限</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody id="tbody1">
+                                        <tr>
+                                            @*  <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td> *@
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@section Modules
+{
+    <!-- iCheck -->
+    <script src="~/vendors/iCheck/icheck.min.js"></script>
+    <!-- Datatables -->
+    <script src="~/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+    <script src="~/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="~/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="~/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+    <script src="~/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+    <script src="~/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="~/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+    <script src="~/vendors/jszip/dist/jszip.min.js"></script>
+    <script src="~/vendors/pdfmake/build/pdfmake.min.js"></script>
+    <script src="~/vendors/pdfmake/build/vfs_fonts.js"></script>
+
+}
+
+@section Scripts
+    {
+    <script>
+        const selNursename = document.querySelector('#selectedNursename');
+        const scheduleTableBody = document.querySelector('#tbody1');
+        const selMonth = document.querySelector('#selectedMonth');
+        const selShift = document.querySelector('#selectedShift');
+        const selDep = document.querySelector('#selectedDepartment');
+        
+
+        //下拉選單匯入護士名
+        (async () => {
+            const url = '@Url.Content("~/Schedule/nurseapi/SelectedNurseName")';
+            const response = await fetch(url);
+            const datas = await response.json();
+
+            //console.log(datas);
+            const optNursenames = datas.map(name => `<option value=${name}>${name}</option>`);
+            optNursenames.unshift('<option value="allnurse">全部</option>');
+
+
+            selNursename.innerHTML = optNursenames.join("");
+        })();
+
+
+        //下拉選單匯入月份
+        (async () => {
+            const url = '@Url.Content("~/Schedule/nurseapi/GetMonth")';
+            const response = await fetch(url);
+            const datas = await response.json();
+            //console.log(datas);
+
+            const optMonth = datas.map(month => `<option value=${month}>${month}</option>`);
+            //如果是請選擇則選到當月的值
+            optMonth.unshift(`<option value=${(new Date()).getFullYear()}/${(parseInt((new Date()).getMonth()) + 1).toString().padStart(2, 0)}>請選擇</option>`);
+
+            selMonth.innerHTML = optMonth.join("");
+
+        })();
+
+        //下拉選單匯入時段
+        (async () => {
+            const url = '@Url.Content("~/Schedule/nurseapi/GetShifts")';
+            const response = await fetch(url);
+            const datas = await response.json();
+            //console.log(datas);
+
+            const optShift = datas.map(shift => `<option value=${shift.clinicShifts}>${shift.clinicShifts}</option>`);
+            optShift.unshift('<option value="allshift">全部</option>');
+
+            selShift.innerHTML = optShift.join("");
+
+        })();
+
+        //下拉選單匯入科別
+        (async () => {
+            const url = '@Url.Content("~/Schedule/nurseapi/GetDepartment")';
+            const response = await fetch(url);
+            const datas = await response.json();
+            //console.log(datas)
+
+            const optDep = datas.map(dep => `<option value=${dep}>${dep}</option>`);
+            optDep.unshift('<option value="alldep">全部</option>');
+
+            selDep.innerHTML = optDep.join("");
+
+        })();
+
+        //匯入護士班表
+        function QueryMemberInfo(selectedMonth) {
+            //alert(selectedMonth)
+            $('#datatable').dataTable({
+                ajax: {
+                    type: 'GET',
+                    url: (`/Schedule/nurseapi/ShowNurseSchedule/${selectedMonth}`),
+                    dataSrc: function (json) { return json; }
+                },
+                destroy: true,
+                columns: [
+                    // { "data": "id", "visible": false },
+                    { "data": "日期" },
+                    { "data": "護士" },
+                    { "data": "醫師" },
+                    { "data": "時段" },
+                    { "data": "科別" },
+                    { "data": "診間" },
+                    { "data": "掛號上限" }
+                ],
+                fixedHeader: {
+                    header: true
+                },
+                language: {
+                    url: "https://cdn.datatables.net/plug-ins/1.13.7/i18n/zh-HANT.json"
+                },
+                order: [[1, 'asc']]
+            });
+
+        }
+
+        QueryMemberInfo(`${(new Date()).getFullYear()}/${(parseInt((new Date()).getMonth()) + 1).toString().padStart(2, 0)}`);
+
+        //護士搜尋功能
+        selNursename.addEventListener('change', () => { searchName(); });
+        function searchName() {
+            const selectedNurse = $(selNursename).val();
+            const table = $('#datatable').DataTable();
+            //alert(selectedDoctor)
+            if (selectedNurse === 'allnurse') {
+                table.column(1).search("").draw();
+            } else {
+                table.column(1).search(selectedNurse).draw();
+            }
+
+        }
+
+
+        //月份搜尋功能
+        selMonth.addEventListener('change', (event) => { QueryMemberInfo(event.target.value) });
+
+        //時段搜尋功能
+        selShift.addEventListener('change', () => { searchShift(); });
+        function searchShift() {
+            const selectedShift = $(selShift).val();
+            const table = $('#datatable').DataTable();
+            //alert(selectedShift);
+            if (selectedShift === 'allshift') {
+                table.column(3).search("").draw();
+            } else {
+                table.column(3).search(selectedShift).draw();
+            }
+
+        }
+
+        //科別搜尋
+        selDep.addEventListener('change', () => { searchDep(); });
+        function searchDep() {
+            const selectedDep = $(selDep).val();
+            const table = $('#datatable').DataTable();
+            if (selectedDep === 'alldep') {
+                table.column(4).search("").draw();
+            } else {
+                table.column(4).search(selectedDep).draw();
+            }
+
+
+        }
+
+
+
+
+    </script>
+}

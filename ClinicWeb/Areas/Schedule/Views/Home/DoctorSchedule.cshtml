@@ -149,11 +149,13 @@
 
             //console.log(datas);
             const optDoctornames = datas.map(name => `<option value=${name}>${name}</option>`);
-            optDoctornames.unshift('<option value="alldoctors">全部</option>');
+            optDoctornames.unshift('<option value="alldoctor">全部</option>');
 
 
             selDoctorname.innerHTML = optDoctornames.join("");
         })();
+
+       
 
         //下拉選單匯入月份
         (async() => {
@@ -178,7 +180,7 @@
             //console.log(datas);
 
             const optShift = datas.map(shift => `<option value=${shift.clinicShifts}>${shift.clinicShifts}</option>`);
-            optShift.unshift('<option value="alldoctors">全部</option>');
+            optShift.unshift('<option value="allshift">全部</option>');
 
             selShift.innerHTML = optShift.join("");
         
@@ -218,7 +220,14 @@
                     { "data": "科別" },
                     { "data": "診間" },
                     { "data": "掛號上限" }
-                ]
+                ],
+                fixedHeader: {
+                    header: true
+                },
+                language: {
+                    url: "https://cdn.datatables.net/plug-ins/1.13.7/i18n/zh-HANT.json"
+                },
+                order: [[1, 'asc']]
             });
             
         }
@@ -231,7 +240,7 @@
             const selectedDoctor = $(selDoctorname).val();
             const table = $('#datatable').DataTable();
             //alert(selectedDoctor)
-            if (selectedDoctor === '全部') {
+            if (selectedDoctor === 'alldoctor') {
                 table.column(1).search("").draw();
             } else {
                 table.column(1).search(selectedDoctor).draw();
@@ -249,7 +258,7 @@
             const selectedShift = $(selShift).val();
             const table = $('#datatable').DataTable();
             //alert(selectedShift);
-            if (selectedShift === '全部') {
+            if (selectedShift === 'allshift') {
                 table.column(2).search("").draw();
             } else {
                 table.column(2).search(selectedShift).draw();
@@ -262,7 +271,7 @@
         function searchDep() { 
             const selectedDep = $(selDep).val();
             const table = $('#datatable').DataTable();
-            if (selectedDep === '全部') {
+            if (selectedDep === 'alldep') {
                 table.column(3).search("").draw();
             } else {
                 table.column(3).search(selectedDep).draw();
