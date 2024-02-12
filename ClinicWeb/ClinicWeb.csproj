@@ -12,7 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="C:\Users\Vicky Tsai\Downloads\MemIndex.cshtml" Link="MemIndex.cshtml" />
     <Content Include="wwwroot\vendors\parsleyjs\bower_components\bootstrap\bower.json" />
     <Content Include="wwwroot\vendors\parsleyjs\bower_components\bootstrap\dist\css\bootstrap-theme.css" />
     <Content Include="wwwroot\vendors\parsleyjs\bower_components\bootstrap\dist\css\bootstrap-theme.min.css" />
