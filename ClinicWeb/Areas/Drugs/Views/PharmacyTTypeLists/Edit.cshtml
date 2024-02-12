@@ -1,0 +1,39 @@
+﻿@model ClinicWeb.Areas.Drugs.Models.PharmacyTTypeList
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>PharmacyTTypeList</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="FIdType" />
+            <div class="form-group">
+                <label asp-for="FTypeCode" class="control-label"></label>
+                <input asp-for="FTypeCode" class="form-control" />
+                <span asp-validation-for="FTypeCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FType" class="control-label"></label>
+                <input asp-for="FType" class="form-control" />
+                <span asp-validation-for="FType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
