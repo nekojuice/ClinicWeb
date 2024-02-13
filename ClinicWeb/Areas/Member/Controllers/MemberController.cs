@@ -83,13 +83,18 @@ namespace ClinicWeb.Areas.Member.Controllers
             //可以指定不是這個名稱的view來顯示 return View("~Areas/Member/");
             return View();
         }
-//新增會員資料
+        //新增會員資料
         [HttpPost]
-        //[ValidateAntiForgeryToken]
-        public IActionResult MemberCreate(MemberMemberList member, string GenderString, string VerificationString)
+        [ValidateAntiForgeryToken]
+        public IActionResult MemberCreate([Bind("MemberNumber,Name,Gender,BloodType,NationalId,Address,ContactAddress,Phone,BirthDate,IceName,MemPassword,MemEmail,Verification,IsEnabled")] MemberMemberList member, string GenderString, string VerificationString)
         {
             //return Content("123");
-
+            //檢查驗證
+            if (!ModelState.IsValid)
+            {
+                // 如果模型驗證失敗，重新顯示包含錯誤信息的表單
+                return View(member); // 返回相同的視圖，這將會顯示錯誤信息
+            }
             //加入資料庫
             if (GenderString == "true")
             {
@@ -120,7 +125,7 @@ namespace ClinicWeb.Areas.Member.Controllers
 
 
         //修改會員資料的畫面顯示
-        public async Task <IActionResult> MemberEdit(int memberId,int currentPage)
+        public async Task <IActionResult> MemberEdit(int? memberId)
         {
             if (memberId == null || _context.MemberMemberList == null)
             {
@@ -176,15 +181,15 @@ namespace ClinicWeb.Areas.Member.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
 /* [Bind("MemberId,MemberNumber,Name,Gender,BloodType,NationalId,Address,ContactAddress,Phone,BirthDate,IceName,MemPassword,MemEmail,Verification,IsEnabled")]*/ 
-        public async Task<IActionResult> Edit(int MemberId,MemberMemberList member, string GenderString, string VerificationString)
+        public async Task<IActionResult> Edit([Bind("MemberId,MemberNumber,Name")]int MemberId,MemberMemberList member, string GenderString, string VerificationString)
         {
             if (MemberId != member.MemberId)
             {
                 return NotFound();
             }
 
-            //if (ModelState.IsValid)
-            //{
+            if (ModelState.IsValid)
+            {
                 try
                 {
                     if (GenderString == "true")
@@ -212,9 +217,10 @@ namespace ClinicWeb.Areas.Member.Controllers
                     {
                         throw;
                     }
-                //}
+                }
                 //return RedirectToAction(nameof(Index));
             }
+            
             // 取得剛剛那筆會員資料的 ID
             int memberId = member.MemberId;
             //return View("~/Areas/Member/Views/_MemberIndex.cshtml",  member.MemberId);

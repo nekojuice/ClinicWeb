@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ClinicWeb.Areas.Member.Models
 {
@@ -8,6 +9,7 @@ namespace ClinicWeb.Areas.Member.Models
         [Key]
         [Required]
         [Column("Member_ID")]
+       
         public int MemberId { get; set; }
 
         [Required]

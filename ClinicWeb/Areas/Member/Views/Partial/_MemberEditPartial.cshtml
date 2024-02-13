@@ -12,8 +12,9 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="MemberId" />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="MemberNumber" class="form-control" />
+            <input type="hidden" asp-for="MemberNumber" class="form-control"/>
 
+          @*   <label  asp-for="MemberNumber"  class="control-label" style="display: block; position: absolute; top: -20px;">@Model.MemberNumber</label> *@
 
             <!--姓名-->
             <div class="col-md-6 col-sm-6" style="margin-top: 20px;">
@@ -61,10 +62,10 @@
 
             <!--性別-->
             <div class="form-group row">
-                <label class="control-label col-md-3 col-sm-3 ">性別</label>
+                <label class="control-label col-md-3 col-sm-3 " asp-for="Gender"></label>
                 <div class="col-md-9 col-sm-9 ">
                     <select name="GenderString" class="form-control">
-                        <option value="">---請選擇---</option>
+                       
                         <!option value='true'@if (Model.Gender == true)
                             @("selected")
 

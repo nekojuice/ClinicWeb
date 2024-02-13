@@ -72,7 +72,7 @@
                     <div class="col-sm-12">
                         <div class="card-box table-responsive">
 
-
+                            <!--修改畫面打開-->
                             <div class="modal fade" id="MemEdit" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
                                 <div class="modal-dialog modal-lg">
                                     <div class="modal-content" id="memberedit">
@@ -178,6 +178,10 @@
 
 }
 @section Scripts {
+
+    @{
+        await Html.RenderPartialAsync("~/Views/Shared/_ValidationScriptsPartial.cshtml");
+    }
     <script>
 
         //顯示會員主畫面資料表
@@ -285,7 +289,7 @@
                 });
                 //確定有抓到整包formdata
                 const data = await response.text();
-                  // // divInfo.innerHTML = data;
+                // // divInfo.innerHTML = data;
             }
             catch {
                 new PNotify({
@@ -299,7 +303,7 @@
             }
 
 
-          
+
 
 
             //新增完成之後要清除剛剛輸入的資料以及跳出新增成功樣式 並且取得最新資料
@@ -312,10 +316,10 @@
                 styling: 'bootstrap3'
             });
 
-         
+
             //重抓全部資料
             QueryMemberInfo();
-    
+
 
         });
 
@@ -507,8 +511,6 @@
 
 
 
-
-
-
     </script>
+
 }

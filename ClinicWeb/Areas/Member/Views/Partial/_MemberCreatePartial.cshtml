@@ -1,5 +1,6 @@
 ﻿@* @model MemberMemberList *@
-@model ClinicWeb.Areas.Member.ViewModels.Membermetadata
+@* @model ClinicWeb.Areas.Member.ViewModels.Membermetadata *@
+@model ClinicWeb.Areas.Member.Models.MemberMemberList
 <div class="x_panel">
     <div class="x_title">
         <h2>新增會員</h2>
@@ -13,7 +14,7 @@
             <!--姓名-->
             <div class="col-md-6 col-sm-6  form-group has-feedback">
 
-                <input name="Name" type="text" class="form-control has-feedback-left" placeholder="姓名" @* readonly *@>
+                <input name="Name" type="text" class="form-control has-feedback-left" placeholder=@Html.DisplayNameFor(model => model.Name) >
                 <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
             </div>
             <!--身分證字號-->
