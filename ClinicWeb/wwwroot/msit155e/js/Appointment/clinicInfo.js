@@ -353,9 +353,12 @@ async function ModAppt() {
         styling: 'bootstrap3'
     });
 
+    //更新右表資料與狀態
     //只重繪修改的該row
     //也許要新增修改看診狀態? 所以整個row重繪
     $('#apptDataTable').DataTable().row(_index_apptDataTable).data(result).draw();
+    //更新左表總掛號數
+    await update_PatientNumber()
 }
 //刪除掛號紀錄(非退掛)
 async function DelAppt() {

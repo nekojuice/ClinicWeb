@@ -62,7 +62,7 @@ namespace ClinicWeb.Areas.Appointment.Controllers
                     科別 = x.Doctor.Department,
                     醫師名稱 = x.Doctor.Name,
                     上限人數 = x.RegistrationLimit,
-                    預約人數 = x.ApptClinicList.Count,
+                    預約人數 = x.ApptClinicList.Count(y=>y.IsCancelled==false)
                 }));
         }
 
@@ -242,7 +242,7 @@ namespace ClinicWeb.Areas.Appointment.Controllers
                     .Where(x => x.ClinicInfoId == Convert.ToInt32(id))
                     .Select(x => new
                     {
-                        預約人數 = x.ApptClinicList.Count
+                        預約人數 = x.ApptClinicList.Count(y => y.IsCancelled == false)
                     })
                     .First()
                     );
