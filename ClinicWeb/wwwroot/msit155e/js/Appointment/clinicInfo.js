@@ -130,6 +130,7 @@ $("#clinicDataTable tbody").on('mousedown', 'tr', function () {
     $("#modAppt").prop("disabled", true);
 });
 
+
 $("#apptDataTable tbody").on('mousedown', 'tr', function () {
     _index_apptDataTable = $('#apptDataTable').DataTable().row(this).index();
     if (_index_apptDataTable == null) { return; } //忽略無選擇時
