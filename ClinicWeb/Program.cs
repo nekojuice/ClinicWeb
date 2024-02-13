@@ -19,8 +19,8 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
-//³]©w³s±µ¦r¦ê
 
+builder.Services.AddDbContext<ClinicWeb.Areas.Schedule.Models.ClinicSysContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ClinicSys")));
 builder.Services.AddDbContext<ClinicWeb.Areas.Appointment.Models.ClinicSysContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ClinicSys")));
 //builder.Services.AddDbContext<ClinicSysContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ClinicSys")));
 
@@ -33,7 +33,6 @@ builder.Services.AddDbContext<ClinicSysContext>(options => options.UseSqlServer(
 //};
 //var ConnString = ClinicDb.ConnectionString;
 //builder.Services.AddDbContext<ClinicSysContext>(options => options.UseSqlServer(ConnString));
-
 
 //NewtonsoftJson
 builder.Services.AddControllers().AddNewtonsoftJson();
