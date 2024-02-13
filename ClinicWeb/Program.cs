@@ -1,9 +1,13 @@
 using ClinicWeb.Data;
 using ClinicWeb.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+var Server = builder.Configuration["ClinicSys:Server"];
+var User = builder.Configuration["ClinicSys:USER"];
+var Pass = builder.Configuration["ClinicSys:PASS"];
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
@@ -16,7 +20,15 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 builder.Services.AddControllersWithViews();
 
 //設定連接字串
-builder.Services.AddDbContext<ClinicSysContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ClinicSys")));
+builder.Services.AddDbContext<ClinicSysContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ClinicSys"))); //連接本地端資料庫
+//var ClinicDb = new SqlConnectionStringBuilder(builder.Configuration.GetConnectionString("ClinicSysWAN")) //連接本組連線資料庫
+//{
+//    ServerSPN = Server,
+//    UserID = User,
+//    Password = Pass
+//};
+//var ConnString = ClinicDb.ConnectionString;
+//builder.Services.AddDbContext<ClinicSysContext>(options => options.UseSqlServer(ConnString));
 
 //NewtonsoftJson
 builder.Services.AddControllers().AddNewtonsoftJson();
