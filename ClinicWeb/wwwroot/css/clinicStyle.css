@@ -167,6 +167,7 @@ body .container.body .right_col {
     position: unset;
     width: 100%;
 }
+
 .nav-sm ul.nav.child_menu {
     background: #C89090;
     text-shadow: 0.1em 0.1em 0.2em black;
@@ -174,13 +175,22 @@ body .container.body .right_col {
 
 .nav-sm span.fa {
     display: inline-block;
-
 }
 
 #sidebar-menu2 {
     background: #CC9999;
-    position:absolute;
-    z-index:500;
-    width:100%;
+    position: absolute;
+    z-index: 500;
+    width: 100%;
 }
 /*擴充手機選單*/
+
+/*footer*/
+footer {
+    margin-top: -40px;
+    height: 40px;
+}
+
+/*.right_col {
+    padding-bottom: 30px;
+}*/
