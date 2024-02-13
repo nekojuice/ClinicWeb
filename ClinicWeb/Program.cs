@@ -17,7 +17,7 @@ builder.Services.AddControllersWithViews();
 
 //設定連接字串
 //Areas中Drugs
-builder.Services.AddDbContext<ClinicWeb.Areas.Drugs.Models.ClinicSysContext>(options =>  options.UseSqlServer(builder.Configuration.GetConnectionString("ClincSys")));
+builder.Services.AddDbContext<ClinicWeb.Areas.Drugs.Models.ClinicSysContext>(options =>  options.UseSqlServer(builder.Configuration.GetConnectionString("ClinicSys")));
 builder.Services.AddDbContext<ClinicSysContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ClinicSys")));
 
 //NewtonsoftJson
