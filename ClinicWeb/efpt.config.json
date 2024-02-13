@@ -7,7 +7,7 @@
    "IncludeConnectionString": false,
    "ModelNamespace": null,
    "OutputContextPath": null,
-   "OutputPath": "Areas\/Drugs\/Models",
+   "OutputPath": "Areas\/Appointment\/Models",
    "PreserveCasingWithRegex": true,
    "ProjectRootNamespace": "ClinicWeb",
    "Schemas": null,
@@ -16,35 +16,39 @@
    "T4TemplatePath": null,
    "Tables": [
       {
-         "Name": "[dbo].[Pharmacy_tClinicalUseDetails]",
+         "Name": "[dbo].[Appt_ClinicList]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[Pharmacy_tClinicalUseList]",
+         "Name": "[dbo].[Appt_PatientState_Ref]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[Pharmacy_tMedicinesList]",
+         "Name": "[dbo].[Member_EmployeeList]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[Pharmacy_tSideEffectDetails]",
+         "Name": "[dbo].[Member_MemberList]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[Pharmacy_tSideEffectList]",
+         "Name": "[dbo].[RoomList]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[Pharmacy_tTypeDetails]",
+         "Name": "[dbo].[RoomTypeList]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[Pharmacy_tTypeList]",
+         "Name": "[dbo].[Schedule_ClinicInfo]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Schedule_ClinicTime]",
          "ObjectType": 0
       }
    ],
-   "UiHint": "desktop-vnk4r11.ClinicSys.dbo",
+   "UiHint": "nkj-x510uq.ClinicSys.dbo",
    "UncountableWords": null,
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": false,

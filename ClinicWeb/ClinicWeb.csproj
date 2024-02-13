@@ -230,7 +230,6 @@
     <Folder Include="Areas\Room\Data\" />
     <Folder Include="Areas\Room\Models\" />
     <Folder Include="Areas\Schedule\Data\" />
-    <Folder Include="Areas\Schedule\Models\" />
     <Folder Include="Areas\Shop\Data\" />
     <Folder Include="Areas\Shop\Models\" />
     <Folder Include="Areas\Temp\Data\" />
@@ -244,7 +243,6 @@
     <Folder Include="wwwroot\msit155e\css\Shop\" />
     <Folder Include="wwwroot\msit155e\css\Schedule\" />
     <Folder Include="wwwroot\msit155e\css\Room\" />
-    <Folder Include="wwwroot\msit155e\images\Appointment\" />
     <Folder Include="wwwroot\msit155e\images\Attend\" />
     <Folder Include="wwwroot\msit155e\images\Cases\" />
     <Folder Include="wwwroot\msit155e\images\Drugs\" />
