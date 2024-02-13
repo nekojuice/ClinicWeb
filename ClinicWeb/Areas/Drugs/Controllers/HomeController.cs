@@ -9,5 +9,10 @@ namespace ClinicWeb.Areas.Drugs.Controllers
 		{
 			return View();
 		}
+		[Route("{Areas}/{Controller}/{Action}")]
+		public IActionResult Type()
+		{
+			return View();
+		}
 	}
 }
