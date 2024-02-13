@@ -7,7 +7,7 @@
    "IncludeConnectionString": false,
    "ModelNamespace": null,
    "OutputContextPath": null,
-   "OutputPath": "Areas\\Schedule\\Models",
+   "OutputPath": "Areas\/Appointment\/Models",
    "PreserveCasingWithRegex": true,
    "ProjectRootNamespace": "ClinicWeb",
    "Schemas": null,
@@ -16,7 +16,19 @@
    "T4TemplatePath": null,
    "Tables": [
       {
+         "Name": "[dbo].[Appt_ClinicList]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Appt_PatientState_Ref]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[Member_EmployeeList]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Member_MemberList]",
          "ObjectType": 0
       },
       {
@@ -32,39 +44,11 @@
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[Schedule_ClinicSchedule]",
-         "ObjectType": 0
-      },
-      {
          "Name": "[dbo].[Schedule_ClinicTime]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[Schedule_NurseSchedule]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[Schedule_PharmacistSchedule]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[Schedule_Staff&PharmacistShiftsTime]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[Schedule_StaffSchedule]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[Schedule_WardNurseSchedule]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[Schedule_WardShiftsTime]",
          "ObjectType": 0
       }
    ],
-   "UiHint": "laptop-shbpsen2.ClinicSys.dbo",
+   "UiHint": "nkj-x510uq.ClinicSys.dbo",
    "UncountableWords": null,
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": false,
