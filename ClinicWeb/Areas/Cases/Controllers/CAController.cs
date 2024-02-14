@@ -9,6 +9,7 @@ using ClinicWeb.Models;
 
 namespace ClinicWeb.Areas.Cases.Controllers
 {
+    [Area("Cases")]
     [Route("api/[controller]")]
     [ApiController]
     public class CAController : ControllerBase
