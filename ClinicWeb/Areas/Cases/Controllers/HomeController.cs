@@ -12,17 +12,17 @@ namespace ClinicWeb.Areas.Cases.Controllers
 		public HomeController(ClinicSysContext context) { _context = context; }
 		public IActionResult Index()
 		{
-			var result = (from tSchedule in _context.ScheduleClinicInfo select tSchedule.Date.Substring(0, 7)).Distinct();
+			//var result = (from tSchedule in _context.ScheduleClinicInfo select tSchedule.Date.Substring(0, 7)).Distinct();
 
-			ViewBag.Date = new SelectList(_context.ScheduleClinicInfo
-				.Select(tSchedule => tSchedule.Date.Substring(0, 7))
-				.Distinct());
+			//ViewBag.Date = new SelectList(_context.ScheduleClinicInfo
+			//	.Select(tSchedule => tSchedule.Date.Substring(0, 7))
+			//	.Distinct());
 
-			ViewBag.Department = new SelectList(_context.MemberEmployeeList
-				.Select(x => x.Department)
-				.Distinct());
+			//ViewBag.Department = new SelectList(_context.MemberEmployeeList
+			//	.Select(x => x.Department)
+			//	.Distinct());
 
-			ViewBag.ClinicShifts = new SelectList(_context.ScheduleClinicTime.Select(x => x.ClinicShifts));
+			//ViewBag.ClinicShifts = new SelectList(_context.ScheduleClinicTime.Select(x => x.ClinicShifts));
 
 			return View();
 		}
@@ -36,7 +36,7 @@ namespace ClinicWeb.Areas.Cases.Controllers
 					id=x.CaseId,
 					姓名=x.Member.Name,
 					身分證字號=x.Member.NationalId,
-					性別=x.Member.Gender
+					初診日期 = x.FirstvisitDate
 				}));
 		}
 		public IActionResult main()
