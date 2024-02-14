@@ -139,10 +139,12 @@ namespace ClinicWeb.Areas.Appointment.Controllers
             if (!isDuplicate)
             {
                 //計算診號邏輯
+                //未有已掛號號碼，初始計算值
                 int maxClinicNumber = Convert.ToBoolean(isVIP) ? -1 : 0;
+                //如果有已掛號號碼，撈取最大值
                 try
                 {
-                    maxClinicNumber += _context.ApptClinicList
+                    maxClinicNumber = _context.ApptClinicList
                                     .Where(x => x.IsVip == Convert.ToBoolean(isVIP) && x.ClinicId == Convert.ToInt32(clinicId))
                                     .Select(x => x.ClinicNumber)
                                     .Max();
@@ -180,12 +182,14 @@ namespace ClinicWeb.Areas.Appointment.Controllers
                 .Where(x => x.ClinicId == Convert.ToInt32(clinicId) && x.MemberId == Convert.ToInt32(memberId))
                 .Select(x => new
                 {
-                    clinic_id = x.ClinicId,
-                    member_id = x.MemberId,
+                    //clinic_id = x.ClinicId,
+                    //member_id = x.MemberId,
+                    會員號碼 = x.Member.MemberNumber,
                     診號 = x.ClinicNumber,
                     姓名 = x.Member.Name,
                     生日 = x.Member.BirthDate.ToString("yyyy/MM/dd"),
                     性別 = x.Member.Gender ? "男" : "女",
+                    血型 = x.Member.BloodType,
                     身分證字號 = x.Member.NationalId,
                     退掛 = x.IsCancelled ? "是" : "否",
                     看診狀態 = x.PatientState.PatientStateName

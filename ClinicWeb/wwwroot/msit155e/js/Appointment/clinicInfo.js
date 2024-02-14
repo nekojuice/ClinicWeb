@@ -148,13 +148,13 @@ $("#apptDataTable tbody").on('mousedown', 'tr', function () {
 
 //右表
 async function getApptData(clinicID) {
-    //選擇時先清空資料
+    //先清空資料
     $("#apptDataTable").DataTable().clear();
-    //要資料
+    //撈資料
     const response = await fetch(`/Appointment/ApptSys/GET_ApptRecordList/${clinicID}`)
     const data = await response.json()
     //填入資料
-    $("#apptDataTable").DataTable().rows.add(data).draw()
+    await $("#apptDataTable").DataTable().rows.add(data).draw();
 }
 
 //下拉選單 搜尋是否退掛
@@ -241,10 +241,12 @@ async function memberNationalIdSearchClick(id, searchResult) {
 async function AddAppt() {
     const memberId = $("#AddApptMemberId").val()
     const isVIP = $("#AddApptIsVIP").is(":checked")
-    const currentPage = $('#apptDataTable').DataTable().page();//紀錄當前page
+    //const currentPage = $('#apptDataTable').DataTable().page();//紀錄當前page
+
 
     if (!_clinicIdSelected || !memberId) {
-        alert("未選擇病患或門診")
+        $("#addApptMessage").text('未選擇病患')
+        $("#addApptMessage").css('visibility', 'visible')
         return
     }
     //loading gif
@@ -276,20 +278,57 @@ async function AddAppt() {
             type: 'success',
             styling: 'bootstrap3'
         });
-        await getApptData(_clinicIdSelected)
+
+        //更新左表掛號數
+        await update_PatientNumber()
         $("#modAppt").prop("disabled", "disabled");
 
-        await update_PatientNumber()
-        //更新重撈後更換page
-        await $('#apptDataTable').DataTable().page(currentPage).draw('page') //切換到當前page
+        //更新掛號資料表
+        await getApptData(_clinicIdSelected)
+
+
+        //套件jumpToData(資料,欄位編號)
+        $('#apptDataTable').DataTable().page.jumpToData(+memberId, 1);  //memberId要轉成int
+
+        //抓取新掛號node
+        const changedRowNode = await $('#apptDataTable').DataTable().row(searchFunction({ member_id: +memberId })).node();
+        await DataChanged_ColorAnimate(changedRowNode);
+
     }
 }
+
+//搜尋datatable row資料函式
+const searchFunction = function (dictSearch) {
+    return function (idx, data, node) {
+        const keys = Object.keys(dictSearch);
+        const n = keys.length;
+        let k = 0;
+        for (let i = 0; i <= keys.length; i++) {
+            //intrinsically checks if the key exists
+            if (data[keys[i]] === dictSearch[keys[i]]) {
+                k++;
+            } else {
+                return false;
+            }
+            if (n === k) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
+
 //更新目前掛號數
 async function update_PatientNumber() {
+    const currentPage = $('#clinicDataTable').DataTable().page();//紀錄當前page
     const response = await fetch(`ApptSys/GET_ClinicPatientNumber/${_clinicIdSelected}`, { method: "POST" })
     const result = await response.json()
     //$('#clinicDataTable').DataTable().row(_index_clinicDataTable).data(result).draw(); //不需要整列更新
-    $('#clinicDataTable').DataTable().cell(_index_clinicDataTable, 6).data(result.預約人數).draw();
+    await $('#clinicDataTable').DataTable().cell(_index_clinicDataTable, 6).data(result.預約人數).draw();
+    await $('#clinicDataTable').DataTable().page(currentPage).draw('page') //切換到當前page
+    //閃爍動畫
+    const changedRowNode = $('#clinicDataTable').DataTable().row(_index_clinicDataTable).node()
+    await DataChanged_ColorAnimate(changedRowNode)
 }
 //關閉#addApptForm視窗
 function addApptFormClose() {
@@ -306,14 +345,15 @@ $("#modAppt").on('click', async (e) => {
     //console.log(dataArray)
 
     //填入視窗
-    $("#ModApptMemberNumber").val(data.clinic_id)
-    $("#ModApptNationalId").val(data.member_id)
+    //$("#ModApptMemberId").val(data.member_id)
+    $("#ModApptMemberNumber").val(data.會員號碼)
+    $("#ModApptNationalId").val(data.身分證字號)
     $("#ModApptName").val(data.姓名)
     $("#ModApptGender").val(data.性別)
     $("#ModApptBirthDate").val(data.生日)
-    $("#ModApptBloodType").val(data.看診狀態)
+    $("#ModApptBloodType").val(data.血型)
     $("#ModApptClinicNumber").val(data.診號)
-    $("#ModApptState").val(data.身分證字號)
+    $("#ModApptState").val(data.看診狀態)
     if (data.退掛 == "是") {
         $("#ModApptIsCancelled").val("True")
         isCancelled = "True"
@@ -329,7 +369,8 @@ async function ModAppt() {
         return
     }
 
-    let memberId = $('#apptDataTable').DataTable().row(_index_apptDataTable).data().member_id;
+    const memberId = $('#apptDataTable').DataTable().row(_index_apptDataTable).data().member_id;
+    const memberName = $('#apptDataTable').DataTable().row(_index_apptDataTable).data().姓名;
 
     let result;
     try {
@@ -339,7 +380,7 @@ async function ModAppt() {
         new PNotify({
             title: '更新資料失敗',
             text: '發生錯誤，請洽系統管理員',
-            type: 'danger',
+            type: 'error',
             styling: 'bootstrap3'
         });
         //$("#modApptMessage").text('更新資料失敗，請洽系統管理員')
@@ -350,6 +391,7 @@ async function ModAppt() {
     modApptFormClose()
     new PNotify({
         title: '修改成功',
+        text: `${memberName} 掛號已修改`,
         type: 'success',
         styling: 'bootstrap3'
     });
@@ -360,7 +402,25 @@ async function ModAppt() {
     $('#apptDataTable').DataTable().row(_index_apptDataTable).data(result).draw();
     //更新左表總掛號數
     await update_PatientNumber()
+    //閃爍動畫
+    const changedRowNode = $('#apptDataTable').DataTable().row(_index_apptDataTable).node()
+    await DataChanged_ColorAnimate(changedRowNode)
 }
+
+//資料更新後的閃爍動畫
+function DataChanged_ColorAnimate(node) {
+    //node = 該row或該cell html tag選擇器
+    node.classList.remove('colorChange');
+    requestAnimationFrame(function () {
+        node.classList.add('colorChange');
+        node.addEventListener('animationend', function () {
+            node.classList.remove('colorChange');
+        }, {
+            once: true
+        });
+    });
+}
+
 //刪除掛號紀錄(非退掛)
 async function DelAppt() {
     let memberId = $('#apptDataTable').DataTable().row(_index_apptDataTable).data().member_id;
@@ -376,7 +436,7 @@ async function DelAppt() {
         new PNotify({
             title: '刪除失敗',
             text: '發生錯誤，請洽系統管理員',
-            type: 'danger',
+            type: 'error',
             styling: 'bootstrap3'
         });
         $("#delApptMessage").text('刪除失敗，請洽系統管理員')
@@ -391,7 +451,7 @@ async function DelAppt() {
         new PNotify({
             title: '刪除成功',
             text: `${memberName} 掛號紀錄已刪除`,
-            type: 'success',
+            type: 'danger',
             styling: 'bootstrap3'
         });
         await update_PatientNumber()
