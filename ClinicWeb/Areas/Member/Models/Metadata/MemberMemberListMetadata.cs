@@ -12,7 +12,7 @@ namespace ClinicWeb.Areas.Member.Models
        
         public int MemberId { get; set; }
 
-        [Required]
+    
         //[Column("Member_Number")]
         [Display(Name = "會員編號")]
         public int MemberNumber { get; set; }
@@ -55,7 +55,7 @@ namespace ClinicWeb.Areas.Member.Models
         [Display(Name = "戶籍地址")]
         public string? Address { get; set; }
 
-        //[Required]
+        [Required(ErrorMessage = "請輸入聯絡地址 ")]
         //[Column("Contact_Address")]
         //[StringLength(50)]
         [Display(Name = "聯絡地址")]
@@ -72,12 +72,13 @@ namespace ClinicWeb.Areas.Member.Models
        
         public DateTime BirthDate { get; set; }
 
+        [Required(ErrorMessage = "請輸入緊急聯絡人姓名 ")]
         //[Column("ICE_Name")]
         //[StringLength(50)]
         [Display(Name = "緊急聯絡人")]
         public string? IceName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "請輸入緊急聯絡人電話 ")]
         //[Column("ICE_Number")]
         //[StringLength(50)]
         [Display(Name = "緊急聯絡人電話")]

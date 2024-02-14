@@ -3,6 +3,7 @@
 using ClinicWeb.Areas.Member.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol;
 
 
 namespace ClinicWeb.Areas.Member.Controllers
@@ -86,14 +87,25 @@ namespace ClinicWeb.Areas.Member.Controllers
         //新增會員資料
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult MemberCreate([Bind("MemberNumber,Name,Gender,BloodType,NationalId,Address,ContactAddress,Phone,BirthDate,IceName,MemPassword,MemEmail,Verification,IsEnabled")] MemberMemberList member, string GenderString, string VerificationString)
+        //[Bind("MemberNumber,Name,Gender,BloodType,NationalId,Address,ContactAddress,Phone,BirthDate,IceName,MemPassword,MemEmail,Verification,IsEnabled")]
+        public IActionResult MemberCreate( MemberMemberList member, string GenderString, string VerificationString)
         {
+
+            if(member==null) 
+            {
+                Console.WriteLine("null~~");
+            }
+            else
+            {
+                Console.WriteLine(member.ToJson());
+            }
+
             //return Content("123");
             //檢查驗證
             if (!ModelState.IsValid)
             {
                 // 如果模型驗證失敗，重新顯示包含錯誤信息的表單
-                return View(member); // 返回相同的視圖，這將會顯示錯誤信息
+                return PartialView("~/Areas/Member/Views/Partial/_MemberCreatePartial.cshtml", member); // 返回相同的視圖，這將會顯示錯誤信息
             }
             //加入資料庫
             if (GenderString == "true")
@@ -113,12 +125,8 @@ namespace ClinicWeb.Areas.Member.Controllers
 
             _context.MemberMemberList.Add(member);
             _context.SaveChanges();
-
-          
-            //    }
-            return View("~/Areas/Member/Views/MemIndex.cshtml");
-
-            
+         
+            return View("~/Areas/Member/Views/Partial/_MemberCreatePartial.cshtml", member);
 
         }
 
@@ -181,7 +189,7 @@ namespace ClinicWeb.Areas.Member.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
 /* [Bind("MemberId,MemberNumber,Name,Gender,BloodType,NationalId,Address,ContactAddress,Phone,BirthDate,IceName,MemPassword,MemEmail,Verification,IsEnabled")]*/ 
-        public async Task<IActionResult> Edit([Bind("MemberId,MemberNumber,Name")]int MemberId,MemberMemberList member, string GenderString, string VerificationString)
+        public async Task<IActionResult> Edit([Bind("MemberId,MemberNumber,Name,Verification")]int MemberId,MemberMemberList member, string GenderString, string VerificationString)
         {
             if (MemberId != member.MemberId)
             {

@@ -160,8 +160,13 @@
                     <div class="col-md-9 col-sm-9">
                         <div class="">
                            <label>
+                               @*  <input asp-for="Verification"  type="checkbox" class="js-switch"
+                                       checked=@Model.Verification
+                                       data-switchery="true" style="display: none;"> *@
+
                                 <input name="VerificationString" id="vertificationformem" type="checkbox" class="js-switch" @if (Model.Verification == true)
                                     @("checked")
+
                                        data-switchery="true" style="display: none;">
                             </label>
                         </div>

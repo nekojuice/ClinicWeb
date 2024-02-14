@@ -63,7 +63,7 @@ public partial class MemberMemberList
     public string MemPassword { get; set; }
 
     [Column("Mem_Email")]
-    [StringLength(50)]
+    //[StringLength(50)]
     public string MemEmail { get; set; }
 
     public bool? Verification { get; set; }

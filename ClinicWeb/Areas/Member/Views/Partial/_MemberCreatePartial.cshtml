@@ -9,30 +9,30 @@
     </div>
     <div class="x_content">
         <br>
-        <form id="memberForm" class="form-label-left input_mask">
+        <form asp-action="MemberCreate" id="memberForm" class="form-label-left input_mask">
 
             <!--姓名-->
             <div class="col-md-6 col-sm-6  form-group has-feedback">
 
-                <input name="Name" type="text" class="form-control has-feedback-left" placeholder=@Html.DisplayNameFor(model => model.Name) >
+                <input asp-for="Name" type="text" class="form-control has-feedback-left" placeholder=@Html.DisplayNameFor(model => model.Name) >
                 <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <!--身分證字號-->
             <div class="col-md-6 col-sm-6  form-group has-feedback">
-                <input name="NationalId" type="text" class="form-control" id="inputName" placeholder="身分證字號">
+                <input asp-for="NationalId" type="text" class="form-control"  placeholder="身分證字號">
                 <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
                 <span asp-validation-for="NationalId" class="text-danger"></span>
             </div>
             <!--信箱-->
             <div class="col-md-6 col-sm-6  form-group has-feedback">
-                <input name="MemEmail" type="email" class="form-control has-feedback-left" id="inputSuccess4" placeholder="信箱">
+                <input asp-for="MemEmail" type="text" class="form-control has-feedback-left"  placeholder="信箱">
                 <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
                 <span asp-validation-for="MemEmail" class="text-danger"></span>
             </div>
             <!--填上電話-->
             <div class="col-md-6 col-sm-6  form-group has-feedback">
-                <input name="Phone" type="tel" class="form-control" id="inputSuccess5" placeholder="連絡電話">
+                <input asp-for="Phone" type="tel" class="form-control" id="inputSuccess5" placeholder="連絡電話">
                 <span class="fa fa-phone form-control-feedback right" aria-hidden="true"></span>
                 <span asp-validation-for="Phone" class="text-danger"></span>
             </div>
@@ -55,7 +55,7 @@
             <div class="form-group row">
                 <label class="control-label col-md-3 col-sm-3 ">血型</label>
                 <div class="col-md-9 col-sm-9 ">
-                    <select class="form-control" name="BloodType">
+                    <select asp-for="BloodType" class="form-control">
                         <option value="">---請選擇---</option>
                         <option>A</option>
                         <option>B</option>
@@ -76,7 +76,7 @@
             <div class="form-group row">
                 <label class="col-form-label col-md-3 col-sm-3 ">戶籍地址</label>
                 <div class="col-md-9 col-sm-9 ">
-                    <input type="text" class="form-control" placeholder="戶籍地址" name="Address">
+                    <input asp-for="Address" type="text" class="form-control" placeholder="戶籍地址">
                     <span asp-validation-for="Address" class="text-danger"></span>
                 </div>
             </div>
@@ -84,7 +84,7 @@
             <div class="form-group row">
                 <label class="col-form-label col-md-3 col-sm-3 "> 聯絡地址</label>
                 <div class="col-md-9 col-sm-9 ">
-                    <input type="text" class="form-control" placeholder="聯絡地址" name="ContactAddress">
+                    <input asp-for="ContactAddress" type="text" class="form-control" placeholder="聯絡地址">
                     <span asp-validation-for="ContactAddress" class="text-danger"></span>
                 </div>
             </div>
@@ -92,7 +92,7 @@
             <div class="form-group row">
                 <label class="col-form-label col-md-3 col-sm-3 ">緊急聯絡人</label>
                 <div class="col-md-9 col-sm-9 ">
-                    <input type="text" class="form-control" placeholder="緊急聯絡人" name="IceName">
+                    <input asp-for="IceName" type="text" class="form-control" placeholder="緊急聯絡人">
                     <span asp-validation-for="IceName" class="text-danger"></span>
                 </div>
             </div>
@@ -100,7 +100,7 @@
             <div class="form-group row">
                 <label class="col-form-label col-md-3 col-sm-3 ">緊急聯絡人電話</label>
                 <div class="col-md-9 col-sm-9 ">
-                    <input type="text" class="form-control" placeholder="緊急聯絡人電話" name="IceNumber">
+                    <input asp-for="IceNumber" type="text" class="form-control" placeholder="緊急聯絡人電話" >
                     <span asp-validation-for="IceNumber" class="text-danger"></span>
                 </div>
             </div>
@@ -112,7 +112,7 @@
 
                 <label class="col-form-label col-md-3 col-sm-3 ">會員密碼</label>
                 <div class="col-md-9 col-sm-9 ">
-                    <input class="form-control" type="password" id="password1" name="MemPassword" title="Minimum 8 Characters Including An Upper And Lower Case Letter, A Number And A Unique Character" required="">
+                    <input asp-for="MemPassword" class="form-control" type="password"  title="Minimum 8 Characters Including An Upper And Lower Case Letter, A Number And A Unique Character" >
                     <span asp-validation-for="MemPassword" class="text-danger"></span>
                     <span style="position: absolute;right:15px;top:7px;" onclick="hideshow()">
                         <i id="slash" class="fa fa-eye-slash" style="display: none;"></i>
@@ -131,7 +131,7 @@
                     <div class="col-md-9 col-sm-9 ">
                         <div class="">
                             <label>
-                                <input name="VerificationString" type="checkbox" class="js-switch" checked />
+                                <input name="VerificationString" type="checkbox" id="vertificationformemCreate"class="js-switch" checked />
                             </label>
                         </div>
 
@@ -158,7 +158,7 @@
                 </label>
 
                 <div class="col-md-9 col-sm-9 ">
-                    <input name="BirthDate" class="date-picker form-control" placeholder="dd-mm-yyyy" type="text" required="required" onfocus="this.type='date'" onmouseover="this.type='date'" onclick="this.type='date'" onblur="this.type='text'" onmouseout="timeFunctionLong(this)">
+                    <input asp-for= "BirthDate" class="date-picker form-control" placeholder="dd-mm-yyyy" type="datetime" onfocus="this.type='date'" onmouseover="this.type='date'" onclick="this.type='date'" onblur="this.type='text'" onmouseout="timeFunctionLong(this)">
                     <span asp-validation-for="BirthDate" class="text-danger"></span>
                     <script>
                         function timeFunctionLong(input) {
