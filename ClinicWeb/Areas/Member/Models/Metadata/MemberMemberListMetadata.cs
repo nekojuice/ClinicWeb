@@ -24,7 +24,7 @@ namespace ClinicWeb.Areas.Member.Models
 
 
 
-    
+        [Required(ErrorMessage = "請選擇性別 ")]
         [Display(Name = "性別")]
         public bool Gender { get; set; }
         [Required]
@@ -43,13 +43,14 @@ namespace ClinicWeb.Areas.Member.Models
         [Display(Name = "血型")]
         public string? BloodType { get; set; }
 
-        [Required]
+
         //[Column("National_ID")]
         //[StringLength(50)]
+        [Required(ErrorMessage = "請輸入身分證字號 ")]
         [Display(Name = "身分證字號")]
         public string? NationalId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "請輸入戶籍地址 ")]
         //[StringLength(50)]
         [Display(Name = "戶籍地址")]
         public string? Address { get; set; }
@@ -60,12 +61,12 @@ namespace ClinicWeb.Areas.Member.Models
         [Display(Name = "聯絡地址")]
         public string? ContactAddress { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "請輸入連絡電話 ")]
         //[StringLength(50)]
         [Display(Name = "連絡電話")]
         public string? Phone { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "請選擇生日 ")]
         //[Column("Birth_Date", TypeName = "datetime")]
         [Display(Name = "生日")]
        
@@ -82,13 +83,13 @@ namespace ClinicWeb.Areas.Member.Models
         [Display(Name = "緊急聯絡人電話")]
         public string? IceNumber { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "請輸入密碼 ")]
         //[Column("Mem_Password")]
         //[StringLength(50)]
         [Display(Name = "密碼")]
         public string? MemPassword { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "請輸入信箱 ")]
         //[Column("Mem_Email")]
         //[StringLength(50)]
         [Display(Name = "信箱")]

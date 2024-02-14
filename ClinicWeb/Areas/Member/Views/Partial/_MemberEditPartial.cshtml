@@ -21,9 +21,11 @@
                 <div class="form-group has-feedback">
                     <label asp-for="Name" class="control-label" style="display: block; position: absolute; top: -20px;"></label>
                     <input asp-for="Name" class="form-control has-feedback-left" placeholder="姓名" style="display: block; padding-left: 30px;" />
+
                     <span class="fa fa-user form-control-feedback left" aria-hidden="true" style="position: absolute; left: 5px; top: 5px;"></span>
-                    <span asp-validation-for="Name" class="text-danger"></span>
+                   
                 </div>
+                <span asp-validation-for="Name" class="text-danger"></span>
             </div>
 
 
@@ -157,11 +159,10 @@
                 <div class="col-md-9 col-sm-9">
                     <div class="col-md-9 col-sm-9">
                         <div class="">
-                            <label>
+                           <label>
                                 <input name="VerificationString" id="vertificationformem" type="checkbox" class="js-switch" @if (Model.Verification == true)
-                                {
-                                    <text>checked</text>
-                                } />
+                                    @("checked")
+                                       data-switchery="true" style="display: none;">
                             </label>
                         </div>
                     </div>

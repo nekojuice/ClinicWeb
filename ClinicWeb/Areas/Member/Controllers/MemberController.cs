@@ -220,6 +220,10 @@ namespace ClinicWeb.Areas.Member.Controllers
                 }
                 //return RedirectToAction(nameof(Index));
             }
+            else 
+            {
+                return  Content("驗證未通過");
+            }
             
             // 取得剛剛那筆會員資料的 ID
             int memberId = member.MemberId;

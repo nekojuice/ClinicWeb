@@ -56,16 +56,18 @@
                 </div>
             </div>
 
-            <!--新增畫面的內容-->
+            <!-- 新增畫面的內容 -->
             <div class="modal fade" id="MemCreate" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
                 <div class="modal-dialog modal-lg">
+                    <!-- 放置 AntiForgeryToken -->
+                    @Html.AntiForgeryToken()
                     <div class="modal-content">
                         <partial name="~/Areas/Member/Views/Partial/_MemberCreatePartial.cshtml" />
                     </div>
                 </div>
             </div>
 
-
+          
             <!--搜尋那塊-->
             <div class="x_content">
                 <div class="row">
@@ -183,6 +185,7 @@
         await Html.RenderPartialAsync("~/Views/Shared/_ValidationScriptsPartial.cshtml");
     }
     <script>
+        //給強制塞東西
 
         //顯示會員主畫面資料表
         function QueryMemberInfo() {
@@ -283,13 +286,16 @@
             // }
             try {
                 const url = '@Url.Content("~/Member/Member/MemberCreate")';
+                const token = $('input[name="__RequestVerificationToken"]').val(); // 獲取CSRF令牌
+                formData.append("__RequestVerificationToken", token); // 將令牌添加到表單數據中
                 const response = await fetch(url, {
-                    "method": "POST",
-                    "body": formData
+                    method: "POST",
+                    body: formData
                 });
-                //確定有抓到整包formdata
+                // 確定有抓到整包formdata
                 const data = await response.text();
                 // // divInfo.innerHTML = data;
+               
             }
             catch {
                 new PNotify({
@@ -360,7 +366,7 @@
 
         //顯示編輯畫面
 
-        async function handleButtonClick(memberId, /* _index_memdatatable */) {
+        async function handleButtonClick(memberId /* _index_memdatatable */) {
             try {
                 const response = await fetch(`@Url.Content("~/Member/Member/MemberEdit")?memberId=${memberId}`);
                 if (!response.ok) {
@@ -371,19 +377,28 @@
                 const showplace = document.getElementById("memberedit");
                 showplace.innerHTML = data;
 
+                //重新綁定要驗證的表單 為了把編輯的表單跟validation連起來 (因為資料室ajax 過來 validation在資料來之前就在了)
+                var form = $('form');
+                form.removeData('validator');
+                form.removeData('unobtrusiveValidation');
+                $.validator.unobtrusive.parse(form);
+
+                //控制編輯按鈕地確認權限的滑輪swichery 一定要寫在請求資料後
                 var switcheryOptions = {
-                    color: '#64bd63',
-                    secondaryColor: '#dfdfdf',
-                    jackColor: '#fff',
-                    jackSecondaryColor: null,
-                    className: 'switchery',
-                    disabled: false,
-                    disabledOpacity: 0.5,
-                    speed: '0.1s',
-                    size: 'default'
+                    
+                        color: '#64bd63', // 當checked時的背景顏色
+                        secondaryColor: '#dfdfdf', // unchecked時的背景顏色
+                        jackColor: '#fff', // checked時的按鈕顏色
+                        jackSecondaryColor: null, // uncheck時的按鈕顏色
+                        className: 'switchery', // class名稱
+                        disabled: false, // 是否設為disabled
+                        disabledOpacity: 0.5, // 當設為disabled時的透明度
+                        speed: '0.1s', // 開關切換的速度
+                        size: 'default' // 開關大小(small, default, large)
                 };
                 new Switchery(document.getElementById('vertificationformem'), switcheryOptions);
 
+                //註冊按鈕事件 要再生成編輯partial之後再加上 不然抓不到這個按鈕事件
                 buttonEventFunc(/* memberId,_index_memdatatable */);
             } catch (error) {
                 console.error('在取得會員資料並打開編輯畫面出現錯誤，請洽系統管理員:', error);
@@ -405,6 +420,7 @@
 
         //確定編輯畫面按下保存有抓到資料
         async function buttonEventFunc(/* memberId, *//* _index_memdatatable */) {
+          
             //先抓到當前的頁碼
             const currentPage = $('#memdatatable').DataTable().page()
             console.log("這邊是按下保存後的console log", _index_memdatatable)
@@ -415,6 +431,7 @@
                 // memdatatable
                 const formData = new FormData(document.querySelector('#_MemberEditPartial'));
                 let result;
+
                 try {
                     const url = "/Member/Member/Edit";
                     const response = await fetch(url, {
@@ -422,15 +439,23 @@
                         "body": formData
                     });
                     result = await response.json();
+                    
+
                     console.log("顯示剛剛更新的資料", result)
                 }
                 catch {
+                    result = await response.text
+                    if(result == "驗證未通過") {
+                        return;
+                    }
+
                     new PNotify({
                         title: '錯誤',
                         text: '修改資料失敗',
                         type: 'error',
                         styling: 'bootstrap3'
                     })
+
                     alert('修改資料失敗，請洽系統管理員');
                     return;
                 }
@@ -449,7 +474,8 @@
                 //     alert('修改資料失敗，請洽系統管理員');
                 //     return;
                 // }
-
+                //
+               
                 editMemFormClose();
                 new PNotify({
                     title: '修改成功',
