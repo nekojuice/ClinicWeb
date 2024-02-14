@@ -10,6 +10,13 @@
 			{ "data": "姓名" },
 			{ "data": "身分證字號" },
 			{ "data": "性別" },
+			{
+				data: null, title: "操作功能",  // 這邊是欄位
+				render: function (data, type, row) {
+					return '<button type="button" class="btn btn-warning btn-sm">編輯</button> ' +
+						'<button type="button" class="btn btn-danger btn-sm">刪除</button>'
+				}
+			},
 		],
 		fixedHeader: {
 			header: true

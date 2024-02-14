@@ -36,14 +36,7 @@ namespace ClinicWeb.Areas.Cases.Controllers
 					id=x.CaseId,
 					姓名=x.Member.Name,
 					身分證字號=x.Member.NationalId,
-					性別=x.Member.Gender,
-					//id = x.ClinicInfoId,
-					//日期 = x.Date,
-					//時段 = x.ClinicTime.ClinicShifts,
-					//科別 = x.Doctor.Department,
-					//醫師名稱 = x.Doctor.Name,
-					//上限人數 = x.RegistrationLimit,
-					//預約人數 = x.ApptClinicList.Count,
+					性別=x.Member.Gender
 				}));
 		}
 		public IActionResult main()
