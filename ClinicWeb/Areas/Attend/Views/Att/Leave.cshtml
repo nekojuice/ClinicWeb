@@ -1,4 +1,4 @@
-﻿@model ScheduleClinicInfo
+﻿@model AttendanceTLeave
 
 @{
 	ViewData["Title"] = "請假申請";
@@ -26,7 +26,7 @@
 @section Styles
 {
 	<link href="~/msit155e/css/appointment/clinicinfo.css" rel="stylesheet" asp-append-version="true" />
-	<link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+	@* <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" /> *@
 
 }
 
@@ -37,39 +37,12 @@
 
 
 
-
-
 <select id="empList">
 	@foreach (var obj in ViewBag.employees)
 	{
 		<option>@obj</option>
 	}
 </select>
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-	Launch demo modal
-</button>
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			</div>
-			<div class="modal-body">
-				...
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary">Save changes</button>
-			</div>
-		</div>
-	</div>
-</div>
-
-
 <div class="row" style="display: block;">
 	<div class="col-md-6 col-sm-6 ">
 		<div class="x_panel">
@@ -118,6 +91,75 @@
 	</div>
 </div>
 
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+	新增請假申請
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">新增請假</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<form>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label asp-for="FLeaveDescription" class="control-label">請假事由</label>
+							<input asp-for="FLeaveDescription" class="form-control" id="LeaveDescription" />
+							<span asp-validation-for="FLeaveDescription" class="text-danger"></span>
+						</div>
+						<div class="form-group">
+							<label asp-for="FStartDate" class="control-label"></label>
+							<input type="datetime-local" class="form-control datepicker" id="StartDate">
+							<span asp-validation-for="FStartDate" class="text-danger"></span>
+						</div>
+						<div class="form-group">
+							<label asp-for="FEndDate" class="control-label"></label>
+							<input type="datetime-local" class="form-control datepicker" id="EndDate">
+							<span asp-validation-for="FEndDate" class="text-danger"></span>
+						</div>
+						<div class="form-group">
+							<div class="row">
+								<div class="col">
+									<label asp-for="FSubstitute" class="control-label">代理人</label>
+									<select asp-for="FSubstitute" class="form-control" id="Substitute">
+										@foreach (var obj in ViewBag.substitute)
+										{
+											<option>@obj</option>
+										}
+									</select>
+								</div>
+								<div class="col">
+									<label asp-for="FLeaveTypeId" class="control-label">假別</label>
+									<select asp-for="FLeaveTypeId" class="form-control" id="LeaveTypeId">
+										@{int i = 1;}
+										@foreach (var obj in ViewBag.leaveName)
+										{
+											<option value="@i">@obj</option>
+											@(i++);
+										}
+									</select>
+									<span asp-validation-for="FLeaveTypeId" class="text-danger"></span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+				<button type="button" class="btn btn-primary" id="submitButton">確定申請</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+@* </body> *@
 
 
 
@@ -126,8 +168,17 @@
 
 
 @section Scripts {
+	@* <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script> *@
 	<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+	
 	<script>
+		// $(document).ready(function () {
+		// 	$('#StartDate').datepicker();
+		// });
+		// $(document).ready(function () {
+		// 	$('#EndDate').datepicker();
+		// });
+
 
 
 		//套件
@@ -181,7 +232,42 @@
 			});
 		}
 
+		document.getElementById('submitButton').addEventListener('click', function () {
+			// 獲得數據
+			var leaveDescription = document.getElementById('LeaveDescription').value;
+			var startDate = document.getElementById('StartDate').value;
+			var endDate = document.getElementById('EndDate').value;
+			var substitute = document.getElementById('Substitute').value;
+			var leaveTypeId = document.getElementById('LeaveTypeId').value;
+			let empID = 19;
+			// 傳到後端
+			var data = {
+				"FEmployeeId": empID,
+				"FLeaveDescription": leaveDescription,
+				"FStartDate": startDate,
+				"FEndDate": endDate,
+				"FSubstitute": substitute,
+				"FLeaveTypeId": leaveTypeId
+			};
 
+			// 使用Ajax發送POST請求到控制器
+			$.ajax({
+				url: "/Attend/Att/Create",
+				type: "POST",
+				contentType: "application/json",
+				data: JSON.stringify(data),
+				success: function (response) {
+					console.log("Success:", response);
+					$('#exampleModal').modal('hide');
+					updateDataTable();
+					toastr.success(response)
+				},
+				error: function (error) {
+
+					console.error(error);
+				}
+			});
+		});
 
 
 

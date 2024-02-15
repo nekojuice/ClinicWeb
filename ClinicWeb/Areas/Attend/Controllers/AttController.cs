@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ClinicWeb.Areas.Attend.Controllers
 {
@@ -29,8 +30,12 @@ namespace ClinicWeb.Areas.Attend.Controllers
 		}
         public IActionResult Leave()
 		{
+			 var substitute =_context.AttendanceTLeave.Select(x => x.FSubstitute).Distinct();
+			var leaveName = _context.AttendanceTLeaveTypes.Select(x => x.FLeaveTypeName).Distinct();
 			var employees = _context.AttendanceTLeave.Select(x => x.FEmployeeId).ToList().Distinct();
+			ViewBag.leaveName = leaveName;
 			ViewBag.employees = employees;
+			ViewBag.substitute=substitute;
 			return View();
 		}
 		public IActionResult ExpenseRequests()
@@ -83,7 +88,37 @@ namespace ClinicWeb.Areas.Attend.Controllers
 					申請狀態 = x.FApprovalStatus
 				}));
 		}
+		[Route("{area}/{controller}/{action}")]
+		[HttpPost]
+		public IActionResult Create([FromBody] AttendanceTLeave data)
+		{
+			if (data == null)
+			{
+				return BadRequest("Invalid data");
+			}
 
+			var lanpa = new AttendanceTLeave
+			{
+				FEmployeeId = data.FEmployeeId,
+				FLeaveDescription = data.FLeaveDescription,
+				FStartDate = data.FStartDate,
+				FEndDate = data.FEndDate,
+				FSubstitute = data.FSubstitute,
+				FLeaveTypeId = data.FLeaveTypeId,
+				FLeaveStatus = "待審核"
+		};
+
+			try
+			{
+				_context.AttendanceTLeave.Add(lanpa);
+				_context.SaveChanges();
+				return Ok("申請成功");
+			}
+			catch (Exception ex)
+			{
+				return StatusCode(500, $"Internal server error: {ex.Message}");
+			}
+		}
 
 
 		[Route("{area}/{controller}/{action}")]
