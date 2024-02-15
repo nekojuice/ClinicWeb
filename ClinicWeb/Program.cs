@@ -1,9 +1,13 @@
 using ClinicWeb.Data;
 using ClinicWeb.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+var Server = builder.Configuration["ClinicSys:Server"];
+var User = builder.Configuration["ClinicSys:USER"];
+var Pass = builder.Configuration["ClinicSys:PASS"];
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
@@ -15,8 +19,21 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
-//�]�w�s���r��
+builder.Services.AddDbContext<ClinicWeb.Areas.Member.Models.ClinicSysContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ClinicSys")));
+builder.Services.AddDbContext<ClinicWeb.Areas.Drugs.Models.ClinicSysContext>(options =>  options.UseSqlServer(builder.Configuration.GetConnectionString("ClinicSys")));
+builder.Services.AddDbContext<ClinicWeb.Areas.Schedule.Models.ClinicSysContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ClinicSys")));
+builder.Services.AddDbContext<ClinicWeb.Areas.Appointment.Models.ClinicSysContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ClinicSys")));
 builder.Services.AddDbContext<ClinicSysContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ClinicSys")));
+
+builder.Services.AddDbContext<ClinicSysContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ClinicSys"))); //³s±µ¥»¦aºÝ¸ê®Æ®w
+//var ClinicDb = new SqlConnectionStringBuilder(builder.Configuration.GetConnectionString("ClinicSysWAN")) //³s±µ¥»²Õ³s½u¸ê®Æ®w
+//{
+//    ServerSPN = Server,
+//    UserID = User,
+//    Password = Pass
+//};
+//var ConnString = ClinicDb.ConnectionString;
+//builder.Services.AddDbContext<ClinicSysContext>(options => options.UseSqlServer(ConnString));
 
 //NewtonsoftJson
 builder.Services.AddControllers().AddNewtonsoftJson();

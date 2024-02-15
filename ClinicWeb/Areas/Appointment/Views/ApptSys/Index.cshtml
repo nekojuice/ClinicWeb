@@ -1,52 +1,69 @@
 ﻿@{
-	ViewData["Title"] = "掛號管理系統";
+    ViewData["Title"] = "掛號管理系統";
 }
 @section ModulesStyles
 {
-	<!-- iCheck -->
-	<link href="~/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
-	<!-- Datatables -->
+    <!-- iCheck -->
+    <link href="~/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+    <!-- Datatables -->
 
-	<link href="~/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
-	<link href="~/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
-	<link href="~/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
-	<link href="~/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
-	<link href="~/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+    <link href="~/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="~/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+    <link href="~/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+    <link href="~/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+    <link href="~/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+
+    <!-- Switchery -->
+    <link href="~/vendors/switchery/dist/switchery.min.css" rel="stylesheet">
+    <!-- PNotify -->
+    <link href="~/vendors/pnotify/dist/pnotify.css" rel="stylesheet">
+    <link href="~/vendors/pnotify/dist/pnotify.buttons.css" rel="stylesheet">
+    <link href="~/vendors/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">
 }
 @section Styles
 {
-	<link href="~/msit155e/css/appointment/clinicinfo.css" rel="stylesheet" asp-append-version="true"/>
+    <link href="~/msit155e/css/appointment/clinicinfo.css" rel="stylesheet" asp-append-version="true" />
 }
 
 <partial name="_ClinicInfoPartial" />
 <partial name="_ApptRecordPartial" />
 
+@*跳小窗*@
+<partial name="_AddApptPartial" />
+<partial name="_ModApptPartial" />
 
 
 @section Scripts
 {
-	<script src="~/msit155e/js/Appointment/clinicInfo.js" asp-append-version="true"></script>
+    <script src="~/msit155e/js/Appointment/clinicInfo.js" asp-append-version="true"></script>
 }
 @section Modules
 {
-	<!-- iCheck -->
-	<script src="~/vendors/iCheck/icheck.min.js"></script>
-	<!-- Datatables -->
-	<script src="~/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
-	@* <script src="~/lib/datatables/js/jquery.datatables.min.js"></script> *@
-	<script src="~/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-	<script src="~/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-	<script src="~/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
-	<script src="~/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
-	<script src="~/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
-	<script src="~/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
-	<script src="~/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
-	<script src="~/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
-	<script src="~/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-	<script src="~/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
-	<script src="~/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
-	<script src="~/vendors/jszip/dist/jszip.min.js"></script>
-	<script src="~/vendors/pdfmake/build/pdfmake.min.js"></script>
-	<script src="~/vendors/pdfmake/build/vfs_fonts.js"></script>
-
+    <!-- iCheck -->
+    <script src="~/vendors/iCheck/icheck.min.js"></script>
+    <!-- Datatables -->
+    <script src="~/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    @* <script src="~/lib/datatables/js/jquery.datatables.min.js"></script> *@
+    <script src="~/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+    <script src="~/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="~/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="~/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+    <script src="~/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+    <script src="~/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="~/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+    <script src="~/vendors/jszip/dist/jszip.min.js"></script>
+    <script src="~/vendors/pdfmake/build/pdfmake.min.js"></script>
+    <script src="~/vendors/pdfmake/build/vfs_fonts.js"></script>
+    <!-- Switchery -->
+    <script src="~/vendors/switchery/dist/switchery.min.js"></script>
+    <!-- PNotify -->
+    <script src="~/vendors/pnotify/dist/pnotify.js"></script>
+    <script src="~/vendors/pnotify/dist/pnotify.buttons.js"></script>
+    <script src="~/vendors/pnotify/dist/pnotify.nonblock.js"></script>
+    <!-- datatable jumptodata -->
+    <script src="https://cdn.datatables.net/plug-ins/1.13.7/api/page.jumpToData().js" asp-fallback-src="~/lib/page.jumptodata().js"></script>
 }
