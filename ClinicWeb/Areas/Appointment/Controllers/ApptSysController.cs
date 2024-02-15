@@ -182,8 +182,8 @@ namespace ClinicWeb.Areas.Appointment.Controllers
                 .Where(x => x.ClinicId == Convert.ToInt32(clinicId) && x.MemberId == Convert.ToInt32(memberId))
                 .Select(x => new
                 {
-                    //clinic_id = x.ClinicId,
-                    //member_id = x.MemberId,
+                    clinic_id = x.ClinicId,
+                    member_id = x.MemberId,
                     會員號碼 = x.Member.MemberNumber,
                     診號 = x.ClinicNumber,
                     姓名 = x.Member.Name,
