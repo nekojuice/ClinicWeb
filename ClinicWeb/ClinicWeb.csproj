@@ -221,7 +221,6 @@
     <Folder Include="Areas\Attend\Models\" />
     <Folder Include="Areas\Cases\Data\" />
     <Folder Include="Areas\Cases\Models\" />
-    <Folder Include="Areas\Cases\Views\Home\" />
     <Folder Include="Areas\Drugs\Data\" />
     <Folder Include="Areas\Employee\Data\" />
     <Folder Include="Areas\Employee\Models\" />
@@ -237,7 +236,6 @@
     <Folder Include="wwwroot\js\" />
     <Folder Include="wwwroot\msit155e\css\Attend\" />
     <Folder Include="wwwroot\msit155e\css\Attend\" />
-    <Folder Include="wwwroot\msit155e\css\Cases\" />
     <Folder Include="wwwroot\msit155e\css\Drugs\" />
     <Folder Include="wwwroot\msit155e\css\Member\" />
     <Folder Include="wwwroot\msit155e\css\Shop\" />
@@ -251,7 +249,6 @@
     <Folder Include="wwwroot\msit155e\images\Schedule\" />
     <Folder Include="wwwroot\msit155e\images\Shop\" />
     <Folder Include="wwwroot\msit155e\js\Attend\" />
-    <Folder Include="wwwroot\msit155e\js\Cases\" />
     <Folder Include="wwwroot\msit155e\js\Drugs\" />
     <Folder Include="wwwroot\msit155e\js\Member\" />
     <Folder Include="wwwroot\msit155e\js\Room\" />
