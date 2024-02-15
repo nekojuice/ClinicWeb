@@ -2,42 +2,87 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 
 namespace ClinicWeb.Areas.Attend.Controllers
 {
 
 
 	[Area("Attend")]
-	public class HomeController : Controller
+	public class AttController : Controller
 	{
 		private readonly ClinicSysContext _context;
-		public HomeController(ClinicSysContext context)
+		public AttController(ClinicSysContext context)
 		{
 			_context = context;
 		}
 		public IActionResult Index()
 		{
-			var employees = _context.MemberEmployeeList.Select(x => x.EmpId).ToList();
+			var employees = _context.AttendanceTAttendance.Select(x => x.FEmployeeId).ToList().Distinct();
 			ViewBag.employees = employees;
 			return View();
 		}
 
-
+		public IActionResult Check()
+		{
+			return View();
+		}
+        public IActionResult Leave()
+		{
+			var employees = _context.AttendanceTLeave.Select(x => x.FEmployeeId).ToList().Distinct();
+			ViewBag.employees = employees;
+			return View();
+		}
+		public IActionResult ExpenseRequests()
+		{
+			var employees = _context.AttendanceTExpenseRequests.Select(x => x.FEmployeeId).ToList().Distinct();
+			ViewBag.employees = employees;
+			return View();
+		}
 		[Route("{area}/{controller}/{action}/{id}")]
-		public JsonResult check(string id)
+		public JsonResult checkData(string id)
 		{
 			return Json(_context.AttendanceTAttendance
 				.Where(x => x.FEmployeeId == Convert.ToInt32(id))
-				.Select(x => new
-				{
-					上班時間 = x.FCheckInTime,
-					下班時間 = x.FCheckOutTime,
-					上班日期 = x.FWorkDate,
+			.Select(x => new
+			{
+					上班時間 = x.FCheckInTime.Value.ToString("yyyy-MM-dd HH:mm:ss"),
+					下班時間 = x.FCheckOutTime.Value.ToString("yyyy-MM-dd HH:mm:ss"),
+					上班日期 = x.FWorkDate.Value.ToString("yyyy-MM-dd"),
 					上班狀態 = x.FAttendanceCis,
 					下班狀態 = x.FAttendanceCos
 				}));
 		}
+		public JsonResult LeaveData(string id)
+		{
+			return Json(_context.AttendanceTLeave
+				.Where(x => x.FEmployeeId == Convert.ToInt32(id))
+				.Select(x => new
+				{
+					員工名稱 = x.FEmployee.Name,
+					假別 = x.FLeaveType.FLeaveTypeName,
+					請假起日 = x.FStartDate.Value.ToString("yyyy-MM-dd"),
+					請假迄日 = x.FEndDate.Value.ToString("yyyy-MM-dd"),
+					代理人 = x.FSubstitute,
+					申請狀態 =x.FLeaveStatus
+				}));
+		}
 
+
+		public JsonResult ExpenseData(string id)
+		{
+			return Json(_context.AttendanceTExpenseRequests
+				.Where(x => x.FEmployeeId == Convert.ToInt32(id))
+				.Select(x => new
+				{
+					員工名稱 = x.FEmployee.Name,
+					類別 = x.FExpenseType.FExpenseTypeName,
+					費用申請日 = x.FRequestDate.Value.ToString("yyyy-MM-dd"),
+					費用核發日 = x.FExpenseDate.Value.ToString("yyyy-MM-dd"),
+					申請金額 = x.FAmount,
+					申請狀態 = x.FApprovalStatus
+				}));
+		}
 
 
 

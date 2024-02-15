@@ -1,0 +1,199 @@
+﻿@model ScheduleClinicInfo
+
+@{
+	ViewData["Title"] = "請假申請";
+}
+@section ModulesStyles
+{
+	<!-- iCheck -->
+	<link href="~/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+	<!-- Datatables -->
+
+	<link href="~/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+	<link href="~/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+	<link href="~/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+	<link href="~/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+	<link href="~/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+
+	<!-- Switchery -->
+	<link href="~/vendors/switchery/dist/switchery.min.css" rel="stylesheet">
+
+	<!--Toastr-->
+	<link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+}
+
+
+@section Styles
+{
+	<link href="~/msit155e/css/appointment/clinicinfo.css" rel="stylesheet" asp-append-version="true" />
+}
+
+@{
+	ViewData["Title"] = "請假申請";
+};
+
+
+
+
+
+
+<select id="empList">
+	@foreach (var obj in ViewBag.employees)
+	{
+		<option>@obj</option>
+	}
+</select>
+<button id="btn1" class="btn btn-primary">新增請假申請</button>
+
+
+<div class="row" style="display: block;">
+	<div class="col-md-6 col-sm-6 ">
+		<div class="x_panel">
+			<div class="x_title">
+				<h2>請假申請資訊</h2>
+				<ul class="nav navbar-right panel_toolbox">
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+			<div class="x_content">
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="card-box table-responsive">
+							<table id="clinicDataTable" class="table table-striped table-bordered" style="width:100%">
+								<thead>
+									<tr>
+										<th style="display:none">
+											id
+										</th>
+										<th>
+											員工名稱
+										</th>
+										<th>
+											假別
+										</th>
+										<th>
+											請假起日
+										</th>
+										<th>
+											請假迄日
+										</th>
+										<th>
+											代理人
+										</th>
+										<th>
+											申請狀態
+										</th>
+									</tr>
+								</thead>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+
+
+@section Scripts {
+	<script>
+
+
+		//套件
+		toastr.options = {
+			"closeButton": true,
+			"showDuration": "300",
+			"hideDuration": "500",
+			"timeOut": "1000",
+			"extendedTimeOut": "1000",
+			"showEasing": "swing",
+			"hideEasing": "linear",
+			"showMethod": "fadeIn",
+			"hideMethod": "fadeOut"
+		}
+
+		$('#empList').on('change', function () {
+
+			const selectedValue = $(this).val();
+
+
+			updateDataTable(empID = selectedValue)
+		});
+
+		let empID = 19;
+		$(document).ready(function () {
+			updateDataTable()
+		});
+
+		function updateDataTable() {
+			$('#clinicDataTable').DataTable().destroy()
+			$('#clinicDataTable').DataTable({
+				ajax: {
+					type: 'GET',
+					url: "/Attend/Att/LeaveData/" + empID,
+					dataSrc: function (json) { return json; }
+				},
+				columns: [
+					{ data: "員工名稱" },
+					{ data: "假別" },
+					{ data: "請假起日" },
+					{ data: "請假迄日" },
+					{ data: "代理人" },
+					{ data: "申請狀態" }
+				],
+				fixedHeader: {
+					header: true
+				},
+				language: {
+					url: "https://cdn.datatables.net/plug-ins/1.13.7/i18n/zh-HANT.json"
+				}
+			});
+		}
+
+
+
+
+
+	</script>
+
+
+
+
+
+
+}
+
+
+
+@section Modules
+{
+	<!-- iCheck -->
+	<script src="~/vendors/iCheck/icheck.min.js"></script>
+	<!-- Datatables -->
+	<script src="~/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+	@* <script src="~/lib/datatables/js/jquery.datatables.min.js"></script> *@
+	<script src="~/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+	<script src="~/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+	<script src="~/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+	<script src="~/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+	<script src="~/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+	<script src="~/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+	<script src="~/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+	<script src="~/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+	<script src="~/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+	<script src="~/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+	<script src="~/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+	<script src="~/vendors/jszip/dist/jszip.min.js"></script>
+	<script src="~/vendors/pdfmake/build/pdfmake.min.js"></script>
+	<script src="~/vendors/pdfmake/build/vfs_fonts.js"></script>
+	<!-- Switchery -->
+	<script src="~/vendors/switchery/dist/switchery.min.js"></script>
+	<!--Toastr-->
+	<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+}

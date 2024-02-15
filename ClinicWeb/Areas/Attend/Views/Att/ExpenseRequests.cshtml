@@ -1,7 +1,7 @@
 ﻿@model ScheduleClinicInfo
 
 @{
-	ViewData["Title"] = "打卡系統";
+	ViewData["Title"] = "費用申請";
 }
 @section ModulesStyles
 {
@@ -29,30 +29,25 @@
 }
 
 @{
-	ViewData["Title"] = "打卡資料";
+	ViewData["Title"] = "費用申請";
 };
 
 
-<label id="currentTimeLabel">Current Time: </label>
 
-<select id="dateList"></select>
 <select id="empList">
 	@foreach (var obj in ViewBag.employees)
 	{
 		<option>@obj</option>
 	}
 </select>
+<button id="btn1" class="btn btn-primary">新增費用申請</button>
 
-
-<button id="btn1" class="btn btn-primary">上班打卡</button>
-<button id="btn2" class="btn btn-primary">下班打卡</button>
-<button id="btn3" class="btn btn-primary">新增</button>
 
 <div class="row" style="display: block;">
 	<div class="col-md-6 col-sm-6 ">
 		<div class="x_panel">
 			<div class="x_title">
-				<h2>出勤資訊</h2>
+				<h2>費用申請資訊</h2>
 				<ul class="nav navbar-right panel_toolbox">
 				</ul>
 				<div class="clearfix"></div>
@@ -68,19 +63,22 @@
 											id
 										</th>
 										<th>
-											打卡時間
+											員工名稱
 										</th>
 										<th>
-											簽退時間
+											類別
 										</th>
 										<th>
-											上班日期
+											費用申請日
 										</th>
 										<th>
-											上班狀態
+											費用核發日
 										</th>
 										<th>
-											下班狀態
+											申請金額
+										</th>
+										<th>
+											申請狀態
 										</th>
 									</tr>
 								</thead>
@@ -102,8 +100,9 @@
 
 @section Scripts {
 	<script>
-		const empID = 6;
 
+
+		//套件
 		toastr.options = {
 			"closeButton": true,
 			"showDuration": "300",
@@ -116,27 +115,34 @@
 			"hideMethod": "fadeOut"
 		}
 
-		// Function to update time in the label
-		function updateCurrentTime() {
-			const currentTime = new Date();
-			const formattedTime = currentTime.toLocaleTimeString();
-			$("#currentTimeLabel").text("Current Time: " + formattedTime);
-		}
+		$('#empList').on('change', function () {
+
+			const selectedValue = $(this).val();
+
+
+			updateDataTable(empID = selectedValue)
+		});
+
+		let empID = 19;
+		$(document).ready(function () {
+			updateDataTable()
+		});
 
 		function updateDataTable() {
 			$('#clinicDataTable').DataTable().destroy()
 			$('#clinicDataTable').DataTable({
 				ajax: {
 					type: 'GET',
-					url: "/Attend/Home/check/" + empID,
+					url: "/Attend/Att/ExpenseData/" + empID,
 					dataSrc: function (json) { return json; }
 				},
 				columns: [
-					{ data: "上班時間" },
-					{ data: "下班時間" },
-					{ data: "上班日期" },
-					{ data: "上班狀態" },
-					{ data: "下班狀態" }
+					{ data: "員工名稱" },
+					{ data: "類別" },
+					{ data: "費用申請日" },
+					{ data: "費用核發日" },
+					{ data: "申請金額" },
+					{ data: "申請狀態" }
 				],
 				fixedHeader: {
 					header: true
@@ -147,105 +153,9 @@
 			});
 		}
 
-		$(document).ready(function () {
-			updateDataTable()
-			updateDateList()
-		});
 
 
-		$(document).ready(function () {
-			updateCurrentTime();
-			setInterval(updateCurrentTime, 500);
-		});
 
-
-		$(document).ready(function () {
-			$("#btn1").click(function (e) {
-				e.preventDefault();
-
-				const currentDate = new Date();
-				const isOnTime = currentDate.getHours() < 9;
-				const requestData = {
-					"FEmployeeId": empID,
-					"FCheckInTime": currentDate.toISOString(),
-					"FWorkDate": currentDate.toISOString(),
-					"fAttendanceCIS": isOnTime ? "準時到" : "遲到",
-				};
-
-				$.ajax({
-					type: "POST",
-					url: "/Attend/Home/CHeckIn",
-					contentType: "application/json",
-					data: JSON.stringify(requestData),
-					cache: false,
-					success: function (response) {
-						console.log("Success:", response);
-						updateDataTable();
-						toastr.success(response)
-					},
-					error: function (error) {
-						console.error("Error:", error.responseText);
-						toastr.error(error.responseText)
-					}
-				});
-			});
-		});
-
-		$(document).ready(function () {
-			$("#btn2").click(function (e) {
-				e.preventDefault();
-
-				var currentDate = new Date();
-				var isOnTime = currentDate.getHours() > 17;
-				var requestData = {
-					"FEmployeeId": empID,
-					"FCheckOutTime": currentDate.toISOString(),
-					"FWorkDate": currentDate.toISOString(),
-					"fAttendanceCOS": isOnTime ? "正常下班" : "早退",
-				};
-
-				$.ajax({
-					type: "POST",
-					url: "/Attend/Home/CHeckOut",
-					contentType: "application/json",
-					data: JSON.stringify(requestData),
-					success: function (response) {
-						console.log("Success:", response);
-						updateDataTable();
-						toastr.success(response)
-					},
-					error: function (error) {
-						console.error("Error:", error.responseText);
-						toastr.error(error.responseText)
-					}
-				});
-			});
-		});
-
-
-		function updateDateList() {
-			$.ajax({
-				type: "GET",
-				url: "/Attend/Home/DateList/" + empID,
-				success: function (response) {
-					var dateListDropdown = $("#dateList");
-
-					dateListDropdown.empty(); // Clear existing options
-					console.log(response);
-
-					$.each(response, function (index, item) {
-						dateListDropdown.append($('<option>', {
-							value: item,
-							text: item
-						}));
-						console.log(index, item);
-					});
-				},
-				error: function (error) {
-					console.error(error.responseText);
-				}
-			});
-		}
 
 	</script>
 
