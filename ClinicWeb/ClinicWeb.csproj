@@ -225,7 +225,6 @@
     <Folder Include="Areas\Employee\Data\" />
     <Folder Include="Areas\Employee\Models\" />
     <Folder Include="Areas\Member\Data\" />
-    <Folder Include="Areas\Member\Models\" />
     <Folder Include="Areas\Room\Data\" />
     <Folder Include="Areas\Room\Models\" />
     <Folder Include="Areas\Schedule\Data\" />
@@ -237,7 +236,6 @@
     <Folder Include="wwwroot\msit155e\css\Attend\" />
     <Folder Include="wwwroot\msit155e\css\Attend\" />
     <Folder Include="wwwroot\msit155e\css\Drugs\" />
-    <Folder Include="wwwroot\msit155e\css\Member\" />
     <Folder Include="wwwroot\msit155e\css\Shop\" />
     <Folder Include="wwwroot\msit155e\css\Schedule\" />
     <Folder Include="wwwroot\msit155e\css\Room\" />

@@ -11,8 +11,8 @@
 	<ul class="nav child_menu" @if (ViewBag.AREA == "Member")
 		@("style=display:block;")
 >
-		<li><a asp-area="Member" asp-controller="Home" asp-action="Index">功能首頁</a></li>
-		<li><a asp-area="Member" asp-controller="Home" asp-action="Index2">連結模板</a></li>
+		<li><a asp-area="Member" asp-controller="Member" asp-action="MemIndex">會員資料</a></li>
+		<li><a asp-area="Member" asp-controller="Emp" asp-action="EmpIndex">員工資料</a></li>
 	</ul>
 </li>
 <li @if (ViewBag.AREA == "Attend")

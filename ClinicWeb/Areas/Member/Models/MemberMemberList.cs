@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace ClinicWeb.Models;
+namespace ClinicWeb.Areas.Member.Models;
 
 [Table("Member_MemberList")]
 public partial class MemberMemberList
@@ -66,24 +66,8 @@ public partial class MemberMemberList
     [StringLength(50)]
     public string MemEmail { get; set; }
 
-    [InverseProperty("Member")]
-    public virtual ICollection<AppointmentRoomSchedule> AppointmentRoomSchedule { get; set; } = new List<AppointmentRoomSchedule>();
-
-    [InverseProperty("Member")]
-    public virtual ICollection<ApptClinicList> ApptClinicList { get; set; } = new List<ApptClinicList>();
-
-    [InverseProperty("Member")]
-    public virtual ICollection<CasesMainCase> CasesMainCase { get; set; } = new List<CasesMainCase>();
+    public bool? Verification { get; set; }
 
     [InverseProperty("Member")]
     public virtual ICollection<CasesNewBornList> CasesNewBornList { get; set; } = new List<CasesNewBornList>();
-
-    [InverseProperty("FMember")]
-    public virtual ICollection<TCart> TCart { get; set; } = new List<TCart>();
-
-    [InverseProperty("FMember")]
-    public virtual ICollection<TCouponWallet> TCouponWallet { get; set; } = new List<TCouponWallet>();
-
-    [InverseProperty("FMember")]
-    public virtual ICollection<TOrder> TOrder { get; set; } = new List<TOrder>();
 }
