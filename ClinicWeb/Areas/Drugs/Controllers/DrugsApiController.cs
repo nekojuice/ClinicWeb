@@ -62,5 +62,20 @@ namespace ClinicWeb.Areas.Drugs.Controllers
                 副作用名稱 = x.FSideEffect
             }));
         }
+
+        //讀取劑型明細：編輯
+        //public IActionResult Details(int? id)
+        //{
+        //    if(id == null || _context.PharmacyTTypeList==null) 
+        //    {
+        //        return NotFound();
+        //    }
+        //    var Type = _context.PharmacyTTypeList.FirstOrDefault(m=>m.FIdType==id);
+        //    if(Type == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return Json(Type);
+        //}
     }
 }

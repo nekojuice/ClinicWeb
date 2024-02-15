@@ -21,7 +21,7 @@
 @section Styles {
 
 }
-
+<h1>適應症管理</h1>
 <div class="col-md-6 col-sm-6 ">
     <div class="x_panel">
         <div class="x_title">
@@ -53,7 +53,8 @@
                                 <tr>
                                     <th style="display:none">id</th>
                                     <th>適應症代碼</th>
-                                    <th>適應症名稱</th>                                                                                                                                                
+                                    <th>適應症名稱</th>    
+                                    <th>操作功能</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -64,6 +65,27 @@
             </div>
         </div>
     </div>
+</div>
+@* 沒有用到model暫時保留 *@
+<div class="row">
+   
+    <div class="col-md-10">
+        <form asp-area="Drugs" asp-controller="DrugsApi" asp-action="Details">
+            @* <div class="form-group">
+                <label asp-for="FTypeCode" class="control-label"> 劑型代碼 </label>
+                <input asp-for="FTypeCode" class="form-control" id="fTypeCode" />
+                <label asp-for="FType" class="control-label"> 劑型名稱 </label>
+                <input asp-for="FType" class="form-control" id="fType" />
+            </div> *@
+            <div class="form-group">
+                <label class="control-label"> 適應症代碼 </label>
+                <input class="form-control" id="fClinicalUseCode" />
+                <label class="control-label"> 適應症名稱 </label>
+                <input class="form-control" id="fClinicalUse" />
+            </div>
+        </form>
+    </div>
+   
 </div>
 
 @section Scripts {
@@ -83,7 +105,13 @@
                 columns: [
                     { "data": "id", "visible": false },
                     { "data": "適應症代碼", "width": "20%" },
-                    { "data": "適應症名稱", "width": "80%" }
+                    { "data": "適應症名稱", "width": "60%" },
+                    {
+                        "data": null, title: "操作功能", "width": "20%",
+                        render: function (data, type, row) {
+                            return '<button type="button" name="Editor" class="btn btn-warning btn-sm"> 編輯 </button>'
+                        },
+                    }
                 ],
                 fixedHeader: {
                     header: true
@@ -92,6 +120,15 @@
                     url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/zh-HANT.json'
                 }
             });
+        })
+        const CUCode = document.getElementById('fClinicalUseCode');
+        const CU = document.getElementById('fClinicalUse');
+        $(document).on('click', 'button[name=Editor]', function () {
+            var table = $('#dtCU').DataTable();
+            var tr = $(this).closest('tr');
+            var data = table.row(tr).data();
+            CUCode.value = data.適應症代碼;
+            CU.value = data.適應症名稱;
         })
     </script>
 }
