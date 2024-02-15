@@ -1,5 +1,7 @@
-﻿@{
-	ViewData["Title"] = "藥師管理系統";
+﻿@model PharmacyTTypeList
+
+@{
+    ViewData["Title"] = "藥師管理系統";
 }
 
 @section ModulesStyles
@@ -21,7 +23,7 @@
 @section Styles {
 
 }
-
+<h1>劑型管理</h1>
 <div class="col-md-6 col-sm-6 ">
     <div class="x_panel">
         <div class="x_title">
@@ -53,10 +55,11 @@
                                 <tr>
                                     <th style="display:none">id</th>
                                     <th>劑型代碼</th>
-                                    <th>劑型名稱</th>                                                                        
+                                    <th>劑型名稱</th>
+                                    <th>操作功能</th> @* 會被下面的title覆蓋 *@
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="tbody">
                             </tbody>
                         </table>
                     </div>
@@ -65,12 +68,35 @@
         </div>
     </div>
 </div>
+@* 沒有用到model暫時保留 *@
+<div class="row">
+    @*  <dl class="row"> *@
+    <div class="col-md-10">
+        <form asp-area="Drugs" asp-controller="DrugsApi" asp-action="Details">
+            <div class="form-group">
+                <label asp-for="FTypeCode" class="control-label"> 劑型代碼 </label>
+                <input asp-for="FTypeCode" class="form-control" id="fTypeCode" />
+                <label asp-for="FType" class="control-label"> 劑型名稱 </label>
+                <input asp-for="FType" class="form-control" id="fType" />
+            </div>
+        </form>
+    </div>
+    @*  <dt class="col-sm-2">
+    @Html.DisplayNameFor(model=>model.FTypeCode)123
+    </dt>
+    <dd class="col-sm-8" style="background-color:antiquewhite">
+    @Html.DisplayFor(model=>model.FTypeCode)
+    </dd>
+    </dl> *@
+</div>
 
 @section Scripts {
     <script>
+        //dataTable 讀取資料 
         $(document).ready(function () {
             //alert("ready");
             $('#dtType').dataTable({
+
                 ajax: {
                     type: 'GET',
                     url: (`/Drugs/drugsapi/TypeInfo`),
@@ -80,7 +106,13 @@
                 columns: [
                     { "data": "id", "visible": false },
                     { "data": "劑型代碼", "width": "20%" },
-                    { "data": "劑型名稱", "width": "80%" }
+                    { "data": "劑型名稱", "width": "60%" },
+                    {
+                        "data": null, title: "操作功能", "width": "20%",
+                        render: function (data, type, row) {
+                            return '<button type="button" name="Editor" class="btn btn-warning btn-sm"> 編輯 </button>'
+                        },
+                    }
                 ],
                 fixedHeader: {
                     header: true
@@ -88,8 +120,28 @@
                 language: {
                     url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/zh-HANT.json'
                 }
-        });
-                })
+            });
+        })
+        const TypeCode = document.getElementById('fTypeCode');
+        const Type = document.getElementById('fType');
+        //TypeCode.innerText = "123";
+        $(document).on('click', 'button[name=Editor]', function () {
+            var table = $('#dtType').DataTable();
+            var tr = $(this).closest('tr');
+            var data = table.row(tr).data();
+            console.log(data);
+            console.log(data.劑型代碼);
+            console.log(data.劑型名稱);
+            console.log(typeof (data));
+            console.log(JSON.stringify(data.劑型代碼));
+            TypeCode.value = data.劑型代碼;
+            Type.value = data.劑型名稱;
+            //TypeCode.innerHTML = data.劑型代碼;
+            // (JSON.stringify(data.劑型代碼)) = TypeCode.textContent;
+            //TypeCode.textContent = JSON.stringify(data.劑型代碼)
+
+        })
+        
     </script>
 }
 
