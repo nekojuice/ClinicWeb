@@ -67,7 +67,7 @@
                 </div>
             </div>
 
-          
+
             <!--搜尋那塊-->
             <div class="x_content">
                 <div class="row">
@@ -199,7 +199,7 @@
                     destroy: true,
                     columns: [
                         // { "data": "id", "visible": false },
-                       // { "屬性": "值", "visible": false },建議看JSON撈到的來寫欄位 不然會對錯
+                        // { "屬性": "值", "visible": false },建議看JSON撈到的來寫欄位 不然會對錯
                         { "data": "會員id", "visible": false },
                         { "data": "會員編號" },
                         { "data": "姓名" },
@@ -266,19 +266,19 @@
 
 
         //新增會員的按下儲存後
-     function createBtnEventLis() { 
-        const btnSubmit = document.querySelector('#saveButton');
-        // const divInfo = document.querySelector('#div1');
+        async function createBtnEventLis() {
+            // const btnSubmit = document.querySelector('#AddMemBtn');
+            // const divInfo = document.querySelector('#div1');
 
-        //測試每個欄位抓的到值
-        // const Name11 = document.querySelector('#userName');
-        // btnSubmit.addEventListener('click', async (event) => {
-        //     event.preventDefault(); //停止預設行為
-        //     console.log(Name11.value);
-        // })
+            //測試每個欄位抓的到值
+            // const Name11 = document.querySelector('#userName');
+            // btnSubmit.addEventListener('click', async (event) => {
+            //     event.preventDefault(); //停止預設行為
+            //     console.log(Name11.value);
+            // })
 
-        btnSubmit.addEventListener('click', async (event) => {
-            event.preventDefault(); //停止預設行為
+            // btnSubmit.addEventListener('click', async (event) => {
+            //     event.preventDefault(); //停止預設行為
 
             //FormData
             const formData = new FormData(document.querySelector('#memberForm'));
@@ -288,15 +288,19 @@
             formData.forEach(function (value, key) {
                 jsonobject[key] = value;
             });
+            // jsonobject.Verification = jsonobject.Verification == "on" ? true : false;
+
             let jsonstring = JSON.stringify(jsonobject)
-                        // for (const pair of formData.entries()) {
+            console.log("來看看jsonstring是誰：" + jsonstring);
+            return;
+            // for (const pair of formData.entries()) {
             //     console.log(pair[0]);
             //     console.log(pair[1]);
             // }
             try {
-                    //RequestVerificationToken要加在header裡面 
+                //RequestVerificationToken要加在header裡面
                 const url = '@Url.Content("~/Member/Member/MemberCreate")';
-                
+
                 const response = await fetch(url, {
                     method: "POST",
                     headers: {
@@ -306,11 +310,13 @@
                     },
                     body: jsonstring
                 });
-                // 確定有抓到整包formdata
+                
                 const data = await response.text();
+                
                 // // divInfo.innerHTML = data;
 
-                    //switcheryOptions要再加一次 不然失效
+                //switcheryOptions要再加一次 不然失效
+                async function switcheryforAddMem(){
                     let switcheryOptions = {
 
                         color: '#64bd63', // 當checked時的背景顏色
@@ -324,11 +330,35 @@
                         size: 'default' // 開關大小(small, default, large)
                     };
                     new Switchery(document.getElementById('vertificationformemCreate'), switcheryOptions);
+                }
+                switcheryforAddMem();
 
+                console.log(data);
+                console.log(data === "success");
+                if (data === "success") {
+                    //新增完成之後要清除剛剛輸入的資料以及跳出新增成功樣式 並且取得最新資料
+                    clearForm();
+                    addMemFormClose();
+                    new PNotify({
+                        title: '新增成功',
+                        type: 'success',
+                        styling: 'bootstrap3'
+                    });
+                    QueryMemberInfo();
+                }
+                else {
+                   
                     //把剛剛所有formdata包含錯誤訊息塞給divCreateInfo 也就是createpartial的id
-                document.querySelector('#divCreateInfo').innerHTML = data;
-                //重新呼叫一次按鈕事件  不然會變成輸入完自動送出
-               createBtnEventLis()
+                    document.querySelector('#divCreateInfo').innerHTML = data;
+                    switcheryforAddMem();
+                    //重新綁定要驗證的表單 為了把編輯的表單跟validation連起來 (因為資料室ajax 過來 validation在資料來之前就在了)
+                    var form = $('form');
+                    form.removeData('validator');
+                    form.removeData('unobtrusiveValidation');
+                    $.validator.unobtrusive.parse(form);
+                }
+
+    
             }
             catch {
                 new PNotify({
@@ -346,23 +376,16 @@
 
 
             //新增完成之後要清除剛剛輸入的資料以及跳出新增成功樣式 並且取得最新資料
-            clearForm();
 
-            addMemFormClose();
-            new PNotify({
-                title: '新增成功',
-                type: 'success',
-                styling: 'bootstrap3'
-            });
 
 
             //重抓全部資料
-            QueryMemberInfo();
+          
 
 
-        });
+        };
 
-    }       
+
 
         //關閉#addApptForm視窗
         function addMemFormClose() {
@@ -381,9 +404,9 @@
             clearForm();
         });
 
-        document.getElementById('saveButton').addEventListener('click', function () {
-            clearForm();
-        });
+        // document.getElementById('saveButton').addEventListener('click', function () {
+        //     clearForm();
+        // });
 
         //抓到該筆編輯資料的索引
         let _index_memdatatable;
@@ -423,16 +446,16 @@
 
                 //控制編輯按鈕地確認權限的滑輪swichery 一定要寫在請求資料後
                 var switcheryOptions = {
-                    
-                        color: '#64bd63', // 當checked時的背景顏色
-                        secondaryColor: '#dfdfdf', // unchecked時的背景顏色
-                        jackColor: '#fff', // checked時的按鈕顏色
-                        jackSecondaryColor: null, // uncheck時的按鈕顏色
-                        className: 'switchery', // class名稱
-                        disabled: false, // 是否設為disabled
-                        disabledOpacity: 0.5, // 當設為disabled時的透明度
-                        speed: '0.1s', // 開關切換的速度
-                        size: 'default' // 開關大小(small, default, large)
+
+                    color: '#64bd63', // 當checked時的背景顏色
+                    secondaryColor: '#dfdfdf', // unchecked時的背景顏色
+                    jackColor: '#fff', // checked時的按鈕顏色
+                    jackSecondaryColor: null, // uncheck時的按鈕顏色
+                    className: 'switchery', // class名稱
+                    disabled: false, // 是否設為disabled
+                    disabledOpacity: 0.5, // 當設為disabled時的透明度
+                    speed: '0.1s', // 開關切換的速度
+                    size: 'default' // 開關大小(small, default, large)
                 };
                 new Switchery(document.getElementById('vertificationformem'), switcheryOptions);
 
@@ -458,13 +481,13 @@
 
         //確定編輯畫面按下保存有抓到資料
         async function buttonEventFunc(/* memberId, *//* _index_memdatatable */) {
-          
+
             //先抓到當前的頁碼
             const currentPage = $('#memdatatable').DataTable().page()
             console.log("這邊是按下保存後的console log", _index_memdatatable)
             document.getElementById("_MemberEditPartial").addEventListener("submit", async (event) => {
                 event.preventDefault(); // 防止表單默認提交行為
-               /*  vertification(); *///打開啟用按鍵所要做出的判斷
+                /*  vertification(); *///打開啟用按鍵所要做出的判斷
 
                 // memdatatable
                 const formData = new FormData(document.querySelector('#_MemberEditPartial'));
@@ -477,13 +500,13 @@
                         "body": formData
                     });
                     result = await response.json();
-                    
+
 
                     console.log("顯示剛剛更新的資料", result)
                 }
                 catch {
                     result = await response.text
-                    if(result == "驗證未通過") {
+                    if (result == "驗證未通過") {
                         return;
                     }
 
@@ -513,7 +536,7 @@
                 //     return;
                 // }
                 //
-               
+
                 editMemFormClose();
                 new PNotify({
                     title: '修改成功',

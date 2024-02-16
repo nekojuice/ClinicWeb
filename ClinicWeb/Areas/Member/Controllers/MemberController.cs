@@ -88,10 +88,10 @@ namespace ClinicWeb.Areas.Member.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         //[Bind("MemberNumber,Name,Gender,BloodType,NationalId,Address,ContactAddress,Phone,BirthDate,IceName,MemPassword,MemEmail,Verification,IsEnabled")]
-        public IActionResult MemberCreate( MemberMemberList member, string GenderString, string VerificationString)
+        public IActionResult MemberCreate([FromBody]MemberMemberList member)
         {
 
-            if(member==null) 
+            if (member == null)
             {
                 Console.WriteLine("null~~");
             }
@@ -105,35 +105,38 @@ namespace ClinicWeb.Areas.Member.Controllers
             if (!ModelState.IsValid)
             {
                 // 如果模型驗證失敗，重新顯示包含錯誤信息的表單
+                
                 return PartialView("~/Areas/Member/Views/Partial/_MemberCreatePartial.cshtml", member); // 返回相同的視圖，這將會顯示錯誤信息
             }
-            //加入資料庫
-            if (GenderString == "true")
+            else
             {
-                member.Gender = true;
-            }
-            else { member.Gender = false; }
+                //加入資料庫
+                //if (GenderString == "true")
+                //{
+                //    member.Gender = true;
+                //}
+                //else { member.Gender = false; }
 
-            if (VerificationString == "on")
-            {
-                member.Verification = true;
-            }
-            else { member.Verification = false; }
-            var maxMemberNumber = _context.MemberMemberList.Max(m => m.MemberNumber);
-            var nextMemberNumber = maxMemberNumber + 1;
-            member.MemberNumber = nextMemberNumber;
+                //if (VerificationString == "on")
+                //{
+                //    member.Verification = true;
+                //}
+                //else { member.Verification = false; }
+                var maxMemberNumber = _context.MemberMemberList.Max(m => m.MemberNumber);
+                var nextMemberNumber = maxMemberNumber + 1;
+                member.MemberNumber = nextMemberNumber;
 
-            _context.MemberMemberList.Add(member);
-            _context.SaveChanges();
-         
-            return View("~/Areas/Member/Views/Partial/_MemberCreatePartial.cshtml", member);
+                _context.MemberMemberList.Add(member);
+                _context.SaveChanges();
+                return Content("success"); 
+            }
 
         }
 
 
 
         //修改會員資料的畫面顯示
-        public async Task <IActionResult> MemberEdit(int? memberId)
+        public async Task<IActionResult> MemberEdit(int? memberId)
         {
             if (memberId == null || _context.MemberMemberList == null)
             {
@@ -188,8 +191,8 @@ namespace ClinicWeb.Areas.Member.Controllers
         //把會員編輯好的資料送回資料庫
         [HttpPost]
         [ValidateAntiForgeryToken]
-/* [Bind("MemberId,MemberNumber,Name,Gender,BloodType,NationalId,Address,ContactAddress,Phone,BirthDate,IceName,MemPassword,MemEmail,Verification,IsEnabled")]*/ 
-        public async Task<IActionResult> Edit([Bind("MemberId,MemberNumber,Name,Verification")]int MemberId,MemberMemberList member, string GenderString, string VerificationString)
+        /* [Bind("MemberId,MemberNumber,Name,Gender,BloodType,NationalId,Address,ContactAddress,Phone,BirthDate,IceName,MemPassword,MemEmail,Verification,IsEnabled")]*/
+        public async Task<IActionResult> Edit([Bind("MemberId,MemberNumber,Name,Verification")] int MemberId, MemberMemberList member, string GenderString, string VerificationString)
         {
             if (MemberId != member.MemberId)
             {
@@ -228,11 +231,11 @@ namespace ClinicWeb.Areas.Member.Controllers
                 }
                 //return RedirectToAction(nameof(Index));
             }
-            else 
+            else
             {
-                return  Content("驗證未通過");
+                return Content("驗證未通過");
             }
-            
+
             // 取得剛剛那筆會員資料的 ID
             int memberId = member.MemberId;
             //return View("~/Areas/Member/Views/_MemberIndex.cshtml",  member.MemberId);
