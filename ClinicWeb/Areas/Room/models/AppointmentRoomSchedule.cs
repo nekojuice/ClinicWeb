@@ -15,6 +15,9 @@ public partial class AppointmentRoomSchedule
     [Column("Appointment_ID")]
     public int AppointmentId { get; set; }
 
+    [Column("Emp_ID")]
+    public int EmpId { get; set; }
+
     [Column("Room_ID")]
     public int? RoomId { get; set; }
 
@@ -33,17 +36,13 @@ public partial class AppointmentRoomSchedule
     [Column("Nurse_ID")]
     public int? NurseId { get; set; }
 
-    [ForeignKey("DoctorId")]
-    [InverseProperty("AppointmentRoomScheduleDoctor")]
-    public virtual MemberEmployeeList Doctor { get; set; }
+    [ForeignKey("EmpId")]
+    [InverseProperty("AppointmentRoomSchedule")]
+    public virtual MemberEmployeeList Emp { get; set; }
 
     [ForeignKey("MemberId")]
     [InverseProperty("AppointmentRoomSchedule")]
     public virtual MemberMemberList Member { get; set; }
-
-    [ForeignKey("NurseId")]
-    [InverseProperty("AppointmentRoomScheduleNurse")]
-    public virtual MemberEmployeeList Nurse { get; set; }
 
     [ForeignKey("RoomId")]
     [InverseProperty("AppointmentRoomSchedule")]

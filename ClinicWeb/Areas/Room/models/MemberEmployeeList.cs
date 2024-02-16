@@ -64,11 +64,6 @@ public partial class MemberEmployeeList
 
     public byte[] EmpPhoto { get; set; }
 
-    [InverseProperty("Doctor")]
-    public virtual ICollection<AppointmentRoomSchedule> AppointmentRoomScheduleDoctor { get; set; } = new List<AppointmentRoomSchedule>();
-
-    [InverseProperty("Nurse")]
-    public virtual ICollection<AppointmentRoomSchedule> AppointmentRoomScheduleNurse { get; set; } = new List<AppointmentRoomSchedule>();
-
-   
+    [InverseProperty("Emp")]
+    public virtual ICollection<AppointmentRoomSchedule> AppointmentRoomSchedule { get; set; } = new List<AppointmentRoomSchedule>();
 }

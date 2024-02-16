@@ -68,6 +68,4 @@ public partial class MemberMemberList
 
     [InverseProperty("Member")]
     public virtual ICollection<AppointmentRoomSchedule> AppointmentRoomSchedule { get; set; } = new List<AppointmentRoomSchedule>();
-
-   
 }

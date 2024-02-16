@@ -23,8 +23,6 @@ public partial class RoomList
     [InverseProperty("Room")]
     public virtual ICollection<AppointmentRoomSchedule> AppointmentRoomSchedule { get; set; } = new List<AppointmentRoomSchedule>();
 
-   
-
     [ForeignKey("TypeId")]
     [InverseProperty("RoomList")]
     public virtual RoomTypeList Type { get; set; }
