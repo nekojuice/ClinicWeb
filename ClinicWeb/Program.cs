@@ -12,26 +12,41 @@ var Pass = builder.Configuration["ClinicSys:PASS"];
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
+	options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+	.AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
 
-//nick's server
-var ClinicDb = new SqlConnectionStringBuilder(builder.Configuration.GetConnectionString("ClinicSysWAN"))
+//db switcher
+/// 0: nick's db server -- Nick家伺服器
+/// 1: localhost db server -- localhost本機資料庫伺服器
+int db_source_switcher = 1;
+
+var ConnString = "";
+switch (db_source_switcher)
 {
-    ServerSPN = Server,
-    UserID = User,
-    Password = Pass
-};
-var ConnString = ClinicDb.ConnectionString;
+	case 0:
+		//nick's db server
+		var ClinicDb = new SqlConnectionStringBuilder(builder.Configuration.GetConnectionString("ClinicSysWAN"))
+		{
+			DataSource = Server,
+			UserID = User,
+			Password = Pass
+		};
+		ConnString = ClinicDb.ConnectionString;
+		break;
+	case 1:
+		//localhost db server
+		ConnString = builder.Configuration.GetConnectionString("ClinicSys");
+		break;
+	default:
+		break;
+}
 
-//localhost
-//var ConnString = builder.Configuration.GetConnectionString("ClinicSys");
-
+//Areas model DI
 builder.Services.AddDbContext<ClinicWeb.Areas.Member.Models.ClinicSysContext>(options => options.UseSqlServer(ConnString));
 builder.Services.AddDbContext<ClinicWeb.Areas.Drugs.Models.ClinicSysContext>(options => options.UseSqlServer(ConnString));
 builder.Services.AddDbContext<ClinicWeb.Areas.Schedule.Models.ClinicSysContext>(options => options.UseSqlServer(ConnString));
@@ -47,13 +62,13 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseMigrationsEndPoint();
+	app.UseMigrationsEndPoint();
 }
 else
 {
-    app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+	app.UseExceptionHandler("/Home/Error");
+	// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+	app.UseHsts();
 }
 
 app.UseHttpsRedirection();
@@ -64,14 +79,14 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapControllerRoute(
-      name: "areas",
-      pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
-    );
+	  name: "areas",
+	  pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+	);
 
 
 app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+	name: "default",
+	pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.MapRazorPages();
 
