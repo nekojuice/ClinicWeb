@@ -19,21 +19,25 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddDbContext<ClinicWeb.Areas.Member.Models.ClinicSysContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ClinicSys")));
-builder.Services.AddDbContext<ClinicWeb.Areas.Drugs.Models.ClinicSysContext>(options =>  options.UseSqlServer(builder.Configuration.GetConnectionString("ClinicSys")));
-builder.Services.AddDbContext<ClinicWeb.Areas.Schedule.Models.ClinicSysContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ClinicSys")));
-builder.Services.AddDbContext<ClinicWeb.Areas.Appointment.Models.ClinicSysContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ClinicSys")));
-builder.Services.AddDbContext<ClinicSysContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ClinicSys")));
 
-builder.Services.AddDbContext<ClinicSysContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ClinicSys"))); //³s±µ¥»¦aºÝ¸ê®Æ®w
-//var ClinicDb = new SqlConnectionStringBuilder(builder.Configuration.GetConnectionString("ClinicSysWAN")) //³s±µ¥»²Õ³s½u¸ê®Æ®w
-//{
-//    ServerSPN = Server,
-//    UserID = User,
-//    Password = Pass
-//};
-//var ConnString = ClinicDb.ConnectionString;
-//builder.Services.AddDbContext<ClinicSysContext>(options => options.UseSqlServer(ConnString));
+//nick's server
+var ClinicDb = new SqlConnectionStringBuilder(builder.Configuration.GetConnectionString("ClinicSysWAN"))
+{
+    ServerSPN = Server,
+    UserID = User,
+    Password = Pass
+};
+var ConnString = ClinicDb.ConnectionString;
+
+//localhost
+//var ConnString = builder.Configuration.GetConnectionString("ClinicSys");
+
+builder.Services.AddDbContext<ClinicWeb.Areas.Member.Models.ClinicSysContext>(options => options.UseSqlServer(ConnString));
+builder.Services.AddDbContext<ClinicWeb.Areas.Drugs.Models.ClinicSysContext>(options => options.UseSqlServer(ConnString));
+builder.Services.AddDbContext<ClinicWeb.Areas.Schedule.Models.ClinicSysContext>(options => options.UseSqlServer(ConnString));
+builder.Services.AddDbContext<ClinicWeb.Areas.Appointment.Models.ClinicSysContext>(options => options.UseSqlServer(ConnString));
+builder.Services.AddDbContext<ClinicSysContext>(options => options.UseSqlServer(ConnString));
+
 
 //NewtonsoftJson
 builder.Services.AddControllers().AddNewtonsoftJson();
