@@ -23,6 +23,7 @@ builder.Services.AddControllersWithViews();
 //db switcher
 /// 0: nick's db server -- Nick家伺服器
 /// 1: localhost db server -- localhost本機資料庫伺服器
+/// 2: ispan classroom 201 db server cat -- 201教室ip位置14號(nkj)
 int db_source_switcher = 1;
 
 var ConnString = "";
@@ -41,6 +42,10 @@ switch (db_source_switcher)
 	case 1:
 		//localhost db server
 		ConnString = builder.Configuration.GetConnectionString("ClinicSys");
+		break;
+	case 2:
+		//class 201 db server cat
+		ConnString = builder.Configuration.GetConnectionString("ClinicSysClass201");
 		break;
 	default:
 		break;
