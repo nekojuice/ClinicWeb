@@ -1,0 +1,279 @@
+﻿@model ScheduleClinicInfo
+
+@{
+	ViewData["Title"] = "打卡系統";
+}
+@section ModulesStyles
+{
+	<!-- iCheck -->
+	<link href="~/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+	<!-- Datatables -->
+
+	<link href="~/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+	<link href="~/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+	<link href="~/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+	<link href="~/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+	<link href="~/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+
+	<!-- Switchery -->
+	<link href="~/vendors/switchery/dist/switchery.min.css" rel="stylesheet">
+
+	<!--Toastr-->
+	<link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+}
+
+
+@section Styles
+{
+	<link href="~/msit155e/css/appointment/clinicinfo.css" rel="stylesheet" asp-append-version="true" />
+ @*    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/dist/css/bootstrap.rtl.min.css" rel="stylesheet" /> *@
+}
+
+@{
+	ViewData["Title"] = "打卡資料";
+};
+
+
+<label id="currentTimeLabel">Current Time: </label>
+
+
+<select id="empList">
+	@foreach (var obj in ViewBag.employees)
+	{
+		<option>@obj</option>
+	}
+</select>
+
+
+<button id="btn1" class="btn btn-primary">上班打卡</button>
+<button id="btn2" class="btn btn-primary">下班打卡</button>
+
+
+<div class="row" style="display: block;">
+	<div class="col-md-6 col-sm-6 ">
+		<div class="x_panel">
+			<div class="x_title">
+				<h2>出勤資訊</h2>
+				<ul class="nav navbar-right panel_toolbox">
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+			<div class="x_content">
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="card-box table-responsive">
+							<table id="clinicDataTable" class="table table-striped table-bordered" style="width:100%">
+								<thead>
+									<tr>
+										<th style="display:none">
+											id
+										</th>
+										<th>
+											打卡時間
+										</th>
+										<th>
+											簽退時間
+										</th>
+										<th>
+											上班日期
+										</th>
+										<th>
+											上班狀態
+										</th>
+										<th>
+											下班狀態
+										</th>
+									</tr>
+								</thead>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+
+
+@section Scripts {
+	
+	@* <script src = "~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.esm.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script> *@
+		   <script>
+		//套件
+		toastr.options = {
+			"closeButton": true,
+			"showDuration": "300",
+			"hideDuration": "500",
+			"timeOut": "1000",
+			"extendedTimeOut": "1000",
+			"showEasing": "swing",
+			"hideEasing": "linear",
+			"showMethod": "fadeIn",
+			"hideMethod": "fadeOut"
+		}
+
+		
+			//下拉選單改變
+			$('#empList').on('change', function () {
+				
+				const selectedValue = $(this).val();
+
+				
+				updateDataTable(empID=selectedValue)
+			});
+	
+
+		//顯示時間
+		function updateCurrentTime() {
+			const currentTime = new Date();
+			const formattedTime = currentTime.toLocaleTimeString();
+			$("#currentTimeLabel").text("現在時間: " + formattedTime);
+		}
+		//顯示資料
+		function updateDataTable() {
+			$('#clinicDataTable').DataTable().destroy()
+			$('#clinicDataTable').DataTable({
+				ajax: {
+					type: 'GET',
+					url: "/Attend/Att/checkData/" + empID,
+					dataSrc: function (json) { return json; }
+				},
+				columns: [
+					{ data: "上班時間" },
+					{ data: "下班時間" },
+					{ data: "上班日期" },
+					{ data: "上班狀態" },
+					{ data: "下班狀態" }
+				],
+				fixedHeader: {
+					header: true
+				},
+				language: {
+					url: "https://cdn.datatables.net/plug-ins/1.13.7/i18n/zh-HANT.json"
+				}
+			});
+		}
+		//進畫面讀資料
+		let empID = 19;
+		$(document).ready(function () {
+			updateDataTable()
+		});
+
+		//刷新時間
+		$(document).ready(function () {
+			updateCurrentTime();
+			setInterval(updateCurrentTime, 500);
+		});
+
+		//上班
+		$(document).ready(function () {
+			$("#btn1").click(function (e) {
+				e.preventDefault();
+
+				const currentDate = new Date();
+				const isOnTime = currentDate.getHours() < 9;
+				const requestData = {
+					"FEmployeeId": empID,
+					"FCheckInTime": currentDate.toISOString(),
+					"FWorkDate": currentDate.toISOString(),
+					"fAttendanceCIS": isOnTime ? "準時到" : "遲到",
+				};
+
+				$.ajax({
+					type: "POST",
+					url: "/Attend/Att/CHeckIn",
+					contentType: "application/json",
+					data: JSON.stringify(requestData),
+					cache: false,
+					success: function (response) {
+						console.log("Success:", response);
+						updateDataTable();
+						toastr.success(response)
+					},
+					error: function (error) {
+						console.error("Error:", error.responseText);
+						toastr.error(error.responseText)
+					}
+				});
+			});
+		});
+		//下班
+		$(document).ready(function () {
+			$("#btn2").click(function (e) {
+				e.preventDefault();
+
+				var currentDate = new Date();
+				var isOnTime = currentDate.getHours() > 17;
+				var requestData = {
+					"FEmployeeId": empID,
+					"FCheckOutTime": currentDate.toISOString(),
+					"FWorkDate": currentDate.toISOString(),
+					"fAttendanceCOS": isOnTime ? "正常下班" : "早退",
+				};
+
+				$.ajax({
+					type: "POST",
+					url: "/Attend/Att/CHeckOut",
+					contentType: "application/json",
+					data: JSON.stringify(requestData),
+					success: function (response) {
+						console.log("Success:", response);
+						updateDataTable();
+						toastr.success(response)
+					},
+					error: function (error) {
+						console.error("Error:", error.responseText);
+						toastr.error(error.responseText)
+					}
+				});
+			});
+		});
+
+
+
+	</script>
+
+
+
+
+
+
+}
+
+
+
+@section Modules
+{
+	<!-- iCheck -->
+	<script src="~/vendors/iCheck/icheck.min.js"></script>
+	<!-- Datatables -->
+	<script src="~/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+	@* <script src="~/lib/datatables/js/jquery.datatables.min.js"></script> *@
+	<script src="~/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+	<script src="~/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+	<script src="~/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+	<script src="~/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+	<script src="~/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+	<script src="~/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+	<script src="~/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+	<script src="~/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+	<script src="~/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+	<script src="~/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+	<script src="~/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+	<script src="~/vendors/jszip/dist/jszip.min.js"></script>
+	<script src="~/vendors/pdfmake/build/pdfmake.min.js"></script>
+	<script src="~/vendors/pdfmake/build/vfs_fonts.js"></script>
+	<!-- Switchery -->
+	<script src="~/vendors/switchery/dist/switchery.min.js"></script>
+	<!--Toastr-->
+	<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+}
