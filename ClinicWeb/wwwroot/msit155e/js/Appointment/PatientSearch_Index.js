@@ -3,7 +3,7 @@ function init_PatientApptTable() {
     if (!$.fn.DataTable.isDataTable('#patientApptTable')) {
         $('#patientApptTable').dataTable({
             columns: [
-                { "data": "id", "visible": false },
+                { "data": "clinicAppt_id", "visible": false },
                 { "data": "日期" },
                 { "data": "時段" },
                 { "data": "科別" },
@@ -11,7 +11,7 @@ function init_PatientApptTable() {
                 { "data": "診號" },
                 { "data": "退掛" },
                 { "data": "看診狀態" },
-                { defaultContent: '<input type="button" class="btn btn-info btn_edit" value="編輯"></input>'}
+                { defaultContent: '<button type="button" class="btn btn-info btn_edit" data-toggle="modal" data-target=".modApptModal">編輯</button>'}
             ],
             fixedHeader: {
                 header: true
@@ -73,6 +73,41 @@ async function memberNationalIdSearchClick(id, searchResult) {
 $("#patientApptTable tbody").on('click', '.btn_edit', function () {
     const selectedTr = $(this).closest('tr')
     const index = $("#patientApptTable").DataTable().row(selectedTr).index()
-    const apptId = $("#patientApptTable").DataTable().row(index).data().id;
-    console.log(apptId);
+    const clinicAppt_id = $("#patientApptTable").DataTable().row(index).data().clinicAppt_id;
+    console.log(clinicAppt_id);
+
+    ModAppt(clinicAppt_id)
 })
+
+function modApptFormClose() {
+    $("#modApptForm").modal('toggle')
+    $("#modApptMessage").css('visibility', 'hidden')
+    isCancelled = ""
+}
+function delApptFormClose() {
+    $("#delApptForm").modal('toggle')
+}
+
+//修改選擇的掛號紀錄
+async function ModAppt(clinicAppt_id) { 
+    const response = await fetch(`/Appointment/PatientSearch/GET_ApptRecordOne/${clinicAppt_id}`, { method: "POST" })
+    const data = await response.json();
+
+    //填入視窗
+    //$("#ModApptMemberId").val(data.member_id)
+    $("#ModApptMemberNumber").val(data.會員號碼)
+    $("#ModApptNationalId").val(data.身分證字號)
+    $("#ModApptName").val(data.姓名)
+    $("#ModApptGender").val(data.性別)
+    $("#ModApptBirthDate").val(data.生日)
+    $("#ModApptBloodType").val(data.血型)
+    $("#ModApptClinicNumber").val(data.診號)
+    $("#ModApptState").val(data.看診狀態)
+    if (data.退掛 == "是") {
+        $("#ModApptIsCancelled").val("True")
+        isCancelled = "True"
+    } else {
+        $("#ModApptIsCancelled").val("False")
+        isCancelled = "False"
+    }
+}

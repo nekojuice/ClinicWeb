@@ -25,7 +25,7 @@ function init_ApptTable() {
     if (!$.fn.DataTable.isDataTable('#apptDataTable')) {
         $("#apptDataTable").dataTable({
             columns: [
-                { "data": "clinic_id", "visible": false },
+                { "data": "clinicAppt_id", "visible": false },
                 { "data": "member_id", "visible": false },
                 { "data": "診號" },
                 { "data": "姓名" },
@@ -139,8 +139,7 @@ $("#apptDataTable tbody").on('mousedown', 'tr', function () {
     $(this).siblings().removeClass('selected');
     $(this).addClass('selected');
 
-    let clinicId = $('#apptDataTable').DataTable().row(_index_apptDataTable).data().clinic_id;
-    let memberId = $('#apptDataTable').DataTable().row(_index_apptDataTable).data().member_id;
+    //let memberId = $('#apptDataTable').DataTable().row(_index_apptDataTable).data().member_id;
     //console.log(clinicId + " - " + memberId + " / " + index)
 
     $("#modAppt").prop("disabled", false);

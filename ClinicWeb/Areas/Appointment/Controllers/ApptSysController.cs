@@ -75,7 +75,7 @@ namespace ClinicWeb.Areas.Appointment.Controllers
                 .Include(x => x.Member)
                 .Select(x => new
                 {
-                    clinic_id = x.ClinicId,
+                    clinicAppt_id = x.ClinicListId,
                     member_id = x.MemberId,
                     診號 = x.ClinicNumber,
                     姓名 = x.Member.Name,
@@ -182,7 +182,7 @@ namespace ClinicWeb.Areas.Appointment.Controllers
                 .Where(x => x.ClinicId == Convert.ToInt32(clinicId) && x.MemberId == Convert.ToInt32(memberId))
                 .Select(x => new
                 {
-                    clinic_id = x.ClinicId,
+                    clinicAppt_id = x.ClinicListId,
                     member_id = x.MemberId,
                     會員號碼 = x.Member.MemberNumber,
                     診號 = x.ClinicNumber,
