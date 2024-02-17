@@ -25,33 +25,34 @@
     <link href="~/msit155e/css/appointment/clinicinfo.css" rel="stylesheet" asp-append-version="true" />
 }
 <div class="row" style="display: block;">
-    <div class="col-md-6 col-sm-6 ">
+    <div class="col-md-12 col-sm-12 ">
         <div class="x_panel">
             <div class="x_content">
 
-                <div class="item form-group">
-                    <label for="memberNationalIdSearch" class="col-form-label col-md-2 col-sm-2 label-align">搜尋病患</label>
-                    <div class="col-md-8 col-sm-8  form-group has-feedback">
-                        <input type="text" class="form-control has-feedback-left" id="memberNationalIdSearch" placeholder="身分證字號" autocomplete="off">
-                        <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
 
-                        @*搜尋選單*@
-                        <div class="form-horizontal form-label-left item form-group" style="position:fixed;z-index:500;">
-                            <div class="form-group has-feedback" id="memberNationalIdSearchData" style="display:none;">
-                            </div>
+                <label for="memberNationalIdSearch" class="col-form-label col-md-2 col-sm-2 label-align">搜尋病患</label>
+                <div class="col-md-8 col-sm-8  form-group has-feedback">
+                    <input type="text" class="form-control has-feedback-left" id="memberNationalIdSearch" placeholder="身分證字號" autocomplete="off">
+                    <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+
+                    @*搜尋選單*@
+                    <div class="form-horizontal form-label-left item form-group" style="position:fixed;z-index:500;">
+                        <div class="form-group has-feedback" id="memberNationalIdSearchData" style="display:none;">
                         </div>
-
                     </div>
+
                 </div>
+
             </div>
         </div>
     </div>
 </div>
 
+<partial name="_PatientApptTablePatrial" />
 
 @section Scripts
 {
-
+    <script src="~/msit155e/js/appointment/patientsearch_index.js"></script>
 }
 @section Modules
 {

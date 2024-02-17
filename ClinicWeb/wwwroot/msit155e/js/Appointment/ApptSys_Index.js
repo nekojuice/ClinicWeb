@@ -1,6 +1,6 @@
 ﻿//初始化表格 欄位如果不變，別再destroy了
 function init_ClinicTable() {
-    if (!$.fn.DataTable.isDataTable('#apptDataTable')) {
+    if (!$.fn.DataTable.isDataTable('#clinicDataTable')) {
         $('#clinicDataTable').dataTable({
             columns: [
                 { "data": "id", "visible": false },
