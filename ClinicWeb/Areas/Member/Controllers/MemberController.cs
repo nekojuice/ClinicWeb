@@ -88,7 +88,7 @@ namespace ClinicWeb.Areas.Member.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         //[Bind("MemberNumber,Name,Gender,BloodType,NationalId,Address,ContactAddress,Phone,BirthDate,IceName,MemPassword,MemEmail,Verification,IsEnabled")]
-        public IActionResult MemberCreate([FromBody]MemberMemberList member)
+        public IActionResult MemberCreate([FromForm]MemberMemberList member)
         {
 
             if (member == null)
@@ -99,14 +99,15 @@ namespace ClinicWeb.Areas.Member.Controllers
             {
                 Console.WriteLine(member.ToJson());
             }
-
+            member.Verification = false;
             //return Content("123");
             //檢查驗證
             if (!ModelState.IsValid)
             {
                 // 如果模型驗證失敗，重新顯示包含錯誤信息的表單
                 
-                return PartialView("~/Areas/Member/Views/Partial/_MemberCreatePartial.cshtml", member); // 返回相同的視圖，這將會顯示錯誤信息
+               return PartialView("~/Areas/Member/Views/Partial/_MemberCreatePartial.cshtml", member); // 返回相同的視圖，這將會顯示錯誤信息
+                //return Json(member);
             }
             else
             {
@@ -203,17 +204,17 @@ namespace ClinicWeb.Areas.Member.Controllers
             {
                 try
                 {
-                    if (GenderString == "true")
-                    {
-                        member.Gender = true;
-                    }
-                    else { member.Gender = false; }
+                    //if (GenderString == "true")
+                    //{
+                    //    member.Gender = true;
+                    //}
+                    //else { member.Gender = false; }
 
-                    if (VerificationString == "on")
-                    {
-                        member.Verification = true;
-                    }
-                    else { member.Verification = false; }
+                    //if (VerificationString == "on")
+                    //{
+                    //    member.Verification = true;
+                    //}
+                    //else { member.Verification = false; }
 
                     _context.Update(member);
                     await _context.SaveChangesAsync();

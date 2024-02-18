@@ -288,7 +288,8 @@
             formData.forEach(function (value, key) {
                 jsonobject[key] = value;
             });
-            // jsonobject.Verification = jsonobject.Verification == "on" ? true : false;
+            jsonobject.Verification = jsonobject.Verification == "on" ? true : false;
+            console.log("來看看jsonobject是誰：" + jsonobject);
 
             let jsonstring = JSON.stringify(jsonobject)
             console.log("來看看jsonstring是誰：" + jsonstring);
@@ -310,13 +311,13 @@
                     },
                     body: jsonstring
                 });
-                
+
                 const data = await response.text();
-                
+
                 // // divInfo.innerHTML = data;
 
                 //switcheryOptions要再加一次 不然失效
-                async function switcheryforAddMem(){
+                async function switcheryforAddMem() {
                     let switcheryOptions = {
 
                         color: '#64bd63', // 當checked時的背景顏色
@@ -347,18 +348,21 @@
                     QueryMemberInfo();
                 }
                 else {
-                   
-                    //把剛剛所有formdata包含錯誤訊息塞給divCreateInfo 也就是createpartial的id
-                    document.querySelector('#divCreateInfo').innerHTML = data;
-                    switcheryforAddMem();
-                    //重新綁定要驗證的表單 為了把編輯的表單跟validation連起來 (因為資料室ajax 過來 validation在資料來之前就在了)
-                    var form = $('form');
-                    form.removeData('validator');
-                    form.removeData('unobtrusiveValidation');
-                    $.validator.unobtrusive.parse(form);
-                }
+                    const btnSubmit = document.querySelector('#AddMemBtn');
+                    btnSubmit.addEventListener('click', async (event) => {
 
-    
+                        //把剛剛所有formdata包含錯誤訊息塞給divCreateInfo 也就是createpartial的id
+                        document.querySelector('#divCreateInfo').innerHTML = data;
+                        switcheryforAddMem();
+                        //重新綁定要驗證的表單 為了把編輯的表單跟validation連起來 (因為資料室ajax 過來 validation在資料來之前就在了)
+                        var form = $('form');
+                        form.removeData('validator');
+                        form.removeData('unobtrusiveValidation');
+                        $.validator.unobtrusive.parse(form);
+                    });
+                        }
+
+
             }
             catch {
                 new PNotify({
@@ -380,7 +384,7 @@
 
 
             //重抓全部資料
-          
+
 
 
         };
@@ -461,6 +465,17 @@
 
                 //註冊按鈕事件 要再生成編輯partial之後再加上 不然抓不到這個按鈕事件
                 buttonEventFunc(/* memberId,_index_memdatatable */);
+
+                //測試變換抓誰
+                $(document).ready(function () {
+
+                    $('#vertificationformem').on('click', function () {
+
+                        const isChecked = $(this).is(":checked");
+
+                        console.log("Checkbox的值:", isChecked);
+                    });
+                });
             } catch (error) {
                 console.error('在取得會員資料並打開編輯畫面出現錯誤，請洽系統管理員:', error);
 
@@ -476,7 +491,7 @@
         }
 
 
-
+       
 
 
         //確定編輯畫面按下保存有抓到資料
@@ -491,8 +506,11 @@
 
                 // memdatatable
                 const formData = new FormData(document.querySelector('#_MemberEditPartial'));
-                let result;
 
+                let result;
+                const Verification = $("#vertificationformem").is(":checked")
+                formData.set('Verification', Verification);
+                console.log(formData)
                 try {
                     const url = "/Member/Member/Edit";
                     const response = await fetch(url, {

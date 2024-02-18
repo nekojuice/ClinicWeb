@@ -131,7 +131,7 @@
                     <div class="col-md-9 col-sm-9 ">
                         <div class="">
                             <label>
-                                <input name="VerificationString" type="checkbox" id="vertificationformemCreate"class="js-switch" checked />
+                                <input name="Verification" type="checkbox" id="vertificationformemCreate"class="js-switch" checked />
                             </label>
                         </div>
 
@@ -158,15 +158,17 @@
                 </label>
 
                 <div class="col-md-9 col-sm-9 ">
-                    <input asp-for= "BirthDate" class="date-picker form-control" placeholder="dd-mm-yyyy" type="datetime" onfocus="this.type='date'" onmouseover="this.type='date'" onclick="this.type='date'" onblur="this.type='text'" onmouseout="timeFunctionLong(this)">
+                    <input name="BirthDate" class="date-picker form-control" type="date"  />
+                    <span asp-validation-for="BirthDate" class="text-danger"></span>
+                   @*  <input asp-for= "BirthDate" class="date-picker form-control" placeholder="dd-mm-yyyy" type="date" onfocus="this.type='date'" onmouseover="this.type='date'" onclick="this.type='date'" onblur="this.type='text'" onmouseout="timeFunctionLong(this)">
                     <span asp-validation-for="BirthDate" class="text-danger"></span>
                     <script>
                         function timeFunctionLong(input) {
                             setTimeout(function () {
-                                input.type = 'text';
+                                input.type = 'date';
                             }, 60000);
                         }
-                    </script>
+                    </script> *@
                 </div>
             </div>
             @* <div class="ln_solid"></div> *@

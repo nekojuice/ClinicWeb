@@ -24,12 +24,42 @@ namespace ClinicWeb.Areas.Member.Controllers
             return View("EmpIndex");
             //return View("Index2");
         }
+       
+
+        [Route("{area}/{controller}/{action}")]
+        public JsonResult EmpGetdata()
+        {
+
+            return Json(_context.MemberEmployeeList
+                .Select(x => new
+                {
+                    員工id = x.EmpId,
+                    員工編號 = x.StaffNumber,
+                    姓名 = x.Name,
+                    性別 = x.Gender ? "男" : "女",
+                    血型 = x.BloodType,
+                    身分證字號 = x.NationalId,
+                    聯絡電話 = x.Phone,
+                    地址=x.Address,
+                    員工類別=x.EmpType,
+
+
+                    在職 =(bool)x.Quit ? "在職" : "離職",
+                
+
+            
+                    //已經解決 性別不用這樣寫是為性別不允許null
+
+                }
+                ));
+        }
+
 
         //// GET: Member/Emp
         //public async Task<IActionResult> Index()
         //{
         //    return  View() ;
-                        
+
         //}
 
         //// GET: Member/Emp/Details/5
@@ -155,7 +185,7 @@ namespace ClinicWeb.Areas.Member.Controllers
         //    {
         //        _context.MemberEmployeeList.Remove(memberEmployeeList);
         //    }
-            
+
         //    await _context.SaveChangesAsync();
         //    return RedirectToAction(nameof(Index));
         //}

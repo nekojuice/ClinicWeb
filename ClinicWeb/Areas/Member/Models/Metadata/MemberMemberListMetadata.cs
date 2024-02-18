@@ -27,7 +27,7 @@ namespace ClinicWeb.Areas.Member.Models
         [Required(ErrorMessage = "請選擇性別 ")]
         [Display(Name = "性別")]
         public bool Gender { get; set; }
-        [Required]
+     
         public string? GenderString { get; set; }
 
 
@@ -66,8 +66,9 @@ namespace ClinicWeb.Areas.Member.Models
         [Display(Name = "連絡電話")]
         public string? Phone { get; set; }
 
-        [Required(ErrorMessage = "請選擇生日 ")]
+        //[Required(ErrorMessage = "請選擇生日 ")]
         //[Column("Birth_Date", TypeName = "datetime")]
+
         [Display(Name = "生日")]
        
         public DateTime BirthDate { get; set; }

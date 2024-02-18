@@ -66,7 +66,7 @@
             <div class="form-group row">
                 <label class="control-label col-md-3 col-sm-3 " asp-for="Gender"></label>
                 <div class="col-md-9 col-sm-9 ">
-                    <select name="GenderString" class="form-control">
+                    <select asp-for="Gender" class="form-control">
                        
                         <!option value='true'@if (Model.Gender == true)
                             @("selected")
@@ -164,7 +164,7 @@
                                        checked=@Model.Verification
                                        data-switchery="true" style="display: none;"> *@
 
-                                <input name="VerificationString" id="vertificationformem" type="checkbox" class="js-switch" @if (Model.Verification == true)
+                                <input name="Verification" id="vertificationformem" type="checkbox" class="js-switch" @if (Model.Verification == true)
                                     @("checked")
 
                                        data-switchery="true" style="display: none;">
