@@ -125,7 +125,7 @@ $("#clinicDataTable tbody").on('mousedown', 'tr', function () {
     $(this).siblings().removeClass('selected');
     $(this).addClass('selected');
 
-    getApptData(_clinicIdSelected);
+    getApptData();
     $("#addAppt").prop("disabled", false);
     $("#modAppt").prop("disabled", true);
 });
@@ -146,11 +146,11 @@ $("#apptDataTable tbody").on('mousedown', 'tr', function () {
 });
 
 //右表
-async function getApptData(clinicID) {
+async function getApptData() {
     //先清空資料
     $("#apptDataTable").DataTable().clear();
     //撈資料
-    const response = await fetch(`/Appointment/ApptSys/GET_ApptRecordList/${clinicID}`)
+    const response = await fetch(`/Appointment/ApptSys/GET_ApptRecordList/${_clinicIdSelected}`)
     const data = await response.json()
     //填入資料
     await $("#apptDataTable").DataTable().rows.add(data).draw();
@@ -333,140 +333,20 @@ async function update_PatientNumber() {
 function addApptFormClose() {
     $("#addApptForm").modal('toggle')
 }
-let isCancelled = "";
-//修改選擇的掛號紀錄
-$("#modAppt").on('click', async (e) => {
-    let memberId = $('#apptDataTable').DataTable().row(_index_apptDataTable).data().member_id;
 
-    const response = await fetch(`/Appointment/ApptSys/GET_ApptRecordOne/${_clinicIdSelected}/${memberId}`, { method: "POST" });
-    const data = await response.json();
-    //const dataArray = await Object.values(data)
-    //console.log(dataArray)
-
-    //填入視窗
-    //$("#ModApptMemberId").val(data.member_id)
-    $("#ModApptMemberNumber").val(data.會員號碼)
-    $("#ModApptNationalId").val(data.身分證字號)
-    $("#ModApptName").val(data.姓名)
-    $("#ModApptGender").val(data.性別)
-    $("#ModApptBirthDate").val(data.生日)
-    $("#ModApptBloodType").val(data.血型)
-    $("#ModApptClinicNumber").val(data.診號)
-    $("#ModApptState").val(data.看診狀態)
-    if (data.退掛 == "是") {
-        $("#ModApptIsCancelled").val("True")
-        isCancelled = "True"
-    } else {
-        $("#ModApptIsCancelled").val("False")
-        isCancelled = "False"
-    }
+//點擊修改按鈕
+$("#modAppt").on('click', async () => {
+    const clinicAppt_id = $('#apptDataTable').DataTable().row(_index_apptDataTable).data().clinicAppt_id;
+    ModApptForm_OPEN(clinicAppt_id)
 })
-async function ModAppt() {
-    let putCancell = $("#ModApptIsCancelled").val() //[區域]putCancell愈更變的值, [全域]isCancelled原始的值
-    if (isCancelled == putCancell || isCancelled == "") {
-        modApptFormClose()
-        return
-    }
 
-    const memberId = $('#apptDataTable').DataTable().row(_index_apptDataTable).data().member_id;
-    const memberName = $('#apptDataTable').DataTable().row(_index_apptDataTable).data().姓名;
-
-    let result;
-    try {
-        const response = await fetch(`/Appointment/ApptSys/PUT_ApptRecord_Cancelled/${_clinicIdSelected}/${memberId}/${putCancell}`, { method: "POST" });
-        result = await response.json()
-    } catch (e) {
-        new PNotify({
-            title: '更新資料失敗',
-            text: '發生錯誤，請洽系統管理員',
-            type: 'error',
-            styling: 'bootstrap3'
-        });
-        //$("#modApptMessage").text('更新資料失敗，請洽系統管理員')
-        //$("#modApptMessage").css('visibility', 'visible')
-        return
-    }
-
-    modApptFormClose()
-    new PNotify({
-        title: '修改成功',
-        text: `${memberName} 掛號已修改`,
-        type: 'success',
-        styling: 'bootstrap3'
-    });
-
-    //更新右表資料與狀態
-    //只重繪修改的該row
-    //也許要新增修改看診狀態? 所以整個row重繪
-    $('#apptDataTable').DataTable().row(_index_apptDataTable).data(result).draw();
+//修改的callback
+async function modApptCallback() {
     //更新左表總掛號數
     await update_PatientNumber()
-    //閃爍動畫
-    const changedRowNode = $('#apptDataTable').DataTable().row(_index_apptDataTable).node()
-    await DataChanged_ColorAnimate(changedRowNode)
 }
-
-//資料更新後的閃爍動畫
-function DataChanged_ColorAnimate(node) {
-    //node = 該row或該cell html tag選擇器
-    node.classList.remove('colorChange');
-    requestAnimationFrame(function () {
-        node.classList.add('colorChange');
-        node.addEventListener('animationend', function () {
-            node.classList.remove('colorChange');
-        }, {
-            once: true
-        });
-    });
-}
-
-//刪除掛號紀錄(非退掛)
-async function DelAppt() {
-    let memberId = $('#apptDataTable').DataTable().row(_index_apptDataTable).data().member_id;
-    const memberName = $('#apptDataTable').DataTable().row(_index_apptDataTable).data().姓名;
-    const currentPage = $('#apptDataTable').DataTable().page();//紀錄當前page
-    try {
-        const response = await fetch(`/Appointment/ApptSys/DEL_ApptRecordOne/${_clinicIdSelected}/${memberId}`, { method: "POST" });
-        if (!response.ok) {
-            throw new Error()
-        }
-        result = await response.text()
-    } catch (e) {
-        new PNotify({
-            title: '刪除失敗',
-            text: '發生錯誤，請洽系統管理員',
-            type: 'error',
-            styling: 'bootstrap3'
-        });
-        $("#delApptMessage").text('刪除失敗，請洽系統管理員')
-        $("#delApptMessage").css('visibility', 'visible')
-        return
-    }
-    if (result == "Success") {
-        $("#delApptForm").modal('toggle')
-        $("#modApptForm").modal('toggle')
-        getApptData(_clinicIdSelected);//還是直接傳回新表??
-        $("#modAppt").prop("disabled", "disabled");
-        new PNotify({
-            title: '刪除成功',
-            text: `${memberName} 掛號紀錄已刪除`,
-            type: 'danger',
-            styling: 'bootstrap3'
-        });
-        await update_PatientNumber()
-        //刪除重撈後切換
-        //最大頁數不可比當前頁數小，避免page沒有row
-        if ($('#apptDataTable').DataTable().page.info().pages - 1 >= currentPage) {
-            await $('#apptDataTable').DataTable().page(currentPage).draw('page') //切換到當前page
-        }
-    }
-}
-function delApptFormClose() {
-    $("#delApptForm").modal('toggle')
-}
-//關閉#modApptForm視窗
-function modApptFormClose() {
-    $("#modApptForm").modal('toggle')
-    $("#modApptMessage").css('visibility', 'hidden')
-    isCancelled = ""
+//刪除的callback
+async function delApptCallback() {
+    await getApptData(_clinicIdSelected);//還是直接傳回新表??
+    await update_PatientNumber()
 }

@@ -5,13 +5,21 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ClinicWeb.Areas.Appointment.Controllers
 {
+    /// <summary>
+    /// 掛號管理控制器
+    /// </summary>
+    /// <author>nekojuice</author>
     [Area("Appointment")]
     public class ApptSysController : Controller
     {
         private ClinicSysContext _context;
         public ApptSysController(ClinicSysContext context) { _context = context; }
 
-        public IActionResult Index()
+		/// <summary>
+		/// 顯示 掛號管理頁面
+		/// </summary>
+		/// <returns>[html] Index</returns>
+		public IActionResult Index()
         {
             var result = (from tSchedule in _context.ScheduleClinicInfo select tSchedule.Date.Substring(0, 7)).Distinct();
 
@@ -28,24 +36,30 @@ namespace ClinicWeb.Areas.Appointment.Controllers
             return View();
         }
 
-        //[Route("{area}/{controller}/{action}/{year}/{month}")]
-        //public IActionResult ClinicInfo(string year, string month)
-        //{
-        //    var apptableMonth = from x in _context.ScheduleClinicInfo
-        //                        where x.Date.StartsWith($"{year}/{month}")
-        //                        select x;
-        //    if (apptableMonth == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    else
-        //    {
-        //        return PartialView("_ClinicInfoPartial", apptableMonth);
-        //    }
-        //}
+		//[Route("{area}/{controller}/{action}/{year}/{month}")]
+		//public IActionResult ClinicInfo(string year, string month)
+		//{
+		//    var apptableMonth = from x in _context.ScheduleClinicInfo
+		//                        where x.Date.StartsWith($"{year}/{month}")
+		//                        select x;
+		//    if (apptableMonth == null)
+		//    {
+		//        return NotFound();
+		//    }
+		//    else
+		//    {
+		//        return PartialView("_ClinicInfoPartial", apptableMonth);
+		//    }
+		//}
 
-        [Route("{area}/{controller}/{action}/{year}/{month}")]
-        //[HttpPost]
+		/// <summary>
+		/// 以 指定年月 撈取所有已排班的開診資訊
+		/// </summary>
+		/// <param name="year">指定年</param>
+		/// <param name="month">指定月</param>
+		/// <returns>[JSON] 該月開診資訊，多筆</returns>
+		[Route("{area}/{controller}/{action}/{year}/{month}")]
+        [HttpGet]
         public JsonResult GET_ClinicInfoList(string year, string month)
         {
             return Json(_context.ScheduleClinicInfo
@@ -66,9 +80,13 @@ namespace ClinicWeb.Areas.Appointment.Controllers
                 }));
         }
 
-        [Route("{area}/{controller}/{action}/{id}")]
-        //[HttpPost]
-        public JsonResult GET_ApptRecordList(string id)
+		/// <summary>
+		/// 撈取該診掛號清單
+		/// </summary>
+		/// <param name="id">開診資訊id ClinicInfoId (int)</param>
+		/// <returns>[JSON] 該診掛號清單，多筆</returns>
+		[HttpGet]
+		public JsonResult GET_ApptRecordList(string id)
         {
             return Json(_context.ApptClinicList
                 .Where(x => x.ClinicId == Convert.ToInt32(id))
@@ -87,12 +105,17 @@ namespace ClinicWeb.Areas.Appointment.Controllers
                 }));
         }
 
-        [Route("{area}/{controller}/{action}/{nationalId}")]
-        //[HttpPost]
-        public JsonResult GET_MemberDataSnap(string nationalId)
+		/// <summary>
+		/// 快捷部分搜尋
+		/// 簡易版會員資訊
+		/// </summary>
+		/// <param name="id">會員身分證字號 NationalId (string)</param>
+		/// <returns>[JSON] 簡易版會員資訊，最大5筆</returns>
+		[HttpGet]
+		public JsonResult GET_MemberDataSnap(string id)
         {
             return Json(_context.MemberMemberList
-                .Where(x => x.NationalId.Contains(nationalId))
+                .Where(x => x.NationalId.Contains(id))
                 .Select(x => new
                 {
                     id = x.MemberId,
@@ -105,7 +128,13 @@ namespace ClinicWeb.Areas.Appointment.Controllers
                 );
         }
 
-        [HttpPost]
+		/// <summary>
+		/// !!敏感資訊!!
+		/// 搜尋詳細會員資料
+		/// </summary>
+		/// <param name="id">會員id MemberId (int)</param>
+		/// <returns>[JSON] 詳細會員資料，1筆</returns>
+		[HttpPost]
         public JsonResult GET_MemberData(string id)
         {
             return Json(_context.MemberMemberList
@@ -128,7 +157,15 @@ namespace ClinicWeb.Areas.Appointment.Controllers
                 .FirstOrDefault()
                 );
         }
-        [Route("{area}/{controller}/{action}/{clinicId}/{memberId}/{isVIP}")]
+
+		/// <summary>
+		/// 執行掛號
+		/// </summary>
+		/// <param name="clinicId">開診資訊id ClinicId (int)</param>
+		/// <param name="memberId">會員id MemberId (int)</param>
+		/// <param name="isVIP">是否優待 IsVip (bool)</param>
+		/// <returns>[text] 是否重複掛號 isDuplicate (bool)</returns>
+		[Route("{area}/{controller}/{action}/{clinicId}/{memberId}/{isVIP}")]
         [HttpPost]
         public async Task<IActionResult> Add_ApptRecord(string clinicId, string memberId, string isVIP)
         {
@@ -174,12 +211,18 @@ namespace ClinicWeb.Areas.Appointment.Controllers
             return Content(isDuplicate.ToString());
         }
 
-        [Route("{area}/{controller}/{action}/{clinicId}/{memberId}")]
-        [HttpPost]
-        public JsonResult GET_ApptRecordOne(string clinicId, string memberId)
+		/// <summary>
+		/// 1. 用於顯示查詢彈跳視窗
+		/// 2. 用於更新掛號紀錄單個row
+		/// </summary>
+		/// <param name="id">掛號紀錄id ClinicListId (int)</param>
+		/// <returns>[JSON] 複合資料: 會員資料</returns>
+
+		[HttpPost]
+        public JsonResult GET_ApptRecordOne(string id)
         {
             return Json(_context.ApptClinicList
-                .Where(x => x.ClinicId == Convert.ToInt32(clinicId) && x.MemberId == Convert.ToInt32(memberId))
+                .Where(x => x.ClinicListId == Convert.ToInt32(id))
                 .Select(x => new
                 {
                     clinicAppt_id = x.ClinicListId,
@@ -192,20 +235,31 @@ namespace ClinicWeb.Areas.Appointment.Controllers
                     血型 = x.Member.BloodType,
                     身分證字號 = x.Member.NationalId,
                     退掛 = x.IsCancelled ? "是" : "否",
-                    看診狀態 = x.PatientState.PatientStateName
+                    看診狀態 = x.PatientState.PatientStateName,
+
+                    日期 = x.Clinic.Date,
+                    時段 = x.Clinic.ClinicTime.ClinicShifts,
+                    科別 = x.Clinic.Doctor.Department,
+                    醫師名稱 = x.Clinic.Doctor.Name
                 })
                 .FirstOrDefault()
                 );
         }
 
-        [Route("{area}/{controller}/{action}/{clinicId}/{memberId}/{cancelled}")]
+		/// <summary>
+		/// 修改掛號紀錄
+		/// </summary>
+		/// <param name="id">掛號紀錄id ClinicListId (int)</param>
+		/// <param name="cancelled">是否退掛 IsCancelled (bool)</param>
+		/// <returns>[JSON] 複合資料: 會員資料</returns>
+		[Route("{area}/{controller}/{action}/{id}/{cancelled}")]
         [HttpPost]
-        public async Task<IActionResult> PUT_ApptRecord_Cancelled(string clinicId, string memberId, string cancelled)
+        public async Task<IActionResult> PUT_ApptRecord_Cancelled(string id, string cancelled)
         {
             try
             {
                 var target = _context.ApptClinicList
-                    .Where(x => x.ClinicId == Convert.ToInt32(clinicId) && x.MemberId == Convert.ToInt32(memberId))
+                    .Where(x => x.ClinicListId == Convert.ToInt32(id))
                     .First();
                 target.IsCancelled = Convert.ToBoolean(cancelled);
                 await _context.SaveChangesAsync();
@@ -214,18 +268,22 @@ namespace ClinicWeb.Areas.Appointment.Controllers
             {
                 return NotFound();
             }
-            return GET_ApptRecordOne(clinicId, memberId);
+            return GET_ApptRecordOne(id);
         }
 
-        [Route("{area}/{controller}/{action}/{clinicId}/{memberId}")]
-        [HttpPost]
-        public async Task<IActionResult> DEL_ApptRecordOne(string clinicId, string memberId)
+		/// <summary>
+		/// 刪除掛號紀錄
+		/// </summary>
+		/// <param name="id">掛號紀錄id ClinicListId (int)</param>
+		/// <returns>[text] "Success" 或 NotFound()</returns>
+		[HttpPost]
+        public async Task<IActionResult> DEL_ApptRecordOne(string id)
         {
             try
             {
                 var target = _context.ApptClinicList
-                    .Where(x => x.ClinicId == Convert.ToInt32(clinicId) && x.MemberId == Convert.ToInt32(memberId))
-                    .First();
+					.Where(x => x.ClinicListId == Convert.ToInt32(id))
+					.First();
                 _context.ApptClinicList.Remove(target);
                 await _context.SaveChangesAsync();
                 return Content("Success");
@@ -234,10 +292,15 @@ namespace ClinicWeb.Areas.Appointment.Controllers
             {
                 return NotFound();
             }
-
         }
 
-        [HttpPost]
+		/// <summary>
+		/// 更新當診 已掛號人數
+		/// 掛號、退掛、刪除紀錄時撈取
+		/// </summary>
+		/// <param name="id">開診資訊id ClinicInfoId (int)</param>
+		/// <returns>[JSON] 預約人數 (int) 或 NotFound()</returns>
+		[HttpPost]
         public IActionResult GET_ClinicPatientNumber(string id)
         {
             try

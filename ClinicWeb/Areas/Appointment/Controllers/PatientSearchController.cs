@@ -21,10 +21,12 @@ namespace ClinicWeb.Areas.Appointment.Controllers
         {
             // int, bool
             //不包含歷史資料，從此月開始 (預設)
+            //這個不能寫在一起嗎
             if (!Convert.ToBoolean(monthBefore))
             {
-                string thisMonth = DateTime.Now.ToString("yyyy/mm");
-                return Json(_context.ApptClinicList
+                string thisMonth = DateTime.Now.ToString("yyyy/MM");
+
+				return Json(_context.ApptClinicList
                 .Where(x => x.MemberId == Convert.ToInt32(memberId)
                 && x.Clinic.Date.CompareTo(thisMonth) >= 0)
                 .Include(x => x.Clinic.Doctor)
@@ -33,6 +35,7 @@ namespace ClinicWeb.Areas.Appointment.Controllers
                 .Select(x => new
                 {
 					clinicAppt_id = x.ClinicListId,
+                    姓名 = x.Member.Name,
                     日期 = x.Clinic.Date,
                     時段 = x.Clinic.ClinicTime.ClinicShifts,
                     科別 = x.Clinic.Doctor.Department,
@@ -52,6 +55,7 @@ namespace ClinicWeb.Areas.Appointment.Controllers
                 .Select(x => new
                 {
 					clinicAppt_id = x.ClinicListId,
+                    姓名 = x.Member.Name,
                     日期 = x.Clinic.Date,
                     時段 = x.Clinic.ClinicTime.ClinicShifts,
                     科別 = x.Clinic.Doctor.Department,
@@ -62,27 +66,5 @@ namespace ClinicWeb.Areas.Appointment.Controllers
                 })
                 );
         }
-
-		public JsonResult GET_ApptRecordOne(string id)
-		{
-			return Json(_context.ApptClinicList
-				.Where(x => x.ClinicListId == Convert.ToInt32(id))
-				.Select(x => new
-				{
-					clinicAppt_id = x.ClinicListId,
-					member_id = x.MemberId,
-					會員號碼 = x.Member.MemberNumber,
-					診號 = x.ClinicNumber,
-					姓名 = x.Member.Name,
-					生日 = x.Member.BirthDate.ToString("yyyy/MM/dd"),
-					性別 = x.Member.Gender ? "男" : "女",
-					血型 = x.Member.BloodType,
-					身分證字號 = x.Member.NationalId,
-					退掛 = x.IsCancelled ? "是" : "否",
-					看診狀態 = x.PatientState.PatientStateName
-				})
-				.FirstOrDefault()
-				);
-		}
 	}
 }

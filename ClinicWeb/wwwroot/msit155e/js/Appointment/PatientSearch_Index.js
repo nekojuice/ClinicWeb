@@ -1,9 +1,10 @@
 ﻿//初始化表格
 function init_PatientApptTable() {
-    if (!$.fn.DataTable.isDataTable('#patientApptTable')) {
-        $('#patientApptTable').dataTable({
+    if (!$.fn.DataTable.isDataTable('#apptDataTable')) {
+        $('#apptDataTable').dataTable({
             columns: [
                 { "data": "clinicAppt_id", "visible": false },
+                { "data": "姓名", "visible": false },
                 { "data": "日期" },
                 { "data": "時段" },
                 { "data": "科別" },
@@ -58,56 +59,49 @@ $("#addApptForm").on('click', (e) => {
     }
 })
 
-//填入當前目標與執行搜尋
+//全域變數: 當前選取的會員id
+let selectedMemberId = '';
+//填入當前目標
 async function memberNationalIdSearchClick(id, searchResult) {
+    selectedMemberId = id
     $("#memberNationalIdSearch").val(searchResult)
     $("#memberNationalIdSearchData").hide()
-
-    const response = await fetch(`/Appointment/PatientSearch/PatientApptTable/${id}/True`, { method: "POST" })
-    const data = await response.json()
-    $('#patientApptTable').DataTable().clear().draw
-    $("#patientApptTable").DataTable().rows.add(data).draw()
+    //搜尋
+    getApptData()
 }
 
-//編輯按鈕按下
-$("#patientApptTable tbody").on('click', '.btn_edit', function () {
-    const selectedTr = $(this).closest('tr')
-    const index = $("#patientApptTable").DataTable().row(selectedTr).index()
-    const clinicAppt_id = $("#patientApptTable").DataTable().row(index).data().clinicAppt_id;
-    console.log(clinicAppt_id);
+//執行搜尋
+async function getApptData() {
+    //是否包含歷史紀錄(當月以前)
+    const isContainHistory = $("#isContainHistory").is(":checked")
 
-    ModAppt(clinicAppt_id)
+    const response = await fetch(`/Appointment/PatientSearch/PatientApptTable/${selectedMemberId}/${isContainHistory}`, { method: "POST" })
+    const data = await response.json()
+    $('#apptDataTable').DataTable().clear().draw
+    $("#apptDataTable").DataTable().rows.add(data).draw()
+}
+
+
+let _index_apptDataTable = '';
+//編輯按鈕按下
+$("#apptDataTable tbody").on('click', '.btn_edit', function () {
+    const selectedTr = $(this).closest('tr')
+    _index_apptDataTable = $("#apptDataTable").DataTable().row(selectedTr).index()
+    const clinicAppt_id = $("#apptDataTable").DataTable().row(_index_apptDataTable).data().clinicAppt_id;
+
+    ModApptForm_OPEN(clinicAppt_id)
 })
 
-function modApptFormClose() {
-    $("#modApptForm").modal('toggle')
-    $("#modApptMessage").css('visibility', 'hidden')
-    isCancelled = ""
+//修改的callback
+async function modApptCallback() {
+    //目前啥都沒有
 }
-function delApptFormClose() {
-    $("#delApptForm").modal('toggle')
+//刪除的callback
+async function delApptCallback() {
+    getApptData()
 }
 
-//修改選擇的掛號紀錄
-async function ModAppt(clinicAppt_id) { 
-    const response = await fetch(`/Appointment/PatientSearch/GET_ApptRecordOne/${clinicAppt_id}`, { method: "POST" })
-    const data = await response.json();
-
-    //填入視窗
-    //$("#ModApptMemberId").val(data.member_id)
-    $("#ModApptMemberNumber").val(data.會員號碼)
-    $("#ModApptNationalId").val(data.身分證字號)
-    $("#ModApptName").val(data.姓名)
-    $("#ModApptGender").val(data.性別)
-    $("#ModApptBirthDate").val(data.生日)
-    $("#ModApptBloodType").val(data.血型)
-    $("#ModApptClinicNumber").val(data.診號)
-    $("#ModApptState").val(data.看診狀態)
-    if (data.退掛 == "是") {
-        $("#ModApptIsCancelled").val("True")
-        isCancelled = "True"
-    } else {
-        $("#ModApptIsCancelled").val("False")
-        isCancelled = "False"
-    }
-}
+//切換 是否包含歷史資料開關時
+$("#isContainHistory").on('click', function () {
+    getApptData()
+})
