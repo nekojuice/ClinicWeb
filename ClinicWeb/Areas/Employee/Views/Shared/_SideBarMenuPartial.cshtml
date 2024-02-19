@@ -51,12 +51,11 @@
 <li @if (ViewBag.AREA == "Cases")
 	@("class=active")
 >
-	<a><i class="fa fa-edit"></i> 病例系統 <span class="fa fa-chevron-down"></span></a>
+	<a><i class="fa fa-edit"></i> 病歷系統 <span class="fa fa-chevron-down"></span></a>
 	<ul class="nav child_menu" @if (ViewBag.AREA == "Cases")
 		@("style=display:block;")
 >
-		<li><a asp-area="Cases" asp-controller="Home" asp-action="Index">功能首頁</a></li>
-		<li><a asp-area="Cases" asp-controller="Home" asp-action="Index2">連結模板</a></li>
+		<li><a asp-area="Cases" asp-controller="Home" asp-action="Index">看診與病歷</a></li>
 	</ul>
 </li>
 <li @if (ViewBag.AREA == "Drugs")
