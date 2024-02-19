@@ -1,0 +1,98 @@
+﻿@{
+    ViewData["Title"] = "看診系統";
+}
+@section ModulesStyles
+{
+    <!-- iCheck -->
+    <link href="~/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+    <!-- Datatables -->
+
+    <link href="~/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="~/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+    <link href="~/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+    <link href="~/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+    <link href="~/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+
+    <!-- Switchery -->
+    <link href="~/vendors/switchery/dist/switchery.min.css" rel="stylesheet">
+    <!-- PNotify -->
+    <link href="~/vendors/pnotify/dist/pnotify.css" rel="stylesheet">
+    <link href="~/vendors/pnotify/dist/pnotify.buttons.css" rel="stylesheet">
+    <link href="~/vendors/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">
+
+    <!-- 自訂: 更新後顏色閃爍 -->
+    <link href="~/msit155e/css/appointment/extension_datachanged_coloranimate.css" rel="stylesheet" />
+}
+@section Styles
+{
+    <link href="~/msit155e/css/clinicroomsys/_callingpanelpartial.css" rel="stylesheet" />
+}
+
+@*叫號機*@
+<div class="col-md-3 col-sm-3 nkj_Height_renderpage">
+    <partial name="/Areas/ClinicRoomSys/Views/CallingSys/_CallingPanelPartial.cshtml" />
+</div>
+
+<div class="col-md-9 col-sm-9 nkj_Height_renderpage">
+
+    @*[區塊] 病例看診?*@
+    <div class="col-md-12 col-sm-12 nkj_Height_50p">
+        <div class="x_panel nkj_Height_100p">
+            <h3>病例看診test</h3>
+            <h3>病例看診test</h3>
+            <h3>病例看診test</h3>
+            <h3>病例看診test</h3>
+        </div>
+    </div>
+    @*[區塊] 病例看診?*@
+    
+    @*[區塊] 開藥?*@
+    <div class="col-md-12 col-sm-12 nkj_Height_50p">
+        <div class="x_panel nkj_Height_100p">
+            <h3>開藥test</h3>
+            <h3>開藥test</h3>
+            <h3>開藥test</h3>
+            <h3>開藥test</h3>
+        </div>
+    </div>
+    @*[區塊] 開藥?*@
+
+</div>
+@section Scripts
+{
+    <script src="~/msit155e/js/clinicroomsys/_callingpanelpartial.js"></script>
+}
+@section Modules
+{
+    <!-- iCheck -->
+    <script src="~/vendors/iCheck/icheck.min.js"></script>
+    <!-- Datatables -->
+    <script src="~/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    @* <script src="~/lib/datatables/js/jquery.datatables.min.js"></script> *@
+    <script src="~/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+    <script src="~/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="~/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="~/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+    <script src="~/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+    <script src="~/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="~/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+    <script src="~/vendors/jszip/dist/jszip.min.js"></script>
+    <script src="~/vendors/pdfmake/build/pdfmake.min.js"></script>
+    <script src="~/vendors/pdfmake/build/vfs_fonts.js"></script>
+    <!-- Switchery -->
+    <script src="~/vendors/switchery/dist/switchery.min.js"></script>
+    <!-- PNotify -->
+    <script src="~/vendors/pnotify/dist/pnotify.js"></script>
+    <script src="~/vendors/pnotify/dist/pnotify.buttons.js"></script>
+    <script src="~/vendors/pnotify/dist/pnotify.nonblock.js"></script>
+
+    <!-- datatable jumptodata -->
+    <script src="https://cdn.datatables.net/plug-ins/1.13.7/api/page.jumpToData().js" asp-fallback-src="~/lib/page.jumptodata().js"></script>
+
+    <!-- 自訂: 更新後顏色閃爍 -->
+    <script src="~/msit155e/js/appointment/extension_datachanged_coloranimate.js"></script>
+}

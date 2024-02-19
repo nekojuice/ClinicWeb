@@ -98,3 +98,13 @@
 		<li><a asp-area="Room" asp-controller="Home" asp-action="Index2">連結模板</a></li>
 	</ul>
 </li>
+<li @if (ViewBag.AREA == "ClinicRoomSys")
+	@("class=active")
+>
+	<a><i class="fa fa-list-alt"></i> 診間系統 <span class="fa fa-chevron-down"></span></a>
+	<ul class="nav child_menu" @if (ViewBag.AREA == "ClinicRoomSys")
+		@("style=display:block;")
+>
+		<li><a asp-area="ClinicRoomSys" asp-controller="Home" asp-action="Index">叫號看診系統</a></li>
+	</ul>
+</li>
