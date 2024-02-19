@@ -222,7 +222,6 @@
     <Folder Include="Areas\Cases\Data\" />
     <Folder Include="Areas\Cases\Models\" />
     <Folder Include="Areas\ClinicRoomSys\Data\" />
-    <Folder Include="Areas\ClinicRoomSys\Models\" />
     <Folder Include="Areas\Drugs\Data\" />
     <Folder Include="Areas\Employee\Data\" />
     <Folder Include="Areas\Employee\Models\" />

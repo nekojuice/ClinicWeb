@@ -32,3 +32,33 @@
     }
 }
 init_callingTable()
+
+async function QueryCallingData() {
+
+    const doctorId = 4
+
+    //const date = new Date() //今天
+    const date = new Date("2024/02/01")
+    const datedata = `${date.getFullYear()}/${date.getMonth()+1 }`
+
+    const shiftId = 4
+
+    const jsonData = { 'doctorId': doctorId, 'date': datedata, 'shiftId': shiftId }
+
+    //選擇時先清空資料
+    //$("#callingTable").DataTable().clear();
+    //要資料
+    //const selectedDate = $("#Date").val()
+    const response = await fetch(`/ClinicRoomSys/CallingSys/Get_CallingList`,
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                // Content-Type: 'application/x-www-form-urlencoded',
+            },
+            body: JSON.stringify(jsonData)
+    })
+    const data = await response.json()
+    //填入資料
+    //$("#callingTable").DataTable().rows.add(data).draw()
+}
