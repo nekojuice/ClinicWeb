@@ -88,7 +88,7 @@ namespace ClinicWeb.Areas.Member.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         //[Bind("MemberNumber,Name,Gender,BloodType,NationalId,Address,ContactAddress,Phone,BirthDate,IceName,MemPassword,MemEmail,Verification,IsEnabled")]
-        public IActionResult MemberCreate([FromForm]MemberMemberList member)
+        public IActionResult MemberCreate([Bind("Name,Gender,BloodType,NationalId,Address,ContactAddress,Phone,BirthDate,IceName,MemPassword,MemEmail,Verification")] MemberMemberList member)
         {
 
             if (member == null)
@@ -99,7 +99,7 @@ namespace ClinicWeb.Areas.Member.Controllers
             {
                 Console.WriteLine(member.ToJson());
             }
-            member.Verification = false;
+            
             //return Content("123");
             //檢查驗證
             if (!ModelState.IsValid)
@@ -112,17 +112,7 @@ namespace ClinicWeb.Areas.Member.Controllers
             else
             {
                 //加入資料庫
-                //if (GenderString == "true")
-                //{
-                //    member.Gender = true;
-                //}
-                //else { member.Gender = false; }
-
-                //if (VerificationString == "on")
-                //{
-                //    member.Verification = true;
-                //}
-                //else { member.Verification = false; }
+   
                 var maxMemberNumber = _context.MemberMemberList.Max(m => m.MemberNumber);
                 var nextMemberNumber = maxMemberNumber + 1;
                 member.MemberNumber = nextMemberNumber;
@@ -193,7 +183,7 @@ namespace ClinicWeb.Areas.Member.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         /* [Bind("MemberId,MemberNumber,Name,Gender,BloodType,NationalId,Address,ContactAddress,Phone,BirthDate,IceName,MemPassword,MemEmail,Verification,IsEnabled")]*/
-        public async Task<IActionResult> Edit([Bind("MemberId,MemberNumber,Name,Verification")] int MemberId, MemberMemberList member, string GenderString, string VerificationString)
+        public async Task<IActionResult> Edit([Bind("MemberId,MemberNumber,Name,Verification")] int MemberId, MemberMemberList member)
         {
             if (MemberId != member.MemberId)
             {
@@ -204,18 +194,7 @@ namespace ClinicWeb.Areas.Member.Controllers
             {
                 try
                 {
-                    //if (GenderString == "true")
-                    //{
-                    //    member.Gender = true;
-                    //}
-                    //else { member.Gender = false; }
-
-                    //if (VerificationString == "on")
-                    //{
-                    //    member.Verification = true;
-                    //}
-                    //else { member.Verification = false; }
-
+           
                     _context.Update(member);
                     await _context.SaveChangesAsync();
                 }
@@ -230,7 +209,7 @@ namespace ClinicWeb.Areas.Member.Controllers
                         throw;
                     }
                 }
-                //return RedirectToAction(nameof(Index));
+             
             }
             else
             {

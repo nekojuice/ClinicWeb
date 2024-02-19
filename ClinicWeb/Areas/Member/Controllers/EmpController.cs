@@ -39,6 +39,7 @@ namespace ClinicWeb.Areas.Member.Controllers
                     性別 = x.Gender ? "男" : "女",
                     血型 = x.BloodType,
                     身分證字號 = x.NationalId,
+                    生日=x.BirthDate.ToString("yyyy-MM-dd"),
                     聯絡電話 = x.Phone,
                     地址=x.Address,
                     員工類別=x.EmpType,

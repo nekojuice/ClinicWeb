@@ -4,6 +4,7 @@
 
 @section ModulesStyles
 {
+ 
 
     <!-- iCheck -->
     <link href="~/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
@@ -185,7 +186,7 @@
         await Html.RenderPartialAsync("~/Views/Shared/_ValidationScriptsPartial.cshtml");
     }
     <script>
-        //給強制塞東西
+        
 
         //顯示會員主畫面資料表
         function QueryMemberInfo() {
@@ -261,6 +262,21 @@
             }
 
         }
+
+        // //給強制塞東西
+        // document.addEventListener("DOMContentLoaded", function () {
+        //     var newElement = document.createElement('div');
+        //     newElement.textContent = '新的内容';
+
+        //     // 获取父元素
+        //     var parentElement = document.getElementById("memdatatable_wrapper");
+
+        //     // 將新元素插入到第一個子元素之後
+        //     parentElement.insertAfter(newElement, parentElement.children[1]);
+        // });
+
+
+
         //新增會員資料相關功能
 
 
@@ -282,18 +298,22 @@
 
             //FormData
             const formData = new FormData(document.querySelector('#memberForm'));
-
+            const Verification = $("#vertificationformemCreate").is(":checked")
+            formData.set('Verification', Verification);
             //為了抓到錯誤訊息 用formdata整個重抓一次 包含錯誤訊息和剛剛有輸入的東西重新灌給json並且顯示
             let jsonobject = {};
             formData.forEach(function (value, key) {
                 jsonobject[key] = value;
             });
-            jsonobject.Verification = jsonobject.Verification == "on" ? true : false;
+
+
+
+       
             console.log("來看看jsonobject是誰：" + jsonobject);
 
             let jsonstring = JSON.stringify(jsonobject)
             console.log("來看看jsonstring是誰：" + jsonstring);
-            return;
+            // return;
             // for (const pair of formData.entries()) {
             //     console.log(pair[0]);
             //     console.log(pair[1]);
@@ -332,7 +352,7 @@
                     };
                     new Switchery(document.getElementById('vertificationformemCreate'), switcheryOptions);
                 }
-                switcheryforAddMem();
+                // switcheryforAddMem();
 
                 console.log(data);
                 console.log(data === "success");
@@ -360,7 +380,7 @@
                         form.removeData('unobtrusiveValidation');
                         $.validator.unobtrusive.parse(form);
                     });
-                        }
+                }
 
 
             }
@@ -491,7 +511,7 @@
         }
 
 
-       
+
 
 
         //確定編輯畫面按下保存有抓到資料
@@ -523,7 +543,7 @@
                     console.log("顯示剛剛更新的資料", result)
                 }
                 catch {
-                    result = await response.text
+                    result = await response.text()
                     if (result == "驗證未通過") {
                         return;
                     }
