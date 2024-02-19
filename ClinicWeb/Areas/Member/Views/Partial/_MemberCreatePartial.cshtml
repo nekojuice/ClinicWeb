@@ -42,12 +42,25 @@
             <div class="form-group row">
                 <label class="control-label col-md-3 col-sm-3 ">性別</label>
                 <div class="col-md-9 col-sm-9 ">
-                    <select class="form-control" name="Gender">
-                        <option value="">---請選擇---</option>
-                        <option value="true">男</option>
-                        <option value="false">女</option>
+@*                     <select asp-for="Gender" class="form-control" name="Gender">
+                        <option>---請選擇---</option>
+                        <option value="True">男</option>
+                        <option value="False">女</option>
 
-                    </select>
+                    </select> *@
+
+                    @Html.DropDownListFor(m => m.Gender,
+                             new SelectList(
+                             new[]
+                             {
+                    new SelectListItem { Value = true.ToString(), Text = "男" },
+                    new SelectListItem { Value = false.ToString(), Text = "女" },
+                    },
+                             "Value",
+                             "Text"
+                             ),
+                             new { @class = "form-control" }
+                             )
                 </div>
             </div>
 
@@ -121,9 +134,6 @@
                 </div>
             </div>
 
-
-
-
             <!--啟用權限-->
             <div class="form-group row">
                 <label class="control-label col-md-3 col-sm-3 ">啟用</label>
@@ -134,22 +144,9 @@
                                 <input name="Verification" type="checkbox" id="vertificationformemCreate"class="js-switch" checked />
                             </label>
                         </div>
-
                     </div>
-
                 </div>
             </div>
-
-
-
-
-
-
-
-
-
-
-
 
             <!--選生日-->
             <div class="form-group row">
@@ -158,8 +155,9 @@
                 </label>
 
                 <div class="col-md-9 col-sm-9 ">
-                    <input name="BirthDate" class="date-picker form-control" type="date"  />
+                    <input asp-for="BirthDate" class="date-picker form-control" type="date" required />
                     <span asp-validation-for="BirthDate" class="text-danger"></span>
+                    @* <span asp-validation-for="BirthDate" class="text-danger"></span> *@
                    @*  <input asp-for= "BirthDate" class="date-picker form-control" placeholder="dd-mm-yyyy" type="date" onfocus="this.type='date'" onmouseover="this.type='date'" onclick="this.type='date'" onblur="this.type='text'" onmouseout="timeFunctionLong(this)">
                     <span asp-validation-for="BirthDate" class="text-danger"></span>
                     <script>
@@ -177,7 +175,7 @@
 
                     <button id="closeButton" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button class="btn btn-primary" type="reset">Reset</button>
-                    <button id="AddMemBtn" type="submit" class="btn btn-primary" onclick="createBtnEventLis()">Save</button>
+                    <button id="AddMemBtn" type="submit" class="btn btn-primary" onclick="">Save</button>
 
 
 

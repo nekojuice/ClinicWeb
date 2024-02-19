@@ -66,12 +66,12 @@ namespace ClinicWeb.Areas.Member.Models
         [Display(Name = "連絡電話")]
         public string? Phone { get; set; }
 
-        //[Required(ErrorMessage = "請選擇生日 ")]
+        
         //[Column("Birth_Date", TypeName = "datetime")]
 
         [Display(Name = "生日")]
-       
-        public DateTime BirthDate { get; set; }
+        [Required(ErrorMessage = "請選擇生日 ")]
+        public DateTime? BirthDate { get; set; }
 
         [Required(ErrorMessage = "請輸入緊急聯絡人姓名 ")]
         //[Column("ICE_Name")]

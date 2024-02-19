@@ -87,8 +87,8 @@ namespace ClinicWeb.Areas.Member.Controllers
         //新增會員資料
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //[Bind("MemberNumber,Name,Gender,BloodType,NationalId,Address,ContactAddress,Phone,BirthDate,IceName,MemPassword,MemEmail,Verification,IsEnabled")]
-        public IActionResult MemberCreate([Bind("Name,Gender,BloodType,NationalId,Address,ContactAddress,Phone,BirthDate,IceName,MemPassword,MemEmail,Verification")] MemberMemberList member)
+		//[Bind("Name,Gender,BloodType,NationalId,Address,ContactAddress,Phone,BirthDate,IceName,IceNumber,MemPassword,MemEmail,Verification")]
+		public IActionResult MemberCreate([Bind("Name,BloodType,NationalId,Address,ContactAddress,Phone,BirthDate,IceName,IceNumber,MemPassword,MemEmail,Verification")] [FromBody] MemberMemberList member)
         {
 
             if (member == null)
@@ -97,16 +97,28 @@ namespace ClinicWeb.Areas.Member.Controllers
             }
             else
             {
-                Console.WriteLine(member.ToJson());
+                Console.WriteLine(member.Name);
+                Console.WriteLine(member.Gender);
+                Console.WriteLine(member.BloodType);
+                Console.WriteLine(member.NationalId);
+                Console.WriteLine(member.Address);
+                Console.WriteLine(member.ContactAddress);
+                Console.WriteLine(member.Phone);
+                Console.WriteLine(member.BirthDate);
+                Console.WriteLine(member.IceName);
+                Console.WriteLine(member.IceNumber);
+                Console.WriteLine(member.MemPassword);
+                Console.WriteLine(member.MemEmail);
+                Console.WriteLine(member.Verification);
             }
             
             //return Content("123");
             //檢查驗證
             if (!ModelState.IsValid)
             {
-                // 如果模型驗證失敗，重新顯示包含錯誤信息的表單
-                
-               return PartialView("~/Areas/Member/Views/Partial/_MemberCreatePartial.cshtml", member); // 返回相同的視圖，這將會顯示錯誤信息
+				// 如果模型驗證失敗，重新顯示包含錯誤信息的表單
+				Console.WriteLine("驗證失敗");
+				return PartialView("~/Areas/Member/Views/Partial/_MemberCreatePartial.cshtml", member); // 返回相同的視圖，這將會顯示錯誤信息
                 //return Json(member);
             }
             else
