@@ -1,8 +1,13 @@
 ﻿using ClinicWeb.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace ClinicWeb.Areas.Employee.Controllers
 {
+
     [Area("Employee")]
     public class MainController : Controller
     {
@@ -16,11 +21,14 @@ namespace ClinicWeb.Areas.Employee.Controllers
         {
             return View();
         }
-		public IActionResult Login()
+
+        [AllowAnonymous]
+        public IActionResult Login()
 		{
 			return View("~/Areas/Employee/Views/Main/Login/Login.cshtml");
 		}
 
+        [AllowAnonymous]
         [HttpPost]
         public IActionResult LoginForStaff(MemberEmployeeList e)
         {
@@ -35,12 +43,27 @@ namespace ClinicWeb.Areas.Employee.Controllers
             }
             else
             {
-
-
                 //這邊等等寫驗證加角色
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, user.StaffNumber.ToString()),
+                    new Claim("StaffNumber", user.StaffNumber.ToString()),
+                   // new Claim(ClaimTypes.Role, "Administrator")
+                };
+                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
             }
             return RedirectToAction("Index");
         }
+
+        [HttpGet]
+        public IActionResult Logout()
+        {
+            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Login");
+        }
+  
+
         //public class LoginPost
         //{
         //    public int StaffNumber { get; set; }

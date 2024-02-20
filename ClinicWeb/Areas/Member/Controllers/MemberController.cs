@@ -1,6 +1,7 @@
 ﻿using ClinicWeb.Areas.Member.Models;
 //要用自己生的模型
 using ClinicWeb.Areas.Member.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,6 +18,7 @@ namespace ClinicWeb.Areas.Member.Controllers
             _context = context;
         }
 
+        [Authorize]
         public IActionResult Index()
         {
             return View();
@@ -78,6 +80,7 @@ namespace ClinicWeb.Areas.Member.Controllers
         }
 
         //顯示多筆會員資料
+
         public IActionResult MemIndex()
         {
             //可以指定不是這個名稱的view來顯示 return View("~Areas/Member/");

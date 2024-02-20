@@ -2,6 +2,7 @@ using ClinicWeb.Data;
 using ClinicWeb.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
@@ -67,7 +68,13 @@ builder.Services.AddControllers().AddNewtonsoftJson();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(option =>
 {
     //未登入時會自動導到這個網址
-    option.LoginPath = new PathString("/api/Login/NoLogin");
+    option.LoginPath = new PathString("/Employee/Main/Login");
+});
+
+//設定全域套用 不用每一支都加上[Authorize] 記得在login zction加上[AllowAnonymous]
+builder.Services.AddMvc(options =>
+{
+    options.Filters.Add(new AuthorizeFilter());
 });
 
 var app = builder.Build();
