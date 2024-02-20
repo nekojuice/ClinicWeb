@@ -1,6 +1,7 @@
-﻿<div class="row nkj_Height_100p" style="display: block;">
-    <div class="col-md-12 col-sm-12 nkj_Height_80p">
-        <div class="x_panel nkj_Height_100p">
+﻿@model ClinicWeb.Areas.Appointment.Models.ScheduleClinicInfo
+<div class="row" style="display: block;">
+    <div class="col-md-3 col-sm-3">
+        <div class="x_panel callingTablePanel">
             @*<div class="x_title">
             <h2>門診資訊</h2>
             <ul class="nav navbar-right panel_toolbox">
@@ -20,6 +21,16 @@
             </ul>
             <div class="clearfix"></div>
             </div>*@
+            <div class="mb-3" style="overflow: auto">
+                <div class="col-md-6">
+                    <select asp-for="ClinicTime" class="form-control">
+                        <option value="0">--選擇時段--</option>
+                        <option value="2">早診</option>
+                        <option value="4">午診</option>
+                        <option value="6">晚診</option>
+                    </select>
+                </div>
+            </div>
 
             <div class="x_content">
                 <div class="row">
@@ -57,14 +68,42 @@
             </div>
         </div>
 
+        <div class="col-md-3 col-sm-3 callingControlPanel">
+            <div class="x_panel">
+
+                <div class="row" style="display: block;">
+                    <div class="col-md-9 col-sm-9">
+                        <div class="row">
+                            <div class="col" style="text-align:center;">
+                                <label class="nkj-label-large" id="call_currentNumber"></label><label class="nkj-label-large"> 號</label>
+                            </div>
+                            <div class="col" style="text-align:center;">
+                                <label class="nkj-label-large" id="call_currentName">___</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <button class="btn btn-info nkj-btn-xxl">叫號</button>
+                            </div>
+                            <div class="col">
+                                <button class="btn btn-success nkj-btn-xxl">看診</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="display: block;">
+                    <div class="col-md-3 col-sm-3">
+                        <button class="btn btn-warning pull-right">未到</button>
+                        <button class="btn btn-primary pull-right">檢查</button>
+                        <button class="btn btn-danger pull-right">結束</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
-    <div class="col-md-12 col-sm-12 nkj_Height_20p">
-        <div class="x_panel nkj_Height_100p">
-            <h2>這裡是控制區</h2>
-            <h2>這裡是控制區</h2>
-            <h2>這裡是控制區</h2>
-            <h2>這裡是控制區</h2>
-        </div>
-    </div>
+    
+    
 </div>
+
