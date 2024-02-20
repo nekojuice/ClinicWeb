@@ -1,5 +1,6 @@
 using ClinicWeb.Data;
 using ClinicWeb.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -62,6 +63,13 @@ builder.Services.AddDbContext<ClinicSysContext>(options => options.UseSqlServer(
 //NewtonsoftJson
 builder.Services.AddControllers().AddNewtonsoftJson();
 
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(option =>
+{
+    //未登入時會自動導到這個網址
+    option.LoginPath = new PathString("/api/Login/NoLogin");
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -81,6 +89,9 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+//順序要一樣
+app.UseCookiePolicy();
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
