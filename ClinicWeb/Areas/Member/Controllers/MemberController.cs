@@ -80,7 +80,7 @@ namespace ClinicWeb.Areas.Member.Controllers
         }
 
         //顯示多筆會員資料
-
+        [Authorize(Roles ="行政")]
         public IActionResult MemIndex()
         {
             //可以指定不是這個名稱的view來顯示 return View("~Areas/Member/");

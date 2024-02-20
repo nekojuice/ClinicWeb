@@ -69,9 +69,11 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 {
     //未登入時會自動導到這個網址
     option.LoginPath = new PathString("/Employee/Main/Login");
+	//看要不要加上access被拒絕的頁面 還是就是單純提醒
+	option.AccessDeniedPath = new PathString("/Employee/Main/noAccess");
 });
 
-//設定全域套用 不用每一支都加上[Authorize] 記得在login zction加上[AllowAnonymous]
+//預設全部api都套用驗證 (不要的話在該 action加上[AllowAnonymous] 好比login
 builder.Services.AddMvc(options =>
 {
     options.Filters.Add(new AuthorizeFilter());

@@ -28,6 +28,7 @@ namespace ClinicWeb.Areas.Employee.Controllers
 			return View("~/Areas/Employee/Views/Main/Login/Login.cshtml");
 		}
 
+        //加上  [AllowAnonymous] 讓登入的不須經過驗證也能使用
         [AllowAnonymous]
         [HttpPost]
         public IActionResult LoginForStaff(MemberEmployeeList e)
@@ -48,7 +49,8 @@ namespace ClinicWeb.Areas.Employee.Controllers
                 {
                     new Claim(ClaimTypes.Name, user.StaffNumber.ToString()),
                     new Claim("StaffNumber", user.StaffNumber.ToString()),
-                   // new Claim(ClaimTypes.Role, "Administrator")
+                    //加上角色設定
+                   new Claim(ClaimTypes.Role, user.EmpType)
                 };
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                 HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
@@ -60,9 +62,14 @@ namespace ClinicWeb.Areas.Employee.Controllers
         public IActionResult Logout()
         {
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction("Login");
+            return Content("123");
         }
-  
+        [HttpGet]
+        public IActionResult noAccess()
+        {
+          
+            return Content("你沒有權限喔喔喔");
+        }
 
         //public class LoginPost
         //{
