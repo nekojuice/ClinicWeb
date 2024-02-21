@@ -195,13 +195,8 @@ namespace ClinicWeb.Areas.Member.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         /* [Bind("MemberId,MemberNumber,Name,Gender,BloodType,NationalId,Address,ContactAddress,Phone,BirthDate,IceName,MemPassword,MemEmail,Verification,IsEnabled")]*/
-        public async Task<IActionResult> Edit([Bind("MemberId,MemberNumber,Name,Verification")] int MemberId, MemberMemberList member)
+        public async Task<IActionResult> Edit(MemberMemberList member)
         {
-            if (MemberId != member.MemberId)
-            {
-                return NotFound();
-            }
-
             if (ModelState.IsValid)
             {
                 try

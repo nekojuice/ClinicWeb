@@ -556,7 +556,7 @@
 
 		async function handleButtonClick(memberId /* _index_memdatatable */) {
 			try {
-				const response = await fetch(`@Url.Content("~/Member/Emp/EmpEdit")?memberId=${memberId}`);
+				const response = await fetch(`@Url.Content("~/Member/Member/MemberEdit")?memberId=${memberId}`);
 				if (!response.ok) {
 					throw new Error('在取得會員資料並打開編輯畫面出現錯誤，請洽系統管理員');
 
@@ -637,7 +637,7 @@
 				formData.set('Quit', Verification);
 				console.log(formData)
 				try {
-					const url = "/Member/Emp/Edit";
+					const url = "/Member/Member/Edit";
 					const response = await fetch(url, {
 						"method": "POST",
 						"body": formData
