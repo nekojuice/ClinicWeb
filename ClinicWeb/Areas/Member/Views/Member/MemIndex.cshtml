@@ -315,7 +315,8 @@
 				formData.forEach(function (value, key) {
 					jsonobject[key] = value;
 				});
-				
+
+				if (jsonobject.Gender == '') { jsonobject.Gender = null }
 				if (jsonobject.Gender == 'True') { jsonobject.Gender = true }
 				if (jsonobject.Gender == 'False') { jsonobject.Gender = false }
 				

@@ -4,7 +4,7 @@
 <div class="x_panel">
     <div class="x_title">
         <h2>新增會員</h2>
-        
+
         <div class="clearfix"></div>
     </div>
     <div class="x_content">
@@ -14,19 +14,19 @@
             <!--姓名-->
             <div class="col-md-6 col-sm-6  form-group has-feedback">
 
-                <input asp-for="Name" type="text" class="form-control has-feedback-left" placeholder=@Html.DisplayNameFor(model => model.Name) >
+                <input asp-for="Name" type="text" class="form-control has-feedback-left" placeholder=@Html.DisplayNameFor(model => model.Name)>
                 <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <!--身分證字號-->
             <div class="col-md-6 col-sm-6  form-group has-feedback">
-                <input asp-for="NationalId" type="text" class="form-control"  placeholder="身分證字號">
+                <input asp-for="NationalId" type="text" class="form-control" placeholder="身分證字號">
                 <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
                 <span asp-validation-for="NationalId" class="text-danger"></span>
             </div>
             <!--信箱-->
             <div class="col-md-6 col-sm-6  form-group has-feedback">
-                <input asp-for="MemEmail" type="text" class="form-control has-feedback-left"  placeholder="信箱">
+                <input asp-for="MemEmail" type="text" class="form-control has-feedback-left" placeholder="信箱">
                 <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
                 <span asp-validation-for="MemEmail" class="text-danger"></span>
             </div>
@@ -36,16 +36,18 @@
                 <span class="fa fa-phone form-control-feedback right" aria-hidden="true"></span>
                 <span asp-validation-for="Phone" class="text-danger"></span>
             </div>
-
+            <div class="col-md-12 col-sm-12">
+                <!--排版用空白 避免錯誤欄推擠亂版-->
+            </div>
             <!--性別-->
 
             <div class="form-group row">
                 <label class="control-label col-md-3 col-sm-3 ">性別</label>
                 <div class="col-md-9 col-sm-9 ">
-@*                     <select asp-for="Gender" class="form-control" name="Gender">
-                        <option>---請選擇---</option>
-                        <option value="True">男</option>
-                        <option value="False">女</option>
+                    @*                     <select asp-for="Gender" class="form-control" name="Gender">
+                    <option>---請選擇---</option>
+                    <option value="True">男</option>
+                    <option value="False">女</option>
 
                     </select> *@
 
@@ -53,6 +55,7 @@
                              new SelectList(
                              new[]
                              {
+                    new SelectListItem { Value = null, Text = "---請選擇---" },
                     new SelectListItem { Value = true.ToString(), Text = "男" },
                     new SelectListItem { Value = false.ToString(), Text = "女" },
                     },
@@ -61,7 +64,9 @@
                              ),
                              new { @class = "form-control" }
                              )
+                    <span asp-validation-for="Gender" class="text-danger"></span>
                 </div>
+
             </div>
 
             <!--血型-->
@@ -113,7 +118,7 @@
             <div class="form-group row">
                 <label class="col-form-label col-md-3 col-sm-3 ">緊急聯絡人電話</label>
                 <div class="col-md-9 col-sm-9 ">
-                    <input asp-for="IceNumber" type="text" class="form-control" placeholder="緊急聯絡人電話" >
+                    <input asp-for="IceNumber" type="text" class="form-control" placeholder="緊急聯絡人電話">
                     <span asp-validation-for="IceNumber" class="text-danger"></span>
                 </div>
             </div>
@@ -125,7 +130,7 @@
 
                 <label class="col-form-label col-md-3 col-sm-3 ">會員密碼</label>
                 <div class="col-md-9 col-sm-9 ">
-                    <input asp-for="MemPassword" class="form-control" type="password"  title="Minimum 8 Characters Including An Upper And Lower Case Letter, A Number And A Unique Character" >
+                    <input asp-for="MemPassword" class="form-control" type="password" title="Minimum 8 Characters Including An Upper And Lower Case Letter, A Number And A Unique Character">
                     <span asp-validation-for="MemPassword" class="text-danger"></span>
                     <span style="position: absolute;right:15px;top:7px;" onclick="hideshow()">
                         <i id="slash" class="fa fa-eye-slash" style="display: none;"></i>
@@ -141,7 +146,7 @@
                     <div class="col-md-9 col-sm-9 ">
                         <div class="">
                             <label>
-                                <input name="Verification" type="checkbox" id="vertificationformemCreate"class="js-switch" checked />
+                                <input name="Verification" type="checkbox" id="vertificationformemCreate" class="js-switch" checked />
                             </label>
                         </div>
                     </div>
@@ -158,14 +163,14 @@
                     <input asp-for="BirthDate" class="date-picker form-control" type="date" required />
                     <span asp-validation-for="BirthDate" class="text-danger"></span>
                     @* <span asp-validation-for="BirthDate" class="text-danger"></span> *@
-                   @*  <input asp-for= "BirthDate" class="date-picker form-control" placeholder="dd-mm-yyyy" type="date" onfocus="this.type='date'" onmouseover="this.type='date'" onclick="this.type='date'" onblur="this.type='text'" onmouseout="timeFunctionLong(this)">
+                    @*  <input asp-for= "BirthDate" class="date-picker form-control" placeholder="dd-mm-yyyy" type="date" onfocus="this.type='date'" onmouseover="this.type='date'" onclick="this.type='date'" onblur="this.type='text'" onmouseout="timeFunctionLong(this)">
                     <span asp-validation-for="BirthDate" class="text-danger"></span>
                     <script>
-                        function timeFunctionLong(input) {
-                            setTimeout(function () {
-                                input.type = 'date';
-                            }, 60000);
-                        }
+                    function timeFunctionLong(input) {
+                    setTimeout(function () {
+                    input.type = 'date';
+                    }, 60000);
+                    }
                     </script> *@
                 </div>
             </div>

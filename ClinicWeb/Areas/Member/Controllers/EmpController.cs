@@ -36,10 +36,10 @@ namespace ClinicWeb.Areas.Member.Controllers
                     員工id = x.EmpId,
                     員工編號 = x.StaffNumber,
                     姓名 = x.Name,
-                    性別 = x.Gender ? "男" : "女",
+                    性別 = (bool)x.Gender ? "男" : "女",
                     血型 = x.BloodType,
                     身分證字號 = x.NationalId,
-                    生日=x.BirthDate.ToString("yyyy-MM-dd"),
+                    生日= ((DateTime)x.BirthDate).ToString("yyyy-MM-dd"),
                     聯絡電話 = x.Phone,
                     地址=x.Address,
                     員工類別=x.EmpType,
@@ -55,6 +55,53 @@ namespace ClinicWeb.Areas.Member.Controllers
                 ));
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        //[Bind("Name,Gender,BloodType,NationalId,Address,ContactAddress,Phone,BirthDate,IceName,IceNumber,MemPassword,MemEmail,Verification")]
+        public IActionResult EmpCreate([Bind("Name,Gender,BloodType,NationalId,Address,ContactAddress,Phone,BirthDate,EmpPassword,EmpType,Department,Quit")][FromBody] MemberEmployeeList emp)
+        {
+
+            if (emp == null)
+            {
+                Console.WriteLine("null~~");
+            }
+            else
+            {
+                Console.WriteLine(emp.Name);
+                Console.WriteLine(emp.Gender);
+                Console.WriteLine(emp.BloodType);
+                Console.WriteLine(emp.NationalId);
+                Console.WriteLine(emp.Address);
+                Console.WriteLine(emp.ContactAddress);
+                Console.WriteLine(emp.Phone);
+                Console.WriteLine(emp.BirthDate);
+                Console.WriteLine(emp.StaffNumber);
+                Console.WriteLine(emp.Department);
+                Console.WriteLine(emp.Quit);
+            }
+
+            //檢查驗證
+            if (!ModelState.IsValid)
+            {
+                // 如果模型驗證失敗，重新顯示包含錯誤信息的表單
+                Console.WriteLine("驗證失敗");
+                return PartialView("~/Areas/Member/Views/Partial/_EmpCreatePartial.cshtml", emp); // 返回相同的視圖，這將會顯示錯誤信息
+                //return Json(member);
+            }
+            else
+            {
+                //加入資料庫
+
+                var maxEmpNumber = _context.MemberEmployeeList.Max(m => m.StaffNumber);
+                var nextEmpNumber = maxEmpNumber + 1;
+                emp.StaffNumber = nextEmpNumber;
+
+                _context.MemberEmployeeList.Add(emp);
+                _context.SaveChanges();
+                return Content("success");
+            }
+
+        }
 
         //// GET: Member/Emp
         //public async Task<IActionResult> Index()

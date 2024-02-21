@@ -24,6 +24,10 @@
     <link href="~/vendors/starrr/dist/starrr.css" rel="stylesheet">
     <!-- bootstrap-daterangepicker -->
     <link href="~/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <!-- PNotify -->
+    <link href="~/vendors/pnotify/dist/pnotify.css" rel="stylesheet">
+    <link href="~/vendors/pnotify/dist/pnotify.buttons.css" rel="stylesheet">
+    <link href="~/vendors/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">
 }
 
 <div class="row" style="display: block;">
@@ -42,7 +46,7 @@
                 <!--新增員工的-->
                 <div class="col-md-2">
                     <label class="form-label"> </label>
-                    <button id="newMembtn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#MemCreate">新增會員</button>
+                    <button id="newMembtn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#MemCreate">新增員工</button>
                 </div>
                 <!--生日區間-->
                 <div class="col-md-1">
@@ -92,7 +96,7 @@
                 <div class="modal-dialog modal-lg">
 
                     <div class="modal-content" id="divCreateInfo">
-                        <partial name="~/Areas/Member/Views/Partial/_MemberCreatePartial.cshtml" />
+                        <partial name="~/Areas/Member/Views/Partial/_EmpCreatePartial.cshtml" />
                     </div>
                 </div>
             </div>
@@ -189,115 +193,249 @@
 
         </div>
     </div>
+</div>
 
 
-    @section Modules
-    {
-        <!-- iCheck -->
-        <script src="~/vendors/iCheck/icheck.min.js"></script>
-        <!-- Datatables -->
-        <script src="~/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
-        @* <script src="~/lib/datatables/js/jquery.datatables.min.js"></script> *@
-        <script src="~/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-        <script src="~/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-        <script src="~/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
-        <script src="~/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
-        <script src="~/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
-        <script src="~/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
-        <script src="~/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
-        <script src="~/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
-        <script src="~/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-        <script src="~/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
-        <script src="~/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
-        <script src="~/vendors/jszip/dist/jszip.min.js"></script>
-        <script src="~/vendors/pdfmake/build/pdfmake.min.js"></script>
-        <script src="~/vendors/pdfmake/build/vfs_fonts.js"></script>
-        <!-- Switchery -->
-        <script src="~/vendors/switchery/dist/switchery.min.js"></script>
+@section Modules
+{
+    <!-- iCheck -->
+    <script src="~/vendors/iCheck/icheck.min.js"></script>
+    <!-- Datatables -->
+    <script src="~/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    @* <script src="~/lib/datatables/js/jquery.datatables.min.js"></script> *@
+    <script src="~/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+    <script src="~/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="~/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="~/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+    <script src="~/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+    <script src="~/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="~/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+    <script src="~/vendors/jszip/dist/jszip.min.js"></script>
+    <script src="~/vendors/pdfmake/build/pdfmake.min.js"></script>
+    <script src="~/vendors/pdfmake/build/vfs_fonts.js"></script>
+    <!-- Switchery -->
+    <script src="~/vendors/switchery/dist/switchery.min.js"></script>
+    <!-- PNotify -->
+    <script src="~/vendors/pnotify/dist/pnotify.js"></script>
+    <script src="~/vendors/pnotify/dist/pnotify.buttons.js"></script>
+    <script src="~/vendors/pnotify/dist/pnotify.nonblock.js"></script>
+}
 
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("~/Views/Shared/_ValidationScriptsPartial.cshtml");
     }
-
-    @section Scripts {
-        <script>
-            //顯示會員主畫面資料表
-            function QueryEmpInfo() {
-                try {
-                    $('#empdatatable').dataTable({
-                        ajax: {
-                            type: 'GET',
-                            url: ("/Member/Emp/EmpGetdata"),
-                            dataSrc: function (json) { return json; }
-                        },
-                        destroy: true,
-                        columns: [
-                            // { "data": "id", "visible": false },
-                            // { "屬性": "值", "visible": false },建議看JSON撈到的來寫欄位 不然會對錯
-                            { "data": "員工id", "visible": false },
-                            { "data": "員工編號" },
-                            { "data": "姓名" },
-                            { "data": "性別" },
-                            { "data": "血型" },
-                            { "data": "身分證字號" },
-                            { "data": "生日" },
-                            { "data": "聯絡電話" },
-                            { "data": "地址" },
-                            { "data": "員工類別" },
-                            { "data": "在職" },
-                            {
-                                "data": "修改",
-                                "render": function (data, type, row) {
-                                    return '<button type="button" class="fa fa-edit border:none indexSelector" style="border: none;" data-toggle="modal" data-target="#MemEdit" onclick="handleButtonClick(' + row.會員id + ')"></button>' +
-                                        '<button type="button" class="fa fa-file-word-o border:none indexSelector" style="border: none;" data-toggle="modal" data-target="#MemView" onclick="handleViewButtonClick(' + row.會員id + ')"></button>';
-                                }
+    <script>
+        //顯示會員主畫面資料表
+        function QueryEmpInfo() {
+            try {
+                $('#empdatatable').dataTable({
+                    ajax: {
+                        type: 'GET',
+                        url: ("/Member/Emp/EmpGetdata"),
+                        dataSrc: function (json) { return json; }
+                    },
+                    destroy: true,
+                    columns: [
+                        // { "data": "id", "visible": false },
+                        // { "屬性": "值", "visible": false },建議看JSON撈到的來寫欄位 不然會對錯
+                        { "data": "員工id", "visible": false },
+                        { "data": "員工編號" },
+                        { "data": "姓名" },
+                        { "data": "性別" },
+                        { "data": "血型" },
+                        { "data": "身分證字號" },
+                        { "data": "生日" },
+                        { "data": "聯絡電話" },
+                        { "data": "地址" },
+                        { "data": "員工類別" },
+                        { "data": "在職" },
+                        {
+                            "data": "修改",
+                            "render": function (data, type, row) {
+                                return '<button type="button" class="fa fa-edit border:none indexSelector" style="border: none;" data-toggle="modal" data-target="#MemEdit" onclick="handleButtonClick(' + row.會員id + ')"></button>' +
+                                    '<button type="button" class="fa fa-file-word-o border:none indexSelector" style="border: none;" data-toggle="modal" data-target="#MemView" onclick="handleViewButtonClick(' + row.會員id + ')"></button>';
                             }
-                        ],
-                        fixedHeader: {
-                            header: true
+                        }
+                    ],
+                    fixedHeader: {
+                        header: true
+                    },
+                    language: {
+                        url: "https://cdn.datatables.net/plug-ins/1.13.7/i18n/zh-HANT.json"
+                    },
+                    order: [[1, 'asc']]
+                });
+            } catch (error) {
+                console.error('在初始化員工資料表時發生錯誤:', error);
+                new PNotify({
+                    title: '錯誤',
+                    text: '初始化員工資料表失敗',
+                    type: 'error',
+                    styling: 'bootstrap3'
+                })
+                alert('初始化員工資料表失敗');
+                return;
+            }
+        }
+
+        QueryEmpInfo();
+
+        //在職狀態搜尋
+        document.getElementById('employmentStatus').addEventListener('change', function () {
+            var selectedValue = this.value;
+            if (selectedValue == '在職狀態') {
+                return;
+            }
+            else {
+                fetch()
+
+            }
+        });
+
+        //生日搜尋
+
+        //員工類型搜尋
+        document.getElementById('employeeType').addEventListener('change', function () {
+            var selectedValue = this.value;
+            if (selectedValue == '員工類型') {
+                return;
+            }
+            else {
+                fetch()
+
+            }
+        });
+
+
+
+        //新增會員資料相關功能
+        //按下[新增會員]按鈕時
+        $("#newMembtn").on('click', function () {
+            event_AddMemBtn()
+            //rebind_validate_create()
+        })
+        //重新綁定create表單的驗證
+        function rebind_validate_create() {
+            //重新綁定要驗證的表單 為了把編輯的表單跟validation連起來 (因為資料室ajax 過來 validation在資料來之前就在了)
+            var form = $('#memberForm');
+            form.removeData('validator');
+            form.removeData('unobtrusiveValidation');
+            $.validator.unobtrusive.parse(form);
+        }
+
+
+        //宣告事件綁定為一方法，給裡頭遞迴使用
+        function event_AddMemBtn() {
+            //新增會員的按下儲存後
+            $("#AddMemBtn").on('click', async function () {
+                //停止預設行為
+                event.preventDefault();
+                rebind_validate_create()
+
+                //建立formData物件，以及修正資料
+                const formData = new FormData(document.querySelector('#memberForm'));
+                const Quit = $("#Quit").is(":checked")
+                formData.set('Quit', Quit);
+
+                //formData物件轉換成json物件
+                let jsonobject = {};
+                formData.forEach(function (value, key) {
+                    jsonobject[key] = value;
+                });
+
+                if (jsonobject.Gender == '') { jsonobject.Gender = null }
+                if (jsonobject.Gender == 'True') { jsonobject.Gender = true }
+                if (jsonobject.Gender == 'False') { jsonobject.Gender = false }
+
+                jsonobject.Quit = jsonobject.Quit == 'true' ? true : false;
+
+
+                const jsonString = JSON.stringify(jsonobject)
+
+                //嘗試fetch
+                try {
+                    const url = '@Url.Content("~/Member/Emp/EmpCreate")';
+                    const response = await fetch(url, {
+                        method: "POST",
+                        headers: {
+                            'Content-Type': 'application/json;charset=UTF-8',
+                            'RequestVerificationToken': jsonobject.__RequestVerificationToken,  //RequestVerificationToken要加在header裡面
+                            'Accept': 'text/plain'
                         },
-                        language: {
-                            url: "https://cdn.datatables.net/plug-ins/1.13.7/i18n/zh-HANT.json"
-                        },
-                        order: [[1, 'asc']]
+                        body: jsonString
                     });
-                } catch (error) {
-                    console.error('在初始化員工資料表時發生錯誤:', error);
+                    const data = await response.text();
+
+                    //處理回傳的結果，成功 => "success"，失敗 => partial HTML文件
+                    if (data === "success") {
+                        clearForm();	//新增完成之後要清除剛剛輸入的資料以及跳出新增成功樣式 並且取得最新資料
+                        addMemFormClose();
+                        new PNotify({
+                            title: '新增成功',
+                            type: 'success',
+                            styling: 'bootstrap3'
+                        });
+                        QueryEmpInfo();
+                    }
+                    else {
+                        //把剛剛所有formdata包含錯誤訊息塞給divCreateInfo 也就是createpartial的id
+                        const btnSubmit = document.querySelector('#AddMemBtn');
+                        document.querySelector('#divCreateInfo').innerHTML = data;
+                        //資料驗證重新綁定
+                        rebind_validate_create()
+                        //switchery重新綁定
+                        switcheryforAddMem()
+                        //按鈕事件重新綁定(遞迴)
+                        event_AddMemBtn()
+                    }
+
+                } catch {
                     new PNotify({
                         title: '錯誤',
-                        text: '初始化員工資料表失敗',
+                        text: '新增資料失敗',
                         type: 'error',
                         styling: 'bootstrap3'
                     })
-                    alert('初始化員工資料表失敗');
+                    alert('新增資料失敗，請洽系統管理員');
                     return;
                 }
-            }
+            })
+        }
 
-            QueryEmpInfo();
 
-            //在職狀態搜尋
-            document.getElementById('employmentStatus').addEventListener('change', function () {
-                var selectedValue = this.value;
-                if (selectedValue == '在職狀態') { 
-                    return;
-                }
-                else {
-                    fetch()
-                   
-                }
-            });
+        //宣告重新綁定switchery方法
+        function switcheryforAddMem() {
+            let switcheryOptions = {
 
-            //生日搜尋
+                color: '#64bd63', // 當checked時的背景顏色
+                secondaryColor: '#dfdfdf', // unchecked時的背景顏色
+                jackColor: '#fff', // checked時的按鈕顏色
+                jackSecondaryColor: null, // uncheck時的按鈕顏色
+                className: 'switchery', // class名稱
+                disabled: false, // 是否設為disabled
+                disabledOpacity: 0.5, // 當設為disabled時的透明度
+                speed: '0.1s', // 開關切換的速度
+                size: 'default' // 開關大小(small, default, large)
+            };
+            new Switchery(document.getElementById('Quit'), switcheryOptions);
+        }
 
-            //員工類型搜尋
-            document.getElementById('employeeType').addEventListener('change', function () {
-                var selectedValue = this.value;
-                if (selectedValue == '員工類型') {
-                    return;
-                }
-                else {
-                    fetch()
+        function clearForm() {
+            //清除輸入的東西
+            document.getElementById('memberForm').reset();
+            //清除出現的警告訊息
+            $('.text-danger').text('');
 
-                }
-            });
-        </script>
-    }
+        }
+        function addMemFormClose() {
+            $('#MemCreate').modal('hide');
+        }
+
+
+    </script>
+}
