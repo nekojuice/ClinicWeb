@@ -46,7 +46,7 @@
                 <!--新增員工的-->
                 <div class="col-md-2">
                     <label class="form-label"> </label>
-                    <button id="newMembtn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#MemCreate">新增員工</button>
+                    <button id="newEmpbtn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#EmpCreate">新增員工</button>
                 </div>
                 <!--生日區間-->
                 <div class="col-md-1">
@@ -92,7 +92,7 @@
 
 
             <!-- 新增畫面的內容 -->
-            <div class="modal fade" id="MemCreate" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+            <div class="modal fade" id="EmpCreate" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
                 <div class="modal-dialog modal-lg">
 
                     <div class="modal-content" id="divCreateInfo">
@@ -111,7 +111,7 @@
 
 
 
-                            @*  MemEdit為了打開彈跳視窗 *@
+                            @*  EmpEdit為了打開彈跳視窗 *@
                             <div class="modal fade" id="EmpEdit" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
 
                                 <div class="modal-dialog modal-lg">
@@ -257,8 +257,8 @@
                         {
                             "data": "修改",
                             "render": function (data, type, row) {
-                                return '<button type="button" class="fa fa-edit border:none indexSelector" style="border: none;" data-toggle="modal" data-target="#MemEdit" onclick="handleButtonClick(' + row.會員id + ')"></button>' +
-                                    '<button type="button" class="fa fa-file-word-o border:none indexSelector" style="border: none;" data-toggle="modal" data-target="#MemView" onclick="handleViewButtonClick(' + row.會員id + ')"></button>';
+                                return '<button type="button" class="fa fa-edit border:none indexSelector" style="border: none;" data-toggle="modal" data-target="#MemEdit" onclick="handleButtonClick(' + row.員工id + ')"></button>' +
+                                    '<button type="button" class="fa fa-file-word-o border:none indexSelector" style="border: none;" data-toggle="modal" data-target="#MemView" onclick="handleViewButtonClick(' + row.員工id + ')"></button>';
                             }
                         }
                     ],
@@ -286,43 +286,41 @@
         QueryEmpInfo();
 
         //在職狀態搜尋
-        document.getElementById('employmentStatus').addEventListener('change', function () {
-            var selectedValue = this.value;
-            if (selectedValue == '在職狀態') {
-                return;
-            }
-            else {
-                fetch()
+        $("#employmentStatus").change(() => { EmpStatus() });
 
-            }
-        });
+        function EmpStatus() {
+            if ($("#employmentStatus").find(":selected").text() == '在職狀態') {
 
+                $('#empdatatable').DataTable().column(10).search("").draw();
+            } else {
+                $('#empdatatable').DataTable().column(10).search($("#employmentStatus").find(":selected").text()).draw();
+            }
+        }
         //生日搜尋
 
         //員工類型搜尋
-        document.getElementById('employeeType').addEventListener('change', function () {
-            var selectedValue = this.value;
-            if (selectedValue == '員工類型') {
-                return;
+        $("#employeeType").change(() => { EmpType() });
+        function EmpType() {
+            if ($("#employeeType").find(":selected").text() == '選擇員工類別') {
+
+                $('#empdatatable').DataTable().column(9).search("").draw();
+            } else {
+                $('#empdatatable').DataTable().column(9).search($("#employeeType").find(":selected").text()).draw();
             }
-            else {
-                fetch()
-
-            }
-        });
+        }
 
 
 
-        //新增會員資料相關功能
-        //按下[新增會員]按鈕時
-        $("#newMembtn").on('click', function () {
-            event_AddMemBtn()
+        //新增員工資料相關功能
+        //按下[新增員工]按鈕時
+        $("#newEmpbtn").on('click', function () {
+            event_AddEmpBtn()
             //rebind_validate_create()
         })
         //重新綁定create表單的驗證
         function rebind_validate_create() {
             //重新綁定要驗證的表單 為了把編輯的表單跟validation連起來 (因為資料室ajax 過來 validation在資料來之前就在了)
-            var form = $('#memberForm');
+            var form = $('#empForm');
             form.removeData('validator');
             form.removeData('unobtrusiveValidation');
             $.validator.unobtrusive.parse(form);
@@ -330,15 +328,15 @@
 
 
         //宣告事件綁定為一方法，給裡頭遞迴使用
-        function event_AddMemBtn() {
+        function event_AddEmpBtn() {
             //新增會員的按下儲存後
-            $("#AddMemBtn").on('click', async function () {
+            $("#AddEmpBtn").on('click', async function () {
                 //停止預設行為
                 event.preventDefault();
                 rebind_validate_create()
 
                 //建立formData物件，以及修正資料
-                const formData = new FormData(document.querySelector('#memberForm'));
+                const formData = new FormData(document.querySelector('#empForm'));
                 const Quit = $("#Quit").is(":checked")
                 formData.set('Quit', Quit);
 
@@ -384,14 +382,14 @@
                     }
                     else {
                         //把剛剛所有formdata包含錯誤訊息塞給divCreateInfo 也就是createpartial的id
-                        const btnSubmit = document.querySelector('#AddMemBtn');
+                        const btnSubmit = document.querySelector('#AddEmpBtn');
                         document.querySelector('#divCreateInfo').innerHTML = data;
                         //資料驗證重新綁定
                         rebind_validate_create()
                         //switchery重新綁定
-                        switcheryforAddMem()
+                        switcheryforAddEmp()
                         //按鈕事件重新綁定(遞迴)
-                        event_AddMemBtn()
+                        event_AddEmpBtn()
                     }
 
                 } catch {
@@ -409,7 +407,7 @@
 
 
         //宣告重新綁定switchery方法
-        function switcheryforAddMem() {
+        function switcheryforAddEmp() {
             let switcheryOptions = {
 
                 color: '#64bd63', // 當checked時的背景顏色
@@ -427,13 +425,13 @@
 
         function clearForm() {
             //清除輸入的東西
-            document.getElementById('memberForm').reset();
+            document.getElementById('empForm').reset();
             //清除出現的警告訊息
             $('.text-danger').text('');
 
         }
         function addMemFormClose() {
-            $('#MemCreate').modal('hide');
+            $('#EmpCreate').modal('hide');
         }
 
 
