@@ -39,7 +39,32 @@ namespace ClinicWeb.Areas.Cases.Controllers
 					初診日期 = x.FirstvisitDate
 				}));
 		}
-		public IActionResult main()
+        [Route("{area}/{controller}/{action}/{id}")]
+        public JsonResult dataidquery(string id)
+        {
+            return Json(_context.CasesMainCase
+                .Include(x => x.Member)
+				.Where(x=>x.MemberId == Convert.ToInt32(id))
+                .Select(x => new
+                {
+                    id = x.CaseId,
+                    姓名 = x.Member.Name,
+                    身分證字號 = x.Member.NationalId,
+                    初診日期 = x.FirstvisitDate
+                }));
+        }
+        [Route("{area}/{controller}/{action}/{id}")]
+        public JsonResult query(string id)
+        {
+            return Json(_context.CasesMedicalRecords
+				.Include(x=>x.Case)
+                .Where(x => x.CaseId == Convert.ToInt32(id))
+                .Select(x => new
+                {
+
+                }));
+        }
+        public IActionResult main()
         {
             return View();
         }
