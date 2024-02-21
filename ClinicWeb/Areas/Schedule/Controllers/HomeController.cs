@@ -10,9 +10,14 @@ namespace ClinicWeb.Areas.Schedule.Controllers
 			return View();
 		}
 
-        public IActionResult NurseSchedule()
-        {
-            return View();
-        }
-    }
+		public IActionResult NurseSchedule()
+		{
+			return View();
+		}
+
+		public IActionResult ClinicWeekSchedule()
+		{
+			return View();
+		}
+	}
 }

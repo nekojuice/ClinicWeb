@@ -1,0 +1,45 @@
+﻿<table style="border: solid">
+    <thead>
+        <tr>
+            <th></th>
+            <th>日</th>
+            <th>一</th>
+            <th>二</th>
+            <th>三</th>
+            <th>四</th>
+            <th>五</th>
+            <th>六</th>
+        </tr>
+    </thead>
+    <tbody id="weekdata">
+
+    </tbody>
+</table>
+@section Scripts {
+    
+    <script>
+        let data;
+        (async () => {
+            const response = await fetch("/Schedule/Api/Get_WeekSchedule/小兒科")
+            data = await response.json()
+            console.log(data)
+
+            const $WEEKDATA_TBODY = $("#weekdata")
+
+            let htmlString = ""
+
+            //建立週迴圈
+            for (let i = 0; i < 7; i++) {
+                let shiftString = ""
+
+                //選定該次迴圈星期物件
+                let item = data.find((x) => {
+                    return x.星期.week == i
+                })
+
+
+            }
+
+        })()
+    </script>
+}
