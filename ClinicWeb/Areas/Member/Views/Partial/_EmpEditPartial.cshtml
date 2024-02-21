@@ -1,0 +1,194 @@
+﻿@model ClinicWeb.Areas.Member.Models.MemberEmployeeList
+@{
+    ViewData["Title"] = "EmpCreate";
+}
+
+<div class="x_panel">
+    <div class="x_title">
+        <h2>新增員工</h2>
+
+        <div class="clearfix"></div>
+    </div>
+    <div class="x_content">
+        <br>
+        <form asp-action="_EmpEditPartial" id="_EmpEditPartial" class="form-label-left input_mask">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="EmpId" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="StaffNumber" class="form-control" />
+
+            <!--姓名-->
+            <div class="col-md-6 col-sm-6  form-group has-feedback">
+
+                <input asp-for="Name" type="text" class="form-control has-feedback-left" placeholder=@Html.DisplayNameFor(model => model.Name)>
+                <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <!--身分證字號-->
+            <div class="col-md-6 col-sm-6  form-group has-feedback">
+                <input asp-for="NationalId" type="text" class="form-control" placeholder="身分證字號">
+                <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+                <span asp-validation-for="NationalId" class="text-danger"></span>
+            </div>
+            <!--信箱 員工沒有email-->
+            <div class="col-md-6 col-sm-6  form-group has-feedback">
+                <input @*asp-for="MemEmail"*@ type="text" class="form-control has-feedback-left" placeholder="信箱">
+                <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
+                <span @*asp-validation-for="MemEmail"*@ class="text-danger"></span>
+            </div>
+            <!--填上電話-->
+            <div class="col-md-6 col-sm-6  form-group has-feedback">
+                <input asp-for="Phone" type="tel" class="form-control" id="inputSuccess5" placeholder="連絡電話">
+                <span class="fa fa-phone form-control-feedback right" aria-hidden="true"></span>
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+            <div class="col-md-12 col-sm-12">
+                <!--排版用空白 避免錯誤欄推擠亂版-->
+            </div>
+            <!--性別-->
+
+            <div class="form-group row">
+                <label class="control-label col-md-3 col-sm-3 ">性別</label>
+                <div class="col-md-9 col-sm-9 ">
+                    @Html.DropDownListFor(m => m.Gender,
+                             new SelectList(
+                             new[]
+                             {
+                    new SelectListItem { Value = null, Text = "---請選擇---" },
+                    new SelectListItem { Value = true.ToString(), Text = "男" },
+                    new SelectListItem { Value = false.ToString(), Text = "女" },
+                    },
+                             "Value",
+                             "Text"
+                             ),
+                             new { @class = "form-control" }
+                             )
+                    <span asp-validation-for="Gender" class="text-danger"></span>
+                </div>
+            </div>
+
+            <!--血型-->
+            <div class="form-group row">
+                <label class="control-label col-md-3 col-sm-3 ">血型</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <select asp-for="BloodType" class="form-control">
+                        <option value="">---請選擇---</option>
+                        <option>A</option>
+                        <option>B</option>
+                        <option>O</option>
+                        <option>AB</option>
+                    </select>
+                </div>
+            </div>
+
+            <!--戶籍地址-->
+            <div class="form-group row">
+                <label class="col-form-label col-md-3 col-sm-3 ">戶籍地址</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <input asp-for="Address" type="text" class="form-control" placeholder="戶籍地址">
+                    <span asp-validation-for="Address" class="text-danger"></span>
+                </div>
+            </div>
+            <!--聯絡地址-->
+            <div class="form-group row">
+                <label class="col-form-label col-md-3 col-sm-3 "> 聯絡地址</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <input asp-for="ContactAddress" type="text" class="form-control" placeholder="聯絡地址">
+                    <span asp-validation-for="ContactAddress" class="text-danger"></span>
+                </div>
+            </div>
+
+
+            <!--會員密碼-->
+            <div class="form-group row">
+                @*  <input class="form-control" type="password" id="password1" name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&amp;*]).{8,}" title="Minimum 8 Characters Including An Upper And Lower Case Letter, A Number And A Unique Character" required=""> *@
+
+
+                <label class="col-form-label col-md-3 col-sm-3 ">密碼</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <input asp-for="EmpPassword" class="form-control" type="password" title="Minimum 8 Characters Including An Upper And Lower Case Letter, A Number And A Unique Character">
+                    <span asp-validation-for="EmpPassword" class="text-danger"></span>
+                    <span style="position: absolute;right:15px;top:7px;" onclick="hideshow()">
+                        <i id="slash" class="fa fa-eye-slash" style="display: none;"></i>
+                        <i id="eye" class="fa fa-eye" style="display: block;"></i>
+                    </span>
+                </div>
+            </div>
+            <!--選生日-->
+            <div class="form-group row">
+                <label class="col-form-label col-md-3 col-sm-3 ">
+                    生日 <span class="required"></span>
+                </label>
+                <div class="col-md-9 col-sm-9 ">
+                    <input asp-for="BirthDate" class="date-picker form-control" type="date" />
+                    <span asp-validation-for="BirthDate" class="text-danger"></span>
+                </div>
+            </div>
+
+            <!--Quit-->
+            <div class="form-group row">
+                <label class="control-label col-md-3 col-sm-3 ">在職</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <div class="col-md-9 col-sm-9 ">
+                        <div class="">
+                            <label>
+                                <input name="Quit" type="checkbox" id="QuitEdit" class="js-switch" checked />
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!--員工職稱-->
+            <div class="col-md-6 col-sm-6 form-group">
+                <label class="col-form-label col-md-3 col-sm-3 ">員工職稱</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <select asp-for="EmpType" class="form-control">
+                        <option value="">--選擇員工類別--</option>
+                        <option value="醫生">醫生</option>
+                        <option value="護士">護士</option>
+                        <option value="行政">行政</option>
+                        <option value="藥師">藥師</option>
+                    </select>
+                    <span asp-validation-for="EmpType" class="text-danger"></span>
+                </div>
+            </div>
+            <!--部門-->
+            <div class="col-md-6 col-sm-6 form-group">
+                <label class="col-form-label col-md-3 col-sm-3 ">部門</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <select asp-for="Department" class="form-control">
+                        <option value="">--選擇部門--</option>
+                        <option value="婦產科">婦產科</option>
+                        <option value="小兒科">小兒科</option>
+                        <option value="門診">門診</option>
+                        <option value="其他">其他</option>
+                    </select>
+                    <span asp-validation-for="Department" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <!--排版用空白 避免錯誤欄推擠亂版-->
+            </div>
+
+
+            <!--按鈕列-->
+            <div class="form-group row">
+                <div class="col-md-9 col-sm-9  offset-md-9">
+                    <input id="empEditSave" type="submit" value="Save" class="btn btn-primary" />
+                    <button id="editCloseButton" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+
+
+        </form>
+    </div>
+</div>
+
+
+
+
+
