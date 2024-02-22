@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>@ViewData["Title"] | 寶育婦幼診所-後臺管理系統 </title>
-
+    @inject ClinicSysContext dataContext
     <!-- Bootstrap -->
     <link href="~/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -40,12 +40,12 @@
                     <!-- menu profile quick info -->
                     <div class="profile clearfix">
                         <div class="profile_pic">
-                            <img src="~/images/img.jpg" alt="..." class="img-circle profile_img">
+                            <img id="profilePic" alt="員工大頭照" src="~/images/user.png" alt="..." class="img-circle profile_img">
                         </div>
                         <div class="profile_info">
                             <span id="EmpType">醫師</span>
                             <h2 id="staffname">黃貓咪</h2>
-
+                            <cache expires-after="@TimeSpan.FromSeconds(5)">目前員工數量：@dataContext.MemberMemberList.Count()</cache>
                         </div>
                         <div class="clearfix"></div>
                     </div>
@@ -219,18 +219,8 @@
     <script src="~/build/js/custom.min.js"></script>
     <script src="~/build/js/custom_extend_nkj.min.js"></script>
 
+    <script src="~/msit155e/js/Login/Login.js"></script>
 
-    <script>
-
-        (async () => {
-            const response = await fetch(`/Employee/Main/Profile`);
-            const data = await response.json();
-            // 確定有抓到整包formdata
-            document.getElementById('EmpType').innerText = data.EmpType;
-            document.getElementById('staffname').innerText = data.StaffName;
-        })();
-
-    </script>
 
 
     @await RenderSectionAsync("Scripts", required: false)
