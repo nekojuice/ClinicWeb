@@ -7,7 +7,7 @@
 
     <div class="x_content">
         <br>
-        <form asp-action="_MemberEditPartial" id="_MemberEditPartial" class="form-label-left input_mask">
+        <form asp-action="Edit" id="form_MemberEdit" class="form-label-left input_mask">
 
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="MemberId" />
@@ -170,7 +170,7 @@
                                 checked=@Model.Verification
                                 data-switchery="true" style="display: none;"> *@
 
-                                <input name="Verification" id="vertificationformem" type="checkbox" class="js-switch" @if (Model.Verification == true)
+                                <input name="Verification" id="Verification" type="checkbox" class="js-switch" @if (Model.Verification == true)
                                     @("checked")
 
                                        data-switchery="true" style="display: none;">

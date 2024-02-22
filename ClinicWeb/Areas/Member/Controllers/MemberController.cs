@@ -84,11 +84,17 @@ namespace ClinicWeb.Areas.Member.Controllers
             //可以指定不是這個名稱的view來顯示 return View("~Areas/Member/");
             return View();
         }
-        //新增會員資料
-        [HttpPost]
+		//新增會員資料
+		//修改會員資料的畫面顯示
+		public IActionResult MemberCreate()
+		{
+			return PartialView("~/Areas/Member/Views/Partial/_MemberCreatePartial.cshtml");
+		}
+
+		[HttpPost]
         [ValidateAntiForgeryToken]
 		//[Bind("Name,Gender,BloodType,NationalId,Address,ContactAddress,Phone,BirthDate,IceName,IceNumber,MemPassword,MemEmail,Verification")]
-		public IActionResult MemberCreate([Bind("Name,BloodType,NationalId,Address,ContactAddress,Phone,BirthDate,IceName,IceNumber,MemPassword,MemEmail,Verification")] [FromBody] MemberMemberList member)
+		public IActionResult Create([Bind("Name,BloodType,NationalId,Address,ContactAddress,Phone,BirthDate,IceName,IceNumber,MemPassword,MemEmail,Verification")] [FromBody] MemberMemberList member)
         {
 
             if (member == null)
@@ -111,8 +117,6 @@ namespace ClinicWeb.Areas.Member.Controllers
                 Console.WriteLine(member.MemEmail);
                 Console.WriteLine(member.Verification);
             }
-            
-            //return Content("123");
             //檢查驗證
             if (!ModelState.IsValid)
             {

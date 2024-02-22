@@ -9,7 +9,7 @@
     </div>
     <div class="x_content">
         <br>
-        <form asp-action="MemberCreate" id="memberForm" class="form-label-left input_mask">
+        <form asp-action="Create" id="form_MemberCreate" class="form-label-left input_mask">
 
             <!--姓名-->
             <div class="col-md-6 col-sm-6  form-group has-feedback">
@@ -24,6 +24,9 @@
                 <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
                 <span asp-validation-for="NationalId" class="text-danger"></span>
             </div>
+
+            <div class="col-md-12 col-sm-12"><!--排版用空白 避免錯誤欄推擠亂版--></div>
+
             <!--信箱-->
             <div class="col-md-6 col-sm-6  form-group has-feedback">
                 <input asp-for="MemEmail" type="text" class="form-control has-feedback-left" placeholder="信箱">
@@ -36,9 +39,9 @@
                 <span class="fa fa-phone form-control-feedback right" aria-hidden="true"></span>
                 <span asp-validation-for="Phone" class="text-danger"></span>
             </div>
-            <div class="col-md-12 col-sm-12">
-                <!--排版用空白 避免錯誤欄推擠亂版-->
-            </div>
+            
+            <div class="col-md-12 col-sm-12"><!--排版用空白 避免錯誤欄推擠亂版--></div>
+
             <!--性別-->
 
             <div class="form-group row">
@@ -146,7 +149,7 @@
                     <div class="col-md-9 col-sm-9 ">
                         <div class="">
                             <label>
-                                <input name="Verification" type="checkbox" id="vertificationformemCreate" class="js-switch" checked />
+                                <input name="Verification" type="checkbox" id="Verification" class="js-switch" checked />
                             </label>
                         </div>
                     </div>

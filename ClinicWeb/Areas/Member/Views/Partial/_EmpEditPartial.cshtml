@@ -11,7 +11,7 @@
     </div>
     <div class="x_content">
         <br>
-        <form asp-action="_EmpEditPartial" id="_EmpEditPartial" class="form-label-left input_mask">
+        <form asp-action="Edit" id="form_EmpEdit" class="form-label-left input_mask">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="EmpId" />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -132,7 +132,10 @@
                     <div class="col-md-9 col-sm-9 ">
                         <div class="">
                             <label>
-                                <input name="Quit" type="checkbox" id="QuitEdit" class="js-switch" checked />
+                                <input name="Quit" type="checkbox" id="Quit" @if (Model.Quit == true)
+                                    @("checked")
+
+                                       data-switchery="true" style="display: none;">
                             </label>
                         </div>
                     </div>
@@ -177,7 +180,7 @@
             <!--按鈕列-->
             <div class="form-group row">
                 <div class="col-md-9 col-sm-9  offset-md-9">
-                    <input id="empEditSave" type="submit" value="Save" class="btn btn-primary" />
+                    <input type="submit" value="Save" class="btn btn-primary" />
                     <button id="editCloseButton" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>

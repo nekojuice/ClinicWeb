@@ -55,10 +55,15 @@ namespace ClinicWeb.Areas.Member.Controllers
                 ));
         }
 
+        public IActionResult EmpCreate()
+        {
+            return PartialView("~/Areas/Member/Views/Partial/_EmpCreatePartial.cshtml");
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         //[Bind("Name,Gender,BloodType,NationalId,Address,ContactAddress,Phone,BirthDate,IceName,IceNumber,MemPassword,MemEmail,Verification")]
-        public IActionResult EmpCreate([Bind("Name,Gender,BloodType,NationalId,Address,ContactAddress,Phone,BirthDate,EmpPassword,EmpType,Department,Quit")][FromBody] MemberEmployeeList emp)
+        public IActionResult Create([Bind("Name,Gender,BloodType,NationalId,Address,ContactAddress,Phone,BirthDate,EmpPassword,EmpType,Department,Quit")][FromBody] MemberEmployeeList emp)
         {
 
             if (emp == null)
