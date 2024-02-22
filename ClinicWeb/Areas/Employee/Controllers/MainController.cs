@@ -138,19 +138,12 @@ namespace ClinicWeb.Areas.Employee.Controllers
             // 如果找到了對應的員工且員工有大頭照數據
             if (employee != null && employee.EmpPhoto != null && employee.EmpPhoto.Length > 0)
             {
-                // 直接將圖片的二進制數據返回給客戶端
-                return File(employee.EmpPhoto, "image/jpeg"); // 假設大頭照數據是 JPEG 格式的，請根據實際情況修改
+                                return File(employee.EmpPhoto, "image/jpeg"); 
             }
             else
             {
-                // 如果沒有找到對應的員工或者員工沒有大頭照數據，返回一個默認的圖片或者錯誤信息
-                // 可以返回一個空的圖片，或者一個預設的圖片
-                // 例如：
-                // return File("~/images/default-avatar.jpg", "image/jpeg"); // 返回一個預設的圖片
-                // 或者：
-                // return NotFound(); // 返回一個 404 錯誤
-
-                return NotFound(); // 在這個示例中，如果沒有找到對應的員工或者員工沒有大頭照數據，返回 404 錯誤
+              
+                return NotFound(); 
             }
         }
 
