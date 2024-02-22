@@ -3,6 +3,7 @@
 using ClinicWeb.Areas.Schedule.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 using System.Numerics;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -95,27 +96,34 @@ namespace ClinicWeb.Areas.Schedule.Controllers
         [HttpGet]
         public IActionResult Get_WeekSchedule(string departmentName)
         {
+            //撈取資料到物件
             var result = _context.ScheduleClinicSchedule
                 .Where(x => x.Doctor.Department == departmentName)
-                .GroupBy(x => new { x.Week })
+                .GroupBy(x => x.Week)
                 .Select(x =>
                     new
                     {
-                        星期 = x.Key,
-                        排班 = x.GroupBy(x => x.Time.ClinicShifts).Select(x => new
+                        Week = x.Key,
+                        ClinicShifts = x.GroupBy(x => x.Time.ClinicShifts).Select(x =>
+                        new
                         {
-                            時段 = x.Key,
-                            診間 = new
+                            ClinicShift = x.Key,
+                            Details = x.Select(x => new
                             {
-                                doctor = x.Select(x => x.Doctor.Name),
-                                room = x.Select(x => x.Room.Name)
-                            }
+                                doctor = x.Doctor.Name,
+                                room = x.Room.Name
+                            })
                         })
                     }
                 );
+            //將物件重組成動態json key
+            var rebuildFormat = result.ToDictionary(
+                w => w.Week, w => (object)w.ClinicShifts.ToDictionary(
+                    w => w.ClinicShift, w => (object)w.Details
+                ));
 
-            return Json(result);
+            return Json(rebuildFormat);
         }
-        //fetch("/Schedule/Api/Get_WeekSchedule/小兒科")
+        //用法: fetch("/Schedule/Api/Get_WeekSchedule/小兒科")
     }
 }
