@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 
 namespace ClinicWeb.Areas.Employee.Controllers
 {
@@ -12,6 +15,7 @@ namespace ClinicWeb.Areas.Employee.Controllers
     public class MainController : Controller
     {
         private ClinicSysContext _context;
+        private readonly IHttpContextAccessor _httpContextAccessor;
         public MainController(ClinicSysContext context)
         {
             _context = context;
@@ -20,6 +24,13 @@ namespace ClinicWeb.Areas.Employee.Controllers
         public IActionResult Index()
         {
             return View();
+        }
+
+        //測試業面是否知道登入者是誰
+        public IActionResult who()
+        {
+            HttpContext.User.Claims.ToList();
+            return Content("");
         }
 
         [AllowAnonymous]
@@ -49,6 +60,9 @@ namespace ClinicWeb.Areas.Employee.Controllers
                 {
                     new Claim(ClaimTypes.Name, user.StaffNumber.ToString()),
                     new Claim("StaffNumber", user.StaffNumber.ToString()),
+                     new Claim("EmpName", user.Name),
+                      new Claim("EmpId", user.EmpId.ToString()),
+
                     //加上角色設定
                    new Claim(ClaimTypes.Role, user.EmpType)
                 };
@@ -76,5 +90,42 @@ namespace ClinicWeb.Areas.Employee.Controllers
         //    public int StaffNumber { get; set; }
         //    public string Password { get; set; }
         //}
+
+        //取得httpcontext的使用者資訊
+        //[AllowAnonymous]
+
+        //public IActionResult Profile()
+        //{
+
+        //    var user = HttpContext.User;
+        //    var staffNumber = user.Claims.FirstOrDefault(c => c.Type == "StaffNumber")?.Value;
+        //    var empType = user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+        //    string result = staffNumber.IsNullOrEmpty() ? "未登入" : staffNumber;
+        //    // 根據需要從用戶身份中獲取其他信息
+
+        //    return Content(result);
+        //}
+
+        [AllowAnonymous]
+        public IActionResult Profile()
+        {
+            var user = HttpContext.User;
+            var staffNumber = user.Claims.FirstOrDefault(c => c.Type == "StaffNumber")?.Value;
+            var staffName=user.Claims.FirstOrDefault(c=>c.Type== "EmpName")?.Value;
+            var empType = user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+
+            var resultObject = new
+            {
+                StaffNumber = staffNumber,
+                StaffName = staffName,
+                EmpType = empType
+            };
+
+            string result = staffNumber.IsNullOrEmpty() ? "未登入" : JsonConvert.SerializeObject(resultObject);
+
+            return Content(result, "application/json");
+        }
+
+
     }
 }

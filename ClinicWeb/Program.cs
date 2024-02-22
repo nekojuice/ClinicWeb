@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol;
 
 var builder = WebApplication.CreateBuilder(args);
 var Server = builder.Configuration["ClinicSys:Server"];
@@ -23,9 +24,9 @@ builder.Services.AddControllersWithViews();
 
 
 //db switcher
-/// 0: nick's db server -- Nick®a¦øªA¾¹
-/// 1: localhost db server -- localhost¥»¾÷¸ê®Æ®w¦øªA¾¹
-/// 2: ispan classroom 201 db server cat -- 201±Ğ«Çip¦ì¸m14¸¹(nkj)
+/// 0: nick's db server -- Nickï¿½aï¿½ï¿½ï¿½Aï¿½ï¿½
+/// 1: localhost db server -- localhostï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®wï¿½ï¿½ï¿½Aï¿½ï¿½
+/// 2: ispan classroom 201 db server cat -- 201ï¿½Ğ«ï¿½ipï¿½ï¿½m14ï¿½ï¿½(nkj)
 int db_source_switcher = 1;
 
 var ConnString = "";
@@ -63,17 +64,19 @@ builder.Services.AddDbContext<ClinicSysContext>(options => options.UseSqlServer(
 
 //NewtonsoftJson
 builder.Services.AddControllers().AddNewtonsoftJson();
-
+//å¯åœ¨è‡ªè¨‚å…ƒä»¶å–å¾—Httpcontext
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(option =>
 {
-    //¥¼µn¤J®É·|¦Û°Ê¾É¨ì³o­Óºô§}
+    //æœªç™»å…¥æ™‚æœƒè‡ªå‹•å°åˆ°é€™å€‹ç¶²å€
     option.LoginPath = new PathString("/Employee/Main/Login");
-	//¬İ­n¤£­n¥[¤Waccess³Q©Úµ´ªº­¶­± ÁÙ¬O´N¬O³æ¯Â´£¿ô
-	option.AccessDeniedPath = new PathString("/Employee/Main/noAccess");
+    //çœ‹è¦ä¸è¦åŠ ä¸Šaccessè¢«æ‹’çµ•çš„é é¢ é‚„æ˜¯å°±æ˜¯å–®ç´”æé†’
+    option.AccessDeniedPath = new PathString("/Employee/Main/noAccess");
+	option.ExpireTimeSpan=TimeSpan.FromMinutes(30);
 });
 
-//¹w³]¥ş³¡api³£®M¥ÎÅçÃÒ (¤£­nªº¸Ü¦b¸Ó action¥[¤W[AllowAnonymous] ¦n¤ñlogin
+//é è¨­å…¨éƒ¨apiéƒ½å¥—ç”¨é©—è­‰ (ä¸è¦çš„è©±åœ¨è©² actionåŠ ä¸Š[AllowAnonymous] å¥½æ¯”login
 builder.Services.AddMvc(options =>
 {
     options.Filters.Add(new AuthorizeFilter());
@@ -98,7 +101,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-//¶¶§Ç­n¤@¼Ë
+//é †åºè¦ä¸€æ¨£
 app.UseCookiePolicy();
 app.UseAuthentication();
 app.UseAuthorization();
