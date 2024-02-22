@@ -1,7 +1,8 @@
 ﻿//顯示會員主畫面資料表
+let $EMP_DATATABLE;
 function QueryEmpInfo() {
     try {
-        $('#empdatatable').dataTable({
+        $EMP_DATATABLE = $('#empdatatable').dataTable({
             ajax: {
                 type: 'GET',
                 url: (url_Emp_GetData),
@@ -65,6 +66,40 @@ function EmpStatus() {
     }
 }
 //生日搜尋
+let minDateFilter = "";
+let maxDateFilter = "";
+$("#startDate").on('change', function () {
+    minDateFilter = new Date($("#startDate").val()).getTime();
+    $EMP_DATATABLE.fnDraw();
+})
+
+$("#endDate").on('change', function () {
+    maxDateFilter = new Date($("#endDate").val()).getTime();
+    $EMP_DATATABLE.fnDraw();
+})
+
+$.fn.dataTableExt.afnFiltering.push(
+    function (oSettings, aData, iDataIndex) {
+        if (typeof aData._date == 'undefined') {
+            aData._date = new Date(aData[6]).getTime();
+        }
+
+        if (minDateFilter && !isNaN(minDateFilter)) {
+            if (aData._date < minDateFilter) {
+                return false;
+            }
+        }
+
+        if (maxDateFilter && !isNaN(maxDateFilter)) {
+            if (aData._date > maxDateFilter) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+);
+
 
 //員工類型搜尋
 $("#employeeType").change(() => { EmpType() });
