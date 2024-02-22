@@ -12,9 +12,9 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="MemberId" />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="MemberNumber" class="form-control"/>
+            <input type="hidden" asp-for="MemberNumber" class="form-control" />
 
-          @*   <label  asp-for="MemberNumber"  class="control-label" style="display: block; position: absolute; top: -20px;">@Model.MemberNumber</label> *@
+            @*   <label  asp-for="MemberNumber"  class="control-label" style="display: block; position: absolute; top: -20px;">@Model.MemberNumber</label> *@
 
             <!--姓名-->
             <div class="col-md-6 col-sm-6" style="margin-top: 20px;">
@@ -23,7 +23,7 @@
                     <input asp-for="Name" class="form-control has-feedback-left" placeholder="姓名" style="display: block; padding-left: 30px;" />
 
                     <span class="fa fa-user form-control-feedback left" aria-hidden="true" style="position: absolute; left: 5px; top: 5px;"></span>
-                   
+
                 </div>
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
@@ -59,6 +59,10 @@
                     <span asp-validation-for="Phone" class="text-danger"></span>
                 </div>
             </div>
+            <div class="col-md-12 col-sm-12">
+                <!--排版用空白 避免錯誤欄推擠亂版-->
+            </div>
+
 
 
 
@@ -67,9 +71,10 @@
                 <label class="control-label col-md-3 col-sm-3 " asp-for="Gender"></label>
                 <div class="col-md-9 col-sm-9 ">
                     <select asp-for="Gender" class="form-control">
-                       
+
                         <!option value='true'@if (Model.Gender == true)
                             @("selected")
+
 
 
 
@@ -78,6 +83,7 @@
                         > 男 </!option >
                         <!option value='false'@if (Model.Gender == false)
                             @("selected")
+
 
 
 
@@ -124,7 +130,7 @@
             <div class="form-group row">
                 <label class="control-label col-md-3 col-sm-3" asp-for="BirthDate"></label>
                 <div class="col-md-9 col-sm-9">
-                    <input name="BirthDate" class="date-picker form-control" type="date" value="@Model.BirthDate.ToString("yyyy-MM-dd")" required="required" />
+                    <input name="BirthDate" class="date-picker form-control" type="date" value="@Model.BirthDate?.ToString("yyyy-MM-dd")" required="required" />
                     <span asp-validation-for="BirthDate" class="text-danger"></span>
                 </div>
             </div>
@@ -159,10 +165,10 @@
                 <div class="col-md-9 col-sm-9">
                     <div class="col-md-9 col-sm-9">
                         <div class="">
-                           <label>
-                               @*  <input asp-for="Verification"  type="checkbox" class="js-switch"
-                                       checked=@Model.Verification
-                                       data-switchery="true" style="display: none;"> *@
+                            <label>
+                                @*  <input asp-for="Verification"  type="checkbox" class="js-switch"
+                                checked=@Model.Verification
+                                data-switchery="true" style="display: none;"> *@
 
                                 <input name="Verification" id="vertificationformem" type="checkbox" class="js-switch" @if (Model.Verification == true)
                                     @("checked")
@@ -179,13 +185,7 @@
                     <button id="editCloseButton" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
-          
+
         </form>
     </div>
 </div>
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-}
-

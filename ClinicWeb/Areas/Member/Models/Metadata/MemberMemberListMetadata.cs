@@ -26,7 +26,7 @@ namespace ClinicWeb.Areas.Member.Models
 
         [Required(ErrorMessage = "請選擇性別 ")]
         [Display(Name = "性別")]
-        public bool Gender { get; set; }
+        public bool? Gender { get; set; }
      
         public string? GenderString { get; set; }
 

@@ -22,7 +22,7 @@ public partial class MemberMemberList
     [StringLength(50)]
     public string Name { get; set; }
 
-    public bool Gender { get; set; }
+    public bool? Gender { get; set; }
 
   
     [Column("Blood_Type")]
@@ -48,7 +48,7 @@ public partial class MemberMemberList
     public string Phone { get; set; }
 
     [Column("Birth_Date", TypeName = "datetime")]
-    public DateTime BirthDate { get; set; }
+    public DateTime? BirthDate { get; set; }
 
     [Column("ICE_Name")]
     [StringLength(50)]

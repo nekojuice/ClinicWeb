@@ -315,7 +315,8 @@
 				formData.forEach(function (value, key) {
 					jsonobject[key] = value;
 				});
-				
+
+				if (jsonobject.Gender == '') { jsonobject.Gender = null }
 				if (jsonobject.Gender == 'True') { jsonobject.Gender = true }
 				if (jsonobject.Gender == 'False') { jsonobject.Gender = false }
 				
@@ -555,7 +556,7 @@
 
 		async function handleButtonClick(memberId /* _index_memdatatable */) {
 			try {
-				const response = await fetch(`@Url.Content("~/Member/Member/MemberEdit")?memberId=${memberId}`);
+				const response = await fetch(`@Url.Content("~/Member/Emp/EmpEdit")?memberId=${memberId}`);
 				if (!response.ok) {
 					throw new Error('在取得會員資料並打開編輯畫面出現錯誤，請洽系統管理員');
 
@@ -624,19 +625,19 @@
 			//先抓到當前的頁碼
 			const currentPage = $('#memdatatable').DataTable().page()
 			console.log("這邊是按下保存後的console log", _index_memdatatable)
-			document.getElementById("_MemberEditPartial").addEventListener("submit", async (event) => {
+			document.getElementById("MemberCreate").addEventListener("submit", async (event) => {
 				event.preventDefault(); // 防止表單默認提交行為
 				/*  vertification(); *///打開啟用按鍵所要做出的判斷
 
 				// memdatatable
-				const formData = new FormData(document.querySelector('#_MemberEditPartial'));
+				const formData = new FormData(document.querySelector('#MemberCreate'));
 
 				let result;
-				const Verification = $("#vertificationformem").is(":checked")
-				formData.set('Verification', Verification);
+				const Verification = $("#Quit").is(":checked")
+				formData.set('Quit', Verification);
 				console.log(formData)
 				try {
-					const url = "/Member/Member/Edit";
+					const url = "/Member/Emp/Edit";
 					const response = await fetch(url, {
 						"method": "POST",
 						"body": formData
