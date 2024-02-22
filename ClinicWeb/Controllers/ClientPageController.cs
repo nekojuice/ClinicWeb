@@ -8,9 +8,26 @@ namespace ClinicWeb.Controllers
 		{
 			return View();
 		}
+		public IActionResult shop()
+		{
+			return View();
+		}
+		public IActionResult about()
+		{
+			return View();
+		}
 		public IActionResult services()
 		{
 			return View();
 		}
+		public IActionResult blog()
+		{
+			return View();
+		}
+		public IActionResult contact()
+		{
+			return View();
+		}
+
 	}
 }
