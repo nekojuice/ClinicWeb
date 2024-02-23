@@ -45,7 +45,7 @@
                         <div class="profile_info">
                             <span id="EmpType">醫師</span>
                             <h2 id="staffname">黃貓咪</h2>
-                            <cache expires-after="@TimeSpan.FromSeconds(5)">目前員工數量：@dataContext.MemberMemberList.Count()</cache>
+                            <cache expires-after="@TimeSpan.FromSeconds(5)">目前員工數量：@dataContext.MemberEmployeeList.Count()</cache>
                         </div>
                         <div class="clearfix"></div>
                     </div>
@@ -96,7 +96,7 @@
                         <ul class=" navbar-right">
                             <li class="nav-item dropdown open" style="padding-left: 15px;">
                                 <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
-                                    <img src="~/images/img.jpg" alt="">黃貓咪
+                                    <img id="profilePicLogout" src="~/images/user.png" alt=""><span id="staffnameForLogout">黃貓咪</span>
                                 </a>
                                 <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" asp-action="Profile"> Profile</a>

@@ -20,7 +20,7 @@ namespace ClinicWeb.Areas.Member.Controllers
             _context = context;
         }
 
-        [Authorize(Roles = "行政")]
+        //[Authorize(Roles = "行政,管理員")]
         public IActionResult EmpIndex()
         {
             return View("EmpIndex");

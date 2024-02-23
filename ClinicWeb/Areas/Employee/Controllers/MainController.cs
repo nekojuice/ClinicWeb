@@ -49,11 +49,17 @@ namespace ClinicWeb.Areas.Employee.Controllers
                         && a.EmpPassword == e.EmpPassword
                         select a).SingleOrDefault();
 
-            if (user == null)
-            {
-                return Content("帳號密碼錯誤");
-            }
-            else
+			//if (user == null)
+			//{
+			//    return Content("帳號密碼錯誤");
+			//}
+			if (user == null)
+			{
+				ViewData["ErrorMessage"] = "帳號密碼輸入有誤";
+				return View("~/Areas/Employee/Views/Main/Login/Login.cshtml");
+			}
+			
+			else
             {
                 //這邊等等寫驗證加角色
                 var claims = new List<Claim>
@@ -76,7 +82,8 @@ namespace ClinicWeb.Areas.Employee.Controllers
         public IActionResult Logout()
         {
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return Content("123");
+			return RedirectToAction("Login");
+			//return Content("123");
         }
         [HttpGet]
         public IActionResult noAccess()
@@ -107,18 +114,20 @@ namespace ClinicWeb.Areas.Employee.Controllers
         //}
 
         [AllowAnonymous]
-        public IActionResult Profile()
+        public IActionResult ProfileforStaff()
         {
             var user = HttpContext.User;
             var staffNumber = user.Claims.FirstOrDefault(c => c.Type == "StaffNumber")?.Value;
             var staffName=user.Claims.FirstOrDefault(c=>c.Type== "EmpName")?.Value;
             var empType = user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+            var empIdCookie = user.Claims.FirstOrDefault(c => c.Type == "EmpId")?.Value;
 
             var resultObject = new
             {
                 StaffNumber = staffNumber,
                 StaffName = staffName,
-                EmpType = empType
+                EmpType = empType,
+                EmpIdCookie= empIdCookie
             };
 
             string result = staffNumber.IsNullOrEmpty() ? "未登入" : JsonConvert.SerializeObject(resultObject);
