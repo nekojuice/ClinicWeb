@@ -211,7 +211,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.11" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.12" />
   </ItemGroup>
 
   <ItemGroup>
@@ -221,6 +221,7 @@
     <Folder Include="Areas\Attend\Models\" />
     <Folder Include="Areas\Cases\Data\" />
     <Folder Include="Areas\Cases\Models\" />
+    <Folder Include="Areas\ClinicRoomSys\Data\" />
     <Folder Include="Areas\Drugs\Data\" />
     <Folder Include="Areas\Employee\Data\" />
     <Folder Include="Areas\Employee\Models\" />
