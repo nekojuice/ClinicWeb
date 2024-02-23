@@ -11,7 +11,11 @@
     </div>
     <div class="x_content">
         <br>
-        <form asp-action="Create" id="form_EmpCreate" class="form-label-left input_mask">
+        <form asp-action="Edit" id="form_EmpEdit" class="form-label-left input_mask">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="EmpId" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="StaffNumber" class="form-control" />
 
             <!--姓名-->
             <div class="col-md-6 col-sm-6  form-group has-feedback">
@@ -28,9 +32,9 @@
             </div>
             <!--信箱 員工沒有email-->
             <div class="col-md-6 col-sm-6  form-group has-feedback">
-            <input @*asp-for="MemEmail"*@ type="text" class="form-control has-feedback-left" placeholder="信箱">
-            <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
-            <span @*asp-validation-for="MemEmail"*@ class="text-danger"></span>
+                <input @*asp-for="MemEmail"*@ type="text" class="form-control has-feedback-left" placeholder="信箱">
+                <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
+                <span @*asp-validation-for="MemEmail"*@ class="text-danger"></span>
             </div>
             <!--填上電話-->
             <div class="col-md-6 col-sm-6  form-group has-feedback">
@@ -128,7 +132,10 @@
                     <div class="col-md-9 col-sm-9 ">
                         <div class="">
                             <label>
-                                <input name="Quit" type="checkbox" id="Quit" class="js-switch" checked />
+                                <input name="Quit" type="checkbox" id="Quit" @if (Model.Quit == true)
+                                    @("checked")
+
+                                       data-switchery="true" style="display: none;">
                             </label>
                         </div>
                     </div>
@@ -169,13 +176,12 @@
                 <!--排版用空白 避免錯誤欄推擠亂版-->
             </div>
 
-            
+
             <!--按鈕列-->
-            <div class="form-group row" style="margin:30px">
-                <div class="col-md-9 col-sm-9  offset-md-8">
-                    <button id="closeButton" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button class="btn btn-primary" type="reset">Reset</button>
-                    <button id="AddMemBtn" type="submit" class="btn btn-primary" onclick="">Save</button>
+            <div class="form-group row">
+                <div class="col-md-9 col-sm-9  offset-md-9">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                    <button id="editCloseButton" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
 
