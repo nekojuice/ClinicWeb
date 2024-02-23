@@ -33,14 +33,26 @@ const Drugssec = document.getElementById("Drugssec");
 })();
 
 (async () => {
-    const response = await fetch(`/Employee/Main/ProfileForPicture`);
-    if (response.ok) {
+
+    try {
+        const response = await fetch(`/Employee/Main/ProfileForPicture`);
+        if (!response.ok) {
+            throw new Error(`${response.status}`);
+            return;
+        }
+
         const blob = await response.blob();
+        if (blob.type != "image/jpeg") {
+            return;
+        }
         const imgUrl = URL.createObjectURL(blob);
         document.getElementById('profilePic').src = imgUrl;
         document.getElementById('profilePicLogout').src = imgUrl;
-    } else {
-        console.error('抓大頭照的api怪怪的');
     }
+    catch (error) {
+        console.log(error);
+    }
+
 })();
+
 

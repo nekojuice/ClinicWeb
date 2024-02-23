@@ -151,8 +151,9 @@ namespace ClinicWeb.Areas.Employee.Controllers
             }
             else
             {
-              
-                return NotFound(); 
+
+                //return NotFound(); 
+                return Content("沒圖片");
             }
         }
 
