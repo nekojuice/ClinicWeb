@@ -3,6 +3,7 @@
         $('#callingTable').dataTable({
             columns: [
                 { "data": "member_id", "visible": false },
+                { "data": "clinicListId", "visible": false },
                 { "data": "status_id", "visible": false },
                 { "data": "診號" },
                 { "data": "姓名" },
@@ -80,6 +81,7 @@ $("#callingTable tbody").on('mousedown', 'tr', function () {
     
     const dataObject = $('#callingTable').DataTable().row(_index_DataTable).data()
     MEMBER_ID = dataObject.member_id;
+    CLINICLIST_ID = dataObject.clinicListId;
 
     $(this).siblings().removeClass('selected');
     $(this).addClass('selected');

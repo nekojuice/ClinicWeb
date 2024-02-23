@@ -21,6 +21,9 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
         [Route("{area}/{controller}/{action}")]
         public IActionResult Get_CallingList([FromBody] CallingPanelViewModel vm)
         {
+            //var user = HttpContext.User;
+            //var EmpIdCookie = user.Claims.FirstOrDefault(c => c.Type == "EmpId")?.Value;
+
             //[debug] 擷取傳入的值
             //Console.WriteLine($"doctor: { vm.doctorId}, date: {vm.date}, shiftId: {vm.shiftId}");
             return Json(_context.ApptClinicList
@@ -29,6 +32,7 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
                 && x.Clinic.ClinicTimeId == vm.shiftId)
                 .Select(x=>new {
 					member_id = x.MemberId,
+                    clinicListId = x.ClinicListId,
 					status_id = x.PatientStateId,
 					診號 = x.ClinicNumber,
 					姓名 = x.Member.Name,

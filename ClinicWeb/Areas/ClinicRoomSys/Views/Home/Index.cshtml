@@ -39,10 +39,11 @@
         //宣告全域變數
         //選取的會員(病患)ID
         let MEMBER_ID;
+        let CLINICLIST_ID;
         //點選左表後觸發的事件 fetch右表
         async function on_memberClick()
         {
-            console.log('selected ID: ' + MEMBER_ID);
+            console.log(`selected 會員ID MEMBER_ID: ${MEMBER_ID}, 掛號序列ID CLINICLIST_ID: ${CLINICLIST_ID}`);
             // const response = await fetch('')
             // const data = await response.json()
         }
