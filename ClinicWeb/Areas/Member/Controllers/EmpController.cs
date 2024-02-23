@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ClinicWeb.Areas.Member.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ClinicWeb.Areas.Member.Controllers
 {
@@ -19,6 +20,7 @@ namespace ClinicWeb.Areas.Member.Controllers
             _context = context;
         }
 
+        //[Authorize(Roles = "行政,管理員")]
         public IActionResult EmpIndex()
         {
             return View("EmpIndex");
