@@ -72,8 +72,8 @@ namespace ClinicWeb.Areas.Employee.Controllers
                     //加上角色設定
                    new Claim(ClaimTypes.Role, user.EmpType)
                 };
-                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
+                var claimsIdentity = new ClaimsIdentity(claims, "test1");   //注意!!!
+                HttpContext.SignInAsync("backend", new ClaimsPrincipal(claimsIdentity));    //注意!!!
             }
             return RedirectToAction("Index");
         }
@@ -81,8 +81,8 @@ namespace ClinicWeb.Areas.Employee.Controllers
         [HttpGet]
         public IActionResult Logout()
         {
-            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-			return RedirectToAction("Login");
+            HttpContext.SignOutAsync("backend");    //注意!!!
+            return RedirectToAction("Login");
 			//return Content("123");
         }
         [HttpGet]
