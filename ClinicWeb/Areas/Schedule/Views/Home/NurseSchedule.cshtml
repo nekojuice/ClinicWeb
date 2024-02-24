@@ -45,6 +45,12 @@
                         </li>
                     </ul>
                     <div class="clearfix"></div>
+
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label"> </label>
+                    @* 按鈕觸發小窗 *@
+                    <button id="newSchedulebtn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#ScheduleCreate">新增排班</button>
                 </div>
                 <div class="mb-3" style="overflow: auto">
                     <div class="col-md-3">
@@ -108,6 +114,57 @@
     </div>
 </div>
 
+@* //彈跳小窗 *@
+<div class="modal fade" id="ScheduleCreate" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" id="divCreateInfo">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">
+                    新增排班
+                </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+
+            </div>
+            <div class="modal-body d-flex flex-column">
+                <div class="mb-3 pb-2">
+                    <!-- 新添加的行 -->
+                    <div class="col-md-3">
+                        <label class="form-label" style="font-size:16px">月份: </label>
+                        <select class="form-control" id="selMonth">
+                        </select>
+                    </div>
+                </div>
+                <div class="mb-3 pb-2">
+                    <!-- 新添加的行 -->
+                    <div class="col-md-3">
+                        <label class="form-label" style="font-size:16px">醫師名稱: </label>
+                        <select class="form-control" id="selDoctorname">
+                        </select>
+                    </div>
+                </div>
+                <div class="pt-2">
+                    <!-- 新添加的行 -->
+                    <div class="col-md-3">
+                        <label class="form-label" style="font-size:16px">護士名稱: </label>
+                        <select class="form-control" id="selNursename">
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    關閉
+                </button>
+                <button type="button" class="btn btn-primary">
+                    新增排班
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
 
@@ -142,6 +199,11 @@
         const selMonth = document.querySelector('#selectedMonth');
         const selShift = document.querySelector('#selectedShift');
         const selDep = document.querySelector('#selectedDepartment');
+        // 取得新增小窗元素
+        const selcreateMonth = document.querySelector('#selMonth');
+        const selcreateDrName = document.querySelector('#selDoctorname');
+        const selcreateNurseName = document.querySelector('#selNursename');
+        
         
 
         //下拉選單匯入護士名
@@ -200,6 +262,46 @@
 
             selDep.innerHTML = optDep.join("");
 
+        })();
+
+
+        //小窗下拉選單匯入年月
+        (async () => {
+            const url = '@Url.Content("~/Schedule/api/GetNowMonth")';
+            const response = await fetch(url);
+            const datas = await response.json();
+
+            const optNowMonth = datas.map(month => `<option value=${month}>${month}</option>`)
+            optNowMonth.unshift('<option value="nomonth">請選擇</option>')
+
+            selcreateMonth.innerHTML = optNowMonth.join("");
+
+        })();
+
+        //小窗下拉選單匯入醫生名
+        (async () => {
+            const url = '@Url.Content("~/Schedule/api/SelectedDoctorName")';
+            const response = await fetch(url);
+            const datas = await response.json();
+
+            const optDoctornames = datas.map(name => `<option value=${name}>${name}</option>`);
+            optDoctornames.unshift('<option value="alldoctor">全部</option>');
+
+            selcreateDrName.innerHTML = optDoctornames.join("");
+        })();
+
+        //小窗下拉選單匯入護士名
+        (async () => {
+            const url = '@Url.Content("~/Schedule/nurseapi/SelectedNurseName")';
+            const response = await fetch(url);
+            const datas = await response.json();
+
+            //console.log(datas);
+            const optNursenames = datas.map(name => `<option value=${name}>${name}</option>`);
+            optNursenames.unshift('<option value="allnurse">全部</option>');
+
+
+            selcreateNurseName.innerHTML = optNursenames.join("");
         })();
 
         //匯入護士班表
