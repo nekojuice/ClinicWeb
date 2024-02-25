@@ -35,11 +35,10 @@
 init_callingTable()
 
 async function QueryCallingData() {
+    //引入全域變數
+    const doctorId = DOCTOR_ID
+    const date = CLINIC_DATE
 
-    const doctorId = 4
-
-    //const date = new Date() //今天
-    const date = new Date("2024/02/01")
     const datedata = `${date.getFullYear()}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${(date.getDate()).toString().padStart(2, '0')}`
 
     const shiftId = +$("#ClinicTime").val()

@@ -39,7 +39,20 @@
         //宣告全域變數
         //選取的會員(病患)ID
         let MEMBER_ID;
+        //病患掛號序列
         let CLINICLIST_ID;
+        //醫生員工ID
+        let DOCTOR_ID;
+        //選擇門診時間 (常理應該要選今天，為了demo寫死)
+        let CLINIC_DATE = new Date("2024/02/01");
+
+        //撈取狀態: 員工id
+        (async () => {
+            const response = await fetch('@Url.Content("~/ClinicRoomSys/CallingSys/Get_EmpId")', { method: 'POST' });
+            const memberData = await response.text()
+            DOCTOR_ID = memberData
+        })();
+
         //點選左表後觸發的事件 fetch右表
         async function on_memberClick()
         {

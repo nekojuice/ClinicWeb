@@ -30,16 +30,26 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
                 .Where(x => x.Clinic.DoctorId == vm.doctorId
                 && x.Clinic.Date == vm.date
                 && x.Clinic.ClinicTimeId == vm.shiftId)
-                .Select(x=>new {
-					member_id = x.MemberId,
+                .Select(x => new
+                {
+                    member_id = x.MemberId,
                     clinicListId = x.ClinicListId,
-					status_id = x.PatientStateId,
-					診號 = x.ClinicNumber,
-					姓名 = x.Member.Name,
-					性別 = x.Member.Gender? "男":"女",
-					狀態 = x.PatientState.PatientStateName
-				})
+                    status_id = x.PatientStateId,
+                    診號 = x.ClinicNumber,
+                    姓名 = x.Member.Name,
+                    性別 = x.Member.Gender ? "男" : "女",
+                    狀態 = x.PatientState.PatientStateName
+                })
                 );
+        }
+
+        [HttpPost]
+        public IActionResult Get_EmpId()
+        {
+            var user = HttpContext.User;
+            var EmpIdCookie = user.Claims.FirstOrDefault(c => c.Type == "EmpId")?.Value ?? "";
+
+            return Content(EmpIdCookie);
         }
     }
 }
