@@ -18,37 +18,31 @@ public partial class MemberEmployeeList
     [Column("Staff_Number")]
     public int StaffNumber { get; set; }
 
-    [Required]
     [StringLength(50)]
     public string Name { get; set; }
 
-    public bool Gender { get; set; }
+    public bool? Gender { get; set; }
 
-    [Required]
     [Column("Blood_Type")]
     [StringLength(50)]
     public string BloodType { get; set; }
 
-    [Required]
     [Column("National_ID")]
     [StringLength(50)]
     public string NationalId { get; set; }
 
-    [Required]
     [StringLength(50)]
     public string Address { get; set; }
 
-    [Required]
     [Column("Contact_Address")]
     [StringLength(50)]
     public string ContactAddress { get; set; }
 
-    [Required]
     [StringLength(50)]
     public string Phone { get; set; }
 
     [Column("Birth_Date", TypeName = "datetime")]
-    public DateTime BirthDate { get; set; }
+    public DateTime? BirthDate { get; set; }
 
     [Column("Emp_Type")]
     [StringLength(50)]

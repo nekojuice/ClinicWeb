@@ -1,4 +1,6 @@
-﻿@{
+﻿@model MemberEmployeeList
+
+@{
     ViewData["Title"] = "登入";
 }
 <!DOCTYPE html>
@@ -25,6 +27,9 @@
     <link href="~/build/css/custom.min.css" rel="stylesheet">
 </head>
 
+
+
+
 <body class="login">
     <div>
         <a class="hiddenanchor" id="signup"></a>
@@ -33,16 +38,26 @@
         <div class="login_wrapper">
             <div class="animate form login_form">
                 <section class="login_content">
-                    <form>
+                    <form asp-area="Employee" asp-controller="Main" asp-action="LoginForStaff" method="post">
                         <h1>Login Form</h1>
                         <div>
-                            <input type="text" class="form-control" placeholder="Username" required="" />
+                            <input asp-for="StaffNumber" class="form-control" placeholder="Username" required="" />
                         </div>
+
                         <div>
-                            <input type="password" class="form-control" placeholder="Password" required="" />
+
                         </div>
+
                         <div>
-                            <a class="btn btn-default submit" asp-action="Index">Log in</a>
+                            <!--密碼要加type 不然會顯示出來-->
+                            <input asp-for="EmpPassword" type="password" class="form-control" placeholder="Password" required="" />
+                        </div>
+                        @if (ViewData["ErrorMessage"] != null)
+                        {
+                            <div class="text-danger">@ViewData["ErrorMessage"]</div>
+                        }
+                        <div>
+                            <button class="btn btn-default submit" type="submit">Log in</button>
                             <a class="reset_pass" href="#">Lost your password?</a>
                         </div>
 

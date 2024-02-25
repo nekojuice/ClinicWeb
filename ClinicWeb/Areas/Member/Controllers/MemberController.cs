@@ -1,8 +1,10 @@
 ﻿using ClinicWeb.Areas.Member.Models;
 //要用自己生的模型
 using ClinicWeb.Areas.Member.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol;
 
 
 namespace ClinicWeb.Areas.Member.Controllers
@@ -17,6 +19,7 @@ namespace ClinicWeb.Areas.Member.Controllers
             _context = context;
         }
 
+        [Authorize]
         public IActionResult Index()
         {
             return View();
@@ -34,7 +37,7 @@ namespace ClinicWeb.Areas.Member.Controllers
                     會員id = x.MemberId,
                     會員編號 = x.MemberNumber,
                     姓名 = x.Name,
-                    性別 = x.Gender ? "男" : "女",
+                    性別 = (bool)x.Gender ? "男" : "女",
                     血型 = x.BloodType,
                     身分證字號 = x.NationalId,
                     聯絡電話 = x.Phone,
@@ -62,7 +65,7 @@ namespace ClinicWeb.Areas.Member.Controllers
                     會員id = x.MemberId,
                     會員編號 = x.MemberNumber,
                     姓名 = x.Name,
-                    性別 = x.Gender ? "男" : "女",
+                    性別 = (bool)x.Gender ? "男" : "女",
                     血型 = x.BloodType,
                     身分證字號 = x.NationalId,
                     聯絡電話 = x.Phone,
@@ -78,49 +81,72 @@ namespace ClinicWeb.Areas.Member.Controllers
         }
 
         //顯示多筆會員資料
+        //[Authorize(Roles = "行政,管理員")]
         public IActionResult MemIndex()
         {
             //可以指定不是這個名稱的view來顯示 return View("~Areas/Member/");
             return View();
         }
-//新增會員資料
-        [HttpPost]
-        //[ValidateAntiForgeryToken]
-        public IActionResult MemberCreate(MemberMemberList member, string GenderString, string VerificationString)
+		//新增會員資料
+		//修改會員資料的畫面顯示
+		public IActionResult MemberCreate()
+		{
+			return PartialView("~/Areas/Member/Views/Partial/_MemberCreatePartial.cshtml");
+		}
+
+		[HttpPost]
+        [ValidateAntiForgeryToken]
+		//[Bind("Name,Gender,BloodType,NationalId,Address,ContactAddress,Phone,BirthDate,IceName,IceNumber,MemPassword,MemEmail,Verification")]
+		public IActionResult Create([Bind("Name,BloodType,NationalId,Address,ContactAddress,Phone,BirthDate,IceName,IceNumber,MemPassword,MemEmail,Verification")] [FromBody] MemberMemberList member)
         {
-            //return Content("123");
 
-            //加入資料庫
-            if (GenderString == "true")
+            if (member == null)
             {
-                member.Gender = true;
+                Console.WriteLine("null~~");
             }
-            else { member.Gender = false; }
-
-            if (VerificationString == "on")
+            else
             {
-                member.Verification = true;
+                Console.WriteLine(member.Name);
+                Console.WriteLine(member.Gender);
+                Console.WriteLine(member.BloodType);
+                Console.WriteLine(member.NationalId);
+                Console.WriteLine(member.Address);
+                Console.WriteLine(member.ContactAddress);
+                Console.WriteLine(member.Phone);
+                Console.WriteLine(member.BirthDate);
+                Console.WriteLine(member.IceName);
+                Console.WriteLine(member.IceNumber);
+                Console.WriteLine(member.MemPassword);
+                Console.WriteLine(member.MemEmail);
+                Console.WriteLine(member.Verification);
             }
-            else { member.Verification = false; }
-            var maxMemberNumber = _context.MemberMemberList.Max(m => m.MemberNumber);
-            var nextMemberNumber = maxMemberNumber + 1;
-            member.MemberNumber = nextMemberNumber;
+            //檢查驗證
+            if (!ModelState.IsValid)
+            {
+				// 如果模型驗證失敗，重新顯示包含錯誤信息的表單
+				Console.WriteLine("驗證失敗");
+				return PartialView("~/Areas/Member/Views/Partial/_MemberCreatePartial.cshtml", member); // 返回相同的視圖，這將會顯示錯誤信息
+                //return Json(member);
+            }
+            else
+            {
+                //加入資料庫
+   
+                var maxMemberNumber = _context.MemberMemberList.Max(m => m.MemberNumber);
+                var nextMemberNumber = maxMemberNumber + 1;
+                member.MemberNumber = nextMemberNumber;
 
-            _context.MemberMemberList.Add(member);
-            _context.SaveChanges();
-
-          
-            //    }
-            return View("~/Areas/Member/Views/MemIndex.cshtml");
-
-            
+                _context.MemberMemberList.Add(member);
+                _context.SaveChanges();
+                return Content("success"); 
+            }
 
         }
 
 
 
         //修改會員資料的畫面顯示
-        public async Task <IActionResult> MemberEdit(int memberId,int currentPage)
+        public async Task<IActionResult> MemberEdit(int? memberId)
         {
             if (memberId == null || _context.MemberMemberList == null)
             {
@@ -175,30 +201,14 @@ namespace ClinicWeb.Areas.Member.Controllers
         //把會員編輯好的資料送回資料庫
         [HttpPost]
         [ValidateAntiForgeryToken]
-/* [Bind("MemberId,MemberNumber,Name,Gender,BloodType,NationalId,Address,ContactAddress,Phone,BirthDate,IceName,MemPassword,MemEmail,Verification,IsEnabled")]*/ 
-        public async Task<IActionResult> Edit(int MemberId,MemberMemberList member, string GenderString, string VerificationString)
+        /* [Bind("MemberId,MemberNumber,Name,Gender,BloodType,NationalId,Address,ContactAddress,Phone,BirthDate,IceName,MemPassword,MemEmail,Verification,IsEnabled")]*/
+        public async Task<IActionResult> Edit(MemberMemberList member)
         {
-            if (MemberId != member.MemberId)
+            if (ModelState.IsValid)
             {
-                return NotFound();
-            }
-
-            //if (ModelState.IsValid)
-            //{
                 try
                 {
-                    if (GenderString == "true")
-                    {
-                        member.Gender = true;
-                    }
-                    else { member.Gender = false; }
-
-                    if (VerificationString == "on")
-                    {
-                        member.Verification = true;
-                    }
-                    else { member.Verification = false; }
-
+           
                     _context.Update(member);
                     await _context.SaveChangesAsync();
                 }
@@ -212,9 +222,14 @@ namespace ClinicWeb.Areas.Member.Controllers
                     {
                         throw;
                     }
-                //}
-                //return RedirectToAction(nameof(Index));
+                }
+             
             }
+            else
+            {
+                return Content("驗證未通過");
+            }
+
             // 取得剛剛那筆會員資料的 ID
             int memberId = member.MemberId;
             //return View("~/Areas/Member/Views/_MemberIndex.cshtml",  member.MemberId);
