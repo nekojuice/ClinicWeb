@@ -72,7 +72,7 @@ namespace ClinicWeb.Areas.Employee.Controllers
                     //加上角色設定
                    new Claim(ClaimTypes.Role, user.EmpType)
                 };
-                var claimsIdentity = new ClaimsIdentity(claims, "test1");   //注意!!!
+                var claimsIdentity = new ClaimsIdentity(claims, "backendForStaff");   //注意!!!
                 HttpContext.SignInAsync("backend", new ClaimsPrincipal(claimsIdentity));    //注意!!!
             }
             return RedirectToAction("Index");
