@@ -64,11 +64,30 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
         [HttpPost]
         public JsonResult GRT(string id) //GETREPORT
         {
-            return Json(_context.CasesMedicalRecords
+            return Json(_context.CasesTestReport
                 .Where(x => x.CaseId == Convert.ToInt32(id))
                 .Select(x => new
                 {
-                    
+                    ReportID = x.ReportId,
+                    TestName = x.TestName,
+                    TestDate = x.TestDate.ToString("yyyy-MM-dd"),
+                    ReportDate = x.ReportDate.ToString("yyyy-MM-dd"),
+                    Result = x.Result,
+                    Attachment = x.Attachment,
+                    ImagePath = x.ImagePath,
+                })
+                );
+        }
+        [HttpPost]
+        public JsonResult GP(string id) //GETPRESCRIPTION
+        {
+            return Json(_context.CasesPrescription
+                .Where(x => x.CaseId == Convert.ToInt32(id))
+                .Select(x => new
+                {
+                    PrescriptionID= x.PrescriptionId,
+                    PrescriptionDate = x.PrescriptionDate.ToString("yyyy-MM-dd"),
+                    Dispensing = x.Dispensing,
                 })
                 );
         }

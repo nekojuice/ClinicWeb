@@ -22,7 +22,7 @@ public partial class CasesTestReport
     public DateTime TestDate { get; set; }
 
     [Column("Report_Date", TypeName = "datetime")]
-    public DateTime? ReportDate { get; set; }
+    public DateTime ReportDate { get; set; }
 
     [Required]
     [Column("Test_Name")]

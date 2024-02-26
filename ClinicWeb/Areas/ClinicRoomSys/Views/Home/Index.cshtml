@@ -54,7 +54,6 @@
             const memberData = await response.text()
             DOCTOR_ID = memberData
             getCase(MEMBER_ID);
-            getRecord(CASE_ID);
         })();
 
         //點選左表後觸發的事件 fetch右表
@@ -71,19 +70,37 @@
             const data = await response.json();
             console.log(data);
             CASE_ID = data.casesID;
-            console.log(CASE_ID);
             const record = getRecord(CASE_ID);
             console.log(record);
+            const report = getReport(CASE_ID);
+            console.log(report);
+            const prescription = getPrescription(CASE_ID);
+            console.log(prescription);
+            console.log(CASE_ID);
         }
 
         //獲得看診紀錄資料
         async function getRecord(id) {
-			const response = await fetch(`/ClinicRoomSys/Cases/GRD/${id}`, { method: "POST" })
+			const response =await fetch(`/ClinicRoomSys/Cases/GRD/${id}`, { method: "POST" })
 			const data = await response.json();
-			console.log(data);
+            return data;
 		}
+        //獲得檢查報告資料
+        async function getReport(id) {
+            const response = await fetch(`/ClinicRoomSys/Cases/GRT/${id}`, { method: "POST" })
+            const data = await response.json();
+            return data;
+        }
+        //獲得處方資料
+        async function getPrescription(id) {
+            const response = await fetch(`/ClinicRoomSys/Cases/GP/${id}`, { method: "POST" })
+            const data = await response.json();
+            return data;
+        }
 
 
+
+        
     </script>
     <script src="~/msit155e/js/clinicroomsys/_callingpanelpartial.js"></script>
 }
