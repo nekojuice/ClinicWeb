@@ -20,7 +20,7 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
         //    return View();
         //}
         [HttpPost]
-        public JsonResult GM(string id) //GETMEMBER
+        public JsonResult GM(string id) //GETMainCase
         {
             return Json(_context.CasesMainCase
                 .Include(x => x.Member)
@@ -42,6 +42,34 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
 
                 })
                 .FirstOrDefault()
+                );
+        }
+        [HttpPost]
+        public JsonResult GRD(string id) //GETRECORD
+        {
+            return Json(_context.CasesMedicalRecords
+                .Where(x => x.CaseId == Convert.ToInt32(id))
+                .Select(x => new
+                {
+                    RecordID = x.MrId,
+                    BloodPresure = x.Bp,
+                    Pulse = x.Pulse,
+                    BodyTemparture = x.Bt,
+                    ChiefComplaint = x.Cc,
+                    Disposal = x.Disposal,
+                    Prescribe = x.Prescribe,
+                })
+                );
+        }
+        [HttpPost]
+        public JsonResult GRT(string id) //GETREPORT
+        {
+            return Json(_context.CasesMedicalRecords
+                .Where(x => x.CaseId == Convert.ToInt32(id))
+                .Select(x => new
+                {
+                    
+                })
                 );
         }
     }

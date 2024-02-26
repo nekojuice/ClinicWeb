@@ -54,6 +54,7 @@
             const memberData = await response.text()
             DOCTOR_ID = memberData
             getCase(MEMBER_ID);
+            getRecord(CASE_ID);
         })();
 
         //點選左表後觸發的事件 fetch右表
@@ -64,14 +65,23 @@
             // const response = await fetch('')
             // const data = await response.json()
         }
-        
+        //獲得主要病歷表資料
         async function getCase(id) {
             const response = await fetch(`/ClinicRoomSys/Cases/GM/${id}`, { method: "POST" })
             const data = await response.json();
             console.log(data);
             CASE_ID = data.casesID;
             console.log(CASE_ID);
+            const record = getRecord(CASE_ID);
+            console.log(record);
         }
+
+        //獲得看診紀錄資料
+        async function getRecord(id) {
+			const response = await fetch(`/ClinicRoomSys/Cases/GRD/${id}`, { method: "POST" })
+			const data = await response.json();
+			console.log(data);
+		}
 
 
     </script>
