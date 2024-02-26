@@ -1,0 +1,91 @@
+﻿.c_table {
+    margin: 0px 15px 15px 0px;
+    width: 240px;
+    /*height: 125px;*/
+    display: block;
+    float: left;
+    border: 4px solid rgb(180, 180, 180);
+    font-weight: bold;
+    color: #000;
+    font-family: "微軟正黑體", "新細明體";
+    background-color: #e8f7fe;
+}
+
+table {
+    display: table;
+    border-collapse: separate;
+    box-sizing: border-box;
+    text-indent: initial;
+    border-spacing: 2px;
+    border-color: gray;
+}
+
+.c_table_td12 {
+    font-size: 42px;
+    color: #f00;
+    font-weight: bold;
+    text-align: center;
+    padding: 30px 20px 15px 20px;
+    cursor: pointer;
+    border-left-style: solid;
+    border-left-color: gray;
+    border-left-width: 1px;
+    background-color: #fdf1f1;
+    background-repeat: no-repeat;
+    background-position: center top;
+    width: 125px;
+    height: 70px;
+}
+
+td {
+    display: table-cell;
+    vertical-align: inherit;
+}
+
+.c_table_td11 {
+    width: 110px;
+    font-size: x-large;
+    color: #045FB3;
+    font-weight: bold;
+    text-align: center;
+    border-bottom-style: dashed;
+    border-bottom-color: gray;
+    border-bottom-width: 1px;
+    cursor: pointer;
+}
+
+.c_table_td2 {
+    text-align: center;
+    border-bottom-style: dashed;
+    border-bottom-color: gray;
+    border-bottom-width: 1px;
+    font-size: large;
+    min-width: 130px;
+}
+
+.c_table_td3 {
+    text-align: center;
+    font-size: medium;
+}
+
+
+html, body, .outer, .row {
+    height: 99%;
+}
+
+html, body, .outer {
+    width: 99%;
+}
+
+body {
+    background: #e8f7fe;
+}
+
+.x_panel {
+    border: 4px solid gray;
+    border-radius: 5px;
+    margin: 20px;
+    padding: 20px;
+    background: white;
+    height: 100%;
+}

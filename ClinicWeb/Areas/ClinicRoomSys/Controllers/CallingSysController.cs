@@ -51,5 +51,10 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
 
             return Content(EmpIdCookie);
         }
+
+        [HttpGet]
+        public IActionResult View_CallingPage() {
+            return View("~/Areas/ClinicRoomSys/Views/CallingPage/View_CallingPage.cshtml");
+        }
     }
 }
