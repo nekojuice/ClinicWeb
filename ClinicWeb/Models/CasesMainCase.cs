@@ -25,7 +25,7 @@ public partial class CasesMainCase
     [Required]
     [Column("Firstvisit_Date")]
     [StringLength(50)]
-    public string FirstvisitDate { get; set; }
+    public DateTime FirstvisitDate { get; set; }
 
     public double? Height { get; set; }
 

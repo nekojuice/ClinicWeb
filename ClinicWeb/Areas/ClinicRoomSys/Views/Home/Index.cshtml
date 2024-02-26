@@ -38,28 +38,41 @@
     <script>
         //宣告全域變數
         //選取的會員(病患)ID
-        let MEMBER_ID;
+        let MEMBER_ID = 1;
         //病患掛號序列
         let CLINICLIST_ID;
         //醫生員工ID
         let DOCTOR_ID;
         //選擇門診時間 (常理應該要選今天，為了demo寫死)
         let CLINIC_DATE = new Date("2024/02/01");
+        //病歷ID
+        let CASE_ID;
 
         //撈取狀態: 員工id
         (async () => {
             const response = await fetch('@Url.Content("~/ClinicRoomSys/CallingSys/Get_EmpId")', { method: 'POST' });
             const memberData = await response.text()
             DOCTOR_ID = memberData
+            getCase(MEMBER_ID);
         })();
 
         //點選左表後觸發的事件 fetch右表
         async function on_memberClick()
         {
             console.log(`selected 會員ID MEMBER_ID: ${MEMBER_ID}, 掛號序列ID CLINICLIST_ID: ${CLINICLIST_ID}`);
+            getCase(MEMBER_ID);
             // const response = await fetch('')
             // const data = await response.json()
         }
+        
+        async function getCase(id) {
+            const response = await fetch(`/ClinicRoomSys/Cases/GM/${id}`, { method: "POST" })
+            const data = await response.json();
+            console.log(data);
+            CASE_ID = data.casesID;
+            console.log(CASE_ID);
+        }
+
 
     </script>
     <script src="~/msit155e/js/clinicroomsys/_callingpanelpartial.js"></script>
