@@ -1,7 +1,9 @@
 using ClinicWeb.Areas.Identity;
 using ClinicWeb.Data;
 using ClinicWeb.Models;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
@@ -80,6 +82,27 @@ builder.Services.AddHttpContextAccessor();
 //    option.ExpireTimeSpan = TimeSpan.FromMinutes(30);
 //});
 
+var con = builder.Configuration;
+//測試google登入
+//builder.Services.AddAuthentication().AddCookie().AddGoogle(GoogleDefaults.AuthenticationScheme,googleOptions =>
+//{
+//    googleOptions.ClientId = con["Authentication:Google:ClientId"];
+//    googleOptions.ClientSecret = con["Authentication:Google:ClientSecret"];
+//});
+
+//builder.Services.AddAuthentication(options =>
+//{
+//    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+//    options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
+//})
+//            .AddCookie()
+//            .AddGoogle(GoogleDefaults.AuthenticationScheme, options =>
+//            {
+//                options.ClientId = con["Authentication:Google:ClientId"];
+//                options.ClientSecret = con["Authentication:Google:ClientSecret"];
+//                options.ClaimActions.MapJsonKey("urn:google:picture", "picture", "url");
+//            });
+
 builder.Services.AddAuthentication()
     .AddCookie("backend", option =>
     {
@@ -96,7 +119,15 @@ builder.Services.AddAuthentication()
         //看要不要加上access被拒絕的頁面 還是就是單純提醒
         option.AccessDeniedPath = new PathString("/ClientPage/Login");
         option.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+    })
+    .AddCookie()
+    .AddGoogle("Google", options =>
+    {
+        options.ClientId = con["Authentication:Google:ClientId"];
+        options.ClientSecret = con["Authentication:Google:ClientSecret"];
+        options.ClaimActions.MapJsonKey("urn:google:picture", "picture", "url");
     });
+
 
 
 //builder.Services.AddAuthorization(options =>
@@ -139,7 +170,7 @@ builder.Services.AddAuthorization(o =>
     o.AddPolicy("frontendpolicy", b =>
     {
         b.RequireAuthenticatedUser();
-        b.AuthenticationSchemes = new List<string> { "frontend" };
+        b.AuthenticationSchemes = new List<string> { "frontend","Google" };
     });
 });
 

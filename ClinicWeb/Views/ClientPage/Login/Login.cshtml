@@ -38,15 +38,43 @@
             <span></span>
             Register
         </a>
+
+
+        <div id="buttonDiv"></div>
     </form>
+
+    <a asp-controller="LoginGoogletest" asp-action="Logingoogle" class="btn btn-primary form-control">google登入</a>
+
 </div>
 
+
+
+<script src="https://accounts.google.com/gsi/client" async></script>
 <script>
     document.getElementById('MemberLogin').addEventListener('click', function (event) {
-        event.preventDefault(); // 阻止默認的超連結行為
+        event.preventDefault(); // Prevent default link behavior
 
-        // 提交表單
+        // Submit the form
         document.getElementById('MemberloginForm').submit();
     });
 
+    function handleCredentialResponse(response) {
+        console.log("Encoded JWT ID token: " + response.credential);
+        // Handle the credential response as needed
+    }
+
+    window.onload = function () {
+        google.accounts.id.initialize({
+            client_id: "526974450781-r15eef63hrf196gkhsn0tjuqkvk49vjm.apps.googleusercontent.com",
+            callback: handleCredentialResponse
+        });
+        google.accounts.id.renderButton(
+            document.getElementById("buttonDiv"),
+            { theme: "outline", size: "large" }  // customization attributes
+        );
+        google.accounts.id.prompt(); // also display the One Tap dialog
+    }
 </script>
+
+
+

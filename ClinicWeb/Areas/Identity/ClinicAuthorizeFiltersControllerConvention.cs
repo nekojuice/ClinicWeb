@@ -14,14 +14,14 @@ namespace ClinicWeb.Areas.Identity
                 .RequireAuthenticatedUser()
                 .AddAuthenticationSchemes("backend")
                 .Build();
-            var clientCredentialsPolicy = new AuthorizationPolicyBuilder()
-                .RequireAuthenticatedUser()
-                .AddAuthenticationSchemes("frontend")
-                .Build();
-            var allPolicy = new AuthorizationPolicyBuilder()
-                .RequireAuthenticatedUser()
-                .AddAuthenticationSchemes("backend", "frontend")
-                .Build();
+                var clientCredentialsPolicy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .AddAuthenticationSchemes("frontend", "Google")
+                    .Build();
+            //var allPolicy = new AuthorizationPolicyBuilder()
+            //    .RequireAuthenticatedUser()
+            //    .AddAuthenticationSchemes("backend", "frontend")
+            //    .Build();
 
             if (controller.RouteValues.Any()
                 && controller.RouteValues.TryGetValue("area", out apiArea)
