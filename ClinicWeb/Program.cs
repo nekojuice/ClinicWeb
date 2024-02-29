@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.CodeAnalysis.Options;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -123,7 +124,8 @@ builder.Services.AddAuthentication()
     .AddCookie()
     .AddGoogle("Google", options =>
     {
-        options.ClientId = con["Authentication:Google:ClientId"];
+		
+		options.ClientId = con["Authentication:Google:ClientId"];
         options.ClientSecret = con["Authentication:Google:ClientSecret"];
         options.ClaimActions.MapJsonKey("urn:google:picture", "picture", "url");
     });
@@ -170,7 +172,7 @@ builder.Services.AddAuthorization(o =>
     o.AddPolicy("frontendpolicy", b =>
     {
         b.RequireAuthenticatedUser();
-        b.AuthenticationSchemes = new List<string> { "frontend","Google" };
+        b.AuthenticationSchemes = new List<string> { "Google","frontend" };
     });
 });
 

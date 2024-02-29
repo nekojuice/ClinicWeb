@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
+using NuGet.Protocol;
 using System.Security.Claims;
 
 namespace ClinicWeb.Controllers
@@ -23,7 +24,8 @@ namespace ClinicWeb.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+		[AllowAnonymous]
+		public IActionResult Index()
         {
             return View();
         }
@@ -48,14 +50,25 @@ namespace ClinicWeb.Controllers
             return View();
         }
 
-        [AllowAnonymous]
-        public IActionResult Login()
-        {
-            return View("~/Views/ClientPage/Login/Login.cshtml");
-        }
+		[AllowAnonymous]
+		public IActionResult Login()
+		{
+			if (HttpContext.User.Identity.IsAuthenticated)
+
+                //考慮寫成claims.count===0
+			{
+                //未來會加上會員中心畫面以及個人資料
+				return Content("現在是登入狀態喔");
+			}
+			else
+			{
+				return View("~/Views/ClientPage/Login/Login.cshtml");
+			}
+		}
 
 
-        [AllowAnonymous]
+
+		[AllowAnonymous]
         [HttpPost]
         public IActionResult LoginForClient(MemberMemberList m)
         {

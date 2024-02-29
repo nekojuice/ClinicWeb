@@ -43,8 +43,8 @@ namespace ClinicWeb.Controllers
                     claim.Value,
                     ClaimTypes.Name
                 });
-                //return Json(claims);
-                return RedirectToAction("Index",new {area=""});
+               return Json(claims);
+                // return RedirectToAction("Index",new {area=""});
             }
         }
 
