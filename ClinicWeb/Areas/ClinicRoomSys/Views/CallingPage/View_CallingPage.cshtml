@@ -3,7 +3,8 @@
 <head>
     <title>叫號畫面</title>
     <!-- Bootstrap -->
-    <link href="~/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/dist/css/bootstrap-utilities.min.css" rel="stylesheet" />
     <!-- Font Awesome -->
     <link href="~/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- Custom Theme Style -->
@@ -13,39 +14,114 @@
 </head>
 <body>
     <div class="outer">
-        <div class="row">
+        <div class="row row-outer">
 
             <div class="col-8">
                 <div class="x_panel">
-                    <p>123</p>
+                    <div class="ad_header_panel">
+                        <img src="~/msit155e/images/logo-simply.png" class="ad_header_img" />
+                        <span class="ad_header_title">寶育婦幼診所</span>
+                    </div>
+
+                    <div class="ad_content_panel">
+
+                        <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    
+                                    <img src="~/msit155e/images/clinicroomsys/cp-ad1.jpg" class="d-block w-100" />
+                                </div>
+                                <div class="carousel-item">
+                                    
+                                    <img src="~/msit155e/images/clinicroomsys/cp-ad2.jpg" class="d-block w-100" />
+                                </div>
+                                <div class="carousel-item">
+                                    
+                                    <img src="~/msit155e/images/clinicroomsys/cp-ad3.jpg" class="d-block w-100" />
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
+
+
             </div>
 
             <div class="col-4">
                 <div class="x_panel">
-                    <div id="c_dept_counter" class="c_dept_counter">
-                        <table id="TABLE_0" class="c_table">
-                            <tr id="TABLE_tr1_0">
-                                <td id="TABLE_td1_0" class="c_table_td11" onclick="get_tag('01')">01 診</td>
-                                <td id="TABLE_td2_0" rowspan="3" class="c_table_td12"><div id="c_table_td12_a1" class="c_table_td12_nb"></div></td>
-                            </tr>
-                            <tr id="TABLE_tr2_0">
-                                <td id="TABLE_td21_0" class="c_table_td2">魏淑鉁</td>
-                            </tr>
-                            <tr id="TABLE_tr3_0"><td id="TABLE_td31_0" title="醫師約診" class="c_table_td3">醫師約診</td></tr>
-                        </table>
+                    @*1*@
+                    <div class="row cp-unit" id="cp-1">
+                        <div class="col-5">
+                            <div class="row cp-unit-left"><div class="col-12 cp-dept"></div></div> @*科別*@
+                            <div class="row cp-unit-left"><span class="col-12 cp-room"></span></div> @*診間*@
+                            <div class="row cp-unit-left"><span class="col-12 cp-doc"></span></div> @*醫師*@
+                        </div>
+                        <div class="col-7">
+                            <div class="row cp-unit-right cp-unit-right-top"><div class="col-12">目前叫號</div></div>
+                            <div class="row cp-unit-right cp-unit-right-bot"><div class="col-12 cp-num"></div></div> @*叫號*@
+                        </div>
                     </div>
+                    @*2*@
+                    <div class="row cp-unit" id="cp-2">
+                        <div class="col-5">
+                            <div class="row cp-unit-left"><div class="col-12 cp-dept"></div></div> @*科別*@
+                            <div class="row cp-unit-left"><span class="col-12 cp-room"></span></div> @*診間*@
+                            <div class="row cp-unit-left"><span class="col-12 cp-doc"></span></div> @*醫師*@
+                        </div>
+                        <div class="col-7">
+                            <div class="row cp-unit-right cp-unit-right-top"><div class="col-12">目前叫號</div></div>
+                            <div class="row cp-unit-right cp-unit-right-bot"><div class="col-12 cp-num"></div></div> @*叫號*@
+                        </div>
+                    </div>
+                    @*3*@
+                    <div class="row cp-unit" id="cp-3">
+                        <div class="col-5">
+                            <div class="row cp-unit-left"><div class="col-12 cp-dept"></div></div> @*科別*@
+                            <div class="row cp-unit-left"><span class="col-12 cp-room"></span></div> @*診間*@
+                            <div class="row cp-unit-left"><span class="col-12 cp-doc"></span></div> @*醫師*@
+                        </div>
+                        <div class="col-7">
+                            <div class="row cp-unit-right cp-unit-right-top"><div class="col-12">目前叫號</div></div>
+                            <div class="row cp-unit-right cp-unit-right-bot"><div class="col-12 cp-num"></div></div> @*叫號*@
+                        </div>
+                    </div>
+                    @*4*@
+                    <div class="row cp-unit" id="cp-4">
+                        <div class="col-5">
+                            <div class="row cp-unit-left"><div class="col-12 cp-dept"></div></div> @*科別*@
+                            <div class="row cp-unit-left"><span class="col-12 cp-room"></span></div> @*診間*@
+                            <div class="row cp-unit-left"><span class="col-12 cp-doc"></span></div> @*醫師*@
+                        </div>
+                        <div class="col-7">
+                            <div class="row cp-unit-right cp-unit-right-top"><div class="col-12">目前叫號</div></div>
+                            <div class="row cp-unit-right cp-unit-right-bot"><div class="col-12 cp-num"></div></div> @*叫號*@
+                        </div>
+                    </div>
+                    
+
                 </div>
             </div>
 
+        </div>
+
+        <div class="row_footer">
+            <div class="col-12">
+
+                <div class="message_panel">
+                    <p>test message</p>
+                </div>
+
+            </div>
         </div>
     </div>
 
 
 
     <!-- jQuery -->
-    <script src="~/vendors/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap -->
-    <script src="~/vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/msit155e/js/clinicroomsys/view_callingpage.js"></script>
 </body>
 </html>
