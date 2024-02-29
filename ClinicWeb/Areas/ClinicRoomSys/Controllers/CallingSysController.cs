@@ -52,8 +52,27 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
             return Content(EmpIdCookie);
         }
 
+        [HttpPost]
+        public IActionResult Get_EmpInfo([FromBody] CallingPanelViewModel vm)
+        {
+            if (vm.doctorId == null || vm.date == null)
+            {
+                return NotFound();
+            }
+
+            return Json(_context.ScheduleClinicInfo.Where(x => x.DoctorId == Convert.ToInt32(vm.doctorId) && x.Date == vm.date)
+                .Select(x => new
+                {
+                    doctorId = x.DoctorId,
+                    department = x.Doctor.Department,
+                    room = x.ClincRoom.Name,
+                    doctorName = x.Doctor.Name
+                }).FirstOrDefault());
+        }
+
         [HttpGet]
-        public IActionResult View_CallingPage() {
+        public IActionResult View_CallingPage()
+        {
             return View("~/Areas/ClinicRoomSys/Views/CallingPage/View_CallingPage.cshtml");
         }
     }

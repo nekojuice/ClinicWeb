@@ -1,4 +1,5 @@
 using ClinicWeb.Data;
+using ClinicWeb.Hubs;
 using ClinicWeb.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
@@ -13,6 +14,7 @@ var User = builder.Configuration["ClinicSys:USER"];
 var Pass = builder.Configuration["ClinicSys:PASS"];
 
 // Add services to the container.
+builder.Services.AddSignalR();
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 	options.UseSqlServer(connectionString));
@@ -105,6 +107,8 @@ app.UseRouting();
 app.UseCookiePolicy();
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.MapHub<CallingHub>("/CallingHub");
 
 app.MapControllerRoute(
 	  name: "areas",

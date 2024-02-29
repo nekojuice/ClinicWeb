@@ -94,3 +94,58 @@ $("#callingTable tbody").on('mousedown', 'tr', function () {
     $("#call_currentName").html(dataObject.姓名)
 
 });
+
+
+//signalR
+let connection = new signalR.HubConnectionBuilder().withUrl("/CallingHub").build();
+
+//[宣告on] 進入畫面時註冊
+connection.on("DoctorLoginCall", function (doctorId, department, room, doctorName) {
+    console.log(`${doctorId}, ${department}, ${room}, ${doctorName}`)
+});
+//[宣告on] 選擇時段
+connection.on("DoctorShiftChange", function (doctorId, shift) {
+    console.log(`${doctorId}, ${shift}`)
+});
+//[宣告on] 叫號
+connection.on("DoctorNumberChange", function (doctorId, number) {
+    console.log(`${doctorId}, ${number}`)
+});
+//signalR連線初始化
+connection.start().then(function () {
+    //document.getElementById("sendButton").disabled = false;
+}).catch(function (err) {
+    return console.error(err.toString());
+});
+
+//進入畫面時註冊
+(async () => {
+    //引入全域變數
+    const response1 = await fetch(URL_Get_EmpId, { method: 'POST' });
+    const doctor_ID = await response1.text()
+
+    const date = CLINIC_DATE
+    const datedata = `${date.getFullYear()}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${(date.getDate()).toString().padStart(2, '0')}`
+
+    const jsonData = { 'doctorId': doctor_ID, 'date': datedata}
+    const response2 = await fetch(Get_EmpInfo,
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                // Content-Type: 'application/x-www-form-urlencoded',
+            },
+            body: JSON.stringify(jsonData)
+        });
+    const data = await response2.json();
+    console.log(data);
+
+    //更改當前診號
+    $("#spanShowDept").text(data.department)
+    $("#spanShowRoom").text(data.room)
+
+    //註冊signalR
+    connection.invoke("DoctorLoginCall", DOCTOR_ID, data.department, data.room, data.doctorName).catch(function (err) {
+        return console.error(err.toString());
+    });
+})();

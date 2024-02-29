@@ -102,10 +102,11 @@
 <li @if (ViewBag.AREA == "ClinicRoomSys")
 	@("class=active")
 >
-	<a><i class="fa fa-list-alt"></i> 診間系統 <span class="fa fa-chevron-down"></span></a>
+	<a><i class="fa fa-stethoscope"></i> 診間系統 <span class="fa fa-chevron-down"></span></a>
 	<ul class="nav child_menu" @if (ViewBag.AREA == "ClinicRoomSys")
 		@("style=display:block;")
 >
 		<li><a asp-area="ClinicRoomSys" asp-controller="Home" asp-action="Index">叫號看診系統</a></li>
+		<li><a asp-area="ClinicRoomSys" asp-controller="CallingSys" asp-action="View_CallingPage">叫號前台 <i class="fa fa-share-square-o"></i></a></li>
 	</ul>
 </li>
