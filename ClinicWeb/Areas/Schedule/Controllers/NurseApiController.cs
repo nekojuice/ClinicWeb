@@ -96,8 +96,7 @@ namespace ClinicWeb.Areas.Schedule.Controllers
 
         }
 
-        //排班
-        [Route("{area}/{controller}/{action}/{year?}/{month?}/{drid}/{nurseid}")]
+        [Route("{area}/{controller}/{action}/{year}/{month}/{drid}/{nurseid}")]
         public IActionResult Scheduling(string year, string month, int drid, int nurseid)
         {
 
@@ -120,45 +119,45 @@ namespace ClinicWeb.Areas.Schedule.Controllers
             else
             {
                 // 如果不存在，添加新的跟診護士
-                AddNurseSchedule(year, month, drid, nurseid);
+                var result = _context.ScheduleClinicInfo
+                    .Where(x => x.DoctorId == drid && x.Date.Substring(0, 7) == start)
+                    .Select(s => new
+                    {
+                        Id = s.ClinicInfoId,
+                        DoctorId = s.DoctorId,
+                        Department = s.Doctor.Department,
+                        RoomId = s.ClincRoomId,
+                        TimeId = s.ClinicTimeId,
+                        Date = s.Date
+                    }).ToList();
+
+
+                foreach (var clinicInfo in result)
+                {
+                    // 在這裡添加門診護士排班
+                    var nurseSchedule = new ScheduleNurseSchedule()
+                    {
+                        ClinicId = clinicInfo.Id,  // 門診排班資料表的 ID
+                        EmpId = nurseid,
+                        LeaveStatus = 0
+                    };
+
+                    _context.ScheduleNurseSchedule.Add(nurseSchedule);
+                }
+
+                _context.SaveChanges();
+
                 return Ok("成功新增跟診護士");
             }
+
+           
+                
+
+
+            
         }
 
-        private void AddNurseSchedule(string year, string month, int drid, int nurseid)
-        {
-            string start = year + "/" + month; // 排班起始月
-            var result = _context.ScheduleClinicInfo
-                .Where(x => x.DoctorId == drid && x.Date.Substring(0, 7) == start)
-                .Select(s => new
-                {
-                    Id = s.ClinicInfoId,
-                    DoctorId = s.DoctorId,
-                    Department = s.Doctor.Department,
-                    RoomId = s.ClincRoomId,
-                    TimeId = s.ClinicTimeId,
-                    Date = s.Date
-                }).ToList();
-
-
-            foreach (var clinicInfo in result)
-            {
-                // 在這裡添加門診護士排班
-                var nurseSchedule = new ScheduleNurseSchedule()
-                {
-                    ClinicId = clinicInfo.Id,  // 門診排班資料表的 ID
-                    EmpId = nurseid,
-                    LeaveStatus = 0
-                };
-
-                _context.ScheduleNurseSchedule.Add(nurseSchedule);
-            }
-
-            _context.SaveChanges();
-
-
-
-        }
+        
     }
 
 }

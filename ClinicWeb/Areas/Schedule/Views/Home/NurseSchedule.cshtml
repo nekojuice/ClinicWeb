@@ -389,6 +389,33 @@
             selcreateNurseName.innerHTML = optNursenames.join("");
         })();
 
+        //護士排班
+        btnScheduling.addEventListener('click', () => {
+            const year = selcreateMonth.value.substring(0, 4);
+            const month = selcreateMonth.value.substring(5, 7);
+            const drid = selcreateDrName.value; // 獲取選到的醫師 ID
+            const nurseid = selcreateNurseName.value; // 獲取選到的護士 ID
+
+            fetch(`/Schedule/NurseApi/Scheduling/${year}/${month}/${drid}/${nurseid}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+
+                    // 關閉小窗
+                    $('#ScheduleCreate').modal('hide');
+
+                    // 顯示排班成功
+                    alert('排班成功！');
+                    QueryMemberInfo(selectedMonth);
+                })
+                .catch(alert('排班錯誤'));
+        });
+       
+
 
 
     </script>
