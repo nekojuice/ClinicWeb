@@ -27,11 +27,6 @@
                 </div>
             </div>
 
-            <div class="x_panel">
-                @* 測試用佔位空間 *@
-                <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-            </div>
-
         </div>
         <div class="x_panel">
             <div class="x_title">
@@ -56,23 +51,29 @@
 
             <div class="x_content">
                 <div class="col-sm-12">
-                    <table id="clinicDataTable" class="table table-striped table-bordered nowrap" style="width:100%">
+                    <table id="recordDataTable" class="table table-striped table-bordered nowrap" style="width:100%">
                         <thead>
                             <tr>
-                                <th style="display:none">
-                                    id
+                                 <th style="display:none">
+                                    看診紀錄ID
                                 </th>
                                 <th>
                                     血壓
                                 </th>
                                 <th>
+                                    脈搏
+                                </th>
+                                <th>
                                     體溫
                                 </th>
                                 <th>
-                                    初診日期
+                                    主述
                                 </th>
                                 <th>
-                                    操作功能
+                                    醫囑
+                                </th>
+                                <th>
+                                    處方
                                 </th>
                             </tr>
                         </thead>
@@ -103,23 +104,23 @@
 
             <div class="x_content">
                 <div class="col-sm-12">
-                    <table id="clinicDataTable" class="table table-striped table-bordered nowrap" style="width:100%">
+                    <table id="reportDataTable" class="table table-striped table-bordered nowrap" style="width:100%">
                         <thead>
                             <tr>
                                 <th style="display:none">
-                                    id
+                                    報告ID
                                 </th>
                                 <th>
-                                    姓名
+                                    檢查名稱
                                 </th>
                                 <th>
-                                    身分證字號
+                                    檢查日期
                                 </th>
                                 <th>
-                                    初診日期
+                                    報告日期
                                 </th>
                                 <th>
-                                    操作功能
+                                    結果
                                 </th>
                             </tr>
                         </thead>
@@ -150,23 +151,17 @@
 
             <div class="x_content">
                 <div class="col-sm-12">
-                    <table id="clinicDataTable" class="table table-striped table-bordered nowrap" style="width:100%">
+                    <table id="prescriptionDataTable" class="table table-striped table-bordered nowrap" style="width:100%">
                         <thead>
                             <tr>
                                 <th style="display:none">
-                                    id
+                                    處方ID
                                 </th>
                                 <th>
-                                    姓名
+                                    處方日期
                                 </th>
                                 <th>
-                                    身分證字號
-                                </th>
-                                <th>
-                                    初診日期
-                                </th>
-                                <th>
-                                    操作功能
+                                    調劑方式
                                 </th>
                             </tr>
                         </thead>

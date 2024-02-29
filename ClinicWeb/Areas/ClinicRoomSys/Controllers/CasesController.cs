@@ -73,8 +73,6 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
                     TestDate = x.TestDate.ToString("yyyy-MM-dd"),
                     ReportDate = x.ReportDate.ToString("yyyy-MM-dd"),
                     Result = x.Result,
-                    Attachment = x.Attachment,
-                    ImagePath = x.ImagePath,
                 })
                 );
         }
