@@ -2,6 +2,7 @@
 //using ClinicWeb.Models;
 using ClinicWeb.Areas.Drugs.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace ClinicWeb.Areas.Drugs.Controllers
 {
@@ -27,10 +28,24 @@ namespace ClinicWeb.Areas.Drugs.Controllers
                 儲存方法 = x.FStorage
             }));
         }
+        //public JsonResult DrugsDetail(int id) 
+        //{
+        //    return Json(_context.PharmacyTMedicinesList
+        //        .Where(x=>x.FIdDrug==id)
+        //        .Include(x=>x.PharmacyTTypeDetails)                
+        //        .Select(x=>new 
+        //        {
+        //            識別碼 = x.FIdDrug,
+        //            劑型=x.PharmacyTTypeDetails
+
+        //        }));
+                    
+        //}
 
         //讀取DB劑型資訊傳回JSON
         //GET:Drugs/DrugsApi/TypeInfo
-        public JsonResult TypeInfo() {
+        public JsonResult TypeInfo()
+        {
             return Json(_context.PharmacyTTypeList.Select(x => new
             {
                 id = x.FIdType,
@@ -77,5 +92,19 @@ namespace ClinicWeb.Areas.Drugs.Controllers
         //    }
         //    return Json(Type);
         //}
+
+        //新增適應症資料
+        [HttpPost]
+        public IActionResult ClinicalUseCreate(PharmacyTClinicalUseList clinicalUseList)
+        {
+            //return Content("測試API是否有連到前端");
+            //var maxClinicalUseId = _context.PharmacyTClinicalUseList.Max(c => c.FIdClinicalUse);
+            //var nextClinicalUseId = maxClinicalUseId + 1;
+            //clinicalUseList.FIdClinicalUse = nextClinicalUseId;
+            _context.PharmacyTClinicalUseList.Add(clinicalUseList);
+            _context.SaveChanges();
+
+            return View("~/Areas/Drugs/Views/ClinicalUse.cshtml");
+        }
     }
 }

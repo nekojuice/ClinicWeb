@@ -43,6 +43,21 @@
             </ul>
             <div class="clearfix"></div>
         </div>
+        @* 新增按鈕的排版 *@
+        <div class="mb-6" style="overflow: auto">
+            <div class="col-md-6">
+                <label class="form-label"> </label>
+                <button id="newClinicalUsebtn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#ClinicalUseCreate">新增適應症</button>
+            </div>
+        </div>
+        <!--新增畫面的內容-->
+        <div class="modal fade" id="ClinicalUseCreate" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <partial name="~/Areas/Drugs/Views/Partial/_ClinicalUseCreatePartial.cshtml" />
+                </div>
+            </div>
+        </div>
         @* 如果要加搜尋選項放這裡 *@
         <div class="x_content">
             <div class="row">
@@ -88,50 +103,6 @@
    
 </div>
 
-@section Scripts {
-        
-
-    <script>                        
-        $(document).ready(function () {
-            //alert("CUList");
-            $('#dtCU').dataTable({
-                
-                ajax: {
-                    type: 'GET',
-                    url: (`/Drugs/DrugsApi/ClinicalUseInfo`),
-                    dataSrc: function (json) { return json; }
-                },
-                destroy: true,
-                columns: [
-                    { "data": "id", "visible": false },
-                    { "data": "適應症代碼", "width": "20%" },
-                    { "data": "適應症名稱", "width": "60%" },
-                    {
-                        "data": null, title: "操作功能", "width": "20%",
-                        render: function (data, type, row) {
-                            return '<button type="button" name="Editor" class="btn btn-warning btn-sm"> 編輯 </button>'
-                        },
-                    }
-                ],
-                fixedHeader: {
-                    header: true
-                },
-                language: {
-                    url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/zh-HANT.json'
-                }
-            });
-        })
-        const CUCode = document.getElementById('fClinicalUseCode');
-        const CU = document.getElementById('fClinicalUse');
-        $(document).on('click', 'button[name=Editor]', function () {
-            var table = $('#dtCU').DataTable();
-            var tr = $(this).closest('tr');
-            var data = table.row(tr).data();
-            CUCode.value = data.適應症代碼;
-            CU.value = data.適應症名稱;
-        })
-    </script>
-}
 
 @section Modules
 {
@@ -155,3 +126,96 @@
     <script src="~/vendors/pdfmake/build/vfs_fonts.js"></script>
 
 }
+
+@section Scripts {
+
+
+    <script>
+        //進入畫面時或新增刪出修改完畢，載入DB中適應症的資料
+        function QueryClinicalUseInfo(){
+            //alert("CUList");
+            $('#dtCU').dataTable({
+
+                ajax: {
+                    type: 'GET',
+                    url: (`/Drugs/DrugsApi/ClinicalUseInfo`),
+                    dataSrc: function (json) { return json; }
+                },
+                destroy: true,
+                columns: [
+                    { "data": "id", "visible": false },
+                    { "data": "適應症代碼", "width": "20%" },
+                    { "data": "適應症名稱", "width": "60%" },
+                    {
+                        "data": null, title: "操作功能", "width": "20%",
+                        render: function (data, type, row) {
+                            return '<button type="button" name="Editor" class="btn btn-warning btn-sm"> 編輯 </button>'+
+                                   '<button type="button"  name="Delete" class="btn btn-danger btn-sm"> 刪除 </button>'
+                        },
+                    }
+                ],
+                fixedHeader: {
+                    header: true
+                },
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/zh-HANT.json'
+                }
+            });
+
+        }
+        QueryClinicalUseInfo();
+        
+        //帶入指向的資料在畫面上
+        const CUCode = document.getElementById('fClinicalUseCode');
+        const CU = document.getElementById('fClinicalUse');
+        $(document).on('click', 'button[name=Editor]', function () {
+            var table = $('#dtCU').DataTable();
+            var tr = $(this).closest('tr');
+            var data = table.row(tr).data();
+            CUCode.value = data.適應症代碼;
+            CU.value = data.適應症名稱;
+        })
+
+        //新增適應症按鈕
+        
+        const btnSubmit = document.querySelector('#saveButton');        
+        
+        
+        btnSubmit.addEventListener('click', async (event)=> {
+            console.log(btnSubmit); //測始有無抓到按鈕;
+            //alert('儲存');
+            event.preventDefault(); //停止預設行為
+            
+            //FormData
+            const formData = new FormData(document.querySelector('#ClinicalUseForm'));
+           
+            //測試是否有抓取Form上的值
+            for(const pair of formData.entries()){
+                console.log(pair[0]);
+                console.log(pair[1]);
+            }
+            const url='@Url.Content("~/Drugs/DrugsApi/ClinicalUseCreate")';
+            const response = await fetch(url, {
+                "method": "POST",
+                "body": formData
+            });
+            const data = await response.text();
+            console.log(data);
+            clearForm();
+            addModalClose();
+            
+            QueryClinicalUseInfo();
+        })
+
+        //新增按鈕按下後會清空modal內容
+        function clearForm() {
+            document.getElementById('ClinicalUseForm').reset();
+        }
+        
+        //新增按鈕按下後關閉modal視窗
+        function addModalClose() {
+            $('#ClinicalUseCreate').modal('hide');
+        }
+    </script>
+}
+
