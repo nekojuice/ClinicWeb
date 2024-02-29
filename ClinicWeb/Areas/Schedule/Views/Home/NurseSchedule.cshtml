@@ -140,7 +140,7 @@
                     <!-- 新添加的行 -->
                     <div class="col-md-3">
                         <label class="form-label" style="font-size:16px">醫師名稱: </label>
-                        <select class="form-control" id="selDoctorname">
+                        <select class="form-control" id="selDoctorname" >
                         </select>
                     </div>
                 </div>
@@ -157,7 +157,7 @@
                 <button type="button" class="btn btn-default" data-dismiss="modal">
                     關閉
                 </button>
-                <button type="button" class="btn btn-primary">
+                <button id="btnScheduling" type="button" class="btn btn-primary">
                     新增排班
                 </button>
             </div>
@@ -203,6 +203,7 @@
         const selcreateMonth = document.querySelector('#selMonth');
         const selcreateDrName = document.querySelector('#selDoctorname');
         const selcreateNurseName = document.querySelector('#selNursename');
+        const btnScheduling = document.querySelector('#btnScheduling');
         
         
 
@@ -213,7 +214,7 @@
             const datas = await response.json();
 
             //console.log(datas);
-            const optNursenames = datas.map(name => `<option value=${name}>${name}</option>`);
+            const optNursenames = datas.map(name => `<option value=${name.empId}>${name.name}</option>`);
             optNursenames.unshift('<option value="allnurse">全部</option>');
 
 
@@ -265,44 +266,8 @@
         })();
 
 
-        //小窗下拉選單匯入年月
-        (async () => {
-            const url = '@Url.Content("~/Schedule/api/GetNowMonth")';
-            const response = await fetch(url);
-            const datas = await response.json();
-
-            const optNowMonth = datas.map(month => `<option value=${month}>${month}</option>`)
-            optNowMonth.unshift('<option value="nomonth">請選擇</option>')
-
-            selcreateMonth.innerHTML = optNowMonth.join("");
-
-        })();
-
-        //小窗下拉選單匯入醫生名
-        (async () => {
-            const url = '@Url.Content("~/Schedule/api/SelectedDoctorName")';
-            const response = await fetch(url);
-            const datas = await response.json();
-
-            const optDoctornames = datas.map(name => `<option value=${name}>${name}</option>`);
-            optDoctornames.unshift('<option value="alldoctor">全部</option>');
-
-            selcreateDrName.innerHTML = optDoctornames.join("");
-        })();
-
-        //小窗下拉選單匯入護士名
-        (async () => {
-            const url = '@Url.Content("~/Schedule/nurseapi/SelectedNurseName")';
-            const response = await fetch(url);
-            const datas = await response.json();
-
-            //console.log(datas);
-            const optNursenames = datas.map(name => `<option value=${name}>${name}</option>`);
-            optNursenames.unshift('<option value="allnurse">全部</option>');
 
 
-            selcreateNurseName.innerHTML = optNursenames.join("");
-        })();
 
         //匯入護士班表
         function QueryMemberInfo(selectedMonth) {
@@ -330,7 +295,7 @@
                 language: {
                     url: "https://cdn.datatables.net/plug-ins/1.13.7/i18n/zh-HANT.json"
                 },
-                order: [[1, 'asc']]
+                order: [[0, 'asc']]
             });
 
         }
@@ -383,6 +348,46 @@
 
         }
 
+
+        //小窗月份匯入
+        (async () => {
+            const url = '@Url.Content("~/Schedule/api/GetNowMonth")';
+            const response = await fetch(url);
+            const datas = await response.json();
+
+            const optNowMonth = datas.map(month => `<option value=${month}>${month}</option>`)
+            optNowMonth.unshift('<option value="nomonth">請選擇</option>')
+
+            selcreateMonth.innerHTML = optNowMonth.join("");
+
+        })();
+
+        //小窗醫生名匯入
+        (async() => {
+            const url = '@Url.Content("~/Schedule/api/SelectedDoctorName")';
+            const response = await fetch(url);
+            const datas = await response.json();
+
+            const optDoctornames = datas.map(name => `<option value=${name.empId}>${name.name}</option>`);
+            optDoctornames.unshift('<option value="alldoctor">請選擇</option>');
+
+            selcreateDrName.innerHTML = optDoctornames.join("");
+        })();
+
+
+        //小窗護士名匯入
+        (async () => {
+            const url = '@Url.Content("~/Schedule/nurseapi/SelectedNurseName")';
+            const response = await fetch(url);
+            const datas = await response.json();
+
+            //console.log(datas);
+            const optNursenames = datas.map(name => `<option value=${name.empId}>${name.name}</option>`);
+            optNursenames.unshift('<option value="allnurse">請選擇</option>');
+
+
+            selcreateNurseName.innerHTML = optNursenames.join("");
+        })();
 
 
 

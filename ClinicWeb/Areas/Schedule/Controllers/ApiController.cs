@@ -4,6 +4,7 @@ using ClinicWeb.Areas.Schedule.Models;
 //using ClinicWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 using System.Numerics;
 using System.Runtime.InteropServices.JavaScript;
 using System.Security.Cryptography.Xml;
@@ -67,7 +68,7 @@ namespace ClinicWeb.Areas.Schedule.Controllers
         //匯出月份
         public IActionResult GetMonth()
         {
-            var month = _context.ScheduleClinicInfo.Select(d => d.Date.Substring(0, 7)).Distinct(); //2023/12
+            var month = _context.ScheduleClinicInfo.Select(d => d.Date.Substring(0, 7)).Distinct().OrderBy(m => m); //2023/12
             return Json(month);
 
         }
@@ -111,9 +112,9 @@ namespace ClinicWeb.Areas.Schedule.Controllers
 
         }
 
-        [Route("{area}/{controller}/{action}/{month?}/{doctorID?}")]
+        [Route("{area}/{controller}/{action}/{year}/{month}")]
         //排班
-        public IActionResult Scheduling(string month, string doctorID)
+        public IActionResult Scheduling(string year,string month)
         {
 
             // 檢查重複排班
@@ -136,7 +137,7 @@ namespace ClinicWeb.Areas.Schedule.Controllers
 
             ////取得排班起始日
             ////用textbox, combobox, DateTime.Now...等其他方法決定start日期
-            string start = month;    //假設排2023-12月班表
+            string start = year+"/"+month;    //假設排2023-12月班表
 
             string week = DateTime.Now.DayOfWeek.ToString("");    //取得今天 星期
             string startWeek = DateTime.Parse(start).DayOfWeek.ToString();  //1號的星期(英文) //五
@@ -153,7 +154,7 @@ namespace ClinicWeb.Areas.Schedule.Controllers
 
                         DoctorId = item.醫師ID,
                         ClincRoomId = item.診間ID,
-                        Date = start.Substring(0, 8) + day.ToString("00"),  //"2023-12-" + "01" ("00"為格式，個位數會補0)
+                        Date = start +"/"+ day.ToString("00"),  //"2023-12-" + "01" ("00"為格式，個位數會補0)
                         ClinicTimeId = item.時段ID,
                         RegistrationLimit = 30,
                         JumpStatus = 0,
@@ -164,7 +165,7 @@ namespace ClinicWeb.Areas.Schedule.Controllers
             }
 
             _context.SaveChanges();
-            return Json(result);
+            return RedirectToAction("DoctorSchedule","Home",  new {area = "Schedule"});
 
             }
 
