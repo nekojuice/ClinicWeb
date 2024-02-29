@@ -77,7 +77,7 @@ $("#callingTable tbody").on('mousedown', 'tr', function () {
     const _index_DataTable = $('#callingTable').DataTable().row(this).index();
     if (_index_DataTable == null) { return; } //忽略無選擇時
     if ($(this).hasClass('selected')) { return; }   //忽略選擇同一row
-    
+
     const dataObject = $('#callingTable').DataTable().row(_index_DataTable).data()
     MEMBER_ID = dataObject.member_id;
     CLINICLIST_ID = dataObject.clinicListId;
@@ -97,26 +97,17 @@ $("#callingTable tbody").on('mousedown', 'tr', function () {
 
 
 //signalR
-let connection = new signalR.HubConnectionBuilder().withUrl("/CallingHub").build();
+let connection = new signalR.HubConnectionBuilder()
+    .withUrl("/CallingHub")
+    .withAutomaticReconnect()
+    .build();
 
-//[宣告on] 進入畫面時註冊
-connection.on("DoctorLoginCall", function (doctorId, department, room, doctorName) {
-    console.log(`${doctorId}, ${department}, ${room}, ${doctorName}`)
-});
-//[宣告on] 選擇時段
-connection.on("DoctorShiftChange", function (doctorId, shift) {
-    console.log(`${doctorId}, ${shift}`)
-});
-//[宣告on] 叫號
-connection.on("DoctorNumberChange", function (doctorId, number) {
-    console.log(`${doctorId}, ${number}`)
-});
 //signalR連線初始化
-connection.start().then(function () {
-    //document.getElementById("sendButton").disabled = false;
-}).catch(function (err) {
-    return console.error(err.toString());
-});
+connection.start()
+    //.then(function () { })
+    .catch(function (err) {
+        return console.error(err.toString());
+    });
 
 //進入畫面時註冊
 (async () => {
@@ -127,7 +118,7 @@ connection.start().then(function () {
     const date = CLINIC_DATE
     const datedata = `${date.getFullYear()}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${(date.getDate()).toString().padStart(2, '0')}`
 
-    const jsonData = { 'doctorId': doctor_ID, 'date': datedata}
+    const jsonData = { 'doctorId': doctor_ID, 'date': datedata }
     const response2 = await fetch(Get_EmpInfo,
         {
             method: 'POST',
@@ -145,7 +136,27 @@ connection.start().then(function () {
     $("#spanShowRoom").text(data.room)
 
     //註冊signalR
-    connection.invoke("DoctorLoginCall", DOCTOR_ID, data.department, data.room, data.doctorName).catch(function (err) {
-        return console.error(err.toString());
-    });
+    connection.invoke("Set_ClinicInfo", DOCTOR_ID, data.department, data.room, data.doctorName)
+        .catch(function (err) {
+            return console.error(err.toString());
+        });
 })();
+
+//選擇時段
+$("#ClinicTime").on('change', function () {
+    if ($("#ClinicTime option:selected").text() != '--選擇時段--') {
+        connection.invoke("Set_Shift", $("#ClinicTime option:selected").text())
+            .catch(function (err) {
+                return console.error(err.toString());
+            });
+    }
+})
+//按下叫號
+$("#btn_call").on('click', function () {
+    if ($("#call_currentNumber").text() != '') {
+        connection.invoke("Set_Number", $("#call_currentNumber").text())
+            .catch(function (err) {
+                return console.error(err.toString());
+            });
+    }
+})
