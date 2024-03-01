@@ -121,7 +121,7 @@ builder.Services.AddAuthentication()
         option.AccessDeniedPath = new PathString("/ClientPage/Login");
         option.ExpireTimeSpan = TimeSpan.FromMinutes(30);
     })
-    .AddCookie()
+   
     .AddGoogle("Google", options =>
     {
 		

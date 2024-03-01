@@ -47,34 +47,7 @@
 
 </div>
 
-
-
 <script src="https://accounts.google.com/gsi/client" async></script>
-<script>
-    document.getElementById('MemberLogin').addEventListener('click', function (event) {
-        event.preventDefault(); // Prevent default link behavior
-
-        // Submit the form
-        document.getElementById('MemberloginForm').submit();
-    });
-
-    function handleCredentialResponse(response) {
-        console.log("Encoded JWT ID token: " + response.credential);
-        // Handle the credential response as needed
-    }
-
-    window.onload = function () {
-        google.accounts.id.initialize({
-            client_id: "526974450781-r15eef63hrf196gkhsn0tjuqkvk49vjm.apps.googleusercontent.com",
-            callback: handleCredentialResponse
-        });
-        google.accounts.id.renderButton(
-            document.getElementById("buttonDiv"),
-            { theme: "outline", size: "large" }  // customization attributes
-        );
-        google.accounts.id.prompt(); // also display the One Tap dialog
-    }
-</script>
-
+<script src="~/msit155e/js/Login/CllientLogin.js"></script>
 
 

@@ -66,9 +66,17 @@ namespace ClinicWeb.Controllers
 			}
 		}
 
+        [AllowAnonymous]
+        public IActionResult LoginTest()
+        {
+           
+                return View("~/Views/ClientPage/Login/LoginTest.cshtml");
+            
+        }
 
 
-		[AllowAnonymous]
+
+        [AllowAnonymous]
         [HttpPost]
         public IActionResult LoginForClient(MemberMemberList m)
         {
@@ -132,7 +140,15 @@ namespace ClinicWeb.Controllers
         //寫登出Action
         public IActionResult Logout()
         {
-            HttpContext.SignOutAsync("frontend");    
+            try
+            {
+            HttpContext.SignOutAsync("frontend");
+            HttpContext.SignOutAsync();
+            }
+            catch (Exception)
+            {
+            }
+
             return RedirectToAction("Login");
             //return Content("123");
         }

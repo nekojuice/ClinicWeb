@@ -14,10 +14,10 @@ namespace ClinicWeb.Areas.Identity
                 .RequireAuthenticatedUser()
                 .AddAuthenticationSchemes("backend")
                 .Build();
-                var clientCredentialsPolicy = new AuthorizationPolicyBuilder()
-                    .RequireAuthenticatedUser()
-                    .AddAuthenticationSchemes("frontend", "Google")
-                    .Build();
+            var clientCredentialsPolicy = new AuthorizationPolicyBuilder()
+                .RequireAuthenticatedUser()
+                .AddAuthenticationSchemes("frontend", "Google")
+                .Build();
             //var allPolicy = new AuthorizationPolicyBuilder()
             //    .RequireAuthenticatedUser()
             //    .AddAuthenticationSchemes("backend", "frontend")
