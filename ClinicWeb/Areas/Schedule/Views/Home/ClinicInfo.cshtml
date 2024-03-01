@@ -81,6 +81,7 @@
                                 <thead>
                                     <tr>
                                         @*  <th>id</th> *@
+                                        <th style="display:none">Week</th>
                                         <th>星期</th>
                                         <th>醫師</th>
                                         <th>時段</th>
@@ -90,14 +91,7 @@
                                 </thead>
 
                                 <tbody id="tbody1">
-                                    <tr>
-                                        @*  <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td> *@
-                                    </tr>
+                                   
 
                                 </tbody>
                             </table>
@@ -241,6 +235,7 @@
                 destroy: true,
                 columns: [
                     // { "data": "id", "visible": false },
+                    {"data":"week","visible":false},
                     { "data": "星期" },
                     { "data": "醫師" },
                     { "data": "時段" },

@@ -64,7 +64,7 @@ namespace ClinicWeb.Areas.Schedule.Controllers
         //匯出月份
         public IActionResult GetMonth()
         {
-            var month = _context.ScheduleClinicInfo.Select(d => d.Date.Substring(0, 7)).Distinct(); //2023/12
+            var month = _context.ScheduleClinicInfo.Select(d => d.Date.Substring(0, 7)).Distinct().OrderBy(m => m); //2023/12
             return Json(month);
 
         }

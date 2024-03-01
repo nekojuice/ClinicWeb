@@ -165,7 +165,7 @@ namespace ClinicWeb.Areas.Schedule.Controllers
             }
 
             _context.SaveChanges();
-            return RedirectToAction("DoctorSchedule","Home",  new {area = "Schedule"});
+            return Ok();
 
             }
 

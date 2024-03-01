@@ -17,6 +17,9 @@
     <link href="~/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
     <link href="~/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
 
+    <!--Toastr-->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+
 }
 
 
@@ -139,7 +142,7 @@
                 <div class="mb-3 pb-2">
                     <!-- 新添加的行 -->
                     <div class="col-md-3">
-                        <label class="form-label" style="font-size:16px">醫師名稱: </label>
+                        <label class="form-label" style="font-size:16px">醫師: </label>
                         <select class="form-control" id="selDoctorname" >
                         </select>
                     </div>
@@ -147,7 +150,7 @@
                 <div class="pt-2">
                     <!-- 新添加的行 -->
                     <div class="col-md-3">
-                        <label class="form-label" style="font-size:16px">護士名稱: </label>
+                        <label class="form-label" style="font-size:16px">護士: </label>
                         <select class="form-control" id="selNursename">
                         </select>
                     </div>
@@ -189,6 +192,9 @@
     <script src="~/vendors/pdfmake/build/pdfmake.min.js"></script>
     <script src="~/vendors/pdfmake/build/vfs_fonts.js"></script>
 
+    <!--Toastr-->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
 }
 
 @section Scripts
@@ -204,6 +210,19 @@
         const selcreateDrName = document.querySelector('#selDoctorname');
         const selcreateNurseName = document.querySelector('#selNursename');
         const btnScheduling = document.querySelector('#btnScheduling');
+
+        // 套件
+        toastr.options = {
+            "closeButton": true,
+            "showDuration": "300",
+            "hideDuration": "500",
+            "timeOut": "1000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
         
         
 

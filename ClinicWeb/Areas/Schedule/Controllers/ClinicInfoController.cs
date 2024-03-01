@@ -19,6 +19,7 @@ namespace ClinicWeb.Areas.Schedule.Controllers
                 .Select(x => new
                 {
                     //id = x.ClinicInfoId,
+                    Week = x.Week,
                     醫師 = x.Doctor.Name,
                     星期 = GetDayOfWeek(x.Week),
                     時段 = x.Time.ClinicShifts,

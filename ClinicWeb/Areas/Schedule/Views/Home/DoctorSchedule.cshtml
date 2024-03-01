@@ -14,6 +14,9 @@
     <link href="~/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
     <link href="~/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
 
+    <!--Toastr-->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+
 }
 
 
@@ -173,6 +176,9 @@
     <script src="~/vendors/pdfmake/build/pdfmake.min.js"></script>
     <script src="~/vendors/pdfmake/build/vfs_fonts.js"></script>
 
+    <!--Toastr-->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
 }
 
 @section Scripts
@@ -187,6 +193,22 @@
         const selcreateDoctor = document.querySelector('#selDoctorname');
         const selcreateMonth = document.querySelector('#selMonth');
         const scheduling = document.querySelector('#Scheduling');
+
+       // 套件
+        toastr.options = {
+            "closeButton": true,
+            "showDuration": "300",
+            "hideDuration": "500",
+            "timeOut": "1000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+
+
+
 
         //下拉選單匯入醫生名
         (async () => {
@@ -358,23 +380,25 @@
             const month = selcreateMonth.value.substring(5, 7);
             fetch(`/Schedule/api/Scheduling/${year}/${month}`)
                 .then(response => {
-                    // if (response.status!=302) {
-                    //     throw new Error('排班錯誤');
-                    //     return;
-                    // }
+                    if (response.status==200) {
+                        toastr.success('排班成功');
+                        window.location.reload();
+                       
+                    }
                     
                 })
-                .then(data => {
+                // .then(data => {
 
-                    // 關閉小窗
-                    $('#ScheduleCreate').modal('hide');
+                //     // 關閉小窗
+                //     $('#ScheduleCreate').modal('hide');
 
-                    // 顯示排班成功
-                    alert('排班成功！');
-                    QueryMemberInfo(selectedMonth);
+                //     // 顯示排班成功
+                //     // alert('排班成功');
+                //     toastr.success('排班成功');
+                //     QueryMemberInfo(selectedMonth);
 
-                })
-                .catch(alert('排班錯誤'))
+                // })
+                
 
 
         }
