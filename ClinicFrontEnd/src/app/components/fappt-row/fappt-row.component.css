@@ -1,0 +1,42 @@
+.doctor_img {
+  width: 120px;
+  border-radius: 50%;
+  border: 1px solid rgba(52, 73, 94, 0.44);
+}
+
+.cal {
+  width: 100%;
+  text-align: center;
+}
+
+.cal-div {
+  /*  min-width: 100px;*/
+}
+
+.cal-td {
+  min-height: 85px;
+  background-color: #eff2f1;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  border-radius: 2px;
+  border: 0px;
+  -webkit-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.4);
+  -ms-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.4);
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.4);
+  font-weight: 400;
+  text-transform: capitalize;
+}
+
+.cal-btn {
+  width: 100%;
+  max-width: 60px;
+  min-height: 255px;
+  border: 1px dashed gray;
+  border-radius: 10px;
+}
+
+.cal-btn-td {
+  width: 60px;
+}
