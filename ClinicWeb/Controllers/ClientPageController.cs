@@ -1,4 +1,5 @@
-﻿using ClinicWeb.Areas.Appointment.Models;
+﻿using ClinicWeb.Areas.Member.Models;
+
 using Google.Apis.Auth;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -62,7 +63,7 @@ namespace ClinicWeb.Controllers
 			}
 			else
 			{
-				return View("~/Views/ClientPage/Login/Login.cshtml");
+				return View("~/Views/ClientPage/Login/ClientLogin.cshtml");
 			}
 		}
 
@@ -70,8 +71,24 @@ namespace ClinicWeb.Controllers
         public IActionResult LoginTest()
         {
            
-                return View("~/Views/ClientPage/Login/LoginTest.cshtml");
+                return View("~/Views/ClientPage/Login/ClientLogin.cshtml");
             
+        }
+
+        [AllowAnonymous]
+        public IActionResult MemberProfile()
+        {
+
+            return View("~/Views/ClientPage/Login/MemberProfile.cshtml");
+
+        }
+
+        [AllowAnonymous]
+        public IActionResult MemberProfiletest()
+        {
+
+            return View("~/Views/ClientPage/Login/MemberProfiletest.cshtml");
+
         }
 
 
@@ -88,7 +105,7 @@ namespace ClinicWeb.Controllers
             if (user == null)
             {
                 ViewData["ErrorMessage"] = "帳號密碼輸入有誤";
-                return View("~/Views/ClientPage/Login/Login.cshtml");
+                return View("~/Views/ClientPage/Login/ClientLogin.cshtml");
             }
 
             else
@@ -153,92 +170,64 @@ namespace ClinicWeb.Controllers
             //return Content("123");
         }
 
-
-        //google登入action
+        //打開註冊畫面
         [AllowAnonymous]
-        public async Task<IActionResult> ValidGoogleLogin()
+        public IActionResult Register()
         {
-            string? formCredential = Request.Form["credential"]; //回傳憑證
-            string? formToken = Request.Form["g_csrf_token"]; //回傳令牌
-            string? cookiesToken = Request.Cookies["g_csrf_token"]; //Cookie 令牌
-
-            // 驗證 Google Token
-            GoogleJsonWebSignature.Payload? payload = await VerifyGoogleToken(formCredential, formToken, cookiesToken);
-            if (payload == null)
-            {
-                // 驗證失敗
-                ViewData["Msg"] = "驗證 Google 授權失敗";
-            }
-            else
-            {
-                //驗證成功，取使用者資訊內容
-                ViewData["Msg"] = "驗證 Google 授權成功" + "<br>";
-                ViewData["Msg"] += "Email:" + payload.Email + "<br>";
-                ViewData["Msg"] += "Name:" + payload.Name + "<br>";
-                ViewData["Msg"] += "Picture:" + payload.Picture;
-            }
-
-            return View();
+            return View("~/Views/ClientPage/Login/Register.cshtml");
         }
 
+        //註冊帳號
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        ////[Bind("Name,Gender,BloodType,NationalId,Address,ContactAddress,Phone,BirthDate,IceName,IceNumber,MemPassword,MemEmail,Verification")]
+        //public IActionResult Register([Bind("Name,BloodType,NationalId,Address,ContactAddress,Phone,BirthDate,IceName,IceNumber,MemPassword,MemEmail")][FromBody] MemberMemberList member)
+        //{
 
-        /// <summary>
-        /// 驗證 Google Token
-        /// </summary>
-        /// <param name="formCredential"></param>
-        /// <param name="formToken"></param>
-        /// <param name="cookiesToken"></param>
-        /// <returns></returns>
-        public async Task<GoogleJsonWebSignature.Payload?> VerifyGoogleToken(string? formCredential, string? formToken, string? cookiesToken)
-        {
-            // 檢查空值
-            if (formCredential == null || formToken == null && cookiesToken == null)
-            {
-                return null;
-            }
+        //    if (member == null)
+        //    {
+        //        Console.WriteLine("null~~");
+        //    }
+        //    else
+        //    {
+        //        Console.WriteLine(member.Name);
+        //        Console.WriteLine(member.Gender);
+        //        Console.WriteLine(member.BloodType);
+        //        Console.WriteLine(member.NationalId);
+        //        Console.WriteLine(member.Address);
+        //        Console.WriteLine(member.ContactAddress);
+        //        Console.WriteLine(member.Phone);
+        //        Console.WriteLine(member.BirthDate);
+        //        Console.WriteLine(member.IceName);
+        //        Console.WriteLine(member.IceNumber);
+        //        Console.WriteLine(member.MemPassword);
+        //        Console.WriteLine(member.MemEmail);
+        //        Console.WriteLine(member.Verification);
+        //    }
+        //    //檢查驗證
+        //    if (!ModelState.IsValid)
+        //    {
+        //        // 如果模型驗證失敗，重新顯示包含錯誤信息的表單
+        //        Console.WriteLine("驗證失敗");
+        //        return Content("~/Areas/Member/Views/Partial/_MemberCreatePartial.cshtml"); // 返回相同的視圖，這將會顯示錯誤信息
+        //        //return Json(member);
+        //    }
+        //    else
+        //    {
+        //        //加入資料庫
 
-            GoogleJsonWebSignature.Payload? payload;
-            try
-            {
-                // 驗證 token
-                if (formToken != cookiesToken)
-                {
-                    return null;
-                }
+        //        var maxMemberNumber = _context.MemberMemberList.Max(m => m.MemberNumber);
+        //        var nextMemberNumber = maxMemberNumber + 1;
+        //        member.MemberNumber = nextMemberNumber;
 
-                // 驗證憑證
-                IConfiguration Config = new ConfigurationBuilder().AddJsonFile("appSettings.json").Build();
-                string GoogleApiClientId = Config.GetSection("GoogleApiClientId").Value;
-                var settings = new GoogleJsonWebSignature.ValidationSettings()
-                {
-                    Audience = new List<string>() { GoogleApiClientId }
-                };
-                payload = await GoogleJsonWebSignature.ValidateAsync(formCredential, settings);
-                if (!payload.Issuer.Equals("accounts.google.com") && !payload.Issuer.Equals("https://accounts.google.com"))
-                {
-                    return null;
-                }
-                if (payload.ExpirationTimeSeconds == null)
-                {
-                    return null;
-                }
-                else
-                {
-                    DateTime now = DateTime.Now.ToUniversalTime();
-                    DateTime expiration = DateTimeOffset.FromUnixTimeSeconds((long)payload.ExpirationTimeSeconds).DateTime;
-                    if (now > expiration)
-                    {
-                        return null;
-                    }
-                }
-            }
-            catch
-            {
-                return null;
-            }
-            return payload;
-        }
+        //        _context.MemberMemberList.Add(member);
+        //        _context.SaveChanges();
+        //        return Content("success");
+        //    }
 
-       
+        //}
+
+
+
     }
 }
