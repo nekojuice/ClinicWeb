@@ -202,6 +202,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="7.0.14" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.14" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.14" />
@@ -221,6 +222,7 @@
     <Folder Include="Areas\Attend\Models\" />
     <Folder Include="Areas\Cases\Data\" />
     <Folder Include="Areas\Cases\Models\" />
+    <Folder Include="Areas\ClinicRoomSys\Data\" />
     <Folder Include="Areas\Drugs\Data\" />
     <Folder Include="Areas\Employee\Data\" />
     <Folder Include="Areas\Employee\Models\" />
@@ -247,7 +249,6 @@
     <Folder Include="wwwroot\msit155e\images\Shop\" />
     <Folder Include="wwwroot\msit155e\js\Attend\" />
     <Folder Include="wwwroot\msit155e\js\Drugs\" />
-    <Folder Include="wwwroot\msit155e\js\Member\" />
     <Folder Include="wwwroot\msit155e\js\Room\" />
     <Folder Include="wwwroot\msit155e\js\Schedule\" />
     <Folder Include="wwwroot\msit155e\js\Shop\" />

@@ -32,16 +32,3 @@
     color: darkred;
     border-color:darkred;
 }
-
-.colorChange {
-    animation: fade 1.5s ease-out;
-}
-
-@keyframes fade {
-    from {
-        background-color: lightgreen;
-    }
-    to {
-        background-color: transparent;
-    }
-}

@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "掛號管理系統";
+    ViewData["Title"] = "看診系統";
 }
 @section ModulesStyles
 {
@@ -19,28 +19,50 @@
     <link href="~/vendors/pnotify/dist/pnotify.css" rel="stylesheet">
     <link href="~/vendors/pnotify/dist/pnotify.buttons.css" rel="stylesheet">
     <link href="~/vendors/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">
-    
+
     <!-- 自訂: 更新後顏色閃爍 -->
-	<link href="~/msit155e/css/appointment/extension_datachanged_coloranimate.css" rel="stylesheet" />
+    <link href="~/msit155e/css/appointment/extension_datachanged_coloranimate.css" rel="stylesheet" />
 }
 @section Styles
 {
-    <link href="~/msit155e/css/appointment/clinicinfo.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/msit155e/css/clinicroomsys/_callingpanelpartial.css" rel="stylesheet" />
 }
 
-<partial name="_ClinicInfoPartial" />
-<partial name="_ApptRecordPartial" />
-
-@*跳小窗*@
-<partial name="_AddApptPartial" />
-<partial name="_ModApptPartial" />
-
+@*左側*@
+<partial name="/Areas/ClinicRoomSys/Views/CallingSys/_CallingPanelPartial.cshtml" />
+@*右側*@
+<partial name="/Areas/ClinicRoomSys/Views/Cases/_CasesPartial.cshtml" />
 
 @section Scripts
 {
-    @*修改小窗用，順序需再前面*@
-	<script src="~/msit155e/js/appointment/_modapptpartial.js"></script>
-    <script src="~/msit155e/js/Appointment/ApptSys_Index.js" asp-append-version="true"></script>
+    <script>
+        //宣告全域變數
+        //選取的會員(病患)ID
+        let MEMBER_ID;
+        //病患掛號序列
+        let CLINICLIST_ID;
+        //醫生員工ID
+        let DOCTOR_ID;
+        //選擇門診時間 (常理應該要選今天，為了demo寫死)
+        let CLINIC_DATE = new Date("2024/02/01");
+
+        //撈取狀態: 員工id
+        (async () => {
+            const response = await fetch('@Url.Content("~/ClinicRoomSys/CallingSys/Get_EmpId")', { method: 'POST' });
+            const memberData = await response.text()
+            DOCTOR_ID = memberData
+        })();
+
+        //點選左表後觸發的事件 fetch右表
+        async function on_memberClick()
+        {
+            console.log(`selected 會員ID MEMBER_ID: ${MEMBER_ID}, 掛號序列ID CLINICLIST_ID: ${CLINICLIST_ID}`);
+            // const response = await fetch('')
+            // const data = await response.json()
+        }
+
+    </script>
+    <script src="~/msit155e/js/clinicroomsys/_callingpanelpartial.js"></script>
 }
 @section Modules
 {
@@ -69,10 +91,10 @@
     <script src="~/vendors/pnotify/dist/pnotify.js"></script>
     <script src="~/vendors/pnotify/dist/pnotify.buttons.js"></script>
     <script src="~/vendors/pnotify/dist/pnotify.nonblock.js"></script>
-    
+
     <!-- datatable jumptodata -->
     <script src="https://cdn.datatables.net/plug-ins/1.13.7/api/page.jumpToData().js" asp-fallback-src="~/lib/page.jumptodata().js"></script>
 
     <!-- 自訂: 更新後顏色閃爍 -->
-	<script src="~/msit155e/js/appointment/extension_datachanged_coloranimate.js"></script>
+    <script src="~/msit155e/js/appointment/extension_datachanged_coloranimate.js"></script>
 }
