@@ -16,9 +16,10 @@ export class FapptRowComponent {
   weekPage: number = 0;
 
   dateObjectArr: dateObject[] = [];
+  shiftObjectArr: any[] = ['早診','午診','晚診'];
 
   clinicDataObject: any;
-  ClinicDataArray: any =
+  clinicDataArray: any =
     [
       [{}, {}, {}, {}, {}, {}, {}],
       [{}, {}, {}, {}, {}, {}, {}],
@@ -43,7 +44,8 @@ export class FapptRowComponent {
       .subscribe(data => {
         console.log(data);
         this.clinicDataObject = data; //舊的物件集
-        //this.RearrangeData(data);
+        this.RearrangeData(data);
+        console.log(this.clinicDataArray);
       })
 
 
@@ -65,18 +67,18 @@ export class FapptRowComponent {
 
   //依規則填入二維陣列
   RearrangeData(apiDatas:any) {
-    for (let i = 0; i <= apiDatas.length - 1; i++) {
+    for (let i = 0; i < apiDatas.length; i++) {
       // 取得星期 Y
       let colIndex = this.getColIndex(this.dateObjectArr, apiDatas[i]);
       // 取得班別  X
       let rowIndex = this.getRowIndex(apiDatas[i]);
 
-      this.ClinicDataArray[rowIndex][colIndex] = apiDatas[i];
+      this.clinicDataArray[rowIndex][colIndex] = apiDatas[i];
     }
   }
 
-  getRowIndex(apiData: any) {
-    switch (apiData.timePeriod) {
+  getRowIndex(apiData: clinicDataObject) {
+    switch (apiData.shift) {
       case '早診':
         return 0;
 
@@ -91,10 +93,17 @@ export class FapptRowComponent {
     }
   }
 
-  getColIndex(DateHeader: dateObject[], apiData: any) {
-    return DateHeader.findIndex(x => x.date === apiData.value);
+  getColIndex(DateHeader: dateObject[], apiData: clinicDataObject) {
+    return DateHeader.findIndex(x => x.date === apiData.date);
   }
 
+  getClinicDataDetail(index: number) {
+    return this.clinicDataArray[index];
+  }
+
+  getShiftDetail(index: number) {
+    return this.shiftObjectArr[index];
+  }
 
   goAppt(apptId: string) {
     console.log(apptId)

@@ -10,8 +10,8 @@
 }
 
 .cal-div {
-  /*  min-width: 100px;*/
-  margin-right:10px;
+  /*min-width: 100px;*/
+  margin-right: 10px;
 }
 
 .cal-td {
@@ -31,12 +31,10 @@
 }
 
 .cal-btn {
-  display: inline-flex;
+  margin-top: 15px;
   align-items: center;
-  /*width: 60px;*/
-  max-width: 60px;
-  /*min-height: 255px;*/
-  height: 100%;
+  width: 80%;
+  height: 40px;
   border: 1px dashed gray;
   border-radius: 10px;
 }
