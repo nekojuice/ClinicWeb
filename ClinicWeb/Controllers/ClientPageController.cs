@@ -32,6 +32,14 @@ namespace ClinicWeb.Controllers
         {
             return View("~/Views/ClientPage/Login/Login.cshtml");
         }
+        public IActionResult Example()
+        {
+            return View();
+        }
+		public IActionResult Essence() 
+		{
+			return View();
+		}
 
     }
 }
