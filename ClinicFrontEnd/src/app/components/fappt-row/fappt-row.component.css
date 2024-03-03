@@ -11,6 +11,7 @@
 
 .cal-div {
   /*  min-width: 100px;*/
+  margin-right:10px;
 }
 
 .cal-td {
@@ -30,9 +31,12 @@
 }
 
 .cal-btn {
-  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  width: 60px;
   max-width: 60px;
-  min-height: 255px;
+  /*min-height: 255px;*/
+  height: 100%;
   border: 1px dashed gray;
   border-radius: 10px;
 }

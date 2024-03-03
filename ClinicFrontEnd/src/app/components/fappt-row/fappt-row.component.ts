@@ -17,6 +17,12 @@ export class FapptRowComponent {
   dateObjectArr: dateObject[] = [];
 
   clinicDataObject: any;
+  ClinicDataArray: any =
+    [
+      [{}, {}, {}, {}, {}, {}, {}],
+      [{}, {}, {}, {}, {}, {}, {}],
+      [{}, {}, {}, {}, {}, {}, {}]
+    ];
 
   ngOnInit() {
     this.weekChange(0)
@@ -27,13 +33,19 @@ export class FapptRowComponent {
     this.todayDate = new Date(this.todayDate.getTime() + direction * 7 * 24 * 60 * 60 * 1000);
     //let todayDateString = `${this.todayDate.getFullYear()}/${(this.todayDate.getMonth() + 1).toString().padStart(2, '0')}/${(this.todayDate.getDate()).toString().padStart(2, '0')}`;
     //console.log(todayDateString);
+
+    //放入動態日期
     this.putDate()
 
+    //ajax
     this.Client.get(`https://localhost:7071/FAppointment/Get_ClinicApptInfo/${this.dataInput.empId}/${this.todayDate.getFullYear()}/${(this.todayDate.getMonth() + 1).toString().padStart(2, '0')}/${(this.todayDate.getDate()).toString().padStart(2, '0')}`)
       .subscribe(data => {
-        //console.log(data);
-        this.clinicDataObject = data;
+        console.log(data);
+        this.clinicDataObject = data; //舊的物件集
+        //this.RearrangeData(data);
       })
+
+
   }
 
   putDate() {
@@ -50,7 +62,40 @@ export class FapptRowComponent {
     //console.log(this.dateObjectArr)
   }
 
-  goAppt(apptId:string) {
+  //依規則填入二維陣列
+  RearrangeData(apiDatas:any) {
+    for (let i = 0; i <= apiDatas.length - 1; i++) {
+      // 取得星期 Y
+      let colIndex = this.getColIndex(this.dateObjectArr, apiDatas[i]);
+      // 取得班別  X
+      let rowIndex = this.getRowIndex(apiDatas[i]);
+
+      this.ClinicDataArray[rowIndex][colIndex] = apiDatas[i];
+    }
+  }
+
+  getRowIndex(apiData: any) {
+    switch (apiData.timePeriod) {
+      case '早診':
+        return 0;
+
+      case '午診':
+        return 1;
+
+      case '晚診':
+        return 2;
+
+      default:
+        return 0;
+    }
+  }
+
+  getColIndex(DateHeader: dateObject[], apiData: any) {
+    return DateHeader.findIndex(x => x.date === apiData.value);
+  }
+
+
+  goAppt(apptId: string) {
     console.log(apptId)
     //串接會員id及apptId 執行掛號
     //進度在此

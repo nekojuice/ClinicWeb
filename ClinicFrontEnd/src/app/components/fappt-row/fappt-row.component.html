@@ -11,54 +11,63 @@
 
     <a class="btn btn-default" id="intro" href="/"><i class="fa fa-user"></i>醫師簡介</a>
   </div>
-
-  <div class="col-md-9">
-    <table class="cal">
-      <thead>
-        <tr>
-          <th></th>
-          <th><div class="cal-div cal-th"><span class="cal-date">{{dateObjectArr[0].date}}</span><br /><span class="cal-week">{{dateObjectArr[0].week}}</span></div></th>
-          <th><div class="cal-div cal-th"><span class="cal-date">{{dateObjectArr[1].date}}</span><br /><span class="cal-week">{{dateObjectArr[1].week}}</span></div></th>
-          <th><div class="cal-div cal-th"><span class="cal-date">{{dateObjectArr[2].date}}</span><br /><span class="cal-week">{{dateObjectArr[2].week}}</span></div></th>
-          <th><div class="cal-div cal-th"><span class="cal-date">{{dateObjectArr[3].date}}</span><br /><span class="cal-week">{{dateObjectArr[3].week}}</span></div></th>
-          <th><div class="cal-div cal-th"><span class="cal-date">{{dateObjectArr[4].date}}</span><br /><span class="cal-week">{{dateObjectArr[4].week}}</span></div></th>
-          <th><div class="cal-div cal-th"><span class="cal-date">{{dateObjectArr[5].date}}</span><br /><span class="cal-week">{{dateObjectArr[5].week}}</span></div></th>
-          <th><div class="cal-div cal-th"><span class="cal-date">{{dateObjectArr[6].date}}</span><br /><span class="cal-week">{{dateObjectArr[6].week}}</span></div></th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td rowspan="3" class="cal-btn-td"><button class="cal-btn" (click)="weekChange(-1)" [disabled]="weekPage<=0">上一週</button></td>
-          <td><div class="cal-div cal-td">早<br /><span *ngFor="let item of clinicDataObject"><span *ngIf="item.date == dateObjectArr[0].date && item.shift == '早診'"><button (click)="goAppt(item.clinicInfoId)">{{item.count}}/{{item.limit}}</button></span></span></div></td>
-          <td><div class="cal-div cal-td">早<br /><span *ngFor="let item of clinicDataObject"><span *ngIf="item.date == dateObjectArr[1].date && item.shift == '早診'"><button (click)="goAppt(item.clinicInfoId)">{{item.count}}/{{item.limit}}</button></span></span></div></td>
-          <td><div class="cal-div cal-td">早<br /><span *ngFor="let item of clinicDataObject"><span *ngIf="item.date == dateObjectArr[2].date && item.shift == '早診'"><button (click)="goAppt(item.clinicInfoId)">{{item.count}}/{{item.limit}}</button></span></span></div></td>
-          <td><div class="cal-div cal-td">早<br /><span *ngFor="let item of clinicDataObject"><span *ngIf="item.date == dateObjectArr[3].date && item.shift == '早診'"><button (click)="goAppt(item.clinicInfoId)">{{item.count}}/{{item.limit}}</button></span></span></div></td>
-          <td><div class="cal-div cal-td">早<br /><span *ngFor="let item of clinicDataObject"><span *ngIf="item.date == dateObjectArr[4].date && item.shift == '早診'"><button (click)="goAppt(item.clinicInfoId)">{{item.count}}/{{item.limit}}</button></span></span></div></td>
-          <td><div class="cal-div cal-td">早<br /><span *ngFor="let item of clinicDataObject"><span *ngIf="item.date == dateObjectArr[5].date && item.shift == '早診'"><button (click)="goAppt(item.clinicInfoId)">{{item.count}}/{{item.limit}}</button></span></span></div></td>
-          <td><div class="cal-div cal-td">早<br /><span *ngFor="let item of clinicDataObject"><span *ngIf="item.date == dateObjectArr[6].date && item.shift == '早診'"><button (click)="goAppt(item.clinicInfoId)">{{item.count}}/{{item.limit}}</button></span></span></div></td>
-          <td rowspan="3" class="cal-btn-td"><button class="cal-btn" (click)="weekChange(1)" [disabled]="weekPage>=7">下一週</button></td>
-        </tr>
-        <tr>
-          <td><div class="cal-div cal-td">早<br /><span *ngFor="let item of clinicDataObject"><span *ngIf="item.date == dateObjectArr[0].date && item.shift == '午診'"><button (click)="goAppt(item.clinicInfoId)">{{item.count}}/{{item.limit}}</button></span></span></div></td>
-          <td><div class="cal-div cal-td">早<br /><span *ngFor="let item of clinicDataObject"><span *ngIf="item.date == dateObjectArr[1].date && item.shift == '午診'"><button (click)="goAppt(item.clinicInfoId)">{{item.count}}/{{item.limit}}</button></span></span></div></td>
-          <td><div class="cal-div cal-td">早<br /><span *ngFor="let item of clinicDataObject"><span *ngIf="item.date == dateObjectArr[2].date && item.shift == '午診'"><button (click)="goAppt(item.clinicInfoId)">{{item.count}}/{{item.limit}}</button></span></span></div></td>
-          <td><div class="cal-div cal-td">早<br /><span *ngFor="let item of clinicDataObject"><span *ngIf="item.date == dateObjectArr[3].date && item.shift == '午診'"><button (click)="goAppt(item.clinicInfoId)">{{item.count}}/{{item.limit}}</button></span></span></div></td>
-          <td><div class="cal-div cal-td">早<br /><span *ngFor="let item of clinicDataObject"><span *ngIf="item.date == dateObjectArr[4].date && item.shift == '午診'"><button (click)="goAppt(item.clinicInfoId)">{{item.count}}/{{item.limit}}</button></span></span></div></td>
-          <td><div class="cal-div cal-td">早<br /><span *ngFor="let item of clinicDataObject"><span *ngIf="item.date == dateObjectArr[5].date && item.shift == '午診'"><button (click)="goAppt(item.clinicInfoId)">{{item.count}}/{{item.limit}}</button></span></span></div></td>
-          <td><div class="cal-div cal-td">早<br /><span *ngFor="let item of clinicDataObject"><span *ngIf="item.date == dateObjectArr[6].date && item.shift == '午診'"><button (click)="goAppt(item.clinicInfoId)">{{item.count}}/{{item.limit}}</button></span></span></div></td>
-        </tr>
-        <tr>
-          <td><div class="cal-div cal-td">早<br /><span *ngFor="let item of clinicDataObject"><span *ngIf="item.date == dateObjectArr[0].date && item.shift == '晚診'"><button (click)="goAppt(item.clinicInfoId)">{{item.count}}/{{item.limit}}</button></span></span></div></td>
-          <td><div class="cal-div cal-td">早<br /><span *ngFor="let item of clinicDataObject"><span *ngIf="item.date == dateObjectArr[1].date && item.shift == '晚診'"><button (click)="goAppt(item.clinicInfoId)">{{item.count}}/{{item.limit}}</button></span></span></div></td>
-          <td><div class="cal-div cal-td">早<br /><span *ngFor="let item of clinicDataObject"><span *ngIf="item.date == dateObjectArr[2].date && item.shift == '晚診'"><button (click)="goAppt(item.clinicInfoId)">{{item.count}}/{{item.limit}}</button></span></span></div></td>
-          <td><div class="cal-div cal-td">早<br /><span *ngFor="let item of clinicDataObject"><span *ngIf="item.date == dateObjectArr[3].date && item.shift == '晚診'"><button (click)="goAppt(item.clinicInfoId)">{{item.count}}/{{item.limit}}</button></span></span></div></td>
-          <td><div class="cal-div cal-td">早<br /><span *ngFor="let item of clinicDataObject"><span *ngIf="item.date == dateObjectArr[4].date && item.shift == '晚診'"><button (click)="goAppt(item.clinicInfoId)">{{item.count}}/{{item.limit}}</button></span></span></div></td>
-          <td><div class="cal-div cal-td">早<br /><span *ngFor="let item of clinicDataObject"><span *ngIf="item.date == dateObjectArr[5].date && item.shift == '晚診'"><button (click)="goAppt(item.clinicInfoId)">{{item.count}}/{{item.limit}}</button></span></span></div></td>
-          <td><div class="cal-div cal-td">早<br /><span *ngFor="let item of clinicDataObject"><span *ngIf="item.date == dateObjectArr[6].date && item.shift == '晚診'"><button (click)="goAppt(item.clinicInfoId)">{{item.count}}/{{item.limit}}</button></span></span></div></td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="col-md-1">
+    <button class="cal-btn" (click)="weekChange(-1)" [disabled]="weekPage<=0">上一週</button>
   </div>
 
+  <div class="col-md-7">
+
+    <div style="display: inline-flex;">
+      <table class="cal">
+        <thead>
+          <tr>
+            <!--<th></th>-->
+            <th><div class="cal-div cal-th"><span class="cal-date">{{dateObjectArr[0].date}}</span><br /><span class="cal-week">{{dateObjectArr[0].week}}</span></div></th>
+            <th><div class="cal-div cal-th"><span class="cal-date">{{dateObjectArr[1].date}}</span><br /><span class="cal-week">{{dateObjectArr[1].week}}</span></div></th>
+            <th><div class="cal-div cal-th"><span class="cal-date">{{dateObjectArr[2].date}}</span><br /><span class="cal-week">{{dateObjectArr[2].week}}</span></div></th>
+            <th><div class="cal-div cal-th"><span class="cal-date">{{dateObjectArr[3].date}}</span><br /><span class="cal-week">{{dateObjectArr[3].week}}</span></div></th>
+            <th><div class="cal-div cal-th"><span class="cal-date">{{dateObjectArr[4].date}}</span><br /><span class="cal-week">{{dateObjectArr[4].week}}</span></div></th>
+            <th><div class="cal-div cal-th"><span class="cal-date">{{dateObjectArr[5].date}}</span><br /><span class="cal-week">{{dateObjectArr[5].week}}</span></div></th>
+            <th><div class="cal-div cal-th"><span class="cal-date">{{dateObjectArr[6].date}}</span><br /><span class="cal-week">{{dateObjectArr[6].week}}</span></div></th>
+            <!--<th></th>-->
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <!--<td rowspan="3" class="cal-btn-td"><button class="cal-btn" (click)="weekChange(-1)" [disabled]="weekPage<=0">上一週</button></td>-->
+            <td><div class="cal-div cal-td">早<br /><span *ngFor="let item of clinicDataObject"><span *ngIf="item.date == dateObjectArr[0].date && item.shift == '早診'"><button (click)="goAppt(item.clinicInfoId)">{{item.count}}/{{item.limit}}</button></span></span></div></td>
+            <td><div class="cal-div cal-td">早<br /><span *ngFor="let item of clinicDataObject"><span *ngIf="item.date == dateObjectArr[1].date && item.shift == '早診'"><button (click)="goAppt(item.clinicInfoId)">{{item.count}}/{{item.limit}}</button></span></span></div></td>
+            <td><div class="cal-div cal-td">早<br /><span *ngFor="let item of clinicDataObject"><span *ngIf="item.date == dateObjectArr[2].date && item.shift == '早診'"><button (click)="goAppt(item.clinicInfoId)">{{item.count}}/{{item.limit}}</button></span></span></div></td>
+            <td><div class="cal-div cal-td">早<br /><span *ngFor="let item of clinicDataObject"><span *ngIf="item.date == dateObjectArr[3].date && item.shift == '早診'"><button (click)="goAppt(item.clinicInfoId)">{{item.count}}/{{item.limit}}</button></span></span></div></td>
+            <td><div class="cal-div cal-td">早<br /><span *ngFor="let item of clinicDataObject"><span *ngIf="item.date == dateObjectArr[4].date && item.shift == '早診'"><button (click)="goAppt(item.clinicInfoId)">{{item.count}}/{{item.limit}}</button></span></span></div></td>
+            <td><div class="cal-div cal-td">早<br /><span *ngFor="let item of clinicDataObject"><span *ngIf="item.date == dateObjectArr[5].date && item.shift == '早診'"><button (click)="goAppt(item.clinicInfoId)">{{item.count}}/{{item.limit}}</button></span></span></div></td>
+            <td><div class="cal-div cal-td">早<br /><span *ngFor="let item of clinicDataObject"><span *ngIf="item.date == dateObjectArr[6].date && item.shift == '早診'"><button (click)="goAppt(item.clinicInfoId)">{{item.count}}/{{item.limit}}</button></span></span></div></td>
+            <!--<td rowspan="3" class="cal-btn-td"><button class="cal-btn" (click)="weekChange(1)" [disabled]="weekPage>=7">下一週</button></td>-->
+          </tr>
+          <tr>
+            <td><div class="cal-div cal-td">早<br /><span *ngFor="let item of clinicDataObject"><span *ngIf="item.date == dateObjectArr[0].date && item.shift == '午診'"><button (click)="goAppt(item.clinicInfoId)">{{item.count}}/{{item.limit}}</button></span></span></div></td>
+            <td><div class="cal-div cal-td">早<br /><span *ngFor="let item of clinicDataObject"><span *ngIf="item.date == dateObjectArr[1].date && item.shift == '午診'"><button (click)="goAppt(item.clinicInfoId)">{{item.count}}/{{item.limit}}</button></span></span></div></td>
+            <td><div class="cal-div cal-td">早<br /><span *ngFor="let item of clinicDataObject"><span *ngIf="item.date == dateObjectArr[2].date && item.shift == '午診'"><button (click)="goAppt(item.clinicInfoId)">{{item.count}}/{{item.limit}}</button></span></span></div></td>
+            <td><div class="cal-div cal-td">早<br /><span *ngFor="let item of clinicDataObject"><span *ngIf="item.date == dateObjectArr[3].date && item.shift == '午診'"><button (click)="goAppt(item.clinicInfoId)">{{item.count}}/{{item.limit}}</button></span></span></div></td>
+            <td><div class="cal-div cal-td">早<br /><span *ngFor="let item of clinicDataObject"><span *ngIf="item.date == dateObjectArr[4].date && item.shift == '午診'"><button (click)="goAppt(item.clinicInfoId)">{{item.count}}/{{item.limit}}</button></span></span></div></td>
+            <td><div class="cal-div cal-td">早<br /><span *ngFor="let item of clinicDataObject"><span *ngIf="item.date == dateObjectArr[5].date && item.shift == '午診'"><button (click)="goAppt(item.clinicInfoId)">{{item.count}}/{{item.limit}}</button></span></span></div></td>
+            <td><div class="cal-div cal-td">早<br /><span *ngFor="let item of clinicDataObject"><span *ngIf="item.date == dateObjectArr[6].date && item.shift == '午診'"><button (click)="goAppt(item.clinicInfoId)">{{item.count}}/{{item.limit}}</button></span></span></div></td>
+          </tr>
+          <tr>
+            <td><div class="cal-div cal-td">早<br /><span *ngFor="let item of clinicDataObject"><span *ngIf="item.date == dateObjectArr[0].date && item.shift == '晚診'"><button (click)="goAppt(item.clinicInfoId)">{{item.count}}/{{item.limit}}</button></span></span></div></td>
+            <td><div class="cal-div cal-td">早<br /><span *ngFor="let item of clinicDataObject"><span *ngIf="item.date == dateObjectArr[1].date && item.shift == '晚診'"><button (click)="goAppt(item.clinicInfoId)">{{item.count}}/{{item.limit}}</button></span></span></div></td>
+            <td><div class="cal-div cal-td">早<br /><span *ngFor="let item of clinicDataObject"><span *ngIf="item.date == dateObjectArr[2].date && item.shift == '晚診'"><button (click)="goAppt(item.clinicInfoId)">{{item.count}}/{{item.limit}}</button></span></span></div></td>
+            <td><div class="cal-div cal-td">早<br /><span *ngFor="let item of clinicDataObject"><span *ngIf="item.date == dateObjectArr[3].date && item.shift == '晚診'"><button (click)="goAppt(item.clinicInfoId)">{{item.count}}/{{item.limit}}</button></span></span></div></td>
+            <td><div class="cal-div cal-td">早<br /><span *ngFor="let item of clinicDataObject"><span *ngIf="item.date == dateObjectArr[4].date && item.shift == '晚診'"><button (click)="goAppt(item.clinicInfoId)">{{item.count}}/{{item.limit}}</button></span></span></div></td>
+            <td><div class="cal-div cal-td">早<br /><span *ngFor="let item of clinicDataObject"><span *ngIf="item.date == dateObjectArr[5].date && item.shift == '晚診'"><button (click)="goAppt(item.clinicInfoId)">{{item.count}}/{{item.limit}}</button></span></span></div></td>
+            <td><div class="cal-div cal-td">早<br /><span *ngFor="let item of clinicDataObject"><span *ngIf="item.date == dateObjectArr[6].date && item.shift == '晚診'"><button (click)="goAppt(item.clinicInfoId)">{{item.count}}/{{item.limit}}</button></span></span></div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+  <div class="col-md-1">
+    <button class="cal-btn" (click)="weekChange(1)" [disabled]="weekPage>=7">下一週</button>
+  </div>
 </div>
