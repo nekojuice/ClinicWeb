@@ -1,0 +1,14 @@
+﻿<a asp-controller="LoginGoogletest" asp-action="Logingoogle" class="btn btn-primary form-control">google登入</a>
+
+
+@if (Context.User.Identity.IsAuthenticated)
+{
+    <h1>歡迎 @User.Identity.Name</h1>
+
+    <a asp-controller="LoginGoogletest" asp-action="GoogleLogout">登出</a>
+}
+
+
+https://localhost:7071/LoginGoogletest/Logingoogle
+    https://localhost:7071/LoginGoogletest/GoogleResponse
+     https://localhost:7071/LoginGoogletest/GoogleLogout
