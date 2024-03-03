@@ -226,7 +226,6 @@
     <Folder Include="Areas\Member\Data\" />
     <Folder Include="Areas\Member\Models\" />
     <Folder Include="Areas\Room\Data\" />
-    <Folder Include="Areas\Room\Models\" />
     <Folder Include="Areas\Schedule\Data\" />
     <Folder Include="Areas\Schedule\Models\" />
     <Folder Include="Areas\Shop\Data\" />

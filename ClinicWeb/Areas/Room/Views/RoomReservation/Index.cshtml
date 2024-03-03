@@ -1,12 +1,12 @@
-﻿@model IEnumerable<ClinicWeb.Areas.Room.Models.AppointmentRoomSchedule>
+﻿@model IEnumerable<ClinicWeb.Areas.Room.Models.ShowAppointmentRoomSchedule>
 
 <form method="get">
     <div class="form-group">
-        <label for="nurseId">Room:</label>
+        <label for="RoomId">Room:</label>
         <input type="text" name="RoomId" class="form-control" value="" />
     </div>
     <div class="form-group">
-        <label for="nurseId">member:</label>
+        <label for="memberId">Member:</label>
         <input type="text" name="memberId" class="form-control" value="" />
     </div>
     <div class="form-group">
@@ -31,9 +31,13 @@
 <table class="table">
     <thead>
         <tr>
-            <th>Employee</th>
-            <th>Member</th>
-            <th>Room</th>
+            <th>起</th>
+            <th>迄</th>
+            <th>醫生</th>
+            <th>護士</th>
+            <th>患者</th>
+            <th>房名</th>
+
             <!-- Add other columns as needed -->
             <th></th>
         </tr>
@@ -42,9 +46,14 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>@item.Emp.Name</td>
-                <td>@item.Member.Name</td>
-                <td>@item.Room.Name</td>
+                <td>@item.StartDate</td>
+                <td>@item.EndDate</td>
+          
+                <td>@item.DoctorId</td>
+                <td>@item.NurseId</td>
+                <td>@item.MemberName</td>
+                <td>@item.RoomName</td>
+
                 <!-- Add other columns as needed -->
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.AppointmentId">Edit</a> |
