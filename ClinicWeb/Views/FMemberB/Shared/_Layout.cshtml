@@ -1,0 +1,111 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ClinicWeb</title>
+	@await RenderSectionAsync("Styles", required: false)
+	<link href="~/css/bootstrap.min.css" rel="stylesheet" />
+@*     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/ClinicWeb.styles.css" asp-append-version="true" />
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+	<link href="~/css/tiny-slider.css" rel="stylesheet">
+	<link href="~/css/style.css" rel="stylesheet"> *@
+	@await RenderSectionAsync("ModulesStyles", required: false)
+    
+</head>
+<body>
+    <header>
+@* 		<nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
+
+			<div class="container">
+				<a class="navbar-brand" asp-controller="FmemberB" asp-action="MemberIndex"><img src="~/msit155e/images/logo-simply.png" style="height:80px" />會員專區</a>
+
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni" aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+
+				<div class="collapse navbar-collapse" id="navbarsFurni">
+					<ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+						<li><a class="nav-link" asp-controller="FmemberB" asp-action="MemberIndex">會員首頁</a><li/>
+					</ul>
+
+					<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
+						<li><a class="nav-link" asp-controller="ClientPage" asp-action="Index"><img src="~/images/user.svg">登出</a></li>
+					</ul>
+				</div>
+			</div></nav> *@
+
+            <!-- Navbar Start -->
+            <nav class="navbar navbar-expand bg-secondary navbar-dark sticky-top px-4 py-0">
+            <a asp-action="MemberIndex"><img src="~/images/logo.png" style="height:60px;width:80px;" alt="logo"/>
+                </a>
+            <div class="navbar nav_title" style="border:0;color:#ffffff">
+                會員專區
+            </div>
+                <div class="navbar-nav align-items-center ms-auto">
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown" data-bs-toggle="dropdown">
+                        <img class="rounded-circle me-lg-2" src="~/images/user.svg" style="width: 40px; height: 40px;">
+                        <span class="d-none d-lg-inline-flex">會員資訊</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
+                        <a href="#" class="dropdown-item">基本資訊</a>
+                    </div>
+                </div>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown" data-bs-toggle="dropdown">
+                        <img class="rounded-circle me-lg-2" src="~/images/support.svg"style="width: 40px; height: 40px;">
+                        <span class="d-none d-lg-inline-flex">紀錄查詢</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
+                        <a href="#" class="dropdown-item">基本資訊</a>
+                    </div>
+                </div>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown" data-bs-toggle="dropdown">
+                        <img class="rounded-circle me-lg-2" src="~/images/post-1.jpg" style="width: 40px; height: 40px;">
+                        <span class="d-none d-lg-inline-flex">掛號查詢</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
+                        <a href="#" class="dropdown-item">基本資訊</a>
+                    </div>
+                </div>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown" data-bs-toggle="dropdown">
+                        <img class="rounded-circle me-lg-2" src="~/images/post-1.jpg" style="width: 40px; height: 40px;">
+                        <span class="d-none d-lg-inline-flex">評價系統</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
+                        <a href="#" class="dropdown-item">基本資訊</a>
+                    </div>
+                </div>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                            <img class="rounded-circle me-lg-2" src="~/images/person_1.jpg" alt="" style="width: 40px; height: 40px;">
+                            <span class="d-none d-lg-inline-flex">John Doe</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
+                            <a href="#" class="dropdown-item">登出</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <!-- Navbar End -->
+    </header>
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+
+	<footer>
+		<div class="row">
+			<div class="col-md-4 offset-md-10"><p>© 2024 寶育婦幼診所</p></div>
+		</div>
+				
+	</footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+@*     <script src="~/js/site.js" asp-append-version="true"></script> *@
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

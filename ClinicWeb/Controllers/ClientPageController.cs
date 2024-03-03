@@ -24,6 +24,14 @@ namespace ClinicWeb.Controllers
         {
             _context = context;
         }
+        public IActionResult Example()
+        {
+            return View();
+        }
+		public IActionResult Essence() 
+		{
+			return View();
+		}
 
 		[AllowAnonymous]
 		public IActionResult Index()
