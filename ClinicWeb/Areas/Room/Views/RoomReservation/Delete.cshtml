@@ -1,0 +1,19 @@
+﻿@model ClinicWeb.Areas.Room.Models.AppointmentRoomSchedule
+
+<div>
+    <h4>你確定要刪除嗎?</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Emp.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Emp.Name)
+        </dd>
+        <!-- Add other fields as needed -->
+    </dl>
+    <form asp-action="Delete" asp-route-id="@Model.AppointmentId" method="post">
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>
