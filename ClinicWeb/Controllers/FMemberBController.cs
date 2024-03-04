@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using NuGet.Protocol.Plugins;
 
 namespace ClinicWeb.Controllers
 {
@@ -8,5 +9,12 @@ namespace ClinicWeb.Controllers
         {
             return View();
         }
+
+        public IActionResult MemberProfile()
+        {
+            return PartialView("~/Views/FMemberB/PartialView/_MemberProfilePartial.cshtml");
+        }
     }
+
+
 }
