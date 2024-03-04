@@ -27,11 +27,11 @@ public partial class ClinicSysContext : DbContext
     {
         modelBuilder.Entity<AppointmentRoomSchedule>(entity =>
         {
-            entity.HasOne(d => d.Emp).WithMany(p => p.AppointmentRoomSchedule)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Appointment_Room_Schedule_Member_EmployeeList");
+            entity.HasOne(d => d.Doctor).WithMany(p => p.AppointmentRoomScheduleDoctor).HasConstraintName("FK_Appointment_Room_Schedule_Member_EmployeeList1");
 
             entity.HasOne(d => d.Member).WithMany(p => p.AppointmentRoomSchedule).HasConstraintName("FK_Appointment_Room_Schedule_Member_MemberList");
+
+            entity.HasOne(d => d.Nurse).WithMany(p => p.AppointmentRoomScheduleNurse).HasConstraintName("FK_Appointment_Room_Schedule_Member_EmployeeList2");
 
             entity.HasOne(d => d.Room).WithMany(p => p.AppointmentRoomSchedule).HasConstraintName("FK_Appointment_Room_Schedule_RoomList");
         });
