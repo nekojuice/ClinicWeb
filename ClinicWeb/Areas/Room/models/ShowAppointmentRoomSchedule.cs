@@ -28,14 +28,14 @@ namespace ClinicWeb.Areas.Room.Models
 
         [ForeignKey("EmpId")]
         [InverseProperty("AppointmentRoomSchedule")]
-        public virtual MemberEmployeeList Emp { get; set; }
+        public virtual MemberEmployeeList? Emp { get; set; }
 
         [ForeignKey("MemberId")]
         [InverseProperty("AppointmentRoomSchedule")]
-        public virtual MemberMemberList Member { get; set; }
+        public virtual MemberMemberList? Member { get; set; }
 
         [ForeignKey("RoomId")]
         [InverseProperty("AppointmentRoomSchedule")]
-        public virtual RoomList Room { get; set; }
+        public virtual RoomList? Room { get; set; }
     }
 }
