@@ -1,0 +1,38 @@
+﻿html {
+    background-color: rgb(231,231,231);
+}
+a.navbar-brand {
+    color:navy;
+    font-weight:bold;
+}
+    a.navbar-brand:hover {
+        color: navy;
+        font-weight: bold;
+    }
+
+body {
+    height: 100%;
+    width: 80%;
+    margin: auto;
+    box-shadow: 0px 2px 20px rgba(1, 41, 112, 0.1);
+}
+
+footer {
+    bottom: 0;
+    position: fixed;
+    width: 80%;
+    height: 45px;
+    text-align: right;
+    box-shadow: 0px 2px 20px rgba(1, 41, 112, 0.1);
+    background-color: #e6f5f7;
+}
+
+    footer p {
+        line-height: 50px;
+        margin-right: 2%;
+    }
+
+.nkj-main {
+    margin: 30px;
+    padding: 20px;
+}
