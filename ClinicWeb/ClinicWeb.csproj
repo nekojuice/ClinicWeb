@@ -31,6 +31,8 @@
 
   <ItemGroup>
     <None Include="bundleconfig.json" />
+    <None Include="wwwroot\vendors\bootstrap-icons\bootstrap-icons.scss" />
+    <None Include="wwwroot\vendors\bootstrap-icons\fonts\bootstrap-icons.woff2" />
     <None Include="wwwroot\vendors\bootstrap\.github\CODEOWNERS" />
     <None Include="wwwroot\vendors\bootstrap\.github\CONTRIBUTING.md" />
     <None Include="wwwroot\vendors\bootstrap\.github\ISSUE_TEMPLATE\bug.md" />
