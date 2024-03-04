@@ -250,7 +250,6 @@
     <Folder Include="wwwroot\msit155e\js\Attend\" />
     <Folder Include="wwwroot\msit155e\js\Drugs\" />
     <Folder Include="wwwroot\msit155e\js\Room\" />
-    <Folder Include="wwwroot\msit155e\js\Schedule\" />
     <Folder Include="wwwroot\msit155e\js\Shop\" />
   </ItemGroup>
 
