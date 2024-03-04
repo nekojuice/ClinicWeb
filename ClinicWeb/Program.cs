@@ -182,6 +182,19 @@ builder.Services.AddAuthorization(o =>
 //    options.Filters.Add(new AuthorizeFilter());
 //});
 
+//允許angular4200
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: "AngularAccess",
+                      policy =>
+                      {
+                          policy
+                          .AllowAnyMethod()
+                          .AllowAnyHeader()
+                          .WithOrigins("http://localhost:4200");
+                      });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -200,6 +213,9 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+//允許angular4200
+app.UseCors("AngularAccess");
 
 //順序要一樣
 app.UseCookiePolicy();
