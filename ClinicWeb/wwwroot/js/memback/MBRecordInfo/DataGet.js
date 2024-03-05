@@ -1,7 +1,6 @@
 ﻿//獲得主要病歷表資料
 var CASE_ID = 1;
 (() => {
-getRecord(CASE_ID);
     $('#recordDataTable').DataTable({
         columns: [
             { title: "看診紀錄ID", data: "recordID", visible: false },
@@ -19,6 +18,7 @@ getRecord(CASE_ID);
             url: "https://cdn.datatables.net/plug-ins/1.13.7/i18n/zh-HANT.json"
         }
     });
+    getRecord(CASE_ID);
 });
 async function getCase(id) {
     const response = await fetch(`/ClinicRoomSys/Cases/GM/${id}`, { method: "POST" })
