@@ -31,3 +31,4 @@ function clearForm(_selector) {
     //清除出現的警告訊息
     $('.text-danger').text('');
 }
+

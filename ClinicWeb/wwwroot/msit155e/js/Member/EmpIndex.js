@@ -135,6 +135,22 @@ $("#newEmpbtn").on('click', async function () {
 
     //保定
     rebindAll_create()
+  
+    //為了顯示新增員工頁面的圖片預覽
+    document.querySelector('.card').addEventListener('click', function () {
+        document.getElementById('imageUpload').click();
+    });
+
+    document.getElementById('imageUpload').addEventListener('change', function () {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            var previewImage = document.getElementById('previewImage');
+            previewImage.src = e.target.result;
+            previewImage.style.display = 'block'; // 顯示預覽圖片
+        };
+        reader.readAsDataURL(this.files[0]);
+    });
+
 })
 
 function rebindAll_create() {
@@ -360,5 +376,9 @@ async function buttonEventFunc() {
         $('#empdatatable').DataTable().page(currentPage).draw('page')
 
     });
+
+    
+
+   
 }
 
