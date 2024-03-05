@@ -1,5 +1,5 @@
 ﻿(async () => {
-    const response = await fetch("WeekSchedule/Get_WeekSchedule/小兒科")
+    const response = await fetch("WeekSchedule/Get_WeekSchedule/婦產科")
     const data = await response.json()
     
 
@@ -16,7 +16,7 @@
 })();
 
 (async () => {
-    const response = await fetch("WeekSchedule/Get_WeekSchedule/婦產科")
+    const response = await fetch("WeekSchedule/Get_WeekSchedule/小兒科")
     const data = await response.json()
 
     //週迴圈
