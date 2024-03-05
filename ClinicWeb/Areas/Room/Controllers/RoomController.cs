@@ -22,7 +22,7 @@ namespace ClinicWeb.Areas.Room.Controllers
 
 
 
-    
+
 
         public IActionResult Index()
         {
@@ -61,14 +61,18 @@ namespace ClinicWeb.Areas.Room.Controllers
         }
 
         // GET: Room/AppointmentRoomSchedules/Create
+
         public IActionResult Create()
         {
-            ViewData["DoctorId"] = new SelectList(_context.MemberEmployeeList, "EmpId", "Address");
-            ViewData["MemberId"] = new SelectList(_context.MemberMemberList, "MemberId", "Address");
-            ViewData["NurseId"] = new SelectList(_context.MemberEmployeeList, "EmpId", "Address");
-            ViewData["RoomId"] = new SelectList(_context.RoomList, "RoomId", "RoomId");
+            ViewBag.RoomId = new SelectList(_context.RoomList, "RoomId", "Name");
+            ViewBag.MemberId = new SelectList(_context.MemberMemberList, "MemberId", "Name");
+            ViewBag.DoctorId = new SelectList(_context.MemberEmployeeList.Where(x => x.EmpType == "醫生"), "EmpId", "Name");
+            ViewBag.NurseId = new SelectList(_context.MemberEmployeeList.Where(x => x.EmpType == "護士"), "EmpId", "Name");
             return View();
         }
+
+
+
 
         // POST: Room/AppointmentRoomSchedules/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -171,29 +175,25 @@ namespace ClinicWeb.Areas.Room.Controllers
             return View(appointmentRoomSchedule);
         }
 
-        // POST: Room/AppointmentRoomSchedules/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_context.AppointmentRoomSchedule == null)
-            {
-                return Problem("Entity set 'ClinicSysContext.AppointmentRoomSchedule'  is null.");
-            }
-            var appointmentRoomSchedule = await _context.AppointmentRoomSchedule.FindAsync(id);
-            if (appointmentRoomSchedule != null)
-            {
-                _context.AppointmentRoomSchedule.Remove(appointmentRoomSchedule);
-            }
+       [HttpPost]
+[ValidateAntiForgeryToken]
+public async Task<IActionResult> DeleteConfirmed(int id)
+{
+    var appointmentRoomSchedule = await _context.AppointmentRoomSchedule.FindAsync(id);
+    if (appointmentRoomSchedule == null)
+    {
+        return NotFound();
+    }
 
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+    _context.AppointmentRoomSchedule.Remove(appointmentRoomSchedule);
+    await _context.SaveChangesAsync();
+    return RedirectToAction(nameof(Index));
+}
 
-        private bool AppointmentRoomScheduleExists(int id)
-        {
-            return (_context.AppointmentRoomSchedule?.Any(e => e.AppointmentId == id)).GetValueOrDefault();
-        }
+private bool AppointmentRoomScheduleExists(int id)
+{
+    return _context.AppointmentRoomSchedule.Any(e => e.AppointmentId == id);
+}
 
     }
 
