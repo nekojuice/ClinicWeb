@@ -11,6 +11,7 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using NuGet.Protocol;
 using System.Security.Claims;
+using System.Text;
 
 namespace ClinicWeb.Controllers
 {
@@ -28,13 +29,13 @@ namespace ClinicWeb.Controllers
         {
             return View();
         }
-		public IActionResult Essence() 
-		{
-			return View();
-		}
+        public IActionResult Essence()
+        {
+            return View();
+        }
 
-		[AllowAnonymous]
-		public IActionResult Index()
+        [AllowAnonymous]
+        public IActionResult Index()
         {
             return View();
         }
@@ -59,28 +60,28 @@ namespace ClinicWeb.Controllers
             return View();
         }
 
-		[AllowAnonymous]
-		public IActionResult Login()
-		{
-			if (HttpContext.User.Identity.IsAuthenticated)
+        [AllowAnonymous]
+        public IActionResult Login()
+        {
+            if (HttpContext.User.Identity.IsAuthenticated)
 
-                //考慮寫成claims.count===0
-			{
+            //考慮寫成claims.count===0
+            {
                 //未來會加上會員中心畫面以及個人資料
-				return Content("現在是登入狀態喔");
-			}
-			else
-			{
-				return View("~/Views/ClientPage/Login/ClientLogin.cshtml");
-			}
-		}
+                return Content("現在是登入狀態喔");
+            }
+            else
+            {
+                return View("~/Views/ClientPage/Login/ClientLogin.cshtml");
+            }
+        }
 
         [AllowAnonymous]
         public IActionResult LoginTest()
         {
-           
-                return View("~/Views/ClientPage/Login/ClientLogin.cshtml");
-            
+
+            return View("~/Views/ClientPage/Login/ClientLogin.cshtml");
+
         }
 
         [AllowAnonymous]
@@ -130,6 +131,9 @@ namespace ClinicWeb.Controllers
                 };
                 var claimsIdentity = new ClaimsIdentity(claims, "frontendForCustomer");   //注意!!!
                 HttpContext.SignInAsync("frontend", new ClaimsPrincipal(claimsIdentity));    //注意!!!
+
+                //JWT擴充區塊 20240305-1532
+                //SymmetricSecurityKey securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
             }
 
             //return Content("你是會員 登入成功了 喔喔");
@@ -167,8 +171,8 @@ namespace ClinicWeb.Controllers
         {
             try
             {
-            HttpContext.SignOutAsync("frontend");
-            HttpContext.SignOutAsync();
+                HttpContext.SignOutAsync("frontend");
+                HttpContext.SignOutAsync();
             }
             catch (Exception)
             {

@@ -12,6 +12,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using NuGet.Protocol;
+using Microsoft.AspNetCore.Authentication.Negotiate;
 
 var builder = WebApplication.CreateBuilder(args);
 var Server = builder.Configuration["ClinicSys:Server"];
@@ -128,7 +129,15 @@ builder.Services.AddAuthentication()
 		options.ClientId = con["Authentication:Google:ClientId"];
         options.ClientSecret = con["Authentication:Google:ClientSecret"];
         options.ClaimActions.MapJsonKey("urn:google:picture", "picture", "url");
-    });
+    })
+    .AddJwtBearer("Angular", option =>
+    {
+        //等待插入JWT驗證
+        option.ForwardForbid = new PathString("https://localhost:7071/ClientPage/Login"); //登入
+        option.ForwardSignIn = new PathString("https://localhost:7071/ClientPage/Login"); //登入
+        option.ForwardSignOut= new PathString("https://localhost:7071/ClientPage"); //外面首頁
+    })
+    ;
 
 
 

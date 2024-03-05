@@ -27,9 +27,30 @@
 				<th>
 					看診狀態
 				</th>
+				<th>
+					取消
+				</th>
 			</tr>
 		</thead>
 		<tbody>
 		</tbody>
 	</table>
+</div>
+
+<div class="modal fade" id="cancelApptModal" tabindex="-1" aria-labelledby="cancelApptModallLabel" aria-hidden="true" data-backdrop="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="modal-title" id="cancelApptModallLabel">確認取消掛號?</h3>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<p>取消掛號將放棄原本看診順位。<br />如需看診，請重新掛號。</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">返回</button>
+				<button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="confirmCancelBtnOnclick()">退掛</button>
+			</div>
+		</div>
+	</div>
 </div>

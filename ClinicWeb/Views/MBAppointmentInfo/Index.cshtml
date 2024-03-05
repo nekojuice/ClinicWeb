@@ -1,5 +1,7 @@
 ﻿@section Styles
 {
+    <!-- iCheck -->
+    <link href="~/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
     <!-- Datatables -->
 
     <link href="~/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
@@ -8,10 +10,19 @@
     <link href="~/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
     <link href="~/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
 
+    <!-- PNotify -->
+    <link href="~/vendors/pnotify/dist/pnotify.css" rel="stylesheet">
+    <link href="~/vendors/pnotify/dist/pnotify.buttons.css" rel="stylesheet">
+    <link href="~/vendors/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">
+
     <!-- 自訂: 更新後顏色閃爍 -->
     <link href="~/msit155e/css/appointment/extension_datachanged_coloranimate.css" rel="stylesheet" />
 
     <link href="~/msit155e/css/cases/responsivetable.css" rel="stylesheet" />
+}
+
+@{
+    ViewData["Title"] = "掛號查詢";
 }
 
 <div class="row d-flex align-items-start">
@@ -57,6 +68,8 @@
 
 @section Scripts
 {
+    <!-- iCheck -->
+    <script src="~/vendors/iCheck/icheck.min.js"></script>
     <!-- Datatables -->
     <script src="~/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
     @* <script src="~/lib/datatables/js/jquery.datatables.min.js"></script> *@
@@ -78,8 +91,19 @@
     <!-- datatable jumptodata -->
     <script src="https://cdn.datatables.net/plug-ins/1.13.7/api/page.jumpToData().js" asp-fallback-src="~/lib/page.jumptodata().js"></script>
 
+    <!-- PNotify -->
+    <script src="~/vendors/pnotify/dist/pnotify.js"></script>
+    <script src="~/vendors/pnotify/dist/pnotify.buttons.js"></script>
+    <script src="~/vendors/pnotify/dist/pnotify.nonblock.js"></script>
+
     <!-- 自訂: 更新後顏色閃爍 -->
     <script src="~/msit155e/js/appointment/extension_datachanged_coloranimate.js"></script>
+
+    <script>
+        const __checkLoginURL = '@Url.Content("~/MBAppointmentInfo/Get_MemberStatus")'
+        const __getApptListURL = '@Url.Content("~/MBAppointmentInfo/Get_MemberAppt")'
+        const __cancelApptURL = '@Url.Content("~/MBAppointmentInfo/Put_CancelMemberAppt")'
+    </script>
 
     <script src="~/msit155e/js/appointmentsearch/apptsearch.js"></script>
 }

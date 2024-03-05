@@ -28,6 +28,7 @@ namespace ClinicWeb.Areas.Appointment.Controllers
                 .Distinct());
 
             ViewBag.Department = new SelectList(_context.MemberEmployeeList
+                .Where(x => x.Department != "門診" && !string.IsNullOrEmpty(x.Department))
                 .Select(x => x.Department)
                 .Distinct());
 

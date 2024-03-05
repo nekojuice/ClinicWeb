@@ -10,8 +10,8 @@ export class FapptRowComponent {
   constructor(private Client: HttpClient) { }
   @Input() dataInput: any;
 
-  /*todayDate: Date = new Date();*/
-  todayDate: Date = new Date('2024/2/1'); //暫時寫死
+  todayDate: Date = new Date();
+  //todayDate: Date = new Date('2024/2/1'); //暫時寫死
 
   weekPage: number = 0;
 
