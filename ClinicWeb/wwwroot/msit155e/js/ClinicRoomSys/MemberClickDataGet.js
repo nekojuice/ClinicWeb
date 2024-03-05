@@ -1,4 +1,5 @@
 ﻿//獲得主要病歷表資料
+var CASE_ID;
 async function getCase(id) {
     const response = await fetch(`/ClinicRoomSys/Cases/GM/${id}`, { method: "POST" })
     const data = await response.json();
