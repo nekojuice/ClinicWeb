@@ -67,7 +67,8 @@ namespace ClinicWeb.Controllers
                 //考慮寫成claims.count===0
 			{
                 //未來會加上會員中心畫面以及個人資料
-				return Content("現在是登入狀態喔");
+                return View("~/Views/FMemberB/MemberIndex.cshtml");
+                //return Content("現在是登入狀態喔");
 			}
 			else
 			{
