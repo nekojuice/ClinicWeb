@@ -1,10 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ClinicWeb.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace ClinicWeb.Controllers
 {
     public class MBRecordInfoController : Controller
     {
+        private readonly ClinicSysContext _context;
+        public MBRecordInfoController(ClinicSysContext context)
+        {
+            _context = context;
+        }
         public IActionResult Index()
         {
             return View();
@@ -35,7 +41,7 @@ namespace ClinicWeb.Controllers
                     ReportID = x.ReportId,
                     TestName = x.TestName,
                     TestDate = x.TestDate.ToString("yyyy-MM-dd"),
-                    ReportDate = x.ReportDate.ToString("yyyy-MM-dd"),
+                    ReportDate = x.ReportDate.ToString(),
                     Result = x.Result,
                 })
                 );
