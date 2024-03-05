@@ -36,8 +36,9 @@
 
 					<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
 						<li><a class="nav-link" asp-controller="ClientPage" asp-action="Login"><img src="~/images/user.svg"></a></li>
-						<li><a class="nav-link" href="cart.html"><img src="~/images/cart.svg"></a></li>
-						<li><a class="nav-link" asp-controller="ClientPage" asp-action="Logout">要登出的話點我</a></li>
+						
+
+						<partial name="_LoginPartial.cshtml"/>
 					</ul>
 				</div>
 			</div>

@@ -123,6 +123,7 @@ namespace ClinicWeb.Controllers
                 var claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.Email, user.MemEmail.ToString()),
+                       new Claim(ClaimTypes.Name, user.Name),
                     new Claim("MemberNumber", user.MemberNumber.ToString()),
                      new Claim("MemberName", user.Name),
                       new Claim("MemberID", user.MemberId.ToString()),
