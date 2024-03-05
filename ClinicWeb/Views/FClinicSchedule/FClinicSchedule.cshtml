@@ -3,25 +3,55 @@
 *@
 @{
 }
+<style>
+    td {
+        text-align: center; /* 文字水平置中 */
+        vertical-align: middle; /* 文字垂直置中 */
+        white-space: pre; /* 保留空白容量 */
+    }
+    th {
+        text-align: center; /* 文字水平置中 */
+        vertical-align: middle; /* 文字垂直置中 */
+        background-color: #083d63;
+        font-size:15px;
+        color: #fff;
+    }
 
+    table th, table td, table tr {
+        border: 2px solid gray;
+        padding: 10px;
+    }
+ table caption{
+  background-color: #083d63;
+  color:#fff;
+  border:2px solid gray;
+  border-bottom:none;
+  padding:10px;
+}
+
+</style>
 
 <div id="comp-lfkudben" style="margin-top:30px"><h1 style="text-align:center; font-size:47px;"><span style="letter-spacing:0.3em;">門診表</span></h1></div>
-<table style="border: solid">
+<div class="container-fluid" style="display:flex; flex-wrap:wrap; justify-content:center; margin:30px; border:3px dashed; width:fit-content; margin:0 auto;">
+
+<table style="border: solid; margin:10px">
+        <caption style="caption-side:top; text-align:center; font-size:30px">小兒科</caption>
+      
     <thead>
         <tr>
             <th></th>
-            <th st>日</th>
-            <th>一</th>
-            <th>二</th>
-            <th>三</th>
-            <th>四</th>
-            <th>五</th>
-            <th>六</th>
+            <th scope="col">日</th>
+            <th scope="col">一</th>
+            <th scope="col">二</th>
+            <th scope="col">三</th>
+            <th scope="col">四</th>
+            <th scope="col">五</th>
+            <th scope="col">六</th>
         </tr>
     </thead>
     <tbody id="department1">
         <tr id="morning">
-            <td>早診</td>
+            <th scope="row">早診<br />09:00~12:30</th>
             <td></td>
             <td></td>
             <td></td>
@@ -32,7 +62,7 @@
         </tr>
 
         <tr id="noon">
-            <td>午診</td>
+            <th scope="row">午診<br />13:30~17:00</th>
             <td></td>
             <td></td>
             <td></td>
@@ -43,7 +73,7 @@
         </tr>
 
         <tr id="night">
-            <td>晚診</td>
+            <th scope="row">晚診<br />18:00~21:30</th>
             <td></td>
             <td></td>
             <td></td>
@@ -55,7 +85,8 @@
     </tbody>
 </table>
 
-<table style="border: solid">
+    <table style="border: solid;margin:10px">
+        <caption style="caption-side:top; text-align:center; font-size:30px">婦產科</caption>
     <thead>
         <tr>
             <th></th>
@@ -70,7 +101,7 @@
     </thead>
     <tbody id="department2">
         <tr id="morning">
-            <td>早診</td>
+            <th scope="row">早診<br />09:00~12:30</th>
             <td></td>
             <td></td>
             <td></td>
@@ -81,7 +112,7 @@
         </tr>
 
         <tr id="noon">
-            <td>午診</td>
+            <th scope="row">午診<br />13:30~17:00</th>
             <td></td>
             <td></td>
             <td></td>
@@ -92,7 +123,7 @@
         </tr>
 
         <tr id="night">
-            <td>晚診</td>
+             <th scope="row">晚診<br />18:00~21:30</th>
             <td></td>
             <td></td>
             <td></td>
@@ -103,6 +134,7 @@
         </tr>
     </tbody>
 </table>
+</div>
 
 
 

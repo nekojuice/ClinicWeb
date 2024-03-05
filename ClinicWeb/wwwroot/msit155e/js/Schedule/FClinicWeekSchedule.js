@@ -1,5 +1,5 @@
 ﻿(async () => {
-    const response = await fetch("/Controllers/ScheduleAPI/WeekScheduleController/Get_WeekSchedule/小兒科")
+    const response = await fetch("WeekSchedule/Get_WeekSchedule/小兒科")
     const data = await response.json()
     
 
@@ -16,7 +16,7 @@
 })();
 
 (async () => {
-    const response = await fetch("/Controllers/ScheduleAPI/WeekScheduleController/Get_WeekSchedule/婦產科")
+    const response = await fetch("WeekSchedule/Get_WeekSchedule/婦產科")
     const data = await response.json()
 
     //週迴圈
@@ -31,7 +31,7 @@
 
 })();
 function cardBuilder(doctor, room) {
-    return `<div style="border: dashed;"><h5>${doctor}</h5><h6>${room}</h6></div>`
+    return `<div style="border:1px solid; border-radius:15px ; padding:5px"><span style="font-size:20px; color:#083d63; font-weight:bold">${doctor}</span><h6 style="color:#083d63">${room}</h6></div>`
 }
 function tableBuilder(data, index, shiftChinese, shift_tr_id, department_tbody_id) {
     if (data[index].hasOwnProperty(shiftChinese)) {
