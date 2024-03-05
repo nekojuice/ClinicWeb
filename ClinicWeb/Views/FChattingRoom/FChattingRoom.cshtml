@@ -132,38 +132,21 @@
 
             <div class="col-md-6 col-lg-7 col-xl-8">
 
-                <ul class="list-unstyled">
-                    <li class="d-flex justify-content-between mb-4">
-                        <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp" alt="avatar"
-                             class="rounded-circle d-flex align-self-start me-3 shadow-1-strong" width="60">
+                <ul class="list-unstyled" id="messageList" style="max-height: 400px; overflow-y: auto;">
+                    <li class="d-flex justify-content-between mb-4" id="msginsert">
+
                         <div class="card">
                             <div class="card-header d-flex justify-content-between p-3">
                                 <p class="fw-bold mb-0">Brad Pitt</p>
-                                <p class="text-muted small mb-0"><i class="far fa-clock"></i> 12 mins ago</p>
+                                <p class="text-muted small mb-0"><i class="far fa-clock"></i> 10 mins ago</p>
                             </div>
                             <div class="card-body">
-                                <p class="mb-0">
+                                <p class="mb-0" id="msgshow">
                                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
                                     labore et dolore magna aliqua.
                                 </p>
                             </div>
                         </div>
-                    </li>
-                    <li class="d-flex justify-content-between mb-4">
-                        <div class="card w-100">
-                            <div class="card-header d-flex justify-content-between p-3">
-                                <p class="fw-bold mb-0">Lara Croft</p>
-                                <p class="text-muted small mb-0"><i class="far fa-clock"></i> 13 mins ago</p>
-                            </div>
-                            <div class="card-body">
-                                <p class="mb-0">
-                                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-                                    laudantium.
-                                </p>
-                            </div>
-                        </div>
-                        <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-5.webp" alt="avatar"
-                             class="rounded-circle d-flex align-self-start ms-3 shadow-1-strong" width="60">
                     </li>
                     <li class="d-flex justify-content-between mb-4">
 
@@ -173,22 +156,21 @@
                                 <p class="text-muted small mb-0"><i class="far fa-clock"></i> 10 mins ago</p>
                             </div>
                             <div class="card-body">
-                                <p class="mb-0">
+                                <p class="mb-0" id="msgshow">
                                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
                                     labore et dolore magna aliqua.
                                 </p>
                             </div>
                         </div>
                     </li>
-                    <li class="bg-white mb-3">
-                        <div class="form-outline">
-                            <label class="form-label" for="textAreaExample2">輸入訊息</label>
-                            <textarea class="form-control" id="textBig" rows="4"></textarea>
-                        </div>
-                    </li>
-                    <button type="button" class="btn btn-info btn-rounded float-end">送出</button>
                 </ul>
-
+                <div class="bg-white mb-3">
+                    <div class="form-outline">
+                        <label class="form-label" for="textAreaExample2">輸入訊息</label>
+                        <textarea class="form-control" id="textBig" rows="4"></textarea>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-info btn-rounded float-end">送出</button>
             </div>
 
         </div>
@@ -202,8 +184,6 @@
                 </div>
                 <div class="chat-body">
                     <div class="msg-insert">
-                        <div class="msg-send"> 回復 </div>
-                        <div class="msg-receive"> 訊息</div>
                     </div>
                     <div class="chat-text">
                         <textarea id="text" placeholder="發送"></textarea>
@@ -218,25 +198,57 @@
     <link href="~/css/chatroom.css" rel="stylesheet" />
     <script>
         //大聊天室
+        // document.getElementById("textBig").addEventListener("keydown", function (event) {
+        //     if (event.keyCode === 13) { // 檢查按下的按鍵是否是 Enter（keyCode 13）
+        //         var msg = textarea.value.trim();
+
+        //         if (msg !== '') {
+        //             // 清空 textarea
+        //             textarea.value = '';
+
+        //             // 在 .msg-insert 的最前面插入一個包含輸入內容的 div 元素
+        //             var msgDiv = document.createElement('div');
+        //             msgDiv.textContent = msg;
+
+        //             var msgInsert = document.getElementById('msginsert');
+        //             msgInsert.insertBefore(msgDiv, msgInsert.firstChild);
+        //         }
+
+        //         // 防止換行
+        //         event.preventDefault();
+        //     }
+        // });
+
+        function sendMessage() {
+            var msg = document.getElementById("textBig").value.trim();
+
+            if (msg !== '') {
+                // 清空 textarea
+                document.getElementById("textBig").value = '';
+
+                // 創建新的 li 元素
+                var newLi = document.createElement('li');
+                newLi.className = 'd-flex justify-content-between mb-4';
+
+                // 複製卡片內容
+                var cardContent = document.querySelector('#msginsert .card').cloneNode(true);
+                cardContent.querySelector('#msgshow').textContent = msg;
+
+                // 將內容插入新卡片
+                newLi.appendChild(cardContent);
+
+                // 將新卡片插入到列表中
+                var messageList = document.getElementById("messageList");
+                messageList.insertBefore(newLi, messageList.lastChild);
+
+                messageList.scrollTop = messageList.scrollHeight;
+            }
+        }
+
         document.getElementById("textBig").addEventListener("keydown", function (event) {
             if (event.keyCode === 13) { // 檢查按下的按鍵是否是 Enter（keyCode 13）
-                var msg = textarea.value.trim();
-
-                if (msg !== '') {
-                    // 清空 textarea
-                    textarea.value = '';
-
-                    // 在 .msg-insert 的最前面插入一個包含輸入內容的 div 元素
-                    var msgDiv = document.createElement('div');
-                    msgDiv.className = 'msg-send';
-                    msgDiv.textContent = msg;
-
-                    var msgInsert = document.querySelector('.msg-insert');
-                    msgInsert.insertBefore(msgDiv, msgInsert.firstChild);
-                }
-
-                // 防止換行
                 event.preventDefault();
+                sendMessage();
             }
         });
 
@@ -267,7 +279,14 @@
             textarea.addEventListener('keypress', function (event) {
                 if (event.keyCode === 13) { // 檢查按下的按鍵是否是 Enter（keyCode 13）
                     var msg = textarea.value.trim();
-
+                    var currentTime = new Date();
+                    var hours = currentTime.getHours();
+                    var minutes = currentTime.getMinutes();
+                    var amOrPm = hours >= 12 ? '下午' : '上午';
+                    hours = hours % 12;
+                    hours = hours ? hours : 12; // 將 0 轉換為 12
+                    var formattedTime = amOrPm + '  ' + hours + ':' + (minutes < 10 ? '0' : '') + minutes;
+                    
                     if (msg !== '') {
                         // 清空 textarea
                         textarea.value = '';
@@ -277,8 +296,15 @@
                         msgDiv.className = 'msg-send';
                         msgDiv.textContent = msg;
 
+                        // 建立包含時間的 div 元素
+                        var timeDiv = document.createElement('div');
+                        timeDiv.className = 'msg-time';
+                        timeDiv.textContent = formattedTime;
+
                         var msgInsert = document.querySelector('.msg-insert');
-                        msgInsert.insertBefore(msgDiv, msgInsert.firstChild);
+                        msgInsert.appendChild(timeDiv, msgInsert.lastChild);
+                        msgInsert.appendChild(msgDiv, msgInsert.lastChild);
+                        
                     }
 
                     // 防止換行
