@@ -31,7 +31,7 @@
 
 })();
 function cardBuilder(doctor, room) {
-    return `<div style="border:1px solid; border-radius:15px ; padding:5px"><span style="font-size:20px; color:#083d63; font-weight:bold">${doctor}</span><h6 style="color:#083d63">${room}</h6></div>`
+    return `<div style="border:1px solid; border-radius:15px ; padding:5px; margin:10px"><span style="font-size:20px; color:#083d63; font-weight:bold">${doctor}</span><h6 style="color:#083d63">${room}</h6></div>`
 }
 function tableBuilder(data, index, shiftChinese, shift_tr_id, department_tbody_id) {
     if (data[index].hasOwnProperty(shiftChinese)) {
