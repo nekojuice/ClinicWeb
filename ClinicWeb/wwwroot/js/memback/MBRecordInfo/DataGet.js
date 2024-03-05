@@ -3,6 +3,7 @@ var CASE_ID = 1;
 (() => {
     getRecord(CASE_ID);
     getReport(CASE_ID);
+    getPrescription(CASE_ID);
 })();
 async function getCase(id) {
     const response = await fetch(`/ClinicRoomSys/Cases/GM/${id}`, { method: "POST" })
@@ -99,8 +100,21 @@ async function getReport(id) {
 }
 //獲得處方資料
 async function getPrescription(id) {
-    const response = await fetch(`/ClinicRoomSys/Cases/GP/${id}`, { method: "POST" })
+    const response = await fetch(`/MBRecordInfo/GP/${id}`, { method: "POST" })
     const data = await response.json();
     //return data;
+    $('#prescriptionDataTable').DataTable({
+        columns: [
+            { title: "處方ID", data: "prescriptionID", visible: false },
+            { title: "處方日期", data: "prescriptionDate" },
+            { title: "調劑方式", data: "dispensing" },
+        ],
+        fixedHeader: {
+            header: true
+        },
+        language: {
+            url: "https://cdn.datatables.net/plug-ins/1.13.7/i18n/zh-HANT.json"
+        }
+    });
     $('#prescriptionDataTable').DataTable().rows.add(data).draw();
 }
