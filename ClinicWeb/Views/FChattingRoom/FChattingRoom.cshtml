@@ -3,7 +3,7 @@
 }
 
 
-<section style="background-color: #eee;">
+<section style="background-color: white">
     <div class="container py-5">
 
         <div class="row">
@@ -166,8 +166,7 @@
                              class="rounded-circle d-flex align-self-start ms-3 shadow-1-strong" width="60">
                     </li>
                     <li class="d-flex justify-content-between mb-4">
-                        <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp" alt="avatar"
-                             class="rounded-circle d-flex align-self-start me-3 shadow-1-strong" width="60">
+
                         <div class="card">
                             <div class="card-header d-flex justify-content-between p-3">
                                 <p class="fw-bold mb-0">Brad Pitt</p>
@@ -184,7 +183,7 @@
                     <li class="bg-white mb-3">
                         <div class="form-outline">
                             <label class="form-label" for="textAreaExample2">輸入訊息</label>
-                            <textarea class="form-control" id="textAreaExample2" rows="4"></textarea>
+                            <textarea class="form-control" id="textBig" rows="4"></textarea>
                         </div>
                     </li>
                     <button type="button" class="btn btn-info btn-rounded float-end">送出</button>
@@ -218,6 +217,35 @@
                 @section Scripts{
     <link href="~/css/chatroom.css" rel="stylesheet" />
     <script>
+        //大聊天室
+        document.getElementById("textBig").addEventListener("keydown", function (event) {
+            if (event.keyCode === 13) { // 檢查按下的按鍵是否是 Enter（keyCode 13）
+                var msg = textarea.value.trim();
+
+                if (msg !== '') {
+                    // 清空 textarea
+                    textarea.value = '';
+
+                    // 在 .msg-insert 的最前面插入一個包含輸入內容的 div 元素
+                    var msgDiv = document.createElement('div');
+                    msgDiv.className = 'msg-send';
+                    msgDiv.textContent = msg;
+
+                    var msgInsert = document.querySelector('.msg-insert');
+                    msgInsert.insertBefore(msgDiv, msgInsert.firstChild);
+                }
+
+                // 防止換行
+                event.preventDefault();
+            }
+        });
+
+
+
+
+
+
+        //右下聊天室
         $(function () {
             var arrow = $('.chat-head');
             var textarea = $('.chat-text textarea');

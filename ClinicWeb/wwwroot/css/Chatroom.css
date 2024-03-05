@@ -19,13 +19,14 @@
 
 .chat-head {
     width: inherit;
-    height: 45px;
+    height: 35px;
     background: #97CBFF;
     border-radius: 15px 15px 0px 0px;
 }
 
     .chat-head h2 {
         color: white;
+        font-size:18px;
         padding: 8px;
         display: inline-block;
     }
