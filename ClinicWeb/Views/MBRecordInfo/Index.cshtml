@@ -35,17 +35,18 @@
                     <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
                         <div class="container">
                             <h1>Responsive Table</h1>
-                            <table class="rwd-table">
+                            <table class="rwd-table recordDataTable">
                                 <tbody>
                                     <tr>
-                                        <th>Supplier Code</th>
-                                        <th>Supplier Name</th>
-                                        <th>Invoice Number</th>
-                                        <th>Invoice Date</th>
-                                        <th>Due Date</th>
-                                        <th>Net Amount</th>
+                                        <th>看診紀錄ID</th>
+                                        <th>血壓</th>
+                                        <th>脈搏</th>
+                                        <th>體溫</th>
+                                        <th>主述</th>
+                                        <th>醫囑</th>
+                                        <th>處方</th>
                                     </tr>
-                                    <tr>
+                                   @*  <tr>
                                         <td data-th="Supplier Code">
                                             UPS5005
                                         </td>
@@ -124,7 +125,7 @@
                                         <td data-th="Net Amount">
                                             $12,335.69
                                         </td>
-                                    </tr>
+                                    </tr> *@
                                 </tbody>
                             </table>
                         </div>
@@ -234,3 +235,7 @@
             </div>
         </div>
     </div>
+    @section Scripts
+    {
+        <script src="~/js/memback/mbrecordinfo/dataget.js"></script>
+    }
