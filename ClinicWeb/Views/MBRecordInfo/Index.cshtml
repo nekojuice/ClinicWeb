@@ -1,6 +1,12 @@
 ﻿@section styles
 {
     <link href="~/msit155e/css/cases/responsivetable.css" rel="stylesheet" />
+    <!-- Datatables -->
+    <link href="~/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="~/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+    <link href="~/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+    <link href="~/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+    <link href="~/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
 }
 
 <div class="row d-flex align-items-start">
@@ -28,15 +34,10 @@
     <div class="col-xl-9">
         <div class="card">
             <div class="card-body pt-3">
-
-            </div>
-            <div class="card-body pt-3">
                 <div class="tab-content" id="v-pills-tabContent">
                     <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-                        <div class="container">
-                            <h1>Responsive Table</h1>
-                            <table id="recordDataTable" class="rwd-table">
-                                <tbody>
+                            <table id="recordDataTable" class="table table-striped table-bordered rwd-table">
+                                <thead>
                                     <tr>
                                         <th style="display:none">看診紀錄ID</th>
                                         <th>血壓</th>
@@ -46,106 +47,21 @@
                                         <th>醫囑</th>
                                         <th>處方</th>
                                     </tr>
-                                </tbody>
+                                </thead>
                             </table>
-                        </div>
                     </div>
                     <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-                        <div class="container">
-                            <h1>Responsive Table 2</h1>
-                            <table class="rwd-table">
-                                <tbody>
+                            <table id="reportDataTable" class="table table-striped table-bordered rwd-table">
+                                <thead>
                                     <tr>
-                                        <th>Supplier Code</th>
-                                        <th>Supplier Name</th>
-                                        <th>Invoice Number</th>
-                                        <th>Invoice Date</th>
-                                        <th>Due Date</th>
-                                        <th>Net Amount</th>
+                                        <th>報告ID</th>
+                                        <th>檢查名稱</th>
+                                        <th>檢查日期</th>
+                                        <th >報告日期</th>
+                                        <th>結果</th>
                                     </tr>
-                                    <tr>
-                                        <td data-th="Supplier Code">
-                                            UPS5005
-                                        </td>
-                                        <td data-th="Supplier Name">
-                                            UPS
-                                        </td>
-                                        <td data-th="Invoice Number">
-                                            ASDF19218
-                                        </td>
-                                        <td data-th="Invoice Date">
-                                            06/25/2016
-                                        </td>
-                                        <td data-th="Due Date">
-                                            12/25/2016
-                                        </td>
-                                        <td data-th="Net Amount">
-                                            $8,322.12
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td data-th="Supplier Code">
-                                            UPS3449
-                                        </td>
-                                        <td data-th="Supplier Name">
-                                            UPS South Inc.
-                                        </td>
-                                        <td data-th="Invoice Number">
-                                            ASDF29301
-                                        </td>
-                                        <td data-th="Invoice Date">
-                                            6/24/2016
-                                        </td>
-                                        <td data-th="Due Date">
-                                            12/25/2016
-                                        </td>
-                                        <td data-th="Net Amount">
-                                            $3,255.49
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td data-th="Supplier Code">
-                                            BOX5599
-                                        </td>
-                                        <td data-th="Supplier Name">
-                                            BOX Pro West
-                                        </td>
-                                        <td data-th="Invoice Number">
-                                            ASDF43000
-                                        </td>
-                                        <td data-th="Invoice Date">
-                                            6/27/2016
-                                        </td>
-                                        <td data-th="Due Date">
-                                            12/25/2016
-                                        </td>
-                                        <td data-th="Net Amount">
-                                            $45,255.49
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td data-th="Supplier Code">
-                                            PAN9999
-                                        </td>
-                                        <td data-th="Supplier Name">
-                                            Pan Providers and Co.
-                                        </td>
-                                        <td data-th="Invoice Number">
-                                            ASDF33433
-                                        </td>
-                                        <td data-th="Invoice Date">
-                                            6/29/2016
-                                        </td>
-                                        <td data-th="Due Date">
-                                            12/25/2016
-                                        </td>
-                                        <td data-th="Net Amount">
-                                            $12,335.69
-                                        </td>
-                                    </tr>
-                                </tbody>
+                                </thead>
                             </table>
-                        </div>
                     </div>
                     <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">...</div>
                     <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">...</div>
@@ -158,4 +74,20 @@
     @section Scripts
     {
         <script src="~/js/memback/mbrecordinfo/dataget.js"></script>
+        <!-- Datatables -->
+        <script src="~/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+        <script src="~/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+        <script src="~/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+        <script src="~/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+        <script src="~/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+        <script src="~/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+        <script src="~/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+        <script src="~/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+        <script src="~/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+        <script src="~/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+        <script src="~/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+        <script src="~/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+        <script src="~/vendors/jszip/dist/jszip.min.js"></script>
+        <script src="~/vendors/pdfmake/build/pdfmake.min.js"></script>
+        <script src="~/vendors/pdfmake/build/vfs_fonts.js"></script>
     }
