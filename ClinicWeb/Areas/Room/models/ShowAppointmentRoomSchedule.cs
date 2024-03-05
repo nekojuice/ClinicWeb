@@ -7,8 +7,6 @@ namespace ClinicWeb.Areas.Room.Models
     {
         public int AppointmentId { get; set; }
 
-        public int EmpId { get; set; }
-
         public int? RoomId { get; set; }        
         public string? RoomName { get; set; }
         
@@ -25,10 +23,6 @@ namespace ClinicWeb.Areas.Room.Models
 
         public int? NurseId { get; set; }
         public string? NurseName { get; set; }
-
-        [ForeignKey("EmpId")]
-        [InverseProperty("AppointmentRoomSchedule")]
-        public virtual MemberEmployeeList? Emp { get; set; }
 
         [ForeignKey("MemberId")]
         [InverseProperty("AppointmentRoomSchedule")]

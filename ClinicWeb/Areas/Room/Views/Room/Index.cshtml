@@ -1,0 +1,37 @@
+﻿@model IEnumerable<ClinicWeb.Areas.Room.Models.ShowAppointmentRoomSchedule>
+
+<form method="get" asp-action="Create" asp-controller="Room">
+    <button type="submit" class="btn btn-primary">新增</button>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Start</th>
+                <th>End</th>
+                <th>Doctor</th>
+                <th>Nurse</th>
+                <th>Member</th>
+                <th>Room</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.StartDate</td>
+                    <td>@item.EndDate</td>
+                    <td>@item.DoctorName</td>
+                    <td>@item.NurseName</td>
+                    <td>@item.MemberName</td>
+                    <td>@item.RoomName</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.AppointmentId">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.AppointmentId">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.AppointmentId">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    
+</form>

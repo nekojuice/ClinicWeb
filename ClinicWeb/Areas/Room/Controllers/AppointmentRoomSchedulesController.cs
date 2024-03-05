@@ -1,41 +1,29 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using ClinicWeb.Areas.Room.Models;
-
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using ClinicWeb.Areas.Room.Models;
 
 namespace ClinicWeb.Areas.Room.Controllers
 {
     [Area("Room")]
-    public class RoomController : Controller
+    public class AppointmentRoomSchedulesController : Controller
     {
         private readonly ClinicSysContext _context;
 
-        public RoomController(ClinicSysContext context)
+        public AppointmentRoomSchedulesController(ClinicSysContext context)
         {
             _context = context;
         }
 
-
-
-    
-
-        public IActionResult Index()
+        // GET: Room/AppointmentRoomSchedules
+        public async Task<IActionResult> Index()
         {
-            return View(_context.AppointmentRoomSchedule
-                .Select(x => new ShowAppointmentRoomSchedule()
-                {
-                    StartDate = x.StartDate,
-                    EndDate = x.EndDate,
-                    DoctorName = x.Doctor.Name,
-                    NurseName = x.Nurse.Name,
-                    MemberName = x.Member.Name,
-                    RoomName = x.Room.Name,
-                }));
+            var clinicSysContext = _context.AppointmentRoomSchedule.Include(a => a.Doctor).Include(a => a.Member).Include(a => a.Nurse).Include(a => a.Room);
+            return View(await clinicSysContext.ToListAsync());
         }
 
         // GET: Room/AppointmentRoomSchedules/Details/5
@@ -185,28 +173,14 @@ namespace ClinicWeb.Areas.Room.Controllers
             {
                 _context.AppointmentRoomSchedule.Remove(appointmentRoomSchedule);
             }
-
+            
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool AppointmentRoomScheduleExists(int id)
         {
-            return (_context.AppointmentRoomSchedule?.Any(e => e.AppointmentId == id)).GetValueOrDefault();
+          return (_context.AppointmentRoomSchedule?.Any(e => e.AppointmentId == id)).GetValueOrDefault();
         }
-
     }
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
