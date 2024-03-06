@@ -1,6 +1,7 @@
 ﻿using ClinicWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
 using System.Runtime.ExceptionServices;
 
 namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
@@ -47,10 +48,17 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
         [HttpPost]
         public JsonResult GRD(string id) //GETRECORD
         {
+            if (!int.TryParse(id, out int caseId))
+            {
+                return Json(new { error = "Invalid id parameter" });
+            }
+
             return Json(_context.CasesMedicalRecords
-                .Where(x => x.CaseId == Convert.ToInt32(id))
+                .Include(x=>x.Clinic)
+                .Where(x => x.CaseId == caseId)
                 .Select(x => new
                 {
+                    date = DateTime.ParseExact(x.Clinic.Date, "yyyy-MM-dd", CultureInfo.InvariantCulture),
                     RecordID = x.MrId,
                     BloodPresure = x.Bp,
                     Pulse = x.Pulse,
@@ -59,7 +67,7 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
                     Disposal = x.Disposal,
                     Prescribe = x.Prescribe,
                 })
-                );
+            );
         }
         [HttpPost]
         public JsonResult GRT(string id) //GETREPORT

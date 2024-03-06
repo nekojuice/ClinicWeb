@@ -1,5 +1,4 @@
 ﻿//獲得主要病歷表資料
-var CASE_ID;
 async function getCase(id) {
     const response = await fetch(`/ClinicRoomSys/Cases/GM/${id}`, { method: "POST" })
     const data = await response.json();
@@ -11,6 +10,7 @@ async function getCase(id) {
     $('#recordDataTable').DataTable({
         columns: [
             { title: "看診紀錄ID", data: "recordID", visible: false },
+            { title: "日期", data: "date"},
             { title: "血壓", data: "bloodPresure" },
             { title: "脈搏", data: "pulse" },
             { title: "體溫", data: "bodyTemparture" },
