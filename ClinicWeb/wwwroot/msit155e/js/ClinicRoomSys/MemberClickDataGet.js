@@ -2,6 +2,14 @@
 async function getCase(id) {
     const response = await fetch(`/ClinicRoomSys/Cases/GM/${id}`, { method: "POST" })
     const data = await response.json();
+    document.getElementById("inputName").value = data.name;
+    document.getElementById("inputGender").value = data.gender;
+    document.getElementById("inputBirthDate").value = data.birthDate;
+    document.getElementById("inputBloodType").value = data.bloodType;
+    document.getElementById("inputHeight").value = data.height;
+    document.getElementById("inputWeight").value = data.weight;
+    document.getElementById("inputPastHistory").value = data.pastHistory;
+    document.getElementById("inputAllergyRecord").value = data.allergyRecord;
     console.log(data);
     CASE_ID = data.casesID;
     console.log(CASE_ID);
@@ -82,3 +90,33 @@ async function getPrescription(id) {
     //return data;
     $('#prescriptionDataTable').DataTable().rows.add(data).draw();
 }
+
+//async function uploadFormData(formData) {
+//    try {
+//        const response = await fetch('/upload', {
+//            method: 'PUT',
+//            body: formData
+//        });
+//        if (response.ok) {
+//            console.log('上传成功');
+//        } else {
+//            console.error('上传失败');
+//        }
+//    } catch (error) {
+//        console.error('上传出错', error);
+//    }
+//}
+
+//async function getCase(id) {
+//    // 读取表单数据
+//    const form = document.getElementById('MainForm');
+//    const formData = new FormData(form);
+    
+
+//    // 上传表单数据
+//    await uploadFormData(formData);
+//}
+//document.getElementById("submitButton").addEventListener("click", function (event) {
+//    event.preventDefault(); // 防止表單提交
+//    getCase(CASE_ID);
+//});
