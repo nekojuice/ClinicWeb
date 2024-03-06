@@ -41,7 +41,7 @@ namespace ClinicWeb.Controllers
                     ReportID = x.ReportId,
                     TestName = x.TestName,
                     TestDate = x.TestDate.ToString("yyyy-MM-dd"),
-                    ReportDate = x.ReportDate.ToString(),
+                    ReportDate = x.ReportDate.HasValue ? x.ReportDate.Value.ToString("yyyy-MM-dd") : null,
                     Result = x.Result,
                 })
                 );
