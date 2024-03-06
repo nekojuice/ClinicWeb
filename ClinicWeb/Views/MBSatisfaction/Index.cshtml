@@ -4,19 +4,19 @@
 }
 
 <div class="row d-flex align-items-start">
-@* 
+
     <div class="col-xl-3">
         <div class="card">
             <div class="card-body profile-card pt-4 d-flex flex-column">
                 <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                    <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">Home</button>
+                    <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">我的評價</button>
                     <button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">Profile</button>
                     <button class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">Messages</button>
                     <button class="nav-link" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings" type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</button>
                 </div>
             </div>
         </div>
-    </div> *@
+    </div>
 
     <div class="col-xl-9">
         <div class="card">
@@ -24,15 +24,113 @@
                 <div class="tab-content" id="v-pills-tabContent">
                     <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
                         <div class="container">
-                            <h1>評價系統</h1>
+                            <h1>我的評價</h1>
+                            <table class="rwd-table" id="MedicalRecordsTable">
+                                <tbody>
+                                    <tr>
+                                        <th style="display:none">Caseid</th>
+                                        <th>就診日期</th>
+                                        <th>醫師</th>
+                                        <th>時段</th>
+                                        <th>科別</th>
+                                        <th>診間</th>
+                                        <th>評價</th>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            
+                                        </td>
+                                        <td>
+                                            
+                                        </td>
+                                        <td>
+                                            
+                                        </td>
+                                        <td>
+                                            
+                                        </td>
+                                        <td>
+                                            
+                                        </td>
+                                        <td>
+                                            
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                         
+                                        </td>
+                                        <td>
+                                         
+                                        </td>
+                                        <td>
+                                          
+                                        </td>
+                                        <td>
+                                        
+                                        </td>
+                                        <td>
+                                         
+                                        </td>
+                                        <td>
+                                       
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                           
+                                        </td>
+                                        <td>
+                                          
+                                        </td>
+                                        <td>
+                                     
+                                        </td>
+                                        <td >
+                                           
+                                        </td>
+                                        <td >
+                                       
+                                        </td>
+                                        <td >
+                                      
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                      
+                                        </td>
+                                        <td>
+                                          
+                                        </td>
+                                        <td>
+                                         
+                                        </td>
+                                        <td>
+                                     
+                                        </td>
+                                        <td>
+                                        
+                                        </td>
+                                        <td>
+                                       
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                        <div class="container">
+                            <h1>Responsive Table 2</h1>
                             <table class="rwd-table">
                                 <tbody>
                                     <tr>
-                                        <th>就診日期</th>
-                                        <th>掛號號碼</th>
-                                        <th>醫師</th>
-                                        <th>診間</th>
-                                        <th>評價</th>
+                                        <th>Supplier Code</th>
+                                        <th>Supplier Name</th>
+                                        <th>Invoice Number</th>
+                                        <th>Invoice Date</th>
+                                        <th>Due Date</th>
                                         <th>Net Amount</th>
                                     </tr>
                                     <tr>
@@ -119,7 +217,8 @@
                             </table>
                         </div>
                     </div>
-                    
+                    <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">...</div>
+                    <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">...</div>
                 </div>
 
                 <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
@@ -129,3 +228,8 @@
 
 </div>
 
+
+
+@section Scripts{
+    <script src="~/js/memback/mbsatisfaction/mbsatisfaction.js"></script>
+}

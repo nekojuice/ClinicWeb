@@ -1,12 +1,56 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ClinicWeb.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ClinicWeb.Controllers
 {
     public class MBSatisfactionController : Controller
-    {
+    { 
+        private readonly ClinicSysContext _context;
+        public MBSatisfactionController(ClinicSysContext context)
+        {
+            _context = context;
+
+        }
+
         public IActionResult Index()
         {
             return View();
         }
+
+
+        /// 撈取使用者登入資訊
+        public IActionResult Get_MemberStatus()
+        {
+            var user = HttpContext.User;
+            var resultObject = new
+            {
+                MemberNumber = user.Claims.FirstOrDefault(c => c.Type == "MemberNumber")?.Value,
+                MemberName = user.Claims.FirstOrDefault(c => c.Type == "MemberName")?.Value,
+                MemberID = user.Claims.FirstOrDefault(c => c.Type == "MemberID")?.Value
+            };
+            return Json(resultObject);
+        }
+
+        //撈出使用者就診紀錄
+        public IActionResult Get_MedicalRecords()
+        {
+            var user = HttpContext.User;
+            var memberID = user.Claims.FirstOrDefault(c => c.Type == "MemberID")?.Value;
+
+            var MedicalRecords = _context.CasesMedicalRecords
+                .Where(m => m.MrId== 9)
+                .Select(x => new
+                {
+                    caseid = x.CaseId,
+                    就診日期 = x.Clinic.Date,
+                    醫師 = x.Clinic.Doctor,
+                    時段 = x.Clinic.ClinicTime,
+                    科別 = x.Clinic.Doctor.Department,
+                    診間 = x.Clinic.ClincRoom
+
+                });
+            return Json(MedicalRecords);
+        }
+
     }
 }
