@@ -1,4 +1,4 @@
-﻿function init_Table() {
+﻿function init_appt_Table() {
     if (!$.fn.DataTable.isDataTable('#apptDataTable')) {
         $('#apptDataTable').dataTable({
             columns: [
@@ -25,17 +25,17 @@
             aoColumnDefs: [
                 { "bSortable": false, "aTargets": [0, 1, 2, 3, 4, 5, 6, 7, 8] },
                 { "bSearchable": false, "aTargets": [0, 1, 2, 3, 4, 5, 6, 7, 8] }
-            ],
-            //搜尋框
-            searching: false,
-            //分頁
-            bPaginate: false,
-            //筆數頁數資訊
-            info: false
+            ]//,
+            ////搜尋框
+            //searching: false,
+            ////分頁
+            //bPaginate: false,
+            ////筆數頁數資訊
+            //info: false
         });
     }
 }
-init_Table()
+init_appt_Table()
 
 //撈取登入者資訊
 async function get_LoginInfo() {

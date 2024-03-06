@@ -1,14 +1,20 @@
-﻿@section Styles
-{
+﻿@{
+    ViewData["Title"] = "掛號繳費查詢";
+}
+@section Styles
+ {
+    <link href="~/msit155e/css/cases/responsivetable.css" rel="stylesheet" />
+
     <!-- iCheck -->
     <link href="~/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
-    <!-- Datatables -->
 
-    <link href="~/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
-    <link href="~/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
-    <link href="~/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
-    <link href="~/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
-    <link href="~/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+    <!-- Datatables -->
+    <link href="~/lib/datatables/css/datatables.bootstrap.min.css" rel="stylesheet" />
+    <link href="~/lib/datatables/css/jquery.datatables.min.css" rel="stylesheet" />
+    <link href="//cdn.datatables.net/plug-ins/2.0.1/integration/font-awesome/dataTables.fontAwesome.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="~/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 
     <!-- PNotify -->
     <link href="~/vendors/pnotify/dist/pnotify.css" rel="stylesheet">
@@ -18,12 +24,9 @@
     <!-- 自訂: 更新後顏色閃爍 -->
     <link href="~/msit155e/css/appointment/extension_datachanged_coloranimate.css" rel="stylesheet" />
 
-    <link href="~/msit155e/css/cases/responsivetable.css" rel="stylesheet" />
+
 }
 
-@{
-    ViewData["Title"] = "掛號查詢";
-}
 
 <div class="row d-flex align-items-start">
 
@@ -32,7 +35,7 @@
             <div class="card-body profile-card pt-4 d-flex flex-column">
                 <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                     <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">掛號紀錄查詢</button>
-                    <button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">看診繳費查詢</button>
+                    <button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">看診繳費</button>
                     @* <button class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">Messages</button>
                     <button class="nav-link" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings" type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</button> *@
                 </div>
@@ -51,10 +54,7 @@
                     </div>
                     <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                         <div class="container">
-                            <h1>Responsive Table 2</h1>
-                            <table class="rwd-table">
-                                <p>123</p>
-                            </table>
+                            <partial name="_ClientPage_PaymentSearchPanelPartial">
                         </div>
                     </div>
                    @*  <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">...</div>
@@ -71,22 +71,9 @@
     <!-- iCheck -->
     <script src="~/vendors/iCheck/icheck.min.js"></script>
     <!-- Datatables -->
-    <script src="~/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
-    @* <script src="~/lib/datatables/js/jquery.datatables.min.js"></script> *@
-    <script src="~/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-    <script src="~/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-    <script src="~/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
-    <script src="~/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
-    <script src="~/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
-    <script src="~/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
-    <script src="~/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
-    <script src="~/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
-    <script src="~/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-    <script src="~/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
-    <script src="~/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
-    <script src="~/vendors/jszip/dist/jszip.min.js"></script>
-    <script src="~/vendors/pdfmake/build/pdfmake.min.js"></script>
-    <script src="~/vendors/pdfmake/build/vfs_fonts.js"></script>
+    <script src="~/lib/datatables/js/datatables.bootstrap.min.js"></script>
+    <script src="~/lib/datatables/js/datatables.datatables.min.js"></script>
+    <script src="~/lib/datatables/js/jquery.datatables.min.js"></script>
 
     <!-- datatable jumptodata -->
     <script src="https://cdn.datatables.net/plug-ins/1.13.7/api/page.jumpToData().js" asp-fallback-src="~/lib/page.jumptodata().js"></script>
@@ -106,4 +93,5 @@
     </script>
 
     <script src="~/msit155e/js/appointmentsearch/apptsearch.js"></script>
+    <script src="~/msit155e/js/appointmentsearch/paymentsearch.js"></script>
 }
