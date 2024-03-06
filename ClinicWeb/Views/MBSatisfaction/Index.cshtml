@@ -1,6 +1,10 @@
-﻿@section styles
+﻿@section Styles
 {
     <link href="~/msit155e/css/cases/responsivetable.css" rel="stylesheet" />
+    <!-- Datatables -->
+    <link href="~/lib/datatables/css/datatables.bootstrap.min.css" rel="stylesheet" />
+    <link href="~/lib/datatables/css/jquery.datatables.min.css" rel="stylesheet" />
+    <link href="//cdn.datatables.net/plug-ins/2.0.1/integration/font-awesome/dataTables.fontAwesome.css" rel="stylesheet">
 }
 
 <div class="row d-flex align-items-start">
@@ -229,7 +233,11 @@
 </div>
 
 
+@section Scripts {
+        <!-- Datatables -->
+    <script src="~/lib/datatables/js/datatables.bootstrap.min.js"></script>
+    <script src="~/lib/datatables/js/datatables.datatables.min.js"></script>
+    <script src="~/lib/datatables/js/jquery.datatables.min.js"></script>
 
-@section Scripts{
     <script src="~/js/memback/mbsatisfaction/mbsatisfaction.js"></script>
 }
