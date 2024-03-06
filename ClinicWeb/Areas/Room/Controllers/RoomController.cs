@@ -29,6 +29,7 @@ namespace ClinicWeb.Areas.Room.Controllers
             return View(_context.AppointmentRoomSchedule
                 .Select(x => new ShowAppointmentRoomSchedule()
                 {
+                    AppointmentId = x.AppointmentId,
                     StartDate = x.StartDate,
                     EndDate = x.EndDate,
                     DoctorName = x.Doctor.Name,
@@ -174,26 +175,27 @@ namespace ClinicWeb.Areas.Room.Controllers
 
             return View(appointmentRoomSchedule);
         }
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var appointmentRoomSchedule = await _context.AppointmentRoomSchedule.FindAsync(id);
+            if (appointmentRoomSchedule == null)
+            {
+                return NotFound();
+            }
 
-       [HttpPost]
-[ValidateAntiForgeryToken]
-public async Task<IActionResult> DeleteConfirmed(int id)
-{
-    var appointmentRoomSchedule = await _context.AppointmentRoomSchedule.FindAsync(id);
-    if (appointmentRoomSchedule == null)
-    {
-        return NotFound();
-    }
+            _context.AppointmentRoomSchedule.Remove(appointmentRoomSchedule);
+            await _context.SaveChangesAsync();
 
-    _context.AppointmentRoomSchedule.Remove(appointmentRoomSchedule);
-    await _context.SaveChangesAsync();
-    return RedirectToAction(nameof(Index));
-}
+            return Json(new { success = true });
+        }
 
-private bool AppointmentRoomScheduleExists(int id)
-{
-    return _context.AppointmentRoomSchedule.Any(e => e.AppointmentId == id);
-}
+
+        private bool AppointmentRoomScheduleExists(int id)
+        {
+            return (_context.AppointmentRoomSchedule?.Any(e => e.AppointmentId == id)).GetValueOrDefault();
+        }
 
     }
 
