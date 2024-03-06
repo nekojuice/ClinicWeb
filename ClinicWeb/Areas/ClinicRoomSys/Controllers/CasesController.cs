@@ -32,9 +32,9 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
                     MemberNumber = x.Member.MemberNumber,
                     NationalId = x.Member.NationalId,
                     Name = x.Member.Name,
-                    Gender = x.Member.Gender ? "男" : "女",
+                    Gender = (bool)x.Member.Gender ? "男" : "女",
                     FirstVisitDay = x.FirstvisitDate.ToString("yyyy-MM-dd"),
-                    BirthDate = x.Member.BirthDate.ToString("yyyy-MM-dd"),
+                    BirthDate = x.Member.BirthDate.HasValue ? x.Member.BirthDate.Value.ToString("yyyy-MM-dd") : null,
                     BloodType = x.Member.BloodType,
                     Height = x.Height,
                     Weight = x.Weight,
@@ -54,11 +54,11 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
             }
 
             return Json(_context.CasesMedicalRecords
-                .Include(x=>x.Clinic)
+                .Include(x=>x.ClinicList.Clinic)
                 .Where(x => x.CaseId == caseId)
                 .Select(x => new
                 {
-                    date = DateTime.ParseExact(x.Clinic.Date, "yyyy-MM-dd", CultureInfo.InvariantCulture),
+                    date = DateTime.Parse(x.ClinicList.Clinic.Date).ToString("yyyy-MM-dd"),
                     RecordID = x.MrId,
                     BloodPresure = x.Bp,
                     Pulse = x.Pulse,
@@ -79,7 +79,7 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
                     ReportID = x.ReportId,
                     TestName = x.TestName,
                     TestDate = x.TestDate.ToString("yyyy-MM-dd"),
-                    ReportDate = x.ReportDate.ToString("yyyy-MM-dd"),
+                    ReportDate = x.ReportDate.HasValue ? x.ReportDate.Value.ToString("yyyy-MM-dd") : null,
                     Result = x.Result,
                 })
                 );

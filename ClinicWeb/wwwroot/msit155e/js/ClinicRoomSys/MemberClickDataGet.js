@@ -6,7 +6,6 @@ async function getCase(id) {
     CASE_ID = data.casesID;
     console.log(CASE_ID);
     const record = getRecord(CASE_ID);
-    console.log(record);
     $('#recordDataTable').DataTable({
         columns: [
             { title: "看診紀錄ID", data: "recordID", visible: false },
@@ -56,15 +55,14 @@ async function getCase(id) {
         }
     });
     const report = getReport(CASE_ID);
-    console.log(report);
     const prescription = getPrescription(CASE_ID);
-    console.log(prescription);
 }
 
 //獲得看診紀錄資料
 async function getRecord(id) {
     const response = await fetch(`/ClinicRoomSys/Cases/GRD/${id}`, { method: "POST" })
     const data = await response.json();
+    console.log(data);
     // return data;
     $('#recordDataTable').DataTable().rows.add(data).draw();
 }
@@ -72,6 +70,7 @@ async function getRecord(id) {
 async function getReport(id) {
     const response = await fetch(`/ClinicRoomSys/Cases/GRT/${id}`, { method: "POST" })
     const data = await response.json();
+    console.log(data);
     //return data;
     $('#reportDataTable').DataTable().rows.add(data).draw();
 }
@@ -79,6 +78,7 @@ async function getReport(id) {
 async function getPrescription(id) {
     const response = await fetch(`/ClinicRoomSys/Cases/GP/${id}`, { method: "POST" })
     const data = await response.json();
+    console.log(data);
     //return data;
     $('#prescriptionDataTable').DataTable().rows.add(data).draw();
 }
