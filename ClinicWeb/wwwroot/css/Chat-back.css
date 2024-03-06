@@ -1,0 +1,55 @@
+﻿h5{
+
+}
+
+div{
+
+}
+
+ul{
+
+}
+
+a{
+
+}
+img{
+
+}
+
+p{
+
+}
+
+span{
+
+}
+
+label{
+
+}
+
+textarea{
+
+}
+
+
+#messageList {
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: #ffffff #ecf0f1; /* Firefox */
+}
+
+    #messageList::-webkit-scrollbar {
+        width: 10px; /* Chrome, Safari, Edge */
+    }
+
+    #messageList::-webkit-scrollbar-thumb {
+        background-color: #95a5a6; /* 滑块颜色 */
+        border-radius: 5px; /* 滑块圆角 */
+    }
+
+    #messageList:-webkit-scrollbar-track {
+        background-color: #c8b3b3; /* 滑道颜色 */
+    }
+
+

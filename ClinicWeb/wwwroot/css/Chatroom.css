@@ -15,13 +15,14 @@
     background: white;
     width: 300px;
     border-radius: 15px 15px 0px 0px;
+    box-shadow: -3px -3px 20px 1px #bdc3c7;
 }
 
 .chat-head {
     width: inherit;
-    height: 35px;
+    height: 40px;
     background: #97CBFF;
-    border-radius: 15px 15px 0px 0px;
+    border-radius: 10px 10px 0px 0px;
 }
 
     .chat-head h2 {
@@ -43,6 +44,21 @@
     width: inherit;
     overflow: auto;
     margin-bottom: 45px;
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: #97CBFF #ecf0f1; /* Firefox */
+}
+
+.chatBody::-webkit-scrollbar {
+    width: 10px; /* Chrome, Safari, Edge */
+}
+
+.chatBody::-webkit-scrollbar-thumb {
+    background-color: #95a5a6; /* 滑块颜色 */
+    border-radius: 5px; /* 滑块圆角 */
+}
+
+.chatBody::-webkit-scrollbar-track {
+    background-color: #97CBFF; /* 滑道颜色 */
 }
 
 .chat-text {
@@ -106,9 +122,27 @@ msg-time{
         border: 15px solid;
         border-color: transparent transparent transparent #2ecc71;
         right: -29px;
-        top: 7px;
+        top: 10px;
     }
 
     .msg-receive:hover, .msg-send:hover {
         opacity: .9;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
