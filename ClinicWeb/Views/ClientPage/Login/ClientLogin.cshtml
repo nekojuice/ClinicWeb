@@ -63,6 +63,13 @@
                                 {
                                     <div class="text-danger" style="color:red">@ViewData["ErrorMessage"]</div>
                                 }
+                                @if (ViewData["RegisterPrompt"] != null)
+                                {
+                                    <div class="alert alert-warning" role="alert">
+                                        @TempData["RegisterPrompt"]
+                                    </div>
+                                }
+
 
                                 <a asp-controller="LoginGoogletest" asp-action="Logingoogle">
                                     <img src="~/msit155e/images/MemLogin/Fa-Team-Fontawesome-Brands-FontAwesome-Brands-Google-Plus.512.png" alt="Google 登入" style="width: 24px; height: 24px;" />
@@ -98,8 +105,21 @@
 </div>
 
 
+@section Scripts
+{
+    @if (TempData["Msg"] != null)
+    {
+        <script type="text/javascript">
+            alert("@TempData["Msg"]");
+        </script>
+    }
+    @if (ViewData["RegisterPrompt"] != null)
+    {
+        <script type="text/javascript">
+            alert("@TempData["RegisterPrompt"]");
+        </script>
+    }
 
 
-<script>
-  
-</script>
+}
+
