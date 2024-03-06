@@ -39,27 +39,27 @@ namespace ClinicWeb.Areas.Room.Controllers
                 }));
         }
 
-        // GET: Room/AppointmentRoomSchedules/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null || _context.AppointmentRoomSchedule == null)
-            {
-                return NotFound();
-            }
+        //// GET: Room/AppointmentRoomSchedules/Details/5
+        //public async Task<IActionResult> Details(int? id)
+        //{
+        //    if (id == null || _context.AppointmentRoomSchedule == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var appointmentRoomSchedule = await _context.AppointmentRoomSchedule
-                .Include(a => a.Doctor)
-                .Include(a => a.Member)
-                .Include(a => a.Nurse)
-                .Include(a => a.Room)
-                .FirstOrDefaultAsync(m => m.AppointmentId == id);
-            if (appointmentRoomSchedule == null)
-            {
-                return NotFound();
-            }
+        //    var appointmentRoomSchedule = await _context.AppointmentRoomSchedule
+        //        .Include(a => a.Doctor)
+        //        .Include(a => a.Member)
+        //        .Include(a => a.Nurse)
+        //        .Include(a => a.Room)
+        //        .FirstOrDefaultAsync(m => m.AppointmentId == id);
+        //    if (appointmentRoomSchedule == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return View(appointmentRoomSchedule);
-        }
+        //    return View(appointmentRoomSchedule);
+        //}
 
         // GET: Room/AppointmentRoomSchedules/Create
 
@@ -96,24 +96,22 @@ namespace ClinicWeb.Areas.Room.Controllers
         }
 
         // GET: Room/AppointmentRoomSchedules/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int id)
         {
-            if (id == null || _context.AppointmentRoomSchedule == null)
-            {
-                return NotFound();
-            }
-
-            var appointmentRoomSchedule = await _context.AppointmentRoomSchedule.FindAsync(id);
+            var appointmentRoomSchedule = _context.AppointmentRoomSchedule.FirstOrDefault(x => x.AppointmentId == id);
             if (appointmentRoomSchedule == null)
             {
                 return NotFound();
             }
-            ViewData["DoctorId"] = new SelectList(_context.MemberEmployeeList, "EmpId", "Address", appointmentRoomSchedule.DoctorId);
-            ViewData["MemberId"] = new SelectList(_context.MemberMemberList, "MemberId", "Address", appointmentRoomSchedule.MemberId);
-            ViewData["NurseId"] = new SelectList(_context.MemberEmployeeList, "EmpId", "Address", appointmentRoomSchedule.NurseId);
-            ViewData["RoomId"] = new SelectList(_context.RoomList, "RoomId", "RoomId", appointmentRoomSchedule.RoomId);
+
+            ViewBag.RoomId = new SelectList(_context.RoomList, "RoomId", "Name");
+            ViewBag.MemberId = new SelectList(_context.MemberMemberList, "MemberId", "Name");
+            ViewBag.DoctorId = new SelectList(_context.MemberEmployeeList.Where(x => x.EmpType == "醫生"), "EmpId", "Name");
+            ViewBag.NurseId = new SelectList(_context.MemberEmployeeList.Where(x => x.EmpType == "護士"), "EmpId", "Name");
+
             return View(appointmentRoomSchedule);
         }
+
 
         // POST: Room/AppointmentRoomSchedules/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.

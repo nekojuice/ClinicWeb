@@ -30,8 +30,9 @@
                     <td>@item.MemberName</td>
                     <td>@item.RoomName</td>
                     <td>
-                     @*    <a asp-action="Edit" asp-route-id="@item.AppointmentId">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.AppointmentId">Details</a> | *@
+                    <a href="#" onclick="editItem('@item.AppointmentId')">Edit</a> |
+                    |
+                    
                     <a href="#" onclick="confirmDelete('@item.AppointmentId')">Delete</a>
 
                     </td>
@@ -39,7 +40,7 @@
             }
         <script>
             function confirmDelete(id) {
-                if (confirm('Are you sure you want to delete this item?')) {
+                if (confirm('您確定要刪除嗎?')) {
                     deleteItem(id);
                 }
             }
@@ -58,6 +59,10 @@
                         alert('Error deleting item.');
                     }
                 });
+            }
+            function editItem(id) {
+               
+                window.location.href = '@Url.Action("Edit", "Room")' + '?id=' + id;
             }
         </script>
         </tbody>
