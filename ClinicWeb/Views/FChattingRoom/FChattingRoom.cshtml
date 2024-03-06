@@ -140,6 +140,8 @@
                 messageList.insertBefore(newLi, messageList.lastChild);
 
                 messageList.scrollTop = messageList.scrollHeight;
+
+                syncToBottomChat(msg);
             }
         }
 
@@ -147,6 +149,7 @@
             if (event.keyCode === 13) { // 檢查按下的按鍵是否是 Enter（keyCode 13）
                 event.preventDefault();
                 sendMessage();
+                
             }
         });
 
@@ -186,8 +189,33 @@
                     arrow.attr('src', 'https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_down-16.png');
                 }
             });
-  
 
+            // 同步到右下方聊天窗口
+            function syncToBottomChat(msg) {
+                var currentTime = new Date();
+                var hours = currentTime.getHours();
+                var minutes = currentTime.getMinutes();
+                var amOrPm = hours >= 12 ? '下午' : '上午';
+                hours = hours % 12;
+                hours = hours ? hours : 12; // 將 0 轉換為 12
+                var formattedTime = amOrPm + '  ' + hours + ':' + (minutes < 10 ? '0' : '') + minutes;
+
+                // 在 .msg-insert 的最前面插入一個包含輸入內容的 div 元素
+                var msgDiv = document.createElement('div');
+                msgDiv.className = 'msg-send';
+                msgDiv.textContent = msg;
+
+                // 建立包含時間的 div 元素
+                var timeDiv = document.createElement('div');
+                timeDiv.className = 'msg-time';
+                timeDiv.textContent = formattedTime;
+
+                var msgInsert = document.querySelector('.msg-insert');
+                msgInsert.appendChild(timeDiv, msgInsert.lastChild);
+                msgInsert.appendChild(msgDiv, msgInsert.lastChild);
+
+                msgInsert.scrollTop = msgInsert.scrollHeight;
+            }
 
             var textarea = document.getElementById('text'); // 將 'yourTextareaId' 替換成實際的 textarea 元素的 id
 
