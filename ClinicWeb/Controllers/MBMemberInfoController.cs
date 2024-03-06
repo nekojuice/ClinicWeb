@@ -26,6 +26,8 @@ namespace ClinicWeb.Controllers
 
             var memberInfo = _context.MemberMemberList
                                 .FirstOrDefault(m => m.MemberId == Convert.ToInt32(memberID));
+            
+            
             if (memberInfo == null)
             {
                 return Content("找不到會員資料", "application/json");
