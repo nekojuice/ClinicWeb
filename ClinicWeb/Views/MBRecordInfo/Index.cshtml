@@ -3,15 +3,9 @@
 }
 @section styles
 {
-    <link href="~/msit155e/css/cases/responsivetable.css" rel="stylesheet" />
-    <!-- Datatables -->
+    <link href="~/lib/datatables/css/datatables.bootstrap.min.css" rel="stylesheet" />
+    <link href="~/lib/datatables/css/jquery.datatables.min.css" rel="stylesheet" />
     <link href="//cdn.datatables.net/plug-ins/2.0.1/integration/font-awesome/dataTables.fontAwesome.css" rel="stylesheet">
-    <link href="~/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
-    <link href="~/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
-    <link href="~/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
-    <link href="~/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
-    <link href="~/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
-    <link href="~/vendors/bootstrap-icons/bootstrap-icons.min.css" rel="stylesheet" />
     <!-- Font Awesome -->
     <link href="~/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 }
@@ -81,7 +75,9 @@
                             </thead>
                         </table>
                     </div>
-                    <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">...</div>
+                    <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+                        <iframe title="Case_Chart" width="600" height="373.5" src="https://app.powerbi.com/view?r=eyJrIjoiNjMyM2JkMjAtYjVmZi00ZWRlLTk4NTMtMDI3NmNmOGZkMjQyIiwidCI6IjcwODk3ZDZmLTBhNDgtNDlkZS04ODBmLTI3ZDhhZDQ1ZDc2ZSIsImMiOjEwfQ%3D%3D" frameborder="0" allowFullScreen="true"></iframe>
+                    </div>
                 </div>
 
                 <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
@@ -92,19 +88,7 @@
     {
         <script src="~/js/memback/mbrecordinfo/dataget.js"></script>
         <!-- Datatables -->
-        <script src="~/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
-        <script src="~/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-        <script src="~/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-        <script src="~/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
-        <script src="~/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
-        <script src="~/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
-        <script src="~/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
-        <script src="~/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
-        <script src="~/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
-        <script src="~/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-        <script src="~/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
-        <script src="~/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
-        <script src="~/vendors/jszip/dist/jszip.min.js"></script>
-        <script src="~/vendors/pdfmake/build/pdfmake.min.js"></script>
-        <script src="~/vendors/pdfmake/build/vfs_fonts.js"></script>
+        <script src="~/lib/datatables/js/datatables.bootstrap.min.js"></script>
+        <script src="~/lib/datatables/js/datatables.datatables.min.js"></script>
+        <script src="~/lib/datatables/js/jquery.datatables.min.js"></script>
     }
