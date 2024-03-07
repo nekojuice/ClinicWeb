@@ -1,0 +1,8 @@
+﻿
+#clinicDataTable tbody {
+    user-select: none;
+}
+
+    #clinicDataTable tbody .selected {
+        background-color: #cce5ff;
+    }

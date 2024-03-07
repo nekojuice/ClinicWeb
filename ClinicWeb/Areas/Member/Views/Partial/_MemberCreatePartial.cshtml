@@ -1,0 +1,200 @@
+﻿@* @model MemberMemberList *@
+@* @model ClinicWeb.Areas.Member.ViewModels.Membermetadata *@
+@model ClinicWeb.Areas.Member.Models.MemberMemberList
+<div class="x_panel">
+    <div class="x_title">
+        <h2>新增會員</h2>
+
+        <div class="clearfix"></div>
+    </div>
+    <div class="x_content">
+        <br>
+        <form asp-action="Create" id="form_MemberCreate" class="form-label-left input_mask">
+
+            <!--姓名-->
+            <div class="col-md-6 col-sm-6  form-group has-feedback">
+
+                <input asp-for="Name" type="text" class="form-control has-feedback-left" placeholder=@Html.DisplayNameFor(model => model.Name)>
+                <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <!--身分證字號-->
+            <div class="col-md-6 col-sm-6  form-group has-feedback">
+                <input asp-for="NationalId" type="text" class="form-control" placeholder="身分證字號">
+                <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+                <span asp-validation-for="NationalId" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-12 col-sm-12"><!--排版用空白 避免錯誤欄推擠亂版--></div>
+
+            <!--信箱-->
+            <div class="col-md-6 col-sm-6  form-group has-feedback">
+                <input asp-for="MemEmail" type="text" class="form-control has-feedback-left" placeholder="信箱">
+                <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
+                <span asp-validation-for="MemEmail" class="text-danger"></span>
+            </div>
+            <!--填上電話-->
+            <div class="col-md-6 col-sm-6  form-group has-feedback">
+                <input asp-for="Phone" type="tel" class="form-control" id="inputSuccess5" placeholder="連絡電話">
+                <span class="fa fa-phone form-control-feedback right" aria-hidden="true"></span>
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+            
+            <div class="col-md-12 col-sm-12"><!--排版用空白 避免錯誤欄推擠亂版--></div>
+
+            <!--性別-->
+
+            <div class="form-group row">
+                <label class="control-label col-md-3 col-sm-3 ">性別</label>
+                <div class="col-md-9 col-sm-9 ">
+                    @*                     <select asp-for="Gender" class="form-control" name="Gender">
+                    <option>---請選擇---</option>
+                    <option value="True">男</option>
+                    <option value="False">女</option>
+
+                    </select> *@
+
+                    @Html.DropDownListFor(m => m.Gender,
+                             new SelectList(
+                             new[]
+                             {
+                    new SelectListItem { Value = null, Text = "---請選擇---" },
+                    new SelectListItem { Value = true.ToString(), Text = "男" },
+                    new SelectListItem { Value = false.ToString(), Text = "女" },
+                    },
+                             "Value",
+                             "Text"
+                             ),
+                             new { @class = "form-control" }
+                             )
+                    <span asp-validation-for="Gender" class="text-danger"></span>
+                </div>
+
+            </div>
+
+            <!--血型-->
+            <div class="form-group row">
+                <label class="control-label col-md-3 col-sm-3 ">血型</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <select asp-for="BloodType" class="form-control">
+                        <option value="">---請選擇---</option>
+                        <option>A</option>
+                        <option>B</option>
+                        <option>O</option>
+                        <option>AB</option>
+                    </select>
+                </div>
+            </div>
+
+            <!--身分證字號-->
+            @*  <div class="form-group row">
+            <label class="col-form-label col-md-3 col-sm-3 ">Default Input</label>
+            <div class="col-md-9 col-sm-9 ">
+            <input type="text" class="form-control" placeholder="身分證字號" name="NationalId">
+            </div>
+            </div> *@
+            <!--戶籍地址-->
+            <div class="form-group row">
+                <label class="col-form-label col-md-3 col-sm-3 ">戶籍地址</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <input asp-for="Address" type="text" class="form-control" placeholder="戶籍地址">
+                    <span asp-validation-for="Address" class="text-danger"></span>
+                </div>
+            </div>
+            <!--聯絡地址-->
+            <div class="form-group row">
+                <label class="col-form-label col-md-3 col-sm-3 "> 聯絡地址</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <input asp-for="ContactAddress" type="text" class="form-control" placeholder="聯絡地址">
+                    <span asp-validation-for="ContactAddress" class="text-danger"></span>
+                </div>
+            </div>
+            <!--緊急聯絡人-->
+            <div class="form-group row">
+                <label class="col-form-label col-md-3 col-sm-3 ">緊急聯絡人</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <input asp-for="IceName" type="text" class="form-control" placeholder="緊急聯絡人">
+                    <span asp-validation-for="IceName" class="text-danger"></span>
+                </div>
+            </div>
+            <!--緊急聯絡人電話-->
+            <div class="form-group row">
+                <label class="col-form-label col-md-3 col-sm-3 ">緊急聯絡人電話</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <input asp-for="IceNumber" type="text" class="form-control" placeholder="緊急聯絡人電話">
+                    <span asp-validation-for="IceNumber" class="text-danger"></span>
+                </div>
+            </div>
+
+            <!--會員密碼-->
+            <div class="form-group row">
+                @*  <input class="form-control" type="password" id="password1" name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&amp;*]).{8,}" title="Minimum 8 Characters Including An Upper And Lower Case Letter, A Number And A Unique Character" required=""> *@
+
+
+                <label class="col-form-label col-md-3 col-sm-3 ">會員密碼</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <input asp-for="MemPassword" class="form-control" type="password" title="Minimum 8 Characters Including An Upper And Lower Case Letter, A Number And A Unique Character">
+                    <span asp-validation-for="MemPassword" class="text-danger"></span>
+                    <span style="position: absolute;right:15px;top:7px;" onclick="hideshow()">
+                        <i id="slash" class="fa fa-eye-slash" style="display: none;"></i>
+                        <i id="eye" class="fa fa-eye" style="display: block;"></i>
+                    </span>
+                </div>
+            </div>
+
+            <!--啟用權限-->
+            <div class="form-group row">
+                <label class="control-label col-md-3 col-sm-3 ">啟用</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <div class="col-md-9 col-sm-9 ">
+                        <div class="">
+                            <label>
+                                <input name="Verification" type="checkbox" id="Verification" class="js-switch" checked />
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--選生日-->
+            <div class="form-group row">
+                <label class="col-form-label col-md-3 col-sm-3 ">
+                    生日 <span class="required"></span>
+                </label>
+
+                <div class="col-md-9 col-sm-9 ">
+                    <input asp-for="BirthDate" class="date-picker form-control" type="date" required />
+                    <span asp-validation-for="BirthDate" class="text-danger"></span>
+                    @* <span asp-validation-for="BirthDate" class="text-danger"></span> *@
+                    @*  <input asp-for= "BirthDate" class="date-picker form-control" placeholder="dd-mm-yyyy" type="date" onfocus="this.type='date'" onmouseover="this.type='date'" onclick="this.type='date'" onblur="this.type='text'" onmouseout="timeFunctionLong(this)">
+                    <span asp-validation-for="BirthDate" class="text-danger"></span>
+                    <script>
+                    function timeFunctionLong(input) {
+                    setTimeout(function () {
+                    input.type = 'date';
+                    }, 60000);
+                    }
+                    </script> *@
+                </div>
+            </div>
+            @* <div class="ln_solid"></div> *@
+            <div class="form-group row" style="margin:30px">
+                <div class="col-md-9 col-sm-9  offset-md-8">
+
+                    <button id="closeButton" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button class="btn btn-primary" type="reset">Reset</button>
+                    <button id="AddMemBtn" type="submit" class="btn btn-primary" onclick="">Save</button>
+
+
+
+                </div>
+            </div>
+
+
+
+        </form>
+    </div>
+</div>
+
+
+

@@ -36,6 +36,8 @@
 
   <ItemGroup>
     <None Include="bundleconfig.json" />
+    <None Include="wwwroot\vendors\bootstrap-icons\bootstrap-icons.scss" />
+    <None Include="wwwroot\vendors\bootstrap-icons\fonts\bootstrap-icons.woff2" />
     <None Include="wwwroot\vendors\bootstrap\.github\CODEOWNERS" />
     <None Include="wwwroot\vendors\bootstrap\.github\CONTRIBUTING.md" />
     <None Include="wwwroot\vendors\bootstrap\.github\ISSUE_TEMPLATE\bug.md" />
@@ -207,12 +209,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+    <PackageReference Include="Google.Apis.Auth" Version="1.67.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="7.0.16" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.16" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Negotiate" Version="7.0.16" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="7.0.14" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.14" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.14" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.15" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.14" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.16">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.15">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -226,43 +233,33 @@
     <Folder Include="Areas\Attend\Models\" />
     <Folder Include="Areas\Cases\Data\" />
     <Folder Include="Areas\Cases\Models\" />
-    <Folder Include="Areas\Cases\Views\Home\" />
+    <Folder Include="Areas\ClinicRoomSys\Data\" />
     <Folder Include="Areas\Drugs\Data\" />
-    <Folder Include="Areas\Drugs\Models\" />
     <Folder Include="Areas\Employee\Data\" />
     <Folder Include="Areas\Employee\Models\" />
     <Folder Include="Areas\Member\Data\" />
-    <Folder Include="Areas\Member\Models\" />
     <Folder Include="Areas\Room\Data\" />
     <Folder Include="Areas\Schedule\Data\" />
-    <Folder Include="Areas\Schedule\Models\" />
     <Folder Include="Areas\Shop\Data\" />
     <Folder Include="Areas\Shop\Models\" />
     <Folder Include="Areas\Temp\Data\" />
     <Folder Include="Areas\Temp\Models\" />
-    <Folder Include="wwwroot\js\" />
+    <Folder Include="wwwroot\msit155e\js\MemberProfile\" />
     <Folder Include="wwwroot\msit155e\css\Attend\" />
     <Folder Include="wwwroot\msit155e\css\Attend\" />
-    <Folder Include="wwwroot\msit155e\css\Cases\" />
-    <Folder Include="wwwroot\msit155e\css\Drugs\" />
-    <Folder Include="wwwroot\msit155e\css\Member\" />
     <Folder Include="wwwroot\msit155e\css\Shop\" />
     <Folder Include="wwwroot\msit155e\css\Schedule\" />
     <Folder Include="wwwroot\msit155e\css\Room\" />
     <Folder Include="wwwroot\msit155e\images\Appointment\" />
     <Folder Include="wwwroot\msit155e\images\Attend\" />
     <Folder Include="wwwroot\msit155e\images\Cases\" />
-    <Folder Include="wwwroot\msit155e\images\Drugs\" />
     <Folder Include="wwwroot\msit155e\images\Member\" />
     <Folder Include="wwwroot\msit155e\images\Room\" />
     <Folder Include="wwwroot\msit155e\images\Schedule\" />
     <Folder Include="wwwroot\msit155e\images\Shop\" />
     <Folder Include="wwwroot\msit155e\js\Attend\" />
-    <Folder Include="wwwroot\msit155e\js\Cases\" />
     <Folder Include="wwwroot\msit155e\js\Drugs\" />
-    <Folder Include="wwwroot\msit155e\js\Member\" />
     <Folder Include="wwwroot\msit155e\js\Room\" />
-    <Folder Include="wwwroot\msit155e\js\Schedule\" />
     <Folder Include="wwwroot\msit155e\js\Shop\" />
   </ItemGroup>
 

@@ -9,30 +9,30 @@
 			<div class="x_title">
 				<h2>掛號紀錄</h2>
 				<ul class="nav navbar-right panel_toolbox">
-					<li>
+                    @*<li>
 						<a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 					</li>
-					<li class="dropdown">
+                    <li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
 						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 							<a class="dropdown-item" href="#">Settings 1</a>
 							<a class="dropdown-item" href="#">Settings 2</a>
 						</div>
 					</li>
-					<li>
+ 					<li>
 						<a class="close-link"><i class="fa fa-close"></i></a>
-					</li>
+					</li> *@
 				</ul>
 				<div class="clearfix"></div>
 			</div>
 			<div class="mb-3" style="overflow: auto">
 				<div class="col-md-4">
 					<label class="form-label"> </label>
-					<button id="addAppt" class="form-control btn btn-primary" disabled="disabled">新增掛號</button>
+					<button id="addAppt" class="form-control btn btn-primary" disabled="disabled" data-toggle="modal" data-target=".addApptModal">新增掛號</button>
 				</div>
 				<div class="col-md-4">
 					<label class="form-label"> </label>
-					<button id="modAppt" class="form-control btn btn-info" disabled="disabled">查看/修改</button>
+					<button id="modAppt" class="form-control btn btn-info" disabled="disabled" data-toggle="modal" data-target=".modApptModal">查看/修改</button>
 				</div>
 				<div class="col-md-4">
 					<label for="isCancelled" class="form-label">是否退掛: </label>
@@ -52,7 +52,7 @@
 								<thead>
 									<tr>
 										<th style="display:none">
-											clinic_id
+											clinicAppt_id
 										</th>
 										<th style="display:none">
 											member_id
