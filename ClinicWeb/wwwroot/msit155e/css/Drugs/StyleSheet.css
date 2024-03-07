@@ -1,0 +1,24 @@
+﻿body {
+}
+
+
+.article {
+    width: 60%;
+    margin: 20px auto;
+}
+
+/*.bold{
+    font-size:3em;
+    font-weight:bold;
+}*/
+
+/*內文的行高設定*/
+.text{
+    line-height:1.8
+}
+
+/*List的樣式*/
+.list {
+    text-decoration: underline;
+    text-decoration-color: #B9B9FF;
+}
