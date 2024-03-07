@@ -26,7 +26,7 @@ namespace ClinicWeb.Areas.Room.Controllers
             ViewData["Nurses"] = _context.MemberEmployeeList.Where(e => e.EmpType == "護士").ToList();
             return View();
         }
-
+     
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(AppointmentRoomSchedule order)
@@ -35,9 +35,13 @@ namespace ClinicWeb.Areas.Room.Controllers
             {
                 _context.Add(order);
                 _context.SaveChanges();
+                TempData["SuccessMessage"] = "預約成功！";
                 return RedirectToAction(nameof(Index));
             }
-
+            else
+            {
+                TempData["ErrorMessage"] = "預約失敗，请填寫正確的訊息。";
+            }
             var rooms = _context.RoomList.Where(r => r.TypeId == 4).ToList();
             if (rooms.Any())
             {
@@ -54,6 +58,7 @@ namespace ClinicWeb.Areas.Room.Controllers
             ViewData["Doctors"] = _context.MemberEmployeeList.Where(e => e.EmpType == "醫生").ToList();
             ViewData["Nurses"] = _context.MemberEmployeeList.Where(e => e.EmpType == "護士").ToList();
             return View("Index", order);
+
         }
     }
 }

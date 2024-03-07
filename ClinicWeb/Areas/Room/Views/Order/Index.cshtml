@@ -3,8 +3,10 @@
 <form asp-action="Create" method="post">
     <div class="form-group">
         <label asp-for="StartDate">Start Date:</label>
-        <input asp-for="StartDate" class="form-control" type="date" />
+        <input asp-for="StartDate" class="form-control" type="date" required />
+        <span asp-validation-for="StartDate" class="text-danger"></span>
     </div>
+    
     <div class="form-group">
         <label asp-for="RoomId">Room:</label>
         <select asp-for="RoomId" class="form-control" asp-items="@ViewBag.Rooms"></select>
@@ -17,5 +19,25 @@
         <label asp-for="NurseId">Nurse:</label>
         <select asp-for="NurseId" class="form-control" asp-items="@(new SelectList(ViewBag.Nurses, "EmpId", "Name"))"></select>
     </div>
+    
     <button type="submit" class="btn btn-primary">預約</button>
 </form>
+@{
+    var successMessage = TempData["SuccessMessage"] as string;
+    var errorMessage = TempData["ErrorMessage"] as string;
+}
+
+@if (!string.IsNullOrEmpty(successMessage))
+{
+    <div class="alert alert-success" role="alert">
+        @successMessage
+    </div>
+}
+
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <div class="alert alert-danger" role="alert">
+        @errorMessage
+    </div>
+}
+
