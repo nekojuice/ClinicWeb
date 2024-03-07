@@ -1,4 +1,6 @@
-﻿@{
+﻿@model PharmacyTClinicalUseList
+
+@{
     ViewData["Title"] = "藥師管理系統";
 }
 
@@ -165,6 +167,10 @@
         }
         QueryClinicalUseInfo();
         
+        //修改適應症按鈕
+
+
+
         //帶入指向的資料在畫面上
         const CUCode = document.getElementById('fClinicalUseCode');
         const CU = document.getElementById('fClinicalUse');

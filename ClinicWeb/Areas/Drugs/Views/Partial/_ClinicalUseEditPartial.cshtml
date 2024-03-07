@@ -1,0 +1,43 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model ClinicWeb.Areas.Drugs.Models.PharmacyTClinicalUseList
+
+<div class="x_panel">
+    <div class="x_title">
+        <h2>修改適應症資料</h2>
+
+        <div class="clearfix"></div>
+    </div>
+    <div class="x_content">
+        <br>
+        <form asp-action="Edit" id="form_ClinicalUseEdit" class="form-label-left input_mask">
+
+            <!--適應症編號-->
+            <div class="form-group row">
+                <label class="col-form-label col-md-3 col-sm-3 ">適應症編號</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <input type="text" class="form-control" placeholder="適應症編號" name="fClinicalUseCode">
+                </div>
+            </div>
+            <!--適應症名稱-->
+            <div class="form-group row">
+                <label class="col-form-label col-md-3 col-sm-3 ">適應症名稱</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <input type="text" class="form-control" placeholder="適應症名稱" name="fClinicalUse">
+                </div>
+            </div>
+            <!--按鈕-->
+            <div class="form-group row" style="margin:30px">
+                <div class="col-md-9 col-sm-9  offset-md-8">
+
+                    <button id="closeButton" type="button" class="btn btn-secondary" data-dismiss="modal"> 關閉 </button>
+                    <button class="btn btn-primary" type="reset"> 清除 </button>
+                    <button id="saveButton" type="submit" class="btn btn-primary"> 新增 </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

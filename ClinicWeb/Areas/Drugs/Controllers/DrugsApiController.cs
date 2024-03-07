@@ -106,5 +106,23 @@ namespace ClinicWeb.Areas.Drugs.Controllers
 
             return View("~/Areas/Drugs/Views/ClinicalUse.cshtml");
         }
+
+        //修改適應症資料
+       
+        public async Task<IActionResult> ClinicalUseEdit(int? clinicaluseId)
+        {
+            if (clinicaluseId == null || _context.PharmacyTClinicalUseList==null)
+            {
+                return NotFound();
+            }
+
+            var pharmacyTClinicalUseList = await _context.PharmacyTClinicalUseList.FindAsync(clinicaluseId);
+            if (pharmacyTClinicalUseList == null)
+            {
+                return NotFound();
+            }
+            return PartialView("~/Areas/Drugs/Views/Partial/__ClinicalUseEditPartial.cshtml", pharmacyTClinicalUseList);
+        }
+
     }
 }
