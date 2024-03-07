@@ -1,0 +1,116 @@
+﻿@model ClinicWeb.Areas.Member.Models.MemberMemberList
+<div class="container">
+    <h1>修改資料</h1>
+    <form>
+        <div class="row mb-3">
+            <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
+            <div class="col-md-8 col-lg-9">
+                <img src="assets/img/profile-img.jpg" alt="Profile">
+                <div class="pt-2">
+                    <a href="#" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></a>
+                    <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <label asp-for="Name" class="col-md-4 col-lg-3 col-form-label"></label>
+            <div class="col-md-8 col-lg-9">
+                <input asp-for ="Name" type="text" class="form-control">
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <label asp-for="NationalId" class="col-md-4 col-lg-3 col-form-label"></label>
+            <div class="col-md-8 col-lg-9">
+                <input asp-for="NationalId" type="text" class="form-control">
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <label asp-for="MemEmail" class="col-md-4 col-lg-3 col-form-label"></label>
+            <div class="col-md-8 col-lg-9">
+                <input asp-for="MemEmail" type="text" class="form-control">
+            </div>
+        </div>
+        <!-- 聯絡電話 -->
+        <div class="row mb-3">
+            <label asp-for="Phone" class="col-md-4 col-lg-3 col-form-label"></label>
+            <div class="col-md-8 col-lg-9">
+                <input asp-for="Phone" type="text" class="form-control">
+            </div>
+        </div>
+        <!--性別-->
+        <div class="row mb-3">
+            <label asp-for="Gender" class="col-md-4 col-lg-3 col-form-label"></label>
+            <div class="col-md-8 col-lg-9">
+                <select asp-for="Gender" class="form-control">
+                    <!option 
+                    > 男 </!option >
+                    <!option 
+                    > 女 </!option >
+                </select>
+            </div>
+        </div>
+        <!-- 血型 -->
+        <div class="row mb-3">
+            <label asp-for="BloodType" class="col-md-4 col-lg-3 col-form-label"></label>
+            <div class="col-md-8 col-lg-9">
+                <select class="form-control" asp-for="BloodType">
+
+                    <option>A</option>
+                    <option>B</option>
+                    <option>O</option>
+                    <option>AB</option>
+                </select>
+            </div>
+        </div>
+        <!--戶籍地址-->
+        <div class="row mb-3">
+            <label asp-for="Address" class="col-md-4 col-lg-3 col-form-label"></label>
+            <div class="col-md-8 col-lg-9">
+                <input asp-for="Address" type="text" class="form-control">
+            </div>
+        </div>
+        <!--聯絡地址-->
+        <div class="row mb-3">
+            <label asp-for="ContactAddress" class="col-md-4 col-lg-3 col-form-label"></label>
+            <div class="col-md-8 col-lg-9">
+                <input asp-for="ContactAddress" type="text" class="form-control">
+            </div>
+        </div>
+        <!--生日-->
+        <div class="row mb-3">
+            <label asp-for="BirthDate" class="col-md-4 col-lg-3 col-form-label"></label>
+            <div class="col-md-8 col-lg-9">
+                
+                <input asp-for="BirthDate" class="date-picker form-control" type="date" >
+            </div>
+        </div>
+        <!--緊急聯絡人-->
+        <div class="row mb-3">
+            <label asp-for="IceName" class="col-md-4 col-lg-3 col-form-label"></label>
+            <div class="col-md-8 col-lg-9">
+                <input asp-for="IceName" type="text" class="form-control">
+            </div>
+        </div>
+        <!--緊急聯絡人電話-->
+        <div class="row mb-3">
+            <label asp-for="IceNumber" class="col-md-4 col-lg-3 col-form-label"></label>
+            <div class="col-md-8 col-lg-9">
+                <input asp-for="IceNumber" type="text" class="form-control">
+            </div>
+        </div>
+        <!--會員密碼-->
+        <div class="row mb-3">
+            <label asp-for="MemPassword" class="col-md-4 col-lg-3 col-form-label"></label>
+            <div class="col-md-8 col-lg-9">
+                <input asp-for="MemPassword" type="text" class="form-control">
+            </div>
+        </div>
+
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">保存變更</button>
+        </div>
+    </form><!-- End Profile Edit Form -->
+</div>

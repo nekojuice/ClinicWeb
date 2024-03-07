@@ -68,7 +68,8 @@ namespace ClinicWeb.Controllers
             //考慮寫成claims.count===0
             {
                 //未來會加上會員中心畫面以及個人資料
-                return Content("現在是登入狀態喔");
+                return View("~/Views/FMemberB/MemberIndex.cshtml");
+                //return Content("現在是登入狀態喔");
             }
             else
             {
@@ -123,6 +124,7 @@ namespace ClinicWeb.Controllers
                 var claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.Email, user.MemEmail.ToString()),
+                       new Claim(ClaimTypes.Name, user.Name),
                     new Claim("MemberNumber", user.MemberNumber.ToString()),
                      new Claim("MemberName", user.Name),
                       new Claim("MemberID", user.MemberId.ToString()),

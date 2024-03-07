@@ -4,69 +4,70 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - ClinicWeb</title>
-	@await RenderSectionAsync("Styles", required: false)
-	<link href="~/css/bootstrap.min.css" rel="stylesheet" />
+    @await RenderSectionAsync("Styles", required: false)
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ClinicWeb.styles.css" asp-append-version="true" />
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-	<link href="~/css/tiny-slider.css" rel="stylesheet">
-	<link href="~/css/style.css" rel="stylesheet">
-	@await RenderSectionAsync("ModulesStyles", required: false)
-    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="~/css/tiny-slider.css" rel="stylesheet">
+    <link href="~/css/style.css" rel="stylesheet">
+    @await RenderSectionAsync("ModulesStyles", required: false)
+
 </head>
 <body>
     <header>
-		<nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
+        <nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
 
-			<div class="container">
-				<a class="navbar-brand" asp-controller="ClientPage" asp-action="Index"><img src="~/msit155e/images/logo-simply.png" style="height:80px;weight:40px" />寶育婦幼</a>
+            <div class="container">
+                <a class="navbar-brand" asp-controller="ClientPage" asp-action="Index"><img src="~/msit155e/images/logo-simply.png" style="height:80px;weight:40px" />寶育婦幼</a>
 
-				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni" aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni" aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-				<div class="collapse navbar-collapse" id="navbarsFurni">
-					<ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
-						<li><a class="nav-link" asp-controller="ClientPage" asp-action="Index">首頁</a><li/>
-						<li><a class="nav-link" href="http://localhost:4200/">掛號預約</a></li>
-						<li><a class="nav-link" asp-controller="FClinicSchedule" asp-action="FClinicSchedule">門診表</a></li>
-						<li><a class="nav-link" asp-controller="FHealthInformation" asp-action="FHealthInformation">衛教資訊</a></li>
-						<li><a class="nav-link" asp-controller="FHealthInformation" asp-action="FHealthInformation">聊天室</a></li>
-					</ul>
+                <div class="collapse navbar-collapse" id="navbarsFurni">
+                    <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0 nkjpatch-nav">
+                        <li><a class="nav-link" asp-controller="ClientPage" asp-action="Index">首頁</a><li />
+                        <li><a class="nav-link" href="http://localhost:4200/">掛號預約</a></li>
+                        <li><a class="nav-link" asp-controller="FClinicSchedule" asp-action="FClinicSchedule">門診表</a></li>
+                        <li><a class="nav-link" asp-controller="FHealthInformation" asp-action="FHealthInformation">衛教資訊</a></li>
+                        <li><a class="nav-link" asp-controller="FChattingRoom" asp-action="FChattingRoom">聊天室</a></li>
+                    </ul>
 
 					<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
 						<li><a class="nav-link" asp-controller="ClientPage" asp-action="Login"><img src="~/images/user.svg"></a></li>
-						<li><a class="nav-link" href="cart.html"><img src="~/images/cart.svg"></a></li>
-						<li><a class="nav-link" asp-controller="ClientPage" asp-action="Logout">要登出的話點我</a></li>
+						
+
+						<partial name="_LoginPartial.cshtml"/>
 					</ul>
 				</div>
 			</div>
 
-		</nav>
+        </nav>
     </header>
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+    <main role="main" class="pb-3">
+        @RenderBody()
+    </main>
 
-	<footer class="footer-section">
-		<div class="container relative">
-			<div class="row g-5 mb-5">
-				<div class="col-lg-4">
-					<div class="mb-4 footer-logo-wrap"><a href="#" class="footer-logo">寶育婦幼</a></div>
-					<p class="mb-4">Donec facilisis quam ut purus rutrum lobortis. Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate velit imperdiet dolor tempor tristique. Pellentesque habitant</p>
-				</div>
+    <footer class="footer-section">
+        <div class="container relative">
+            <div class="row g-5 mb-5">
+                <div class="col-lg-9">
+                    <div class="mb-4 footer-logo-wrap"><a href="#" class="footer-logo">寶育婦幼</a></div>
+                    <h6 class=""><i class="fa-solid fa-location-dot"></i> 106台北市大安區復興南路一段390號2樓 (資展國際股份有限公司)</h6>
+                    <h6><i class="fa-solid fa-phone"></i> 聯絡我們: (02)6631-6588</h6>
+                </div>
 
-							<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3615.0047467611753!2d121.54083797622505!3d25.0339129778165!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442abd379a5ec97%3A0xedc006d25a9e35df!2z6LOH5bGV5ZyL6Zqb6IKh5Lu95pyJ6ZmQ5YWs5Y-4!5e0!3m2!1szh-TW!2stw!4v1709191984234!5m2!1szh-TW!2stw" width="320" height="200" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3615.0047467611753!2d121.54083797622505!3d25.0339129778165!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442abd379a5ec97%3A0xedc006d25a9e35df!2z6LOH5bGV5ZyL6Zqb6IKh5Lu95pyJ6ZmQ5YWs5Y-4!5e0!3m2!1szh-TW!2stw!4v1709191984234!5m2!1szh-TW!2stw" width="320" height="200" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 
-			</div>
-		</div>
-	</footer>
+            </div>
+        </div>
+    </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-@* 	<script src="~/js/bootstrap.bundle.min.js"></script> *@
-	<script src="~/js/tiny-slider.js"></script>
-	<script src="~/js/custom.js"></script>
+    @* 	<script src="~/js/bootstrap.bundle.min.js"></script> *@
+    <script src="~/js/tiny-slider.js"></script>
+    <script src="~/js/custom.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

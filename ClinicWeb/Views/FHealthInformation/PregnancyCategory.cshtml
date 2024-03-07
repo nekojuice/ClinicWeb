@@ -1,0 +1,112 @@
+﻿@section Styles {
+    <style>
+        .article{
+            width:60%;
+            margin:20px auto;
+        }
+        .sty {
+            border: 5px solid #555555;            
+            border-collapse: collapse;
+        }
+
+        td, th {
+            border: 2px solid black;
+            text-align: center;
+            padding: 5px;
+        }
+
+        thead {
+            background-color: #364C65;
+            color: #FFFFFF;
+        }
+
+        tbody {
+            background-color: #285D99
+        }
+
+            tbody tr:nth-child(2n) {
+                background-color: #71BFDB;
+                color:ghostwhite
+            }
+
+            tbody tr:nth-child(2n+1) {
+                background-color:#E3F2F8;
+            }
+
+            tbody tr:hover {
+                background-color: yellow;
+                color: blueviolet;
+                font-weight: 700;
+            }
+
+            tbody td:hover {
+                background-color: #CE0000;
+                color: #FFFFFF;
+            }
+    </style>
+}
+
+@{
+    ViewData["Title"] = "懷孕藥品分級表";
+}
+
+<div class="article">
+<h4>孕期合理用藥</h4>
+<div>    
+針對不同時期的胚胎，藥品可能會產生不同的影響，通常對胎兒影響最大是在懷孕3-8週。這時胎兒身體各器官正在發育形成，是對藥品影響最敏感的時期，如果服用會引起胎兒畸形的藥品，可能導致胎兒形成缺陷，此階段最好能避免用藥，不可未經醫師或藥師指示下而自行購買服用。如果想要知道如何自行查詢藥品對於妊娠的影響，除了藥品仿單提供的資訊之外，也可參考美國聯邦食品藥品管理局(FDA)的網站了解最新藥品資訊。美國在2015年7月起，決議取消原本採用的A、B、C、D、X懷孕用藥分級方式，新式的藥品標示包括：懷孕曝露（分娩與生產）、哺乳期以及對男女生殖系統影響，較原有的分級制度更詳細。由於這制度更新前上市的藥品有許多還未在仿單中修改，因此目前舊式分級制仍具有臨床的參考價值，未來將逐步更新採用新的規範。
+</div>
+<div>
+    <h2 style="margin:20px 0px" class="fw-bold">懷孕藥品分級表</h2>
+    <hr />
+    </div>
+    <div>
+        <table class="sty">            
+            <thead>
+                <tr>
+                    <th>分級</th>
+                    <th>定義</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>A</td>
+                    <td>在懷孕婦女的對照臨床試驗中，無法證實對懷孕第一期或較後期胎兒有風險、或對胎兒傷害的可能性。</td>
+                </tr>
+                <tr>
+                    <td>B</td>
+                    <td>
+                        動物試驗未顯示對胎兒有危險，但缺乏懷孕婦女的對照臨床試驗資料；
+                        或者，動物試驗顯示對胎兒有不良反應，但懷孕婦女對照臨床試驗無法證實對胎兒有危險。
+                    </td>
+                </tr>
+                <tr>
+                    <td>C</td>
+                    <td>
+                        動物試驗顯示有致畸胎的結果，但沒有針對孕婦或動物有對照組的研究
+                        可證明其危險性。
+                    </td>
+                </tr>
+                <tr>
+                    <td>D</td>
+                    <td>
+                        已證實對人之胎兒有傷害，若是疾病對於孕婦有生命威脅或安全的藥品
+                        已無法治療的情況下，
+                        權衡利弊，仍可使用。
+                    </td>
+                </tr>
+                <tr>
+                    <td>X</td>
+                    <td>
+                        動物或人體的試驗中或使用經驗發現對胎兒有害，而造成的傷害明顯大
+                        於可能的益處。
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    
+</div>
+    <!-- 返回列表按鈕:水平置中 -->
+    <div class="text-center">
+        <a class="btn btn-secondary" href="~/FHealthInformation/FHealthInformation" role="button">返回列表</a>
+    </div>
+</div>

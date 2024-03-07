@@ -1,12 +1,20 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ClinicWeb.Areas.Schedule.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace ClinicWeb.Controllers
 {
 	public class FClinicScheduleController : Controller
-	{
-		public IActionResult FClinicSchedule()
+    {
+
+
+        public IActionResult FClinicSchedule()
 		{
 			return View();
 		}
-	}
+
+
+
+    }
+
 }

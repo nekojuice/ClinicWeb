@@ -47,6 +47,7 @@
 	<ul class="nav child_menu" @if (ViewBag.AREA == "Schedule")
 		@("style=display:block;")
 >
+		<li><a asp-area="Schedule" asp-controller="Home" asp-action="ClinicInfo">門診維護</a></li>
 		<li><a asp-area="Schedule" asp-controller="Home" asp-action="DoctorSchedule">醫師班表</a></li>
 		<li><a asp-area="Schedule" asp-controller="Home" asp-action="NurseSchedule">護士班表</a></li>
 	</ul>
@@ -107,5 +108,17 @@
 		@("style=display:block;")
 >
 		<li><a asp-area="ClinicRoomSys" asp-controller="Home" asp-action="Index">叫號看診系統</a></li>
+	</ul>
+</li>
+
+
+<li @if (ViewBag.AREA == "Chatroom")
+	@("class=active")
+>
+	<a><i class="fa fa-cubes"></i> 線上諮詢 <span class="fa fa-chevron-down"></span></a>
+	<ul class="nav child_menu" @if (ViewBag.AREA == "Chatroom")
+		@("style=display:block;")
+>
+		<li><a asp-area="Chatroom" asp-controller="Chat" asp-action="Index">聊天室</a></li>
 	</ul>
 </li>

@@ -1,5 +1,260 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    ViewData["Title"] = "聊天室";
 }
+
+
+<section style="background-color: white">
+    <div class="container py-5">
+
+        <div class="row">
+
+            <div class="col-md-6 col-lg-5 col-xl-4 mb-4 mb-md-0">
+
+                <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="~/images/chat.jpg" class="d-block w-100" alt="First Slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="~/images/chat2.jpg" class="d-block w-100" alt="Second Slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="~/images/chat3.jpg" class="d-block w-100" alt="Third Slide">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-md-6 col-lg-7 col-xl-8">
+
+                <ul class="list-unstyled" id="messageList" style="max-height: 400px; overflow-y: auto;">
+                    <li class="d-flex justify-content-between mb-4" id="msginsert">
+
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between p-3">
+                                <p class="fw-bold mb-0">Brad Pitt</p>
+                                <p class="text-muted small mb-0"><i class="far fa-clock"></i> 10 mins ago</p>
+                            </div>
+                            <div class="card-body">
+                                <p class="mb-0" id="msgshow">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                                    labore et dolore magna aliqua.
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="d-flex justify-content-between mb-4">
+
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between p-3">
+                                <p class="fw-bold mb-0">Brad Pitt</p>
+                                <p class="text-muted small mb-0"><i class="far fa-clock"></i> 10 mins ago</p>
+                            </div>
+                            <div class="card-body">
+                                <p class="mb-0" id="msgshow">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                                    labore et dolore magna aliqua.
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <div class="bg-white mb-3">
+                    <div class="form-outline">
+                        <label class="form-label" for="textAreaExample2">輸入訊息</label>
+                        <textarea class="form-control" id="textBig" rows="4"></textarea>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-info btn-rounded float-end">送出</button>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+<body class="bodyctrl">
+    <div class="wrapper">
+        <div class="chat-box">
+            <div class="chat-head">
+                <h2>聊天室</h2>
+            </div>
+            <div class="chat-body">
+                <div class="msg-insert">
+                </div>
+                <div class="chat-text">
+                    <textarea id="text" placeholder="發送"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+
+
+                @section Scripts{
+    <link href="~/css/chatroom.css" rel="stylesheet" />
+    <script>
+        //大聊天室
+        // document.getElementById("textBig").addEventListener("keydown", function (event) {
+        //     if (event.keyCode === 13) { // 檢查按下的按鍵是否是 Enter（keyCode 13）
+        //         var msg = textarea.value.trim();
+
+        //         if (msg !== '') {
+        //             // 清空 textarea
+        //             textarea.value = '';
+
+        //             // 在 .msg-insert 的最前面插入一個包含輸入內容的 div 元素
+        //             var msgDiv = document.createElement('div');
+        //             msgDiv.textContent = msg;
+
+        //             var msgInsert = document.getElementById('msginsert');
+        //             msgInsert.insertBefore(msgDiv, msgInsert.firstChild);
+        //         }
+
+        //         // 防止換行
+        //         event.preventDefault();
+        //     }
+        // });
+
+        function sendMessage() {
+            var msg = document.getElementById("textBig").value.trim();
+
+            if (msg !== '') {
+                // 清空 textarea
+                document.getElementById("textBig").value = '';
+
+                // 創建新的 li 元素
+                var newLi = document.createElement('li');
+                newLi.className = 'd-flex justify-content-between mb-4';
+
+                // 複製卡片內容
+                var cardContent = document.querySelector('#msginsert .card').cloneNode(true);
+                cardContent.querySelector('#msgshow').textContent = msg;
+
+                // 將內容插入新卡片
+                newLi.appendChild(cardContent);
+
+                // 將新卡片插入到列表中
+                var messageList = document.getElementById("messageList");
+                messageList.insertBefore(newLi, messageList.lastChild);
+
+                messageList.scrollTop = messageList.scrollHeight;
+
+                syncToBottomChat(msg);
+            }
+        }
+
+        document.getElementById("textBig").addEventListener("keydown", function (event) {
+            if (event.keyCode === 13) { // 檢查按下的按鍵是否是 Enter（keyCode 13）
+                event.preventDefault();
+                sendMessage();
+                
+            }
+        });
+
+
+
+
+
+
+        //右下聊天室
+        $(function () {
+            var arrow = $('.chat-head');
+            var textarea = $('.chat-text textarea');
+            var chatBody = $('.chat-body'); // 聊天區塊元素
+
+            // 初始化時隱藏聊天區塊
+            chatBody.fadeOut('fast');
+            arrow.on('click', function () {
+                var src = arrow.attr('src');
+
+                chatBody.slideToggle('fast');
+                if (src == 'https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_down-16.png') {
+                    arrow.attr('src', 'https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_up-16.png');
+                }
+                else {
+                    arrow.attr('src', 'https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_down-16.png');
+                }
+            });
+
+            // 點擊文檔其他地方時隱藏聊天區塊
+            $(document).on('click', function (event) {
+                // 檢查點擊事件的目標是否是 .chat-head 或 .chat-body 的子元素
+                if (!$(event.target).closest('.chat-head, .chat-body').length) {
+                    // 隱藏聊天區塊
+                    chatBody.fadeOut('fast');
+
+                    // 將箭頭設置為向下的圖片
+                    arrow.attr('src', 'https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_down-16.png');
+                }
+            });
+
+            // 同步到右下方聊天窗口
+            function syncToBottomChat(msg) {
+                var currentTime = new Date();
+                var hours = currentTime.getHours();
+                var minutes = currentTime.getMinutes();
+                var amOrPm = hours >= 12 ? '下午' : '上午';
+                hours = hours % 12;
+                hours = hours ? hours : 12; // 將 0 轉換為 12
+                var formattedTime = amOrPm + '  ' + hours + ':' + (minutes < 10 ? '0' : '') + minutes;
+
+                // 在 .msg-insert 的最前面插入一個包含輸入內容的 div 元素
+                var msgDiv = document.createElement('div');
+                msgDiv.className = 'msg-send';
+                msgDiv.textContent = msg;
+
+                // 建立包含時間的 div 元素
+                var timeDiv = document.createElement('div');
+                timeDiv.className = 'msg-time';
+                timeDiv.textContent = formattedTime;
+
+                var msgInsert = document.querySelector('.msg-insert');
+                msgInsert.appendChild(timeDiv, msgInsert.lastChild);
+                msgInsert.appendChild(msgDiv, msgInsert.lastChild);
+
+                msgInsert.scrollTop = msgInsert.scrollHeight;
+            }
+
+            var textarea = document.getElementById('text'); // 將 'yourTextareaId' 替換成實際的 textarea 元素的 id
+
+            textarea.addEventListener('keypress', function (event) {
+                if (event.keyCode === 13) { // 檢查按下的按鍵是否是 Enter（keyCode 13）
+                    var msg = textarea.value.trim();
+                    var currentTime = new Date();
+                    var hours = currentTime.getHours();
+                    var minutes = currentTime.getMinutes();
+                    var amOrPm = hours >= 12 ? '下午' : '上午';
+                    hours = hours % 12;
+                    hours = hours ? hours : 12; // 將 0 轉換為 12
+                    var formattedTime = amOrPm + '  ' + hours + ':' + (minutes < 10 ? '0' : '') + minutes;
+                    
+                    if (msg !== '') {
+                        // 清空 textarea
+                        textarea.value = '';
+
+                        // 在 .msg-insert 的最前面插入一個包含輸入內容的 div 元素
+                        var msgDiv = document.createElement('div');
+                        msgDiv.className = 'msg-send';
+                        msgDiv.textContent = msg;
+
+                        // 建立包含時間的 div 元素
+                        var timeDiv = document.createElement('div');
+                        timeDiv.className = 'msg-time';
+                        timeDiv.textContent = formattedTime;
+
+                        var msgInsert = document.querySelector('.msg-insert');
+                        msgInsert.appendChild(timeDiv, msgInsert.lastChild);
+                        msgInsert.appendChild(msgDiv, msgInsert.lastChild);
+
+                        msgInsert.scrollTop = msgInsert.scrollHeight;
+                    }
+
+                    // 防止換行
+                    event.preventDefault();
+                }
+            });
+
+        });
+    </script> }    

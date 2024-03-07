@@ -240,15 +240,15 @@
     <Folder Include="Areas\Shop\Models\" />
     <Folder Include="Areas\Temp\Data\" />
     <Folder Include="Areas\Temp\Models\" />
+    <Folder Include="wwwroot\msit155e\js\MemberProfile\" />
     <Folder Include="wwwroot\msit155e\css\Attend\" />
     <Folder Include="wwwroot\msit155e\css\Attend\" />
-    <Folder Include="wwwroot\msit155e\css\Drugs\" />
     <Folder Include="wwwroot\msit155e\css\Shop\" />
     <Folder Include="wwwroot\msit155e\css\Schedule\" />
     <Folder Include="wwwroot\msit155e\css\Room\" />
+    <Folder Include="wwwroot\msit155e\images\Appointment\" />
     <Folder Include="wwwroot\msit155e\images\Attend\" />
     <Folder Include="wwwroot\msit155e\images\Cases\" />
-    <Folder Include="wwwroot\msit155e\images\Drugs\" />
     <Folder Include="wwwroot\msit155e\images\Member\" />
     <Folder Include="wwwroot\msit155e\images\Room\" />
     <Folder Include="wwwroot\msit155e\images\Schedule\" />
@@ -256,7 +256,6 @@
     <Folder Include="wwwroot\msit155e\js\Attend\" />
     <Folder Include="wwwroot\msit155e\js\Drugs\" />
     <Folder Include="wwwroot\msit155e\js\Room\" />
-    <Folder Include="wwwroot\msit155e\js\Schedule\" />
     <Folder Include="wwwroot\msit155e\js\Shop\" />
   </ItemGroup>
 
