@@ -67,7 +67,7 @@
                                             <label for="Name">信箱</label>
                                             <div class="input-group">
                                                 <span class="input-group-text"><i class="fa fa-envelope"></i></span>
-                                                <input asp-for="MemEmail" type="text" class="form-control" placeholder="信箱">
+                                                <input asp-for="MemEmail" type="text" class="form-control" placeholder="信箱" value="@TempData["ForRegister"]">
                                             </div>
                                             <span asp-validation-for="MemEmail" class="text-danger"></span>
                                         </div>
