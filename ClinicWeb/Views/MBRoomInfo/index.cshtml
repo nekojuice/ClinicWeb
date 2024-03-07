@@ -1,0 +1,92 @@
+﻿@model ClinicWeb.Areas.Room.Models.ShowAppointmentRoomSchedule
+
+<div class="container">
+    <form asp-action="Create" method="post">
+        <div class="form-group">
+            <label asp-for="StartDate">起:</label>
+            <input asp-for="StartDate" class="form-control" type="date" required />
+            <span asp-validation-for="StartDate" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="EndDate">迄:</label>
+            <input asp-for="EndDate" class="form-control" type="date" required />
+            <span asp-validation-for="EndDate" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="RoomId">Room:</label>
+            <select asp-for="RoomId" class="form-control" asp-items="@ViewBag.Rooms"></select>
+        </div>
+        <div class="form-group">
+            <label asp-for="DoctorId">Doctor:</label>
+            <select asp-for="DoctorId" class="form-control" asp-items="@(new SelectList(ViewBag.Doctors, "EmpId", "Name"))"></select>
+        </div>
+        <div class="form-group">
+            <label asp-for="NurseId">Nurse:</label>
+            <select asp-for="NurseId" class="form-control" asp-items="@(new SelectList(ViewBag.Nurses, "EmpId", "Name"))"></select>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-3">預約</button>
+    </form>
+</div>
+
+@{
+    var successMessage = TempData["SuccessMessage"] as string;
+    var errorMessage = TempData["ErrorMessage"] as string;
+}
+
+@if (!string.IsNullOrEmpty(successMessage))
+{
+    <div class="alert alert-success" role="alert">
+        @successMessage
+    </div>
+}
+
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <div class="alert alert-danger" role="alert">
+        @errorMessage
+    </div>
+}
+
+
+        <!--
+
+        JavaScript
+        讀取使用者輸入的開始日期及結束日期
+        判斷結束日期要大於開始日期
+        
+        -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Date Range Input</title>
+
+<body>
+
+    <label for="start-date">起:</label>
+    <input type="date" id="start-date">
+
+    <label for="end-date">迄:</label>
+    <input type="date" id="end-date">
+
+    <button onclick="checkDateRange()"></button>
+
+    <script>
+        function checkDateRange() {
+            var startDateInput = document.getElementById("start-date");
+            var endDateInput = document.getElementById("end-date");
+
+            var startDate = new Date(startDateInput.value);
+            var endDate = new Date(endDateInput.value);
+
+            if (endDate <= startDate) {
+                alert("End date must be greater than start date.");
+                return;
+            }
+
+            // Continue with further processing if the date range is valid
+            // For example: submit form data, perform AJAX request, etc.
+        }
+    </script>
+
+</body>
+</html>

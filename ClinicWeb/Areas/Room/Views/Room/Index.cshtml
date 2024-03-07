@@ -11,11 +11,11 @@
                 
                 <th>起</th>
                 <th>迄</th>
+                <th>房名</th>
+                <th>患者</th>
                 <th>醫生</th>
                 <th>護士</th>
-                <th>患者</th>
-                <th>房名</th>
-              
+                                          
             </tr>
         </thead>
         <tbody>
@@ -25,10 +25,12 @@
                     
                     <td>@item.StartDate</td>
                     <td>@item.EndDate</td>
+                    <td>@item.RoomName</td>
+                    <td>@item.MemberName</td>
                     <td>@item.DoctorName</td>
                     <td>@item.NurseName</td>
-                    <td>@item.MemberName</td>
-                    <td>@item.RoomName</td>
+                   
+                    
                     <td>
                     <a href="#" onclick="editItem('@item.AppointmentId')">Edit</a> |
                     |
