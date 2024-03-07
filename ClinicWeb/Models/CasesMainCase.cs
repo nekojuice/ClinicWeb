@@ -22,10 +22,8 @@ public partial class CasesMainCase
 
     public string AllergyRecord { get; set; }
 
-    [Required]
-    [Column("Firstvisit_Date")]
-    [StringLength(50)]
-    public string FirstvisitDate { get; set; }
+    [Column("Firstvisit_Date", TypeName = "datetime")]
+    public DateTime FirstvisitDate { get; set; }
 
     public double? Height { get; set; }
 

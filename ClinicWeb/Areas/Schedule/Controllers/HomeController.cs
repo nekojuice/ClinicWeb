@@ -14,5 +14,9 @@ namespace ClinicWeb.Areas.Schedule.Controllers
         {
             return View();
         }
+        public IActionResult ClinicInfo()
+        {
+            return View();
+        }
     }
 }
