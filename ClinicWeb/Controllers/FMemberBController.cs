@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using NuGet.Protocol.Plugins;
 
 namespace ClinicWeb.Controllers
 {
@@ -9,4 +10,6 @@ namespace ClinicWeb.Controllers
             return View();
         }
     }
+
+
 }

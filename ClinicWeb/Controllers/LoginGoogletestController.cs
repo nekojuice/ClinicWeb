@@ -37,13 +37,13 @@ namespace ClinicWeb.Controllers
 		{
 			var result = await HttpContext.AuthenticateAsync("Google");
 
-			if (result == null || result.Principal == null)
-			{
-				// 驗證失敗 之後希望返回原本畫面加上viewdata
-				ViewData["Msg"] = "驗證 Google 授權失敗";
-				return Content("GoogleLoginFailed");
-			}
-			else
+            if (result == null || result.Principal == null)
+            {
+                // 驗證失敗 之後希望返回原本畫面加上viewdata
+                TempData["Msg"] = "驗證 Google 授權失敗";
+                return View("~/Views/ClientPage/Login/ClientLogin.cshtml");
+            }
+            else
 			{
 
 				var claims = result.Principal.Identities.FirstOrDefault()?.Claims.Select(claim => new
@@ -71,7 +71,10 @@ namespace ClinicWeb.Controllers
 						// 要來找該名會員的ID
 						var claimsAfterGoogleMatch = new List<Claim>
 						{
-							new Claim("MemberID", memberId.ToString()),
+                             new Claim(ClaimTypes.Email, matchingMember.MemEmail.ToString()),
+                             new Claim(ClaimTypes.Name, matchingMember.Name),
+                            new Claim("MemberID", memberId.ToString()),
+
 						};
 
 						
@@ -80,19 +83,22 @@ namespace ClinicWeb.Controllers
 
 				
 					}
-					else
-					{
-						// 沒有找到匹配的會員導到註冊頁面
-						//return RedirectToAction("註冊頁面action");
-						return Json(new { Message = "没有找到匹配的會員" });
-					}
+                    else
+                    {
+                        // 沒有找到匹配的會員導到註冊頁面
+                        //return RedirectToAction("註冊頁面action");
+                        //return Json(new { Message = "没有找到匹配的會員" });
+                        TempData["RegisterPrompt"] = "沒有找到匹配會員，請點選下方註冊";
+                        return View("~/Views/ClientPage/Login/ClientLogin.cshtml");
+                    }
 
-				}
 
-				//return Json(claims);
-				// return RedirectToAction("Index",new {area=""});
-				//要回到之後的會員畫面
-				return View("Index");
+                }
+
+                //return Json(claims);
+                // return RedirectToAction("Index",new {area=""});
+                //要回到之後的會員畫面
+                return View("~/Views/ClientPage/Index.cshtml");
 			}
 		}
 
