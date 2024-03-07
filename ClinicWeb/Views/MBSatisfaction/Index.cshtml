@@ -2,21 +2,39 @@
 {
     <link href="~/msit155e/css/cases/responsivetable.css" rel="stylesheet" />
     <!-- Datatables -->
+    <link href="//cdn.datatables.net/plug-ins/2.0.1/integration/font-awesome/dataTables.fontAwesome.css" rel="stylesheet">
+    <link href="~/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="~/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+    <link href="~/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+    <link href="~/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+    <link href="~/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+    <link href="~/vendors/bootstrap-icons/bootstrap-icons.min.css" rel="stylesheet" />
+    <!-- Datatables -->
     <link href="~/lib/datatables/css/datatables.bootstrap.min.css" rel="stylesheet" />
     <link href="~/lib/datatables/css/jquery.datatables.min.css" rel="stylesheet" />
     <link href="//cdn.datatables.net/plug-ins/2.0.1/integration/font-awesome/dataTables.fontAwesome.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="~/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+
 }
 
 <div class="row d-flex align-items-start">
 
     <div class="col-xl-3">
         <div class="card">
+            <div class="card">
+                <img src="~/images/person_4.jpg" class="card-img-top" alt="..." style="width: 60%;border-radius: 50%;margin: 0 auto;margin-top:2em;box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);">
+                <div class="card-body">
+                    <h5 class="card-title">Coding Yaar</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+            </div>
             <div class="card-body profile-card pt-4 d-flex flex-column">
                 <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                     <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">我的評價</button>
-                    <button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">Profile</button>
-                    <button class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">Messages</button>
-                    <button class="nav-link" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings" type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</button>
+                    @* <button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">檢查報告</button>
+                    <button class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">處方籤</button>
+                    <button class="nav-link" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings" type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">Chart</button> *@
                 </div>
             </div>
         </div>
@@ -27,202 +45,20 @@
             <div class="card-body pt-3">
                 <div class="tab-content" id="v-pills-tabContent">
                     <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-                        <div class="container">
-                            <h1>我的評價</h1>
-                            <table class="rwd-table" id="MedicalRecordsTable">
-                                <tbody>
-                                    <tr>
-                                        <th style="display:none">Caseid</th>
-                                        <th>就診日期</th>
-                                        <th>醫師</th>
-                                        <th>時段</th>
-                                        <th>科別</th>
-                                        <th>診間</th>
-                                        <th>評價</th>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            
-                                        </td>
-                                        <td>
-                                            
-                                        </td>
-                                        <td>
-                                            
-                                        </td>
-                                        <td>
-                                            
-                                        </td>
-                                        <td>
-                                            
-                                        </td>
-                                        <td>
-                                            
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                         
-                                        </td>
-                                        <td>
-                                         
-                                        </td>
-                                        <td>
-                                          
-                                        </td>
-                                        <td>
-                                        
-                                        </td>
-                                        <td>
-                                         
-                                        </td>
-                                        <td>
-                                       
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                           
-                                        </td>
-                                        <td>
-                                          
-                                        </td>
-                                        <td>
-                                     
-                                        </td>
-                                        <td >
-                                           
-                                        </td>
-                                        <td >
-                                       
-                                        </td>
-                                        <td >
-                                      
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                      
-                                        </td>
-                                        <td>
-                                          
-                                        </td>
-                                        <td>
-                                         
-                                        </td>
-                                        <td>
-                                     
-                                        </td>
-                                        <td>
-                                        
-                                        </td>
-                                        <td>
-                                       
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                        <table id="MedicalRecordsTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th style="display:none">看診紀錄ID</th>
+                                    <th>就診日期</th>
+                                    <th>醫師</th>
+                                    <th>時段</th>
+                                    <th>科別</th>
+                                    <th>診間</th>
+                                    <th>評價</th>
+                                </tr>
+                            </thead>
+                        </table>
                     </div>
-                    <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-                        <div class="container">
-                            <h1>Responsive Table 2</h1>
-                            <table class="rwd-table">
-                                <tbody>
-                                    <tr>
-                                        <th>Supplier Code</th>
-                                        <th>Supplier Name</th>
-                                        <th>Invoice Number</th>
-                                        <th>Invoice Date</th>
-                                        <th>Due Date</th>
-                                        <th>Net Amount</th>
-                                    </tr>
-                                    <tr>
-                                        <td data-th="Supplier Code">
-                                            UPS5005
-                                        </td>
-                                        <td data-th="Supplier Name">
-                                            UPS
-                                        </td>
-                                        <td data-th="Invoice Number">
-                                            ASDF19218
-                                        </td>
-                                        <td data-th="Invoice Date">
-                                            06/25/2016
-                                        </td>
-                                        <td data-th="Due Date">
-                                            12/25/2016
-                                        </td>
-                                        <td data-th="Net Amount">
-                                            $8,322.12
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td data-th="Supplier Code">
-                                            UPS3449
-                                        </td>
-                                        <td data-th="Supplier Name">
-                                            UPS South Inc.
-                                        </td>
-                                        <td data-th="Invoice Number">
-                                            ASDF29301
-                                        </td>
-                                        <td data-th="Invoice Date">
-                                            6/24/2016
-                                        </td>
-                                        <td data-th="Due Date">
-                                            12/25/2016
-                                        </td>
-                                        <td data-th="Net Amount">
-                                            $3,255.49
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td data-th="Supplier Code">
-                                            BOX5599
-                                        </td>
-                                        <td data-th="Supplier Name">
-                                            BOX Pro West
-                                        </td>
-                                        <td data-th="Invoice Number">
-                                            ASDF43000
-                                        </td>
-                                        <td data-th="Invoice Date">
-                                            6/27/2016
-                                        </td>
-                                        <td data-th="Due Date">
-                                            12/25/2016
-                                        </td>
-                                        <td data-th="Net Amount">
-                                            $45,255.49
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td data-th="Supplier Code">
-                                            PAN9999
-                                        </td>
-                                        <td data-th="Supplier Name">
-                                            Pan Providers and Co.
-                                        </td>
-                                        <td data-th="Invoice Number">
-                                            ASDF33433
-                                        </td>
-                                        <td data-th="Invoice Date">
-                                            6/29/2016
-                                        </td>
-                                        <td data-th="Due Date">
-                                            12/25/2016
-                                        </td>
-                                        <td data-th="Net Amount">
-                                            $12,335.69
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">...</div>
-                    <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">...</div>
                 </div>
 
                 <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
@@ -232,9 +68,26 @@
 
 </div>
 
-
 @section Scripts {
+
+    
         <!-- Datatables -->
+    <script src="~/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+    <script src="~/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="~/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="~/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+    <script src="~/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+    <script src="~/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="~/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+    <script src="~/vendors/jszip/dist/jszip.min.js"></script>
+    <script src="~/vendors/pdfmake/build/pdfmake.min.js"></script>
+    <script src="~/vendors/pdfmake/build/vfs_fonts.js"></script>
+    <!-- Datatables -->
     <script src="~/lib/datatables/js/datatables.bootstrap.min.js"></script>
     <script src="~/lib/datatables/js/datatables.datatables.min.js"></script>
     <script src="~/lib/datatables/js/jquery.datatables.min.js"></script>

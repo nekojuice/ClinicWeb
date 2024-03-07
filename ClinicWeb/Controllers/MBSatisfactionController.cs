@@ -32,13 +32,14 @@ namespace ClinicWeb.Controllers
         }
 
         //撈出使用者就診紀錄
+        [HttpPost]
         public IActionResult Get_MedicalRecords()
         {
             var user = HttpContext.User;
             var memberID = user.Claims.FirstOrDefault(c => c.Type == "MemberID")?.Value;
 
             var MedicalRecords = _context.CasesMedicalRecords
-                .Where(m => m.MrId== 9)
+                .Where(m => m.MrId == Convert.ToInt32(memberID))
                 .Select(x => new
                 {
                     caseid = x.CaseId,
