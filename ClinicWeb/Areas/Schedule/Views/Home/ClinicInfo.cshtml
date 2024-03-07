@@ -14,6 +14,9 @@
     <link href="~/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
     <link href="~/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
 
+    <!--Toastr-->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+
 }
 
 
@@ -40,6 +43,11 @@
                     </li>
                 </ul>
                 <div class="clearfix"></div>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label"> </label>
+                @* 按鈕觸發小窗 *@
+                <button id="clinicadd" type="button" class="btn btn-primary" data-toggle="modal" data-target="#ClinicAdd">新增門診</button>
             </div>
             <div class="mb-3" style="overflow: auto">
                 <div class="col-md-3">
@@ -104,12 +112,12 @@
 </div>
 
 @* //彈跳小窗 *@
-<div class="modal fade" id="ScheduleCreate" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+<div class="modal fade" id="ClinicAdd" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog modal-lg">
         <div class="modal-content" id="divCreateInfo">
             <div class="modal-header">
                 <h4 class="modal-title" id="myModalLabel">
-                    新增排班
+                    新增門診
                 </h4>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                     &times;
@@ -120,25 +128,51 @@
                 <div class="mb-3 pb-2">
                     <!-- 新添加的行 -->
                     <div class="col-md-3">
-                        <label class="form-label" style="font-size:16px">月份: </label>
-                        <select class="form-control" id="selMonth">
+                        <label class="form-label" style="font-size:16px">星期: </label>
+                        <select class="form-control" id="selweek">
+                            <option value=none>請選擇</option>
+                            <option value=1>星期一</option>
+                            <option value=2>星期二</option>
+                            <option value=3>星期三</option>
+                            <option value=4>星期四</option>
+                            <option value=5>星期五</option>
+                            <option value=6>星期六</option>
                         </select>
                     </div>
                 </div>
-                @*                 <div class="class=" pt-2"">
-                <!-- 新添加的行 -->
-                <div class="col-md-3">
-                <label class="form-label" style="font-size:16px">醫師: </label>
-                <select class="form-control" id="selDoctorname">
-                </select>
+
+                <div class="mb-3 pb-2">
+                  <!-- 新添加的行 -->
+                  <div class="col-md-3">
+                    <label class="form-label" style="font-size:16px">醫師: </label>
+                    <select class="form-control" id="selDoctorname">
+                    </select>
+                  </div>
                 </div>
-                </div> *@
+
+                <div class="mb-3 pb-2">
+                    <!-- 新添加的行 -->
+                    <div class="col-md-3">
+                        <label class="form-label" style="font-size:16px">時段: </label>
+                        <select class="form-control" id="selShift">
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mb-3 pb-2">
+                    <!-- 新添加的行 -->
+                    <div class="col-md-3">
+                        <label class="form-label" style="font-size:16px">診間: </label>
+                        <select class="form-control" id="selRoom">
+                        </select>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">
                     關閉
                 </button>
-                <button id="Scheduling" type="button" class="btn btn-primary">
+                <button id="ClinicAdd" type="button" class="btn btn-primary">
                     新增排班
                 </button>
             </div>
@@ -170,6 +204,9 @@
     <script src="~/vendors/pdfmake/build/pdfmake.min.js"></script>
     <script src="~/vendors/pdfmake/build/vfs_fonts.js"></script>
 
+    <!--Toastr-->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
 }
 
 @section Scripts{
@@ -180,6 +217,26 @@
         const selWeek = document.querySelector('#selectedWeek');
         const selShift = document.querySelector('#selectedShift');
         const selDep = document.querySelector('#selectedDepartment');
+        //小窗元素
+        const selcreateWeek = document.querySelector('#selWeek');
+        const selcreateDrName = document.querySelector('#selDoctorname');
+        const selcreateShift = document.querySelector('#selShift');
+        const selcreateRoom = document.querySelector('#selRoom');
+        const btnClinicadd = document.querySelector('#ClinicAdd');
+
+        // 套件
+        toastr.options = {
+            "closeButton": true,
+            "showDuration": "300",
+            "hideDuration": "500",
+            "timeOut": "1000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+
 
         //下拉選單匯入醫生名
         (async () => {
@@ -294,7 +351,7 @@
             }
         }
 
-
+        //星期搜尋
         selWeek.addEventListener('change', () => { searchWeek(); });
         function searchWeek() {
             const selectedWeek = $('#selectedWeek option:selected').text();
@@ -306,6 +363,48 @@
             }
         }
 
+
+        //小窗醫生名匯入
+        (async () => {
+            const url = '@Url.Content("~/Schedule/api/SelectedDoctorName")';
+            const response = await fetch(url);
+            const datas = await response.json();
+
+            const optDoctornames = datas.map(name => `<option value=${name.empId}>${name.name}</option>`);
+            optDoctornames.unshift('<option value="none">請選擇</option>');
+
+            selcreateDrName.innerHTML = optDoctornames.join("");
+        })();
+
+        //小窗下拉選單匯入時段
+        (async () => {
+            const url = '@Url.Content("~/Schedule/api/GetShifts")';
+            const response = await fetch(url);
+            const datas = await response.json();
+            //console.log(datas);
+
+            const optShifts = datas.map(shift => `<option value=${shift.clinicTimeId}>${shift.clinicShifts}</option>`);
+            optShifts.unshift('<option value="none">請選擇</option>');
+
+            selcreateShift.innerHTML = optShifts.join("");
+
+        })();
+
+        //小窗下拉選單匯入診間
+        (async () => {
+            const url = '@Url.Content("~/Schedule/ClinicInfo/ShowRoom")';
+            const response = await fetch(url); 
+            const datas = await response.json();
+            console.log(datas);
+
+            const optRooms = datas.map(room => `<option value=${room.roomId}>${room.name}</option>`);
+            optRooms.unshift('<option value="none">請選擇</option>'); 
+
+            selcreateRoom.innerHTML = optRooms.join("");
+
+        })();
+
+  
 
 
 

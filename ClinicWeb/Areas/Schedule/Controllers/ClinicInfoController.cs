@@ -1,5 +1,6 @@
 ﻿using ClinicWeb.Areas.Schedule.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace ClinicWeb.Areas.Schedule.Controllers
 {
@@ -29,6 +30,45 @@ namespace ClinicWeb.Areas.Schedule.Controllers
                 });
             
             return Json(WeekSchedule);
+        }
+
+        public IActionResult ShowRoom()
+        {
+            var Week = _context.RoomList
+                .Where(m =>m.TypeId==3)
+                .Select(x => new
+                {
+                   x.RoomId,
+                   x.Name
+                });
+            return Json(Week);
+        }
+
+        public IActionResult AddClinic(int week, int drid, int shiftid, int roomid)
+        {
+            // 檢查是否已存在相同門診
+            var existingClinic = _context.ScheduleClinicSchedule
+                .FirstOrDefault(x => x.Week == week && x.DoctorId == drid && x.TimeId == shiftid && x.RoomId == roomid);
+
+            if (existingClinic != null)
+            {
+                return BadRequest("門診已存在");
+            }
+
+            // 如果不存在，則創建新的門診
+            var newClinic = new ScheduleClinicSchedule
+            {
+                DoctorId = drid,
+                Week = week,
+                TimeId = shiftid,
+                RoomId = roomid
+            };
+
+            // 將新的門存進資料庫
+            _context.ScheduleClinicSchedule.Add(newClinic);
+            _context.SaveChanges();
+
+            return Ok("門診已成功添加");
         }
 
         private static string GetDayOfWeek(int week)
