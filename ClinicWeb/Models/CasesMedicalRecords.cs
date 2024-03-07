@@ -18,8 +18,8 @@ public partial class CasesMedicalRecords
     [Column("MR_Id")]
     public int MrId { get; set; }
 
-    [Column("Clinic_ID")]
-    public int ClinicId { get; set; }
+    [Column("ClinicList_ID")]
+    public int ClinicListId { get; set; }
 
     [Column("BP")]
     [StringLength(50)]
@@ -38,11 +38,19 @@ public partial class CasesMedicalRecords
 
     public string Prescribe { get; set; }
 
+    public int? PatientSatisfaction { get; set; }
+
+    public int? DocSatisfaction { get; set; }
+
+    public int? ClinicSatisfaction { get; set; }
+
+    public int? SysSatisfaction { get; set; }
+
     [ForeignKey("CaseId")]
     [InverseProperty("CasesMedicalRecords")]
     public virtual CasesMainCase Case { get; set; }
 
-    [ForeignKey("ClinicId")]
+    [ForeignKey("ClinicListId")]
     [InverseProperty("CasesMedicalRecords")]
-    public virtual ScheduleClinicInfo Clinic { get; set; }
+    public virtual ApptClinicList ClinicList { get; set; }
 }

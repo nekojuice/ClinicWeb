@@ -31,6 +31,9 @@ public partial class ApptClinicList
     [Column("IsVIP")]
     public bool IsVip { get; set; }
 
+    [InverseProperty("ClinicList")]
+    public virtual ICollection<CasesMedicalRecords> CasesMedicalRecords { get; set; } = new List<CasesMedicalRecords>();
+
     [ForeignKey("ClinicId")]
     [InverseProperty("ApptClinicList")]
     public virtual ScheduleClinicInfo Clinic { get; set; }
