@@ -68,6 +68,7 @@ builder.Services.AddDbContext<ClinicWeb.Areas.Member.Models.ClinicSysContext>(op
 builder.Services.AddDbContext<ClinicWeb.Areas.Drugs.Models.ClinicSysContext>(options => options.UseSqlServer(ConnString));
 builder.Services.AddDbContext<ClinicWeb.Areas.Schedule.Models.ClinicSysContext>(options => options.UseSqlServer(ConnString));
 builder.Services.AddDbContext<ClinicWeb.Areas.Appointment.Models.ClinicSysContext>(options => options.UseSqlServer(ConnString));
+builder.Services.AddDbContext<ClinicWeb.Areas.Room.Models.ClinicSysContext>(options => options.UseSqlServer(ConnString));
 builder.Services.AddDbContext<ClinicSysContext>(options => options.UseSqlServer(ConnString));
 
 
