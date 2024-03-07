@@ -47,6 +47,7 @@
 	<ul class="nav child_menu" @if (ViewBag.AREA == "Schedule")
 		@("style=display:block;")
 >
+		<li><a asp-area="Schedule" asp-controller="Home" asp-action="ClinicInfo">門診維護</a></li>
 		<li><a asp-area="Schedule" asp-controller="Home" asp-action="DoctorSchedule">醫師班表</a></li>
 		<li><a asp-area="Schedule" asp-controller="Home" asp-action="NurseSchedule">護士班表</a></li>
 	</ul>

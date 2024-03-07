@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "排班系統";
+    ViewData["Title"] = "門診周表";
 }
 
 @section ModulesStyles
@@ -14,9 +14,6 @@
     <link href="~/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
     <link href="~/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
 
-    <!--Toastr-->
-    <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
-
 }
 
 
@@ -26,7 +23,7 @@
 
         <div class="x_panel">
             <div class="x_title">
-                <h2>醫師班表</h2>
+                <h2>門診周表</h2>
                 <ul class="nav navbar-right panel_toolbox">
                     <li>
                         <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -44,15 +41,18 @@
                 </ul>
                 <div class="clearfix"></div>
             </div>
-            <div class="col-md-4">
-                <label class="form-label"> </label>
-                @* 按鈕觸發小窗 *@
-                <button id="newSchedulebtn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#ScheduleCreate">新增排班</button>
-            </div>
             <div class="mb-3" style="overflow: auto">
                 <div class="col-md-3">
-                    <label class="form-label">月份: </label>
-                    <select class="form-control" id="selectedMonth">
+                    <label class="form-label">星期: </label>
+                    <select class="form-control" id="selectedWeek">
+                        <option value=all>全部</option>
+                        <option value=1>星期一</option>
+                        <option value=2>星期二</option>
+                        <option value=3>星期三</option>
+                        <option value=4>星期四</option>
+                        <option value=5>星期五</option>
+                        <option value=6>星期六</option>
+
                     </select>
                 </div>
                 <div class="col-md-3">
@@ -70,6 +70,7 @@
                     <select class="form-control" id="selectedDepartment">
                     </select>
                 </div>
+
             </div>
             <div class="x_content">
                 <div class="row">
@@ -80,24 +81,17 @@
                                 <thead>
                                     <tr>
                                         @*  <th>id</th> *@
-                                        <th>日期</th>
+                                        <th style="display:none">Week</th>
+                                        <th>星期</th>
                                         <th>醫師</th>
                                         <th>時段</th>
                                         <th>科別</th>
                                         <th>診間</th>
-                                        <th>掛號上限</th>
                                     </tr>
                                 </thead>
 
                                 <tbody id="tbody1">
-                                    <tr>
-                                        @*  <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td> *@
-                                    </tr>
+                                   
 
                                 </tbody>
                             </table>
@@ -176,39 +170,16 @@
     <script src="~/vendors/pdfmake/build/pdfmake.min.js"></script>
     <script src="~/vendors/pdfmake/build/vfs_fonts.js"></script>
 
-    <!--Toastr-->
-    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-
 }
 
-@section Scripts
-{
+@section Scripts{
+
     <script>
         const selDoctorname = document.querySelector('#selectedDoctorname');
         const scheduleTableBody = document.querySelector('#tbody1');
-        const selMonth = document.querySelector('#selectedMonth');
+        const selWeek = document.querySelector('#selectedWeek');
         const selShift = document.querySelector('#selectedShift');
         const selDep = document.querySelector('#selectedDepartment');
-        //小窗元素
-        const selcreateDoctor = document.querySelector('#selDoctorname');
-        const selcreateMonth = document.querySelector('#selMonth');
-        const scheduling = document.querySelector('#Scheduling');
-
-       // 套件
-        toastr.options = {
-            "closeButton": true,
-            "showDuration": "300",
-            "hideDuration": "500",
-            "timeOut": "1000",
-            "extendedTimeOut": "1000",
-            "showEasing": "swing",
-            "hideEasing": "linear",
-            "showMethod": "fadeIn",
-            "hideMethod": "fadeOut"
-        };
-
-
-
 
         //下拉選單匯入醫生名
         (async () => {
@@ -222,23 +193,6 @@
 
 
             selDoctorname.innerHTML = optDoctornames.join("");
-        })();
-
-
-
-        //下拉選單匯入月份
-        (async () => {
-            const url = '@Url.Content("~/Schedule/api/GetMonth")';
-            const response = await fetch(url);
-            const datas = await response.json();
-            //console.log(datas);
-
-            const optMonth = datas.map(month => `<option value=${month}>${month}</option>`);
-            //如果是請選擇則選到當月的值
-            optMonth.unshift(`<option value=${(new Date()).getFullYear()}/${(parseInt((new Date()).getMonth()) + 1).toString().padStart(2, 0)}>請選擇</option>`);
-
-            selMonth.innerHTML = optMonth.join("");
-
         })();
 
         //下拉選單匯入時段
@@ -269,51 +223,24 @@
 
         })();
 
-        // //小窗下拉選單匯入醫師名字
-        // (async() => {
-        //     const url = '@Url.Content("~/Schedule/api/SelectedDoctorName")';
-        //     const response = await fetch(url);
-        //     const datas = await response.json();
-
-        //     const optDoctornames = datas.map(name => `<option value=${name.empId}>${name.name}</option>`);
-        //     optDoctornames.unshift('<option value="alldoctor">請選擇</option>');
-
-        //     selcreateDoctor.innerHTML = optDoctornames.join("");
-        // })();
 
 
-        //小窗下拉選單匯入月份
-        (async () => {
-            const url = '@Url.Content("~/Schedule/api/GetNowMonth")';
-            const response = await fetch(url);
-            const datas = await response.json();
-
-            const optNowMonth = datas.map(month => `<option value=${month}>${month}</option>`)
-            optNowMonth.unshift('<option value="nomonth">請選擇</option>')
-
-            selcreateMonth.innerHTML = optNowMonth.join("");
-
-        })();
-
-
-        //匯入醫師班表
-        function QueryMemberInfo(selectedMonth) {
-            //alert(selectedMonth)
+        function QueryWeekSchedule() {
             $('#datatable').dataTable({
                 ajax: {
                     type: 'GET',
-                    url: (`/Schedule/api/ShowThismonthSchedule/${selectedMonth}`),
+                    url: (`/Schedule/ClinicInfo/ShowWeekSchedule`),
                     dataSrc: function (json) { return json; }
                 },
                 destroy: true,
                 columns: [
                     // { "data": "id", "visible": false },
-                    { "data": "日期" },
+                    {"data":"week","visible":false},
+                    { "data": "星期" },
                     { "data": "醫師" },
                     { "data": "時段" },
                     { "data": "科別" },
-                    { "data": "診間" },
-                    { "data": "掛號上限" }
+                    { "data": "診間" }
                 ],
                 fixedHeader: {
                     header: true
@@ -325,27 +252,22 @@
             });
 
         }
+        QueryWeekSchedule();
 
-        QueryMemberInfo(`${(new Date()).getFullYear()}/${(parseInt((new Date()).getMonth()) + 1).toString().padStart(2, 0)}`);
-
+        
         //醫師搜尋功能
         selDoctorname.addEventListener('change', () => { searchName(); });
         function searchName() {
-            const selectedDoctor = $('#selDoctorname option:selected').text();
+            const selectedDoctor = $('#selectedDoctorname option:selected').text()
             const table = $('#datatable').DataTable();
             //alert(selectedDoctor)
-            if (selectedDoctor === 'alldoctor') {
+            if (selectedDoctor === '全部') {
                 table.column(1).search("").draw();
             } else {
                 table.column(1).search(selectedDoctor).draw();
             }
 
         }
-
-        //月份搜尋功能
-        selMonth.addEventListener('change', (event) => { QueryMemberInfo(event.target.value) });
-
-
         //時段搜尋功能
         selShift.addEventListener('change', () => { searchShift(); });
         function searchShift() {
@@ -373,36 +295,20 @@
         }
 
 
-        //排班
-        scheduling.addEventListener('click', () => { Scheduling(); });
-        function Scheduling() {
-            const year = selcreateMonth.value.substring(0, 4);
-            const month = selcreateMonth.value.substring(5, 7);
-            fetch(`/Schedule/api/Scheduling/${year}/${month}`)
-                .then(response => {
-                    if (response.status==200) {
-                        toastr.success('排班成功');
-                        window.location.reload();
-                       
-                    }
-                    
-                })
-                // .then(data => {
-
-                //     // 關閉小窗
-                //     $('#ScheduleCreate').modal('hide');
-
-                //     // 顯示排班成功
-                //     // alert('排班成功');
-                //     toastr.success('排班成功');
-                //     QueryMemberInfo(selectedMonth);
-
-                // })
-                
-
-
+        selWeek.addEventListener('change', () => { searchWeek(); });
+        function searchWeek() {
+            const selectedWeek = $('#selectedWeek option:selected').text();
+            const table = $('#datatable').DataTable();
+            if (selectedWeek === '全部') {
+                table.column(0).search("").draw();
+            } else {
+                table.column(0).search(selectedWeek).draw();
+            }
         }
 
 
+
+
     </script>
+
 }
