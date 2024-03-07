@@ -16,6 +16,7 @@
     width: 300px;
     border-radius: 15px 15px 0px 0px;
     box-shadow: -3px -3px 20px 1px #bdc3c7;
+    z-index: 500;
 }
 
 .chat-head {
