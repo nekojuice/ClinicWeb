@@ -1,0 +1,416 @@
+﻿@model IEnumerable<ClinicWeb.Areas.Member.ViewModels.Membermetadata>
+@* @model ClinicWeb.Areas.Member.ViewModels.MemberViewModel *@
+
+
+@section ModulesStyles
+{
+
+    <!-- iCheck -->
+    <link href="~/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+    <!-- Datatables -->
+
+    <link href="~/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="~/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+    <link href="~/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+    <link href="~/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+    <link href="~/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+
+                            @* <!-- bootstrap-wysiwyg -->
+    <link href="~/vendors/google-code-prettify/bin/prettify.min.css" rel="stylesheet"> *@
+    <!-- Select2 -->
+    <link href="~/vendors/select2/dist/css/select2.min.css" rel="stylesheet">
+    <!-- Switchery -->
+    <link href="~/vendors/switchery/dist/switchery.min.css" rel="stylesheet">
+    <!-- starrr -->
+    <link href="~/vendors/starrr/dist/starrr.css" rel="stylesheet">
+    <!-- bootstrap-daterangepicker -->
+    <link href="~/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <!-- PNotify -->
+    <link href="~/vendors/pnotify/dist/pnotify.css" rel="stylesheet">
+    <link href="~/vendors/pnotify/dist/pnotify.buttons.css" rel="stylesheet">
+    <link href="~/vendors/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">
+}
+<div class="row" style="display: block;">
+    <div class="col-md-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>掛號紀錄</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    @*<li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="#">Settings 1</a>
+                    <a class="dropdown-item" href="#">Settings 2</a>
+                    </div>
+                    </li>
+                    <li>
+                    <a class="close-link"><i class="fa fa-close"></i></a>
+                    </li> *@
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="mb-6" style="overflow: auto">
+                
+                    <div class="col-md-2">
+                        <label class="form-label"> </label>
+                        <button id="newMembtn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#MemCreate">新增會員</button>
+                    </div>
+
+
+                <!--新增畫面的內容-->
+                <div class="modal fade" id="MemCreate" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <partial name="~/Areas/Member/Views/Partial/_MemberCreatePartial.cshtml" />
+                        </div>
+                    </div>
+                </div>
+               
+
+            </div>
+            <div class="x_content">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card-box table-responsive">
+
+                            <!--編輯的內容-->
+                            <div class="modal fade" id="MemEdit" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content" id="memberedit">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <table id="memdatatable" class="table table-striped table-bordered" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th style="display:none">
+                                            會員id
+                                        </th>
+                                        <th>
+                                            會員編號
+                                            @*  @Html.DisplayNameFor(model => model.MemberNumber) *@
+                                        </th>
+                                        <th>
+                                            姓名
+                                            @*  @Html.DisplayNameFor(model => model.Name) *@
+                                        </th>
+                                        <th>
+                                            性別
+                                            @* @Html.DisplayNameFor(model => model.Gender) *@
+                                        </th>
+                                        <th>
+                                            血型
+                                            @* @Html.DisplayNameFor(model => model.BloodType) *@
+                                        </th>
+                                        <th>
+                                            身分證字號
+                                        </th>
+                                        <th>
+                                            聯絡電話
+                                            @*  @Html.DisplayNameFor(model => model.NationalId) *@
+                                        </th>
+                                        <th>
+                                            地址
+                                            @*  @Html.DisplayNameFor(model => model.Address) *@
+                                        </th>
+                                        <th>
+                                            緊急聯絡人
+                                            @* @Html.DisplayNameFor(model => model.Phone) *@
+                                        </th>
+                                        <th>
+                                            信箱
+                                            @* @Html.DisplayNameFor(model => model.BirthDate) *@
+                                        </th>
+                                        <th>
+                                            啟用
+                                            @*  @Html.DisplayNameFor(model => model.MemberNumber) *@
+                                        </th>
+                                        <th>
+                                            修改
+                                            <div id="partialContainer"></div>
+
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Modules
+{
+    <!-- iCheck -->
+    <script src="~/vendors/iCheck/icheck.min.js"></script>
+    <!-- Datatables -->
+    <script src="~/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    @* <script src="~/lib/datatables/js/jquery.datatables.min.js"></script> *@
+    <script src="~/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+    <script src="~/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="~/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="~/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+    <script src="~/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+    <script src="~/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="~/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+    <script src="~/vendors/jszip/dist/jszip.min.js"></script>
+    <script src="~/vendors/pdfmake/build/pdfmake.min.js"></script>
+    <script src="~/vendors/pdfmake/build/vfs_fonts.js"></script>
+    <!-- Switchery -->
+    <script src="~/vendors/switchery/dist/switchery.min.js"></script>
+    <!-- PNotify -->
+    <script src="~/vendors/pnotify/dist/pnotify.js"></script>
+    <script src="~/vendors/pnotify/dist/pnotify.buttons.js"></script>
+    <script src="~/vendors/pnotify/dist/pnotify.nonblock.js"></script>
+
+}
+@section Scripts {
+    <script>
+
+        //顯示會員主畫面資料表
+        function QueryMemberInfo() {
+            $('#memdatatable').dataTable({
+                ajax: {
+                    type: 'GET',
+                    url: ("/Member/Member/MemberGetdata"),
+                    dataSrc: function (json) { return json; }
+                },
+                destroy: true,
+                columns: [
+                    // { "data": "id", "visible": false },
+                    { "data": "會員id", "visible": false },
+                    { "data": "會員編號" },
+                    { "data": "姓名" },
+
+                    { "data": "性別" },
+                    { "data": "血型" },
+                    { "data": "身分證字號" },
+                    { "data": "聯絡電話" },
+                    { "data": "地址" },
+                    { "data": "緊急聯絡人" },
+                    { "data": "信箱" },
+                    { "data": "啟用" },
+                    {
+                        "data": "修改", "render": function (data, type, row) {
+                            return '<button type="button" class="fa fa-edit" data-toggle="modal" data-target="#MemEdit" onclick="handleButtonClick(' + row.會員id + ')"></button>';
+
+
+                        }
+                    }
+
+
+                ],
+                fixedHeader: {
+                    header: true
+                },
+                language: {
+                    url: "https://cdn.datatables.net/plug-ins/1.13.7/i18n/zh-HANT.json"
+                },
+                order: [[1, 'asc']]
+            });
+
+        }
+        QueryMemberInfo();
+
+        //控制對於密碼輸入欄位眼睛的顯示
+        function hideshow() {
+            var password = document.getElementById("password1");
+            var slash = document.getElementById("slash");
+            var eye = document.getElementById("eye");
+
+            if (password.type === 'password') {
+                password.type = "text";
+                slash.style.display = "block";
+                eye.style.display = "none";
+            }
+            else {
+                password.type = "password";
+                slash.style.display = "none";
+                eye.style.display = "block";
+            }
+
+        }
+        //新增會員資料相關功能
+
+
+
+        //新增會員的按下儲存後
+        const btnSubmit = document.querySelector('#saveButton');
+        // const divInfo = document.querySelector('#div1');
+
+        //測試每個欄位抓的到值
+        // const Name11 = document.querySelector('#userName');
+        // btnSubmit.addEventListener('click', async (event) => {
+        //     event.preventDefault(); //停止預設行為
+        //     console.log(Name11.value);
+        // })
+
+        btnSubmit.addEventListener('click', async (event) => {
+            event.preventDefault(); //停止預設行為
+
+            //FormData
+            const formData = new FormData(document.querySelector('#memberForm'));
+            // for (const pair of formData.entries()) {
+            //     console.log(pair[0]);
+            //     console.log(pair[1]);
+            // }
+            const url = '@Url.Content("~/Member/Member/MemberCreate")';
+            const response = await fetch(url, {
+                "method": "POST",
+                "body": formData
+            });
+            //確定有抓到整包formdata
+            const data = await response.text();
+            // // divInfo.innerHTML = data;
+
+
+            //新增完成之後要清除剛剛輸入的資料以及跳出新增成功樣式 並且取得最新資料
+
+            clearForm();
+
+            addMemFormClose();
+            new PNotify({
+                title: '新增成功',
+                type: 'success',
+                styling: 'bootstrap3'
+            });
+
+            // $('#memdatatable').DataTable().on('draw.dt', function () {
+            //     $(this).DataTable().page('last').draw('page');
+            // });
+            //重抓全部資料
+            QueryMemberInfo();
+            // //到最後一頁
+            // $("#memdatatable").DataTable().page('last').draw('page')
+
+        });
+
+
+
+        //關閉#addApptForm視窗
+        function addMemFormClose() {
+            $('#MemCreate').modal('hide');
+        }
+
+        // 關閉新增會員的表單後要清上面的資料 一定要放在所有新增相關動作的後面
+        function clearForm() {
+            document.getElementById('memberForm').reset();
+
+        }
+        document.getElementById('closeButton').addEventListener('click', function () {
+            clearForm();
+        });
+
+        document.getElementById('saveButton').addEventListener('click', function () {
+            clearForm();
+        });
+
+
+
+        //顯示編輯畫面
+
+        async function handleButtonClick(memberId) {
+
+            //紀錄該筆資料index
+
+
+            const response = await fetch(`@Url.Content("~/Member/Member/MemberEdit")?memberId=${memberId}`)
+            const data = await response.text();
+            //console.log(data);
+
+            //顯示該筆資料的編輯畫面 會自己帶入此人資料
+            const showplace = document.getElementById("memberedit");
+            showplace.innerHTML = data;
+            // $.get("/Member/MemberEdit", { memberId: memberId }, function (data) {
+            //     // 在加载的部分视图中显示成员的编辑表单
+            //     $("#partialContainer").html(data);
+            // });
+
+            //控制編輯按鈕地確認權限的滑輪swichery 一定要寫在請求資料後
+            var switcheryOptions = {
+                color: '#64bd63', // 當checked時的背景顏色
+                secondaryColor: '#dfdfdf', // unchecked時的背景顏色
+                jackColor: '#fff', // checked時的按鈕顏色
+                jackSecondaryColor: null, // uncheck時的按鈕顏色
+                className: 'switchery', // class名稱
+                disabled: false, // 是否設為disabled
+                disabledOpacity: 0.5, // 當設為disabled時的透明度
+                speed: '0.1s', // 開關切換的速度
+                size: 'default' // 開關大小(small, default, large)
+            };
+            new Switchery(document.getElementById('vertificationformem'), switcheryOptions);
+
+            //註冊按鈕事件 要再生成編輯partial之後再加上 不然抓不到這個按鈕事件
+            buttonEventFunc()
+        }
+
+
+        //確定編輯畫面按下保存有抓到資料
+        async function buttonEventFunc() {
+            document.getElementById("_MemberEditPartial").addEventListener("submit", async (event) => {
+                event.preventDefault(); // 防止表單默認提交行為
+                vertification();//打開啟用按鍵所要做出的判斷
+
+
+
+                // memdatatable
+                const formData = new FormData(document.querySelector('#_MemberEditPartial'));
+                const url = `@Url.Content("~/Member/Member/Edit")?currentPageNumber=${currentPageNumber}`;
+                const response = await fetch(url, {
+                    "method": "POST",
+                    "body": formData
+                });
+                //確定有抓到整包formdata
+                const data = await response.text();
+
+                // // 獲取表單元素
+                // var form = event.target;
+
+                // // 獲取表單數據
+                // var formData = new FormData(form);
+
+                // // 將數據轉換為對象
+                // var formDataObject = {};
+                // formData.forEach(function (value, key) {
+                //     formDataObject[key] = value;
+                // });
+
+                // // 打印表單數據到控制台
+                // console.log(formDataObject);
+            });
+        }
+
+        // 監聽checkbox的變化事件 並加上回傳值
+        function vertification() {
+            document.getElementById("vertificationformem").addEventListener("change", function (event) {
+                // 獲取checkbox的狀態
+                var isChecked = event.target.checked;
+                var valueToSend = isChecked ? "on" : "off";
+            });
+        }
+
+        //只重繪修改的該row
+        // $('#memdatatable').DataTable().row(_index_memdatatable).data(result).draw();
+
+
+
+
+
+
+
+    </script>
+}

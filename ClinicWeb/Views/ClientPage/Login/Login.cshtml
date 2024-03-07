@@ -1,0 +1,51 @@
+﻿@model MemberMemberList
+
+<head>
+    <link rel="stylesheet" href="~/css/LoginStyle.css" asp-append-version="true" />
+</head>
+}
+<div class="login-box">
+    <h2>Login</h2>
+    <form id="MemberloginForm"  asp-controller="ClientPage" asp-action="LoginForClient" method="post">
+        <div class="user-box">
+            <input asp-for="MemEmail" type="text" required="">
+            <label>Username</label>
+        </div>
+        <div class="user-box">
+            <input asp-for="MemPassword" type="password" required="">
+            <label>Password</label>
+        </div>
+
+        @if (ViewData["ErrorMessage"] != null)
+        {
+            <div class="text-danger" style="color:red">@ViewData["ErrorMessage"]</div>
+        }
+
+        <!-- 其他表單字段 -->
+        <a href="#" id="MemberLogin">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            Submit
+        </a>
+
+
+        <a href="#">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            Register
+        </a>
+
+
+        <div id="buttonDiv"></div>
+    </form>
+
+    <a asp-controller="LoginGoogletest" asp-action="Logingoogle" class="btn btn-primary form-control">google登入</a>
+
+</div>
+
+<script src="https://accounts.google.com/gsi/client" async></script>
+<script src="~/msit155e/js/Login/CllientLogin.js"></script>

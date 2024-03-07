@@ -1,0 +1,26 @@
+﻿
+
+
+
+@media (min-width: 1200px) {
+    #profilemain, #footer {
+        margin-left: 300px;
+    }
+}
+
+#profilemain {
+    margin-left: 10px;
+    margin-top: 60px;
+    padding: 20px 30px;
+    transition: all 0.3s;
+
+}
+
+
+
+@media (max-width: 1199px) {
+    #profilemain {
+        padding: 20px;
+    }
+}
+

@@ -26,3 +26,9 @@
 .x_btn_border {
     border: 1px solid #ced4da;
 }
+
+.btn:disabled {
+    background-color: rgba(184,138,138,0.5);
+    color: darkred;
+    border-color:darkred;
+}

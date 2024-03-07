@@ -1,0 +1,211 @@
+﻿<div class="row" style="display: block;">
+    <div class="col-md-9 col-sm-3 ">
+
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>病例詳細</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Settings 1</a>
+                            <a class="dropdown-item" href="#">Settings 2</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <br><br>
+                <div class="x_content">
+                    <div class="col-sm-12">
+                        <label>姓名</label>
+                        <input type="text" class="form-control" id="inputName" disabled>
+
+                        <label>性別</label>
+                        <input type="text" class="form-control" id="inputGender" disabled>
+
+                        <label>出生日期</label>
+                        <input type="text" class="form-control" id="inputBirthDate" disabled>
+                    <div class="form-group">
+                        <label>血型</label>
+                        <input type="text" class="form-control" id="inputBloodType" disabled>
+                    </div>
+                    <form id="MainForm" >
+                    <div class="form-group">
+                        <label for="inputHeight">身高</label>
+                        <input type="number" class="form-control" id="inputHeight" placeholder="請輸入身高">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputWeight">體重</label>
+                        <input type="number" class="form-control" id="inputWeight" placeholder="請輸入體重">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPastHistory">既往病史</label>
+                        <textarea class="form-control" id="inputPastHistory" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputAllergyRecord">過敏紀錄</label>
+                        <textarea class="form-control" id="inputAllergyRecord" rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">修改</button>
+                </form>
+                </div>
+             </div>
+         </div>
+
+            <div class="x_content">
+                <div class="col-sm-12">
+                </div>
+            </div>
+
+        </div>
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>看診紀錄</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Settings 1</a>
+                            <a class="dropdown-item" href="#">Settings 2</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="x_content">
+                <div class="col-sm-12">
+                    <table id="recordDataTable" class="table table-striped table-bordered nowrap" style="width:100%">
+                        <thead>
+                            <tr>
+                                 <th style="display:none">
+                                    看診紀錄ID
+                                </th>
+                                <th>
+                                    日期
+                                </th>
+                                <th>
+                                    血壓
+                                </th>
+                                <th>
+                                    脈搏
+                                </th>
+                                <th>
+                                    體溫
+                                </th>
+                                <th>
+                                    主述
+                                </th>
+                                <th>
+                                    醫囑
+                                </th>
+                                <th>
+                                    處方
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>檢查報告</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Settings 1</a>
+                            <a class="dropdown-item" href="#">Settings 2</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="x_content">
+                <div class="col-sm-12">
+                    <table id="reportDataTable" class="table table-striped table-bordered nowrap" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th style="display:none">
+                                    報告ID
+                                </th>
+                                <th>
+                                    檢查名稱
+                                </th>
+                                <th>
+                                    檢查日期
+                                </th>
+                                <th>
+                                    報告日期
+                                </th>
+                                <th>
+                                    結果
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>處方籤記錄</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Settings 1</a>
+                            <a class="dropdown-item" href="#">Settings 2</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="x_content">
+                <div class="col-sm-12">
+                    <table id="prescriptionDataTable" class="table table-striped table-bordered nowrap" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th style="display:none">
+                                    處方ID
+                                </th>
+                                <th>
+                                    處方日期
+                                </th>
+                                <th>
+                                    調劑方式
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
