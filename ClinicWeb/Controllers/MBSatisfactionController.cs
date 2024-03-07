@@ -38,18 +38,22 @@ namespace ClinicWeb.Controllers
         {
             var user = HttpContext.User;
             var memberID = user.Claims.FirstOrDefault(c => c.Type == "MemberID")?.Value;
+            var Case_ID = _context.CasesMainCase
+                .Where(m => m.MemberId == Convert.ToInt32(memberID))
+                .Select(m => m.CaseId)
+                .FirstOrDefault();
 
             var MedicalRecords = _context.CasesMedicalRecords
                 .Include(m => m.ClinicList.Clinic)
-                .Where(m => m.MrId == Convert.ToInt32(memberID))
+                .Where(m => m.CaseId == 1 /*Case_ID*/)
                 .Select(x => new
                 {
-                    caseid = x.CaseId,
+                    recordid = x.MrId,
                     就診日期 = x.ClinicList.Clinic.Date,
-                    醫師 = x.ClinicList.Clinic.Doctor,
-                    時段 = x.ClinicList.Clinic.ClinicTime,
+                    醫師 = x.ClinicList.Clinic.Doctor.Name,
+                    時段 = x.ClinicList.Clinic.ClinicTime.Time,
                     科別 = x.ClinicList.Clinic.Doctor.Department,
-                    診間 = x.ClinicList.Clinic.ClincRoom
+                    診間 = x.ClinicList.Clinic.ClincRoom.Name,
 
                 });
             return Json(MedicalRecords);
