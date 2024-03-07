@@ -38,9 +38,6 @@ public partial class ScheduleClinicInfo
     [InverseProperty("Clinic")]
     public virtual ICollection<ApptClinicList> ApptClinicList { get; set; } = new List<ApptClinicList>();
 
-    [InverseProperty("Clinic")]
-    public virtual ICollection<CasesMedicalRecords> CasesMedicalRecords { get; set; } = new List<CasesMedicalRecords>();
-
     [ForeignKey("ClincRoomId")]
     [InverseProperty("ScheduleClinicInfo")]
     public virtual RoomList ClincRoom { get; set; }
