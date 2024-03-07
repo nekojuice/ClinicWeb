@@ -1,5 +1,6 @@
 ﻿using ClinicWeb.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace ClinicWeb.Controllers
 {
@@ -39,15 +40,16 @@ namespace ClinicWeb.Controllers
             var memberID = user.Claims.FirstOrDefault(c => c.Type == "MemberID")?.Value;
 
             var MedicalRecords = _context.CasesMedicalRecords
+                .Include(m => m.ClinicList.Clinic)
                 .Where(m => m.MrId == Convert.ToInt32(memberID))
                 .Select(x => new
                 {
                     caseid = x.CaseId,
-                    就診日期 = x.Clinic.Date,
-                    醫師 = x.Clinic.Doctor,
-                    時段 = x.Clinic.ClinicTime,
-                    科別 = x.Clinic.Doctor.Department,
-                    診間 = x.Clinic.ClincRoom
+                    就診日期 = x.ClinicList.Clinic.Date,
+                    醫師 = x.ClinicList.Clinic.Doctor,
+                    時段 = x.ClinicList.Clinic.ClinicTime,
+                    科別 = x.ClinicList.Clinic.Doctor.Department,
+                    診間 = x.ClinicList.Clinic.ClincRoom
 
                 });
             return Json(MedicalRecords);
