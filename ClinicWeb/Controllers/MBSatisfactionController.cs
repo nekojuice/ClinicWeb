@@ -48,7 +48,7 @@ namespace ClinicWeb.Controllers
                 .Where(m => m.CaseId == 1 /*Case_ID*/)
                 .Select(x => new
                 {
-                    recordid = x.MrId,
+                    mRid = x.MrId,
                     就診日期 = x.ClinicList.Clinic.Date,
                     醫師 = x.ClinicList.Clinic.Doctor.Name,
                     時段 = x.ClinicList.Clinic.ClinicTime.Time,

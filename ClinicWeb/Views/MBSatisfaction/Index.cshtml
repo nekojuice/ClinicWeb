@@ -16,7 +16,11 @@
     <!-- Font Awesome -->
     <link href="~/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 
+
+
 }
+
+
 
 <div class="row d-flex align-items-start">
 
@@ -48,7 +52,7 @@
                         <table id="MedicalRecordsTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
                             <thead>
                                 <tr>
-                                    <th style="display:none">看診紀錄ID</th>
+                                    <th style="display:none">mRid</th>
                                     <th>就診日期</th>
                                     <th>醫師</th>
                                     <th>時段</th>
@@ -67,6 +71,52 @@
     </div>
 
 </div>
+
+@* //彈跳小窗 *@
+<div class="modal fade" id="MBReviews" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" id="divCreateInfo">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">
+                    診後評價
+                </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+
+            </div>
+            <div class="modal-body d-flex flex-column">
+
+                    <div class="rating-lists">
+                        <label class="title" for="comment">就診滿意：</label>
+                        <input class="rating rating1" id="1" name="comment" min="0" max="5" step="1" data-size="sm" value="0">
+                    </div>
+                    <div class="rating-lists">
+                        <label class="title" for="comment">醫師積極度：</label>
+                        <input class="rating rating2" id="2" name="comment" min="0" max="5" step="1" data-size="sm" value="0">
+                    </div>
+                    <div class="rating-lists">
+                        <label class="title" for="comment">診間整潔度：</label>
+                        <input class="rating rating3" id="3" name="comment" min="0" max="5" step="1" data-size="sm" value="0">
+                    </div>
+                    <div class="rating-lists">
+                        <label class="title" for="comment">系統滿意度：</label>
+                        <input class="rating rating4" id="4" name="comment" min="0" max="5" step="1" data-size="sm" value="0">
+                    </div>
+   
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    關閉
+                </button>
+                <button id="ClinicAdd" type="button" class="btn btn-primary">
+                    確定
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 @section Scripts {
 
@@ -93,4 +143,5 @@
     <script src="~/lib/datatables/js/jquery.datatables.min.js"></script>
 
     <script src="~/js/memback/mbsatisfaction/mbsatisfaction.js"></script>
+
 }

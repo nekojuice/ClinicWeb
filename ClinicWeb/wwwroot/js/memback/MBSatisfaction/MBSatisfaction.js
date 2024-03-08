@@ -1,6 +1,11 @@
 ﻿
 const table = document.querySelector('#datatable');
 
+
+
+
+
+
 function QueryMedicalRecords() {
     $('#MedicalRecordsTable').DataTable({
         ajax: {
@@ -10,8 +15,8 @@ function QueryMedicalRecords() {
         },
         destroy: true,
         columns: [
-            { "data": "caseid", "visible": false },
-            { "data": "看診日期" },
+            { "data": "mRid", "visible": false },
+            { "data": "就診日期" },
             { "data": "醫師" },
             { "data": "時段" },
             { "data": "科別" },
@@ -19,10 +24,10 @@ function QueryMedicalRecords() {
             {
                 "data": "評價",
                 "render": function (data, type, row) {
-                    return '<button class="btn btn-primary">評價</button>';
+                    return '<button id="btnscore" class="btn btn-primary" data-toggle="modal" data-target="#MBReviews">評價</button>';
                 }
             }
-        ],
+        ],  
         fixedHeader: {
             header: true
         },
