@@ -1,4 +1,5 @@
-﻿using ClinicWeb.Models;
+﻿using ClinicWeb.Areas.Drugs.Controllers;
+using ClinicWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -59,5 +60,22 @@ namespace ClinicWeb.Controllers
                 })
                 );
         }
+
+        [HttpPost]
+        public JsonResult GPL(string id) //GETPRESCRIPTION
+        {
+            return Json(_context.CasesPrescriptionlist
+                .Include(x => x.Drug)
+                .Where(x => x.PrescriptionId == Convert.ToInt32(id))
+                .Select(x => new
+                {
+                    DrugId = x.DrugId,
+                    Name = x.Drug.FDrugName,
+                    Days =x.Days,
+                    total=x.TotalAmount,
+                })
+                );
+        }
+
     }
 }
