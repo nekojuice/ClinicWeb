@@ -136,13 +136,18 @@ async function getPrescriptionList(id) {
     const response = await fetch(`/MBRecordInfo/GPL/${id}`, { method: "POST" })
     const data = await response.json();
     //return data;
-    $('#prescriptionListDataTable').DataTable({
+    var PLDT =$('#prescriptionListDataTable').DataTable({
         "bDestroy": true,
         columns: [
             { title: "藥品ID", data: "drugId", visible: false },
             { title: "藥品名稱", data: "name" },
             { title: "開立天數", data: "days" },
             { title: "總量", data: "total" },
+            {title: "藥品明細查詢", data:null, // 這邊是欄位
+            render: function (data, type, row) {
+                return `<button id="detail" type="button" class="btn btn-primary btn-sm style = "padding-left:10px"">明細</button> `
+                }
+            },
         ],
         fixedHeader: {
             header: true
@@ -151,6 +156,24 @@ async function getPrescriptionList(id) {
             url: "https://cdn.datatables.net/plug-ins/1.13.7/i18n/zh-HANT.json"
         }
     });
-    $('#prescriptionListDataTable').DataTable().rows.add(data).draw();
+    PLDT.rows.add(data).draw();
+
+    PLDT.on('click', 'button', function (e) {
+        let data = PLDT.row(e.target.closest('tr')).data();
+        console.log(data);
+        let id = data['drugId'];
+        alert('You clicked on :' + id);
+
+
+        //$.ajax({
+        //    type: 'GET',
+        //    url: `/MBRecordInfo/GP/${id}`,
+        //    //data: { id: mlaId },
+        //    //cache: false,
+        //    success: function (result) {
+
+        //    }
+        //});
+    });
 }
 
