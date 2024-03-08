@@ -41,6 +41,7 @@ namespace ClinicWeb.Controllers
             {
                 // 驗證失敗 之後希望返回原本畫面加上viewdata
                 TempData["Msg"] = "驗證 Google 授權失敗";
+                //return RedirectToAction("Login", "ClientPage");
                 return View("~/Views/ClientPage/Login/ClientLogin.cshtml");
             }
             else
@@ -89,7 +90,11 @@ namespace ClinicWeb.Controllers
                         //return RedirectToAction("註冊頁面action");
                         //return Json(new { Message = "没有找到匹配的會員" });
                         TempData["RegisterPrompt"] = "沒有找到匹配會員，請點選下方註冊";
-                        return View("~/Views/ClientPage/Login/ClientLogin.cshtml");
+						//沒有匹配會員要倒到註冊頁面並且填上信箱
+                        TempData["ForRegister"] = emailClaim.Value;
+                        HttpContext.SignOutAsync("Google");
+                        return RedirectToAction("Register", "ClientPage");
+                        //return View("~/Views/ClientPage/Login/ClientLogin.cshtml");
                     }
 
 
@@ -97,8 +102,10 @@ namespace ClinicWeb.Controllers
 
                 //return Json(claims);
                 // return RedirectToAction("Index",new {area=""});
-                //要回到之後的會員畫面
-                return View("~/Views/ClientPage/Index.cshtml");
+             
+				//不能回傳view 不然會只是一個頁面 沒有狀態
+                return RedirectToAction("Index","ClientPage");
+                //return View("~/Views/ClientPage/Index.cshtml");
 			}
 		}
 

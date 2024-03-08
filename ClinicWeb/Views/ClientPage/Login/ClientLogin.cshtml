@@ -58,15 +58,23 @@
                                 <div class="form-group mb-3">
                                     <input type="password" asp-for="MemPassword" tabindex="2" class="form-control" placeholder="請輸入密碼">
                                 </div>
-
+                                <!--帳密輸入錯誤的提醒-->
                                 @if (ViewData["ErrorMessage"] != null)
                                 {
                                     <div class="text-danger" style="color:red">@ViewData["ErrorMessage"]</div>
                                 }
-                                @if (ViewData["RegisterPrompt"] != null)
+                                <!--google帳號授權失敗-->
+                                @if (TempData["Msg"] != null)
                                 {
                                     <div class="alert alert-warning" role="alert">
-                                        @TempData["RegisterPrompt"]
+                                        @Html.Raw(TempData["Msg"])
+                                    </div>
+                                }
+                                <!--沒有對應帳號的提醒-->
+                                @if (TempData["RegisterPrompt"] != null)
+                                {
+                                    <div class="alert alert-warning" role="alert">
+                                        @Html.Raw(TempData["RegisterPrompt"])
                                     </div>
                                 }
 
@@ -110,13 +118,14 @@
     @if (TempData["Msg"] != null)
     {
         <script type="text/javascript">
-            alert("@TempData["Msg"]");
+            
+            alert("@Html.Raw(TempData["Msg"])");
         </script>
     }
-    @if (ViewData["RegisterPrompt"] != null)
+    @if (TempData["RegisterPrompt"] != null)
     {
         <script type="text/javascript">
-            alert("@TempData["RegisterPrompt"]");
+            alert("@Html.Raw(TempData["RegisterPrompt"])");
         </script>
     }
 
