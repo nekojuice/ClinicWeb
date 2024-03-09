@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-fappt-row',
@@ -7,18 +8,19 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./fappt-row.component.css']
 })
 export class FapptRowComponent {
-  constructor(private Client: HttpClient) { }
+  constructor(private Client: HttpClient, private activatdeRoute: ActivatedRoute) { }
+  memid = this.activatdeRoute.snapshot.queryParamMap.get('id');
   @Input() dataInput: any;
 
   todayDate: Date = new Date();
-  //todayDate: Date = new Date('2024/2/1'); //暫時寫死
+  //todayDate: Date = new Date('2023/12/01'); //暫時寫死
 
   weekPage: number = 0;
 
   dateObjectArr: dateObject[] = [];
-  shiftObjectArr: any[] = ['早診','午診','晚診'];
+  shiftObjectArr: any[] = ['早診', '午診', '晚診'];
 
-  clinicDataObject: any;
+  //clinicDataObject: any;
   clinicDataArray: any =
     [
       [{}, {}, {}, {}, {}, {}, {}],
@@ -28,6 +30,7 @@ export class FapptRowComponent {
 
   ngOnInit() {
     this.weekChange(0)
+    console.log(this.memid)
   }
 
   weekChange(direction: number) {
@@ -38,17 +41,18 @@ export class FapptRowComponent {
 
     //放入動態日期
     this.putDate()
-
     //ajax
-    this.Client.get(`https://localhost:7071/FAppointment/Get_ClinicApptInfo/${this.dataInput.empId}/${this.todayDate.getFullYear()}/${(this.todayDate.getMonth() + 1).toString().padStart(2, '0')}/${(this.todayDate.getDate()).toString().padStart(2, '0')}`)
+    this.ajaxData()
+  }
+
+  ajaxData() {
+    this.Client.get(`https://localhost:7071/FAppointment/Get_ClinicApptInfo/${this.dataInput.empId}/${this.todayDate.getFullYear()}/${(this.todayDate.getMonth() + 1).toString().padStart(2, '0')}/${(this.todayDate.getDate()).toString().padStart(2, '0')}/${this.memid}`)
       .subscribe(data => {
-        console.log(data);
-        this.clinicDataObject = data; //舊的物件集
+        //console.log(data);
+        //this.clinicDataObject = data; //舊的物件集
         this.RearrangeData(data);
-        console.log(this.clinicDataArray);
+        //console.log(this.clinicDataArray);
       })
-
-
   }
 
   putDate() {
@@ -66,7 +70,7 @@ export class FapptRowComponent {
   }
 
   //依規則填入二維陣列
-  RearrangeData(apiDatas:any) {
+  RearrangeData(apiDatas: any) {
     for (let i = 0; i < apiDatas.length; i++) {
       // 取得星期 Y
       let colIndex = this.getColIndex(this.dateObjectArr, apiDatas[i]);
@@ -105,8 +109,22 @@ export class FapptRowComponent {
     return this.shiftObjectArr[index];
   }
 
-  goAppt(apptId: string) {
-    console.log(apptId)
+  goAppt(clinicdata: clinicDataObject) {
+    console.log(clinicdata.clinicInfoId)
+    if (!this.memid) {
+      alert('請先登入')
+      return
+    }
+    let body = {
+      "apptId": +clinicdata.clinicInfoId,
+      "memid": +this.memid
+    }
+    this.Client.post(`https://localhost:7071/FAppointment/Add_NewAppt`, body)
+      .subscribe(data => {
+        console.log(data)
+        alert(`掛號成功: ${this.dataInput.docName} 醫師, ${clinicdata.date}, ${clinicdata.shift}`)
+        this.ajaxData()
+      })
     //串接會員id及apptId 執行掛號
     //進度在此
   }
@@ -130,4 +148,5 @@ export class clinicDataObject {
   date!: string
   limit!: number
   shift!: string
+  isAppted!: boolean
 }

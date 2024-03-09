@@ -6,6 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
+
+
   title = 'ClinicFrontEnd';
 
   deptSwitch: number = 0;
@@ -13,4 +16,6 @@ export class AppComponent {
   changeDepartment(dept:number) {
     this.deptSwitch = dept;
   }
+
+
 }

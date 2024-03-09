@@ -6,6 +6,7 @@ import { FAppointmentComponent } from './components/fappointment/fappointment.co
 import { Fappointment2Component } from './components/fappointment2/fappointment2.component';
 import { FapptRowComponent } from './components/fappt-row/fappt-row.component';
 import { HttpClientModule } from '@angular/common/http';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { HttpClientModule } from '@angular/common/http';
   ],
   imports: [
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
