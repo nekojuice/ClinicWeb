@@ -62,7 +62,7 @@ namespace ClinicWeb.Controllers
                     clinicInfoId = x.ClinicInfoId,
                     date = x.Date,
                     shift = x.ClinicTime.ClinicShifts,
-                    count = x.ApptClinicList.Where(y=>y.IsCancelled == false).Count(),
+                    count = x.ApptClinicList.Where(y => y.IsCancelled == false).Count(),
                     limit = x.RegistrationLimit,
                     isAppted = x.ApptClinicList.Any(y => y.MemberId == Convert.ToInt32(memId) && y.IsCancelled == false)
                 })
@@ -150,6 +150,16 @@ namespace ClinicWeb.Controllers
             }
 
             return Ok();
+        }
+
+        [HttpGet]
+        public IActionResult Get_MemberName(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return NotFound();
+            }
+            return Json(_context.MemberMemberList.Where(x => x.MemberId == Convert.ToInt32(id)).Select(x => x.Name).FirstOrDefault());
         }
     }
 

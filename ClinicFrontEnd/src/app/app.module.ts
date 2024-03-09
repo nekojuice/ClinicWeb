@@ -7,13 +7,15 @@ import { Fappointment2Component } from './components/fappointment2/fappointment2
 import { FapptRowComponent } from './components/fappt-row/fappt-row.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FAppointmentComponent,
     Fappointment2Component,
-    FapptRowComponent
+    FapptRowComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,

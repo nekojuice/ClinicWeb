@@ -30,7 +30,7 @@ export class FapptRowComponent {
 
   ngOnInit() {
     this.weekChange(0)
-    console.log(this.memid)
+    //console.log(this.memid)
   }
 
   weekChange(direction: number) {
@@ -110,7 +110,7 @@ export class FapptRowComponent {
   }
 
   goAppt(clinicdata: clinicDataObject) {
-    console.log(clinicdata.clinicInfoId)
+    //console.log(clinicdata.clinicInfoId)
     if (!this.memid) {
       alert('請先登入')
       return
@@ -121,7 +121,7 @@ export class FapptRowComponent {
     }
     this.Client.post(`https://localhost:7071/FAppointment/Add_NewAppt`, body)
       .subscribe(data => {
-        console.log(data)
+        //console.log(data)
         alert(`掛號成功: ${this.dataInput.docName} 醫師, ${clinicdata.date}, ${clinicdata.shift}`)
         this.ajaxData()
       })
