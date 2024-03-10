@@ -41,3 +41,7 @@
     margin-top:10px;
     font-weight:bold;
 }
+
+.patient-called {
+    background-color: #FFCCCC !important;
+}

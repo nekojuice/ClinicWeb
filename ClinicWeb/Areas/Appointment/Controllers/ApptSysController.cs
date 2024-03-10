@@ -253,9 +253,9 @@ namespace ClinicWeb.Areas.Appointment.Controllers
 		/// <param name="id">掛號紀錄id ClinicListId (int)</param>
 		/// <param name="cancelled">是否退掛 IsCancelled (bool)</param>
 		/// <returns>[JSON] 複合資料: 會員資料</returns>
-		[Route("{area}/{controller}/{action}/{id}/{cancelled}")]
+		[Route("{area}/{controller}/{action}/{id}/{cancelled}/{state}")]
         [HttpPost]
-        public async Task<IActionResult> PUT_ApptRecord_Cancelled(string id, string cancelled)
+        public async Task<IActionResult> PUT_ApptRecord_Cancelled(string id, string cancelled, string state)
         {
             try
             {
@@ -263,6 +263,7 @@ namespace ClinicWeb.Areas.Appointment.Controllers
                     .Where(x => x.ClinicListId == Convert.ToInt32(id))
                     .First();
                 target.IsCancelled = Convert.ToBoolean(cancelled);
+                target.PatientStateId = Convert.ToInt32(state);
                 await _context.SaveChangesAsync();
             }
             catch (Exception)

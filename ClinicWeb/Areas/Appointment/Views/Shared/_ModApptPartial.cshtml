@@ -79,7 +79,17 @@
 
                         <label class="col-form-label col-md-2 col-sm-2 label-align">看診狀態</label>
                         <div class="col-md-4 col-sm-4 form-group has-feedback">
-                            <input type="text" id="ModApptState" readonly="readonly" class="form-control input_noborder" autocomplete="off" tabindex="-1">
+                            @* <input type="text" id="ModApptState" readonly="readonly" class="form-control input_noborder" autocomplete="off" tabindex="-1"> *@
+                            <select class="form-control" id="ModApptState">
+                                <option value="1">看診中</option>
+                                <option value="2">覆診 已報到</option>
+                                <option value="3">已報到</option>
+                                <option value="4">過號 已報到</option>
+                                <option value="5">離場 檢查中</option>
+                                <option value="6">離場 叫號未到</option>
+                                <option value="7">已結束</option>
+                                <option value="8">未報到</option>
+                            </select>
                         </div>
 
                         <label class="col-form-label col-md-2 col-sm-2 label-align">退掛狀態</label>
