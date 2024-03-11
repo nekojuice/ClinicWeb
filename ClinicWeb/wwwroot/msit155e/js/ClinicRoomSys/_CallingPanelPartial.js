@@ -49,8 +49,8 @@
             order: [[2, 'asc'], [3, 'asc']], //優先度:狀態id > 診號
             //關閉排序和搜尋目標
             aoColumnDefs: [
-                { "bSortable": false, "aTargets": [0, 1, 2, 3, 4, 5] },
-                { "bSearchable": false, "aTargets": [0, 1, 2, 3, 4, 5] }
+                { "bSortable": false, "aTargets": [0, 1, 2, 3, 4, 5, 6] },
+                { "bSearchable": false, "aTargets": [0, 1, 2, 3, 4, 5, 6] }
             ],
             //搜尋框
             searching: false,
@@ -271,3 +271,25 @@ async function process_state(stateNum) {
     //console.log(result)
     $('#callingTable').DataTable().row(selectedIndex).data(result).draw();
 }
+
+let connection2 = new signalR.HubConnectionBuilder()
+    .withUrl("/ApptStateHub")
+    .withAutomaticReconnect()
+    .build();
+
+connection2.on("Set_State", async (jsonMsg) => {
+    let jsonObj = JSON.parse(jsonMsg)
+    let indexes = $('#callingTable').DataTable().rows().eq(0).filter(function (rowIdx) {
+        return $('#callingTable').DataTable().cell(rowIdx, 1).data() == jsonObj.clinicListId ? true : false;
+    })[0];
+    $('#callingTable').DataTable().row(indexes).data(jsonObj).draw()
+
+    const changedRowNode = $('#callingTable').DataTable().row(indexes).node()
+    await DataChanged_ColorAnimate(changedRowNode)
+});
+
+connection2.start()
+    //.then(function () { })
+    .catch(function (err) {
+        return console.error(err.toString());
+    });
