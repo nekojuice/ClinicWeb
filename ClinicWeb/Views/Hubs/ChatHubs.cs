@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 
 namespace ClinicWeb.Views.Hubs
 {
+    [Authorize(Policy = "frontendpolicy")]
     public class ChatHubs:Hub
     {
         private readonly ClinicSysContext _context;
@@ -86,6 +87,12 @@ namespace ClinicWeb.Views.Hubs
         /// <returns></returns>
         public async Task SendMessage(string selfID, string message, string sendToID)
         {
+            var messageContent = new
+            {
+                SenderID = selfID,
+                Message = message
+            };
+
             if (string.IsNullOrEmpty(sendToID))
             {
                 await Clients.All.SendAsync("UpdContent", selfID + " 說: " + message);
@@ -93,10 +100,10 @@ namespace ClinicWeb.Views.Hubs
             else
             {
                 // 接收人
-                await Clients.Client(sendToID).SendAsync("UpdContent", selfID + " 私訊向你說: " + message);
+                await Clients.Client(sendToID).SendAsync("UpdContent", messageContent);
 
                 // 發送人
-                await Clients.Client(Context.ConnectionId).SendAsync("UpdContent", "我說: " + message);
+                await Clients.Client(Context.ConnectionId).SendAsync("UpdContent", messageContent);
             }
         }
 
