@@ -1,6 +1,7 @@
 ﻿@section Styles
 {
     <link href="~/msit155e/css/cases/responsivetable.css" rel="stylesheet" />
+    <link href="~/msit155e/css/schedule/mbsatisfaction.css" rel="stylesheet" />
     <!-- Datatables -->
     <link href="//cdn.datatables.net/plug-ins/2.0.1/integration/font-awesome/dataTables.fontAwesome.css" rel="stylesheet">
     <link href="~/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
@@ -19,6 +20,7 @@
 
 
 }
+
 
 
 
@@ -58,6 +60,10 @@
                                     <th>時段</th>
                                     <th>科別</th>
                                     <th>診間</th>
+                                    <th style="display:none">patientSatisfaction</th>
+                                    <th style="display:none">docSatisfaction</th>
+                                    <th style="display:none">clinicSatisfaction</th>
+                                    <th style="display:none">sysSatisfaction</th>
                                     <th>評價</th>
                                 </tr>
                             </thead>
@@ -65,7 +71,7 @@
                     </div>
                 </div>
 
-                <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+              @*   <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /> *@
             </div>
         </div>
     </div>
@@ -80,36 +86,83 @@
                 <h4 class="modal-title" id="myModalLabel">
                     診後評價
                 </h4>
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                    &times;
-                </button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 
             </div>
             <div class="modal-body d-flex flex-column">
 
                     <div class="rating-lists">
-                        <label class="title" for="comment">就診滿意：</label>
-                        <input class="rating rating1" id="1" name="comment" min="0" max="5" step="1" data-size="sm" value="0">
+                        <label class="title" for="comment">就診滿意度：</label>
+                        <div class="row">
+                            <div class="col-lg-12">
+                            <div class="star-rating" id="PatientSatisfaction">
+                                    <span class="fa fa-star-o" data-rating="1"></span>
+                                    <span class="fa fa-star-o" data-rating="2"></span>
+                                    <span class="fa fa-star-o" data-rating="3"></span>
+                                    <span class="fa fa-star-o" data-rating="4"></span>
+                                    <span class="fa fa-star-o" data-rating="5"></span>
+                                  
+                                </div>
+                            </div>
+                        </div>
+                      
                     </div>
+
                     <div class="rating-lists">
                         <label class="title" for="comment">醫師積極度：</label>
-                        <input class="rating rating2" id="2" name="comment" min="0" max="5" step="1" data-size="sm" value="0">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="star-rating" id="DocSatisfaction">
+                                <span class="fa fa-star-o" data-rating="1"></span>
+                                <span class="fa fa-star-o" data-rating="2"></span>
+                                <span class="fa fa-star-o" data-rating="3"></span>
+                                <span class="fa fa-star-o" data-rating="4"></span>
+                                <span class="fa fa-star-o" data-rating="5"></span>
+                             
+                            </div>
+                        </div>
+                    </div>
                     </div>
                     <div class="rating-lists">
                         <label class="title" for="comment">診間整潔度：</label>
-                        <input class="rating rating3" id="3" name="comment" min="0" max="5" step="1" data-size="sm" value="0">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="star-rating" id="ClinicSatisfaction">
+                                <span class="fa fa-star-o" data-rating="1"></span>
+                                <span class="fa fa-star-o" data-rating="2"></span>
+                                <span class="fa fa-star-o" data-rating="3"></span>
+                                <span class="fa fa-star-o" data-rating="4"></span>
+                                <span class="fa fa-star-o" data-rating="5"></span>
+                            
+                            </div>
+                        </div>
+                    </div>
                     </div>
                     <div class="rating-lists">
                         <label class="title" for="comment">系統滿意度：</label>
-                        <input class="rating rating4" id="4" name="comment" min="0" max="5" step="1" data-size="sm" value="0">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="star-rating" id="SysSatisfaction">
+                                <span class="fa fa-star-o" data-rating="1"></span>
+                                <span class="fa fa-star-o" data-rating="2"></span>
+                                <span class="fa fa-star-o" data-rating="3"></span>
+                                <span class="fa fa-star-o" data-rating="4"></span>
+                                <span class="fa fa-star-o" data-rating="5"></span>
+                             
+                            </div>
+                        </div>
+                    </div>
                     </div>
    
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">
+@*                 <button id="buttonDemo" type="button" class="btn btn-primary">
+                    Demo
+                </button> *@
+                <button type="button" class="btn btn-default" data-bs-dismiss="modal" id="buttonClear">
                     關閉
                 </button>
-                <button id="ClinicAdd" type="button" class="btn btn-primary">
+                <button id="buttonAdd" type="button" class="btn btn-primary">
                     確定
                 </button>
             </div>
@@ -142,6 +195,129 @@
     <script src="~/lib/datatables/js/datatables.datatables.min.js"></script>
     <script src="~/lib/datatables/js/jquery.datatables.min.js"></script>
 
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
     <script src="~/js/memback/mbsatisfaction/mbsatisfaction.js"></script>
+
+    <script>
+
+
+       // var $star_rating = $('.star-rating .fa');
+        //data-*  data-a data-n data-abc  dataset.abc
+        const data = {};
+        $('.star-rating').on('click', function (event) {
+            const rating = $(event.target);  
+            data[event.currentTarget.id]=rating.data("rating")
+           // console.log(data);
+          
+            rating.siblings().removeClass('fa-star').addClass('fa-star-o');
+            rating.prevAll().addBack().removeClass('fa-star-o').addClass('fa-star');
+          //  console.log(event.currentTarget)
+        })
+
+        function addMrid(id) {
+            data["mRid"] = id;
+        }
+
+        //JS
+        // const clear = document.querySelector('#buttonClear');
+        // clear.addEventListener('click', function () {
+        //   const starts = document.querySelectorAll('.fa')
+        //     starts.forEach(start => {
+        //         start.classList.remove('fa-star')
+        //         start.classList.add('fa-star-o')
+        //     })
+        // })
+
+        //jQuery
+        $('#buttonClear').on('click', function () {
+           $('.fa').removeClass('fa-star').addClass('fa-star-o')
+        })
+       async function  send() {
+
+            const response = await fetch('@Url.Content("~/MBSatisfaction/Get_Review")', {
+                'method':'POST',
+                            'body': JSON.stringify(data),
+                'headers': {
+                    'Content-Type': 'application/json'
+                }
+            });
+            if (response.ok) {
+                swal("評價完成！", "感謝您的反饋！", "success");
+                
+            }
+
+            QueryMedicalRecords();
+        }
+
+        // //demo按鈕
+        // $('#buttonDemo').on('click', function () {
+        //     // 修改就診滿意度星级评分
+        //     $('#PatientSatisfaction .fa-star-o').slice(0, 5).removeClass('fa-star-o').addClass('fa-star');
+            
+        //     // 修改醫師積極度星级评分
+        //     $('#DocSatisfaction .fa-star-o').slice(0, 3).removeClass('fa-star-o').addClass('fa-star');
+        
+        //     // 修改診間整潔度星级评分
+        //     $('#ClinicSatisfaction .fa-star-o').slice(0, 4).removeClass('fa-star-o').addClass('fa-star');
+           
+        //     // 修改系統滿意度星级评分
+        //     $('#SysSatisfaction .fa-star-o').slice(0, 4).removeClass('fa-star-o').addClass('fa-star');
+            
+        // });
+
+
+
+        $('#buttonAdd').on('click', function () {
+            let valid = true;
+          
+
+            if (!('PatientSatisfaction' in data)) {
+                valid = false;
+            } else if (!('DocSatisfaction' in data)) {
+                valid = false;
+            } else if (!('ClinicSatisfaction' in data)) {
+                valid = false;
+            } else if (!('SysSatisfaction' in data)) {
+                valid = false;
+            }
+
+
+
+            if (valid) {
+                $('.fa').removeClass('fa-star').addClass('fa-star-o')
+                $('#MBReviews').modal('hide')
+                send();
+                
+            }else{
+                swal("尚未評價完畢！", "請為所有項目進行評價 ,謝謝", "warning", { button: "確定" });
+            }    
+        })
+
+
+
+
+
+        // var SetRatingStar = function () {
+        //     return $star_rating.each(function () {
+        //         if (parseInt($star_rating.siblings('input.rating-value').val()) >= parseInt($(this).data('rating'))) {
+        //             return $(this).removeClass('fa-star-o').addClass('fa-star');
+        //         } else {
+        //             return $(this).removeClass('fa-star').addClass('fa-star-o');
+        //         }c
+        //     });
+        // };
+
+        // $star_rating.on('click', function () {
+        //     $star_rating.siblings('input.rating-value').val($(this).data('rating'));
+        //     return SetRatingStar();
+        // });
+
+       // SetRatingStar();
+        $(document).ready(function () {
+
+        });
+
+    </script>
 
 }

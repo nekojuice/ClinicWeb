@@ -1,4 +1,5 @@
 ﻿using ClinicWeb.Models;
+using ClinicWeb.Models.MBSatisfactionViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -54,10 +55,39 @@ namespace ClinicWeb.Controllers
                     時段 = x.ClinicList.Clinic.ClinicTime.Time,
                     科別 = x.ClinicList.Clinic.Doctor.Department,
                     診間 = x.ClinicList.Clinic.ClincRoom.Name,
+                    PatientSatisfaction  = x.PatientSatisfaction,
+                    DocSatisfaction = x.DocSatisfaction,
+                    ClinicSatisfaction = x.ClinicSatisfaction,
+                    SysSatisfaction = x.SysSatisfaction
 
                 });
             return Json(MedicalRecords);
         }
+
+        [HttpPost]
+        public IActionResult Get_Review([FromBody] MedicalRecordsVM review)
+        {
+
+            //讀出更新的資料
+            CasesMedicalRecords? record = _context.CasesMedicalRecords.Find(review.MrId);
+
+            //更新資料
+            if (record != null)
+            {
+                record.PatientSatisfaction = review.PatientSatisfaction;
+                record.DocSatisfaction = review.DocSatisfaction;
+                record.ClinicSatisfaction = review.ClinicSatisfaction;
+                record.SysSatisfaction = review.SysSatisfaction;
+
+                   
+            }
+
+            _context.SaveChanges();
+            return Ok();
+
+
+        }
+
 
     }
 }
