@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "聊天室";
 }
-
+@model MemberMemberList;
 
 <section style="background-color: white">
     <div class="container py-5">
@@ -25,9 +25,7 @@
                 </div>
 
             </div>
-
             <div class="col-md-6 col-lg-7 col-xl-8">
-
                 <ul class="list-unstyled" id="messageList" style="max-height: 400px; overflow-y: auto;">
                     <li class="d-flex justify-content-between mb-4" id="msginsert">
 
@@ -89,34 +87,110 @@
         </div>
     </div>
 </body>
+<h1>Chat</h1>
+
+<h3>歡迎~ <span id="SelfID">@Model.Name</span></h3>
 
 
+
+<div class="row">
+    <div class="col-8">
+        <div class="mb-3">
+            <label for="message" class="form-label">發送訊息</label>
+            <input type="text" class="form-control" id="message">
+        </div>
+        <div class="mb-3">
+            <label for="sendToID" class="form-label">指定 ID</label>
+            <input type="text" class="form-control" id="sendToID">
+        </div>
+        <button type="button" class="btn btn-primary" id="sendButton">傳送訊息</button>
+    </div>
+    <div class="col-4">
+        <h4>連線 ID 列表</h4>
+        <ul class="list-group" id="IDList">
+        </ul>
+    </div>
+</div>
+
+<div class="row mt-3">
+    <div class="col-12">
+        <h3>聊天內容</h3>
+        <ul class="list-group" id="Content">
+        </ul>
+    </div>
+</div>
+
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
 
                 @section Scripts{
     <link href="~/css/chatroom.css" rel="stylesheet" />
     <script>
-        //大聊天室
-        // document.getElementById("textBig").addEventListener("keydown", function (event) {
-        //     if (event.keyCode === 13) { // 檢查按下的按鍵是否是 Enter（keyCode 13）
-        //         var msg = textarea.value.trim();
 
-        //         if (msg !== '') {
-        //             // 清空 textarea
-        //             textarea.value = '';
+        let list;
+        var connection = new signalR.HubConnectionBuilder()
+            .withUrl("/chatHub")
+            .withHubProtocol(new signalR.JsonHubProtocol())
+            .build();
 
-        //             // 在 .msg-insert 的最前面插入一個包含輸入內容的 div 元素
-        //             var msgDiv = document.createElement('div');
-        //             msgDiv.textContent = msg;
+            
+        //與Server建立連線
+        connection.start().then(function () {
+            console.log("Hub 連線完成");
+        }).catch(function (err) {
+            alert('連線錯誤: ' + err.toString());
+        });
+        connection.on("UpdList", function (jsonList) {
+            list = JSON.parse(jsonList);
+            $("#IDList li").remove();
+            for (i = 0; i < list.length; i++) {
+                $("#IDList").append($("<li></li>").attr("class", "list-group-item").attr("onclick", "ccon(this)").text(list[i].Name));
+            }
+        });
 
-        //             var msgInsert = document.getElementById('msginsert');
-        //             msgInsert.insertBefore(msgDiv, msgInsert.firstChild);
-        //         }
+        // function ccon(element) {
+        //     $('#sendToID').val($(element).text())
+        // }
 
-        //         // 防止換行
-        //         event.preventDefault();
-        //     }
+
+
+        // // 更新用戶個人連線 ID 事件
+        // connection.on("UpdSelfID", function (id) {
+        //     $('#SelfID').html(id);
         // });
 
+        // // 更新聊天內容事件
+        // connection.on("UpdContent", function (msg) {
+        //     $("#Content").append($("<li></li>").attr("class", "list-group-item").text(msg));
+        // });
+
+        // //傳送訊息
+        // $('#sendButton').on('click', function () {
+        //     console.log(list);
+        //     let selfID = $('#SelfID').html();
+        //     let message = $('#message').val();
+        //     let sendToID = list.find(user => user.Name === $('#sendToID').val()).connectionID;
+
+        //     connection.invoke("SendMessage", selfID, message, sendToID).catch(function (err) {
+        //         alert('傳送錯誤: ' + err.toString());
+        //     });
+        // });
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         function sendMessage() {
             var msg = document.getElementById("textBig").value.trim();
 
@@ -149,8 +223,7 @@
             if (event.keyCode === 13) { // 檢查按下的按鍵是否是 Enter（keyCode 13）
                 event.preventDefault();
                 sendMessage();
-                
-            }
+                }
         });
 
 
@@ -165,7 +238,7 @@
             var chatBody = $('.chat-body'); // 聊天區塊元素
 
             // 初始化時隱藏聊天區塊
-            chatBody.fadeOut('fast');
+             chatBody.fadeOut('fast');
             arrow.on('click', function () {
                 var src = arrow.attr('src');
 
@@ -183,39 +256,13 @@
                 // 檢查點擊事件的目標是否是 .chat-head 或 .chat-body 的子元素
                 if (!$(event.target).closest('.chat-head, .chat-body').length) {
                     // 隱藏聊天區塊
-                    chatBody.fadeOut('fast');
+                     chatBody.fadeOut('fast');
 
                     // 將箭頭設置為向下的圖片
                     arrow.attr('src', 'https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_down-16.png');
                 }
             });
 
-            // 同步到右下方聊天窗口
-            function syncToBottomChat(msg) {
-                var currentTime = new Date();
-                var hours = currentTime.getHours();
-                var minutes = currentTime.getMinutes();
-                var amOrPm = hours >= 12 ? '下午' : '上午';
-                hours = hours % 12;
-                hours = hours ? hours : 12; // 將 0 轉換為 12
-                var formattedTime = amOrPm + '  ' + hours + ':' + (minutes < 10 ? '0' : '') + minutes;
-
-                // 在 .msg-insert 的最前面插入一個包含輸入內容的 div 元素
-                var msgDiv = document.createElement('div');
-                msgDiv.className = 'msg-send';
-                msgDiv.textContent = msg;
-
-                // 建立包含時間的 div 元素
-                var timeDiv = document.createElement('div');
-                timeDiv.className = 'msg-time';
-                timeDiv.textContent = formattedTime;
-
-                var msgInsert = document.querySelector('.msg-insert');
-                msgInsert.appendChild(timeDiv, msgInsert.lastChild);
-                msgInsert.appendChild(msgDiv, msgInsert.lastChild);
-
-                msgInsert.scrollTop = msgInsert.scrollHeight;
-            }
 
             var textarea = document.getElementById('text'); // 將 'yourTextareaId' 替換成實際的 textarea 元素的 id
 
