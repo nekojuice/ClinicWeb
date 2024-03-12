@@ -26,8 +26,8 @@ function QueryEmpInfo() {
                 {
                     "data": "修改",
                     "render": function (data, type, row) {
-                        return '<button type="button" class="btn btn-round btn-info" indexSelector" style="border: none;" data-toggle="modal" data-target="#EmpEdit" onclick="handleButtonClick(' + row.員工id + ')">編輯</button>' +
-                            '<button type="button" class="btn btn-round btn-warning" indexSelector" style="border: none;" data-toggle="modal" data-target="#EmpView" onclick="handleViewButtonClick(' + row.員工id + ')">檢視</button>';
+                        return '<button type="button"  class="btn btn-round btn-info indexSelector" style="border: none;" data-toggle="modal" data-target="#EmpEdit" onclick="handleButtonClick(' + row.員工id + ')">編輯</button>' +
+                            '<button type="button" class="btn btn-round btn-warning indexSelector" style="border: none;" data-toggle="modal" data-target="#EmpView" onclick="handleViewButtonClick(' + row.員工id + ')">檢視</button>';
                     }
                 }
             ],
@@ -135,21 +135,12 @@ $("#newEmpbtn").on('click', async function () {
 
     //保定
     rebindAll_create()
+    //demo按鍵的功能
   
-    //為了顯示新增員工頁面的圖片預覽
-    document.querySelector('.card').addEventListener('click', function () {
-        document.getElementById('imageUpload').click();
-    });
 
-    document.getElementById('imageUpload').addEventListener('change', function () {
-        var reader = new FileReader();
-        reader.onload = function (e) {
-            var previewImage = document.getElementById('previewImage');
-            previewImage.src = e.target.result;
-            previewImage.style.display = 'block'; // 顯示預覽圖片
-        };
-        reader.readAsDataURL(this.files[0]);
-    });
+
+    triggerImageUpload('.empcardSelector', 'EmpImageUpload');
+    handleImageUpload('EmpImageUpload', 'EmpPreviewImage');
 
 })
 
@@ -230,6 +221,9 @@ function event_AddMemBtn() {
 
                 //綁定
                 rebindAll_create()
+                //圖片的功能 保險起見再綁一下
+                triggerImageUpload('.empcardSelector', 'EmpImageUpload');
+                handleImageUpload('EmpImageUpload', 'EmpPreviewImage');
             }
 
         } catch {
@@ -298,22 +292,29 @@ async function handleButtonClick(empId) {
     try {
         const response = await fetch(`${url_EmpEdit_Form}?empId=${empId}`);
         if (!response.ok) {
-            throw new Error('在取得會員資料並打開編輯畫面出現錯誤，請洽系統管理員');
+            throw new Error('在取得員工資料並打開編輯畫面出現錯誤，請洽系統管理員');
         }
         const data = await response.text();
-
+        // 假設 response 包含了 Base64 編碼的圖片數據
+        //const imageBase64 = response.imageBase64; // 從後端獲取的 Base64 字符串
+        //const imageElement = document.getElementById('EmpEditPreviewImage'); // 假設這是您想要顯示圖片的 img 元素
+        //imageElement.src = `data:image/jpeg;base64,${imageBase64}`;
         _divEditInfo.innerHTML = data;
 
         //重新綁定
         rebindAll_Edit()
+        //重新綁定圖片預覽功能
+        triggerImageUpload('.EmpEditCardSelector', 'EmpPhotoEdit');
+        handleImageUpload('EmpPhotoEdit', 'EmpEditPreviewImage');
+
 
     } catch (error) {
-        console.error('在取得會員資料並打開編輯畫面出現錯誤，請洽系統管理員:', error);
+        console.error('在取得員工資料並打開編輯畫面出現錯誤，請洽系統管理員:', error);
 
         // 顯示給使用者
         new PNotify({
             title: '錯誤',
-            text: '在取得會員資料並打開編輯畫面出現錯誤，請洽系統管理員',
+            text: '在取得員工資料並打開編輯畫面出現錯誤，請洽系統管理員',
             type: 'error',
             styling: 'bootstrap3'
         });
@@ -337,11 +338,12 @@ async function buttonEventFunc() {
         let result;
         const Quit = $("#Quit").is(":checked")
         formData.set('Quit', Quit);
-
+       
         try {
             const response = await fetch(url_EmpEdit_save, {
                 "method": "POST",
                 "body": formData
+                
             });
             result = await response.json();
         }
@@ -377,7 +379,36 @@ async function buttonEventFunc() {
 
     });
 
+  
+    function fillDemoData() {
     
+        // 名字
+        document.querySelector('[asp-for="Name"]').value = '張三 ';
+        // 身份證號 
+        document.querySelector('[asp-for="NationalId"]').value = 'A123456789';
+        // 電話 
+        document.querySelector('[asp-for="Phone"]').value = '0912345678';
+        // 性別 
+        document.querySelector('[asp-for="Gender"]').value = 'true'; // 男
+        // 血型
+        document.querySelector('[asp-for="BloodType"]').value = 'O';
+        // 戶籍地址 
+        document.querySelector('[asp-for="Address"]').value = '臺北市中正區 ';
+        // 聯絡地址 
+        document.querySelector('[asp-for="ContactAddress"]').value = '臺南市 ';
+        // 密碼 
+        document.querySelector('[asp-for="EmpPassword"]').value = 'Password123!';
+        // 生日
+        document.querySelector('[asp-for="BirthDate"]').value = '1980-01-01';
+        // 員工類比
+        document.querySelector('[asp-for="EmpType"]').value = '醫生 ';
+        // 部门
+        document.querySelector('[asp-for="Department"]').value = '小兒科 ';
+
+        document.querySelector('#Quit').checked = true;
+    };
+
+
 
    
 }

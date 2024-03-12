@@ -32,3 +32,37 @@ function clearForm(_selector) {
     $('.text-danger').text('');
 }
 
+// 觸發圖片上傳
+function triggerImageUpload(cardSelector, uploadInputId) {
+    document.querySelector(cardSelector).addEventListener('click', function () {
+        document.getElementById(uploadInputId).click();
+    });
+}
+
+// 處理圖片檔案選擇和顯示預覽
+function handleImageUpload(uploadInputId, previewImageId) {
+    var inputElement = document.getElementById(uploadInputId);
+    var previewImage = document.getElementById(previewImageId);
+
+    inputElement.addEventListener('change', function () {
+        // 一般圖片上傳
+        if (this.files && this.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                previewImage.src = e.target.result;
+                previewImage.style.display = 'block'; 
+            };
+            reader.readAsDataURL(this.files[0]);
+        }
+    });
+
+    // Blob
+    this.previewBlob = function (blob) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            previewImage.src = e.target.result;
+            previewImage.style.display = 'block'; 
+        };
+        reader.readAsDataURL(blob);
+    };
+}
