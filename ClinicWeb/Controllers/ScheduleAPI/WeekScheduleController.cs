@@ -45,5 +45,17 @@ namespace ClinicWeb.Controllers.ScheduleAPI
             return Json(rebuildFormat);
         }
         //用法: fetch("/Schedule/Api/Get_WeekSchedule/小兒科")
+
+
+        public IActionResult Get_evaluation()
+        {
+
+            var averageSatisfaction = _context.CasesMedicalRecords
+                .Where(x => x.ClinicList.Clinic.Doctor.Name == "趙美琴")
+                .Average(x => x.DocSatisfaction);
+                
+            
+            return Ok(averageSatisfaction);
+        }
     }
 }
