@@ -1,4 +1,6 @@
+using ClinicWeb;
 using ClinicWeb.Areas.Identity;
+using ClinicWeb.Controllers;
 using ClinicWeb.Data;
 using ClinicWeb.Models;
 using Microsoft.AspNetCore.Authentication;
@@ -182,6 +184,8 @@ builder.Services.AddAuthorization(o =>
 //    options.Filters.Add(new AuthorizeFilter());
 //});
 
+// 注册Email功能 要在var app = builder.Build();之前
+builder.Services.AddTransient<IEmailService, EmailService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
