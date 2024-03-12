@@ -63,12 +63,19 @@ namespace ClinicWeb.Areas.Appointment.Controllers
             }
 
             //查詢目前看診號
-            int currentNumber = _context.ApptClinicList
+            int currentNumber = 0;
+            try
+            {
+                currentNumber = _context.ApptClinicList
                 .Where(x => x.ClinicId == patientInfo.ClinicId
                 && (x.PatientStateId == 1 || x.PatientStateId == 2 || x.PatientStateId == 4 || x.PatientStateId == 5 || x.PatientStateId == 6 || x.PatientStateId == 7)
                 )
                 .Select(x => x.ClinicNumber)
                 .Max();
+            }
+            catch (Exception)
+            {}
+
             Console.WriteLine($"currentNum Max: {currentNumber}");
 
             //是否遲到

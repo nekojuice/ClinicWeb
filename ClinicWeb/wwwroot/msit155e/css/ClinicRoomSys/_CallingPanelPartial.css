@@ -1,8 +1,8 @@
 ﻿.callingTablePanel {
     position: fixed;
     margin-left: -10px;
-    max-width: 21.75%;
-    width: 25%;
+    /*max-width: 28%;*/
+    width: 28%;
 }
 #callingTable_wrapper {
     height:600px;
@@ -11,8 +11,8 @@
     position: fixed;
     bottom: 0;
     margin-left: -20px;
-    max-width: 22.8%;
-    width: 25%;
+    /*max-width: 22.8%;*/
+    width: 29%;
 }
 
 
@@ -35,6 +35,10 @@
     #callingTable tbody .selected {
         background-color: #cce5ff;
     }
+
+#callingTable td {
+    text-wrap: nowrap;
+}
 
 .spanshow {
     font-size:1.2em;

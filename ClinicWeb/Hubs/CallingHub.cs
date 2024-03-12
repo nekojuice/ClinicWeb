@@ -10,6 +10,7 @@ namespace ClinicWeb.Hubs
     {
         //儲存連線ID與資料的字典
         public static Dictionary<string, dynamic> dictConnectionID = new Dictionary<string, dynamic>();
+        public static int isCallingCounter = 0;
 
         //連線事件
         //public override Task OnConnectedAsync()
@@ -61,8 +62,10 @@ namespace ClinicWeb.Hubs
         //叫號(醫生面板)
         public async Task Set_Number(string number)
         {
+            isCallingCounter++;
             CallingHubModel model = dictConnectionID[Context.ConnectionId];
             model.number = number;
+            model.isCalling = isCallingCounter;
             dictConnectionID[Context.ConnectionId] = model;
             await Clients.All.SendAsync("Listener_ClinicInfo", JsonSerializer.Serialize(dictConnectionID.Values.ToList()));
         }
@@ -76,5 +79,7 @@ namespace ClinicWeb.Hubs
         public string? doctorName { get; set; }
         public string? shift { get; set; }
         public string? number { get; set; }
+
+        public int isCalling { get; set; }
     }
 }

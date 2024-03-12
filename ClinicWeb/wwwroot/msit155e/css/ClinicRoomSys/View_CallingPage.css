@@ -75,7 +75,7 @@ body {
 .ad_header_panel {
     margin-bottom: 10px;
     width: auto;
-    border: 1px solid black;
+    /*border: 1px solid black;*/
     align-content: center;
     vertical-align: central;
 }
@@ -99,7 +99,7 @@ body {
 .ad_content_panel {
     width: auto;
     height: 90%;
-    border: 1px solid black;
+    /*border: 1px solid black;*/
 
 }
 
