@@ -104,24 +104,64 @@ namespace ClinicWeb.Areas.Drugs.Controllers
             _context.PharmacyTClinicalUseList.Add(clinicalUseList);
             _context.SaveChanges();
 
-            return View("~/Areas/Drugs/Views/ClinicalUse.cshtml");
+            return View("~/Areas/Drugs/Views/Home/ClinicalUse.cshtml");
         }
 
-        //修改適應症資料
-       
-        public async Task<IActionResult> ClinicalUseEdit(int? clinicaluseId)
+        //修改適應症資料-->給modal讀單一一筆資料
+        [HttpGet]
+       // [Route("GetClinicalUse/{id}")]
+        public async Task<IActionResult> EditClinicalUse(int? id)
         {
-            if (clinicaluseId == null || _context.PharmacyTClinicalUseList==null)
+            if (id == null || _context.PharmacyTClinicalUseList==null)
             {
                 return NotFound();
             }
 
-            var pharmacyTClinicalUseList = await _context.PharmacyTClinicalUseList.FindAsync(clinicaluseId);
+            var pharmacyTClinicalUseList = await _context.PharmacyTClinicalUseList.FindAsync(id);
             if (pharmacyTClinicalUseList == null)
             {
                 return NotFound();
             }
-            return PartialView("~/Areas/Drugs/Views/Partial/__ClinicalUseEditPartial.cshtml", pharmacyTClinicalUseList);
+            return PartialView("~/Areas/Drugs/Views/Partial/_ClinicalUseEditPartial.cshtml", pharmacyTClinicalUseList);
+        }
+        //Update回DB
+        //[Bind("FIdClinicalUse,FClinicalUseCode,FClinicalUse")]
+        [HttpPost]
+        //[ValidateAntiForgeryToken] 加了這個會BadResqust
+        
+        public async Task<IActionResult> EditClinicalUse(PharmacyTClinicalUseList pharmacyTClinicalUseList)
+        {           
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(pharmacyTClinicalUseList);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException ex)
+                {
+                    if (!PharmacyTClinicalUseListExists(pharmacyTClinicalUseList.FIdClinicalUse))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Update failed: {ex.Message}");
+                    }
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine($"Update failed: {ex.Message}");  
+                }
+               
+            }
+            return View("~/Areas/Drugs/Views/Home/ClinicalUse.cshtml");
+           // return View(pharmacyTClinicalUseList);
+        }
+
+        private bool PharmacyTClinicalUseListExists(int id)
+        {
+            return (_context.PharmacyTClinicalUseList?.Any(e => e.FIdClinicalUse == id)).GetValueOrDefault();
         }
 
     }
