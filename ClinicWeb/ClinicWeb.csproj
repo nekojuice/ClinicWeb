@@ -14,6 +14,11 @@
 
   <ItemGroup>
     <Content Remove="bundleconfig.json" />
+    <Content Remove="wwwroot\js\memback\MBRecordInfo\DOM_use.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\js\memback\MBRecordInfo\DOM_use.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -36,6 +41,7 @@
 
   <ItemGroup>
     <None Include="bundleconfig.json" />
+    <None Include="wwwroot\js\memback\MBRecordInfo\DOM_use.js" />
     <None Include="wwwroot\vendors\bootstrap-icons\bootstrap-icons.scss" />
     <None Include="wwwroot\vendors\bootstrap-icons\fonts\bootstrap-icons.woff2" />
     <None Include="wwwroot\vendors\bootstrap\.github\CODEOWNERS" />
