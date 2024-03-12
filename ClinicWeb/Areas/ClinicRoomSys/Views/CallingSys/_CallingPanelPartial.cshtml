@@ -22,6 +22,12 @@
             <div class="clearfix"></div>
             </div>*@
             <div class="mb-3" style="overflow: auto">
+                <div class="col-md-3">
+                    <h4 id="spanShowDept" class="spanshow"></h4>
+                </div>
+                <div class="col-md-3">
+                    <h4 id="spanShowRoom" class="spanshow"></h4>
+                </div>
                 <div class="col-md-6">
                     <select asp-for="ClinicTime" class="form-control">
                         <option value="0">--選擇時段--</option>
@@ -86,7 +92,7 @@
                         </div>
                         <div class="row">
                             <div class="col">
-                                <button class="btn btn-info nkj-btn-xxl">叫號</button>
+                                <button id="btn_call" class="btn btn-info nkj-btn-xxl">叫號</button>
                             </div>
                             <div class="col">
                                 <button class="btn btn-success nkj-btn-xxl">看診</button>

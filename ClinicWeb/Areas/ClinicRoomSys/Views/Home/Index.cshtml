@@ -44,9 +44,12 @@
         //醫生員工ID
         let DOCTOR_ID;
         //選擇門診時間 (常理應該要選今天，為了demo寫死)
-        let CLINIC_DATE = new Date("2024/02/01");
+        let CLINIC_DATE = new Date("2023/12/01");
         //病歷ID
         let CASE_ID;
+
+        const URL_Get_EmpId = '@Url.Content("~/ClinicRoomSys/CallingSys/Get_EmpId")';
+        const Get_EmpInfo = '@Url.Content("~/ClinicRoomSys/CallingSys/Get_EmpInfo")';
 
         //撈取狀態: 員工id
         (async () => {
@@ -106,4 +109,7 @@
 
     <!-- 自訂: 更新後顏色閃爍 -->
     <script src="~/msit155e/js/appointment/extension_datachanged_coloranimate.js"></script>
+
+    <!-- SignalR -->
+    <script src="~/lib/microsoft-signalr/signalr.min.js"></script>
 }

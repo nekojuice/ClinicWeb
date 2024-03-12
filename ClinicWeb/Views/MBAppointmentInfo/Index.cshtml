@@ -1,0 +1,97 @@
+﻿@{
+    ViewData["Title"] = "掛號繳費查詢";
+}
+@section Styles
+ {
+    <link href="~/msit155e/css/cases/responsivetable.css" rel="stylesheet" />
+
+    <!-- iCheck -->
+    <link href="~/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+
+    <!-- Datatables -->
+    <link href="~/lib/datatables/css/datatables.bootstrap.min.css" rel="stylesheet" />
+    <link href="~/lib/datatables/css/jquery.datatables.min.css" rel="stylesheet" />
+    <link href="//cdn.datatables.net/plug-ins/2.0.1/integration/font-awesome/dataTables.fontAwesome.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="~/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- PNotify -->
+    <link href="~/vendors/pnotify/dist/pnotify.css" rel="stylesheet">
+    <link href="~/vendors/pnotify/dist/pnotify.buttons.css" rel="stylesheet">
+    <link href="~/vendors/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">
+
+    <!-- 自訂: 更新後顏色閃爍 -->
+    <link href="~/msit155e/css/appointment/extension_datachanged_coloranimate.css" rel="stylesheet" />
+
+
+}
+
+
+<div class="row d-flex align-items-start">
+
+    <div class="col-xl-3">
+        <div class="card">
+            <div class="card-body profile-card pt-4 d-flex flex-column">
+                <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                    <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">掛號紀錄查詢</button>
+                    <button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">看診繳費</button>
+                    @* <button class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">Messages</button>
+                    <button class="nav-link" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings" type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</button> *@
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-9">
+        <div class="card">
+            <div class="card-body pt-3">
+                <div class="tab-content" id="v-pills-tabContent">
+                    <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                        <div class="container">
+                            <partial name="_ClientPage_ApptSearchPanelPartial">
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                        <div class="container">
+                            <partial name="_ClientPage_PaymentSearchPanelPartial">
+                        </div>
+                    </div>
+                   @*  <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">...</div>
+                    <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">...</div> *@
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts
+{
+    <!-- iCheck -->
+    <script src="~/vendors/iCheck/icheck.min.js"></script>
+    <!-- Datatables -->
+    <script src="~/lib/datatables/js/datatables.bootstrap.min.js"></script>
+    <script src="~/lib/datatables/js/datatables.datatables.min.js"></script>
+    <script src="~/lib/datatables/js/jquery.datatables.min.js"></script>
+
+    <!-- datatable jumptodata -->
+    <script src="https://cdn.datatables.net/plug-ins/1.13.7/api/page.jumpToData().js" asp-fallback-src="~/lib/page.jumptodata().js"></script>
+
+    <!-- PNotify -->
+    <script src="~/vendors/pnotify/dist/pnotify.js"></script>
+    <script src="~/vendors/pnotify/dist/pnotify.buttons.js"></script>
+    <script src="~/vendors/pnotify/dist/pnotify.nonblock.js"></script>
+
+    <!-- 自訂: 更新後顏色閃爍 -->
+    <script src="~/msit155e/js/appointment/extension_datachanged_coloranimate.js"></script>
+
+    <script>
+        const __checkLoginURL = '@Url.Content("~/MBAppointmentInfo/Get_MemberStatus")'
+        const __getApptListURL = '@Url.Content("~/MBAppointmentInfo/Get_MemberAppt")'
+        const __cancelApptURL = '@Url.Content("~/MBAppointmentInfo/Put_CancelMemberAppt")'
+    </script>
+
+    <script src="~/msit155e/js/appointmentsearch/apptsearch.js"></script>
+    <script src="~/msit155e/js/appointmentsearch/paymentsearch.js"></script>
+}
