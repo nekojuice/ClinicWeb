@@ -1,5 +1,6 @@
 ﻿using ClinicWeb.Areas.Appointment.Models;
 using ClinicWeb.Areas.ClinicRoomSys.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NuGet.Protocol;
 
@@ -71,6 +72,7 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
                 }).FirstOrDefault());
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public IActionResult View_CallingPage()
         {

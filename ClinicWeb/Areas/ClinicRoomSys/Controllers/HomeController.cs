@@ -9,7 +9,6 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
 	[Area("ClinicRoomSys")]
 	public class HomeController : Controller
 	{
-		[AllowAnonymous]
 		public IActionResult Index()
 		{
 			return View();
