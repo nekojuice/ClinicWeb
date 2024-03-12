@@ -169,13 +169,50 @@
         // });
 
         // 更新聊天內容事件
-        // connection.on("UpdContent", function (msg) {
-        //     $("#messageList").append($("<li></li>").attr("class", "list-group-item").text(msg));
-        // });
         connection.on("UpdContent", function (msg) {
-            // 將收到的訊息附加到 messageList 中
-            $("#messageList").append($("<li></li>").attr("class", "d-flex justify-content-between mb-4")
-                .append($("#msginsert .card").clone().find('#msgshow').text(msg).end()));
+            // 創建一個新的列表項目，並使用style屬性增加空白
+            var listItem = $("<li></li>").attr("class", "list-group-item").text(msg).css("margin-bottom", "25px");
+
+            // 將列表項目添加到 #messageList
+            $("#messageList").append(listItem);
+
+            // 滾動到列表底部
+            var messageList = document.getElementById("messageList");
+            messageList.scrollTop = messageList.scrollHeight;
+        });
+
+
+        //發送訊息
+        connection.on("UpdContentSend", function (data) {
+            var name = data.senderID;
+            var msg = data.message;
+            // 取得現在的時間
+            var currentTime = new Date().toLocaleTimeString();
+
+            // 生成新的列表項目
+            var listItem = $("<li></li>").addClass("d-flex justify-content-between mb-4");
+
+            // 生成卡片元素
+            var card = $("<div></div>").addClass("card");
+
+            // 卡片標題（name）
+            var nameParagraph = $("<p></p>").addClass("fw-bold mb-0").attr("id", "name").text(name).css("margin-right", "20px");
+
+            // 時間（time）
+            var timeParagraph = $("<p></p>").addClass("text-muted small mb-0").attr("id", "time")
+                .html("<i class='far fa-clock'></i> " + currentTime);
+
+            // 卡片主體內容（msgshow）
+            var msgParagraph = $("<p></p>").addClass("mb-0").attr("id", "msgshow").text(msg);
+
+            // 將元素組裝起來
+            card.append($("<div></div>").addClass("card-header d-flex justify-content-between p-3")
+                .append(nameParagraph).append(timeParagraph));
+            card.append($("<div></div>").addClass("card-body").append(msgParagraph));
+            listItem.append(card);
+
+            // 將新的列表項目添加到 messageList 中
+            $("#messageList").append(listItem);
 
             // 滾動到底部
             var messageList = document.getElementById("messageList");
@@ -184,21 +221,68 @@
             // 可選：在此處調用其他需要的函式（例如 syncToBottomChat）
         });
 
-        
 
-        //傳送訊息
-        $('#sendButton').on('click', function () {
+        //接收訊息
+        connection.on("UpdContentCatch", function (data) {
+            var name = data.senderID;
+            var msg = data.message;
+            // 取得現在的時間
+            var currentTime = new Date().toLocaleTimeString();
+
+            // 生成新的列表項目
+            var listItem = $("<li></li>").addClass("d-flex justify-content-end mb-4");
+
+            // 生成卡片元素
+            var card = $("<div></div>").addClass("card");
+
+            // 卡片標題（name）
+            var nameParagraph = $("<p></p>").addClass("fw-bold mb-0").attr("id", "name").text(name).css("margin-right", "20px");
+
+            // 時間（time）
+            var timeParagraph = $("<p></p>").addClass("text-muted small mb-0").attr("id", "time")
+                .html("<i class='far fa-clock'></i> " + currentTime);
+
+            // 卡片主體內容（msgshow）
+            var msgParagraph = $("<p></p>").addClass("mb-0").attr("id", "msgshow").text(msg);
+
+            // 調整元素位置
+            card.append($("<div></div>").addClass("card-header d-flex justify-content-end p-3")
+                .append(nameParagraph).append(timeParagraph));
+            card.append($("<div></div>").addClass("card-body text-end").append(msgParagraph));
+            listItem.append(card);
+
+            // 將新的列表項目添加到 messageList 中
+            $("#messageList").append(listItem);
+
+            // 滾動到底部
+            var messageList = document.getElementById("messageList");
+            messageList.scrollTop = messageList.scrollHeight;
+
+            // 可選：在此處調用其他需要的函式（例如 syncToBottomChat）
+        });
+
+
+
+
+        //送出訊息事件
+       $('#sendButton').on('click', function () {
             console.log(list);
             let selfID = $('#SelfID').html();
             let message = $('#message').val();
             let sendToID = list.find(user => user.Name === $('#sendToID').val()).connectionID;
 
-            connection.invoke("SendMessage", selfID, message, sendToID).catch(function (err) {
-                alert('傳送錯誤: ' + err.toString());
-            });
+            // 檢查訊息是否為空
+            if (message.trim() !== '') {
+                connection.invoke("SendMessage", selfID, message, sendToID).then(function () {
+                    // 清空文本框
+                    $('#message').val('');
+                }).catch(function (err) {
+                    alert('傳送錯誤: ' + err.toString());
+                });
+            } else {
+                alert('訊息不能為空！');
+            }
         });
-        
-        
         
         
         

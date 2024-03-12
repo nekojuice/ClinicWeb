@@ -95,15 +95,15 @@ namespace ClinicWeb.Views.Hubs
 
             if (string.IsNullOrEmpty(sendToID))
             {
-                await Clients.All.SendAsync("UpdContent", selfID + " 說: " + message);
+                await Clients.All.SendAsync("UpdContentAll", selfID + " 說: " + message);
             }
             else
             {
                 // 接收人
-                await Clients.Client(sendToID).SendAsync("UpdContent", messageContent);
+                await Clients.Client(sendToID).SendAsync("UpdContentCatch", messageContent);
 
                 // 發送人
-                await Clients.Client(Context.ConnectionId).SendAsync("UpdContent", messageContent);
+                await Clients.Client(Context.ConnectionId).SendAsync("UpdContentSend", messageContent);
             }
         }
 
