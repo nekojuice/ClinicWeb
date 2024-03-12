@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using ClinicWeb.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace ClinicWeb.Areas.Room.Controllers
+namespace ClinicWeb.Controllers.MBRoomInfoController
 {
     public class MBRoomInfoController : Controller
     {
@@ -30,19 +31,26 @@ namespace ClinicWeb.Areas.Room.Controllers
         {
             if (ModelState.IsValid)
             {
-                DateTime startDate, endDate;
-                if (!DateTime.TryParseExact(order.StartDate, "yyyy/MM/dd", null, System.Globalization.DateTimeStyles.None, out startDate) ||
-                    !DateTime.TryParseExact(order.EndDate, "yyyy/MM/dd", null, System.Globalization.DateTimeStyles.None, out endDate))
+                //if (!DateTime.TryParseExact(order.StartDate, "yyyy/MM/dd", null, System.Globalization.DateTimeStyles.None, out startDate) ||
+                //    !DateTime.TryParseExact(order.EndDate, "yyyy/MM/dd", null, System.Globalization.DateTimeStyles.None, out endDate))
+                if(order.StartDate.CompareTo(order.EndDate) >=0)
                 {
-                    TempData["ErrorMessage"] = "日期格式無效，請使用 yyyy/MM/dd 格式。";
+                    TempData["ErrorMessage"] = "結束日期必須大於開始日期";
                     return RedirectToAction(nameof(Index));
                 }
 
-                var query = _context.AppointmentRoomSchedule
-                    .Where(a => a.RoomId == 4 && (DateTime.Parse(a.StartDate) >= startDate || DateTime.Parse(a.EndDate) <= endDate))
+                var existingAppointments = _context.AppointmentRoomSchedule
+                    .Where(a => a.RoomId == order.RoomId &&
+                                //(DateTime.Parse(a.StartDate) >= startDate || DateTime.Parse(a.EndDate) <= endDate))
+                                (a.StartDate.CompareTo(order.StartDate) >=0 || a.EndDate.CompareTo(order.EndDate) <=0))
                     .ToList();
 
-                //新增到資料庫
+                if (existingAppointments.Any())
+                {
+                    TempData["ErrorMessage"] = "該時間段已有預約";
+                    return RedirectToAction(nameof(Index));
+                }
+
                 _context.AppointmentRoomSchedule.Add(order);
                 _context.SaveChanges();
 
