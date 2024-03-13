@@ -13,7 +13,7 @@
 
         <div class="row">
             <h3>線上諮詢   歡迎~ <span id="SelfID">@User.Identity.Name</span></h3>
-            @* <div class="col-md-6 col-lg-5 col-xl-4 mb-4 mb-md-0">
+                <div class="col-md-6 col-lg-5 col-xl-4 mb-4 mb-md-0 leftbox" id="2">
 
                 <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
@@ -29,9 +29,8 @@
                     </div>
                 </div>
 
-            </div> *@
-
-            <div class="col-md-6 col-lg-5 col-xl-4 mb-4 mb-md-0 leftbox">
+            </div>
+            <div class="col-md-6 col-lg-5 col-xl-4 mb-4 mb-md-0 leftbox" id="1">
                 
                 <h5 class="font-weight-bold mb-3 text-center text-lg-start">線上清單</h5>
                 <hr />
@@ -62,19 +61,30 @@
                 </div>
 
             </div>
-            <div class="col-md-6 col-lg-7 col-xl-8 rightbox" style="max-height:100%">
+            <div class="col-md-6 col-lg-7 col-xl-8 rightbox" style=" height: 700px;">
+                <div style="height: 400px;">
                 <ul class="list-unstyled" id="messageList" style="max-height: 400px; overflow-y: auto;padding-top:5px; ">
                 </ul>
+                </div>
                 <div class="bg-white mb-3">
                     <div class="mb-3">
-                        <label for="sendToID" class="form-label">指定 ID</label>
+                        @* <label for="sendToID" class="form-label">指定 ID</label> *@
                         <input type="text" class="form-control" id="sendToID">
                     </div>
-                    <div class="form-outline">
+                    <div class="form-outline" >
                         <label class="form-label" for="textAreaExample2">輸入訊息</label>
                         <input type="text" class="form-control" id="message" rows="4" style="height: 100px; font-size: 18px;">
                     </div>
                 </div>
+                <label for="fileInput">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none" />
+                        <path d="M21 15v4a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-4H0l8-8 8 8h-3zm-2-7a8.963 8.963 0 0 1-.5 2.998L10 4.414 4.5 10A8.963 8.963 0 0 1 4 8a9 9 0 0 1 18 0c0 1.964-1.79 4.525-3.998 7.998L18 18v1h4a1 1 0 0 1 1 1v2h2v-2a3 3 0 0 0-3-3H2a3 3 0 0 0-3 3v2h2v-2a1 1 0 0 1 1-1h2v-1a7.963 7.963 0 0 1 2-5.002V7h2zm-8 1a6 6 0 0 0-6 6h2a4 4 0 0 1 8 0h2a6 6 0 0 0-6-6zm-1 8h2v-2h-2v2zm0-4h2V9h-2v2z" />
+                    </svg>
+                    選擇檔案
+                </label>
+                <input type="file" id="fileInput" style="display: none;" />
+                <button type="button">&#x1F604;</button>
                 <button type="button" class="btn btn-info btn-rounded float-end" id="sendButton">送出</button>
             </div>
 
@@ -82,187 +92,7 @@
 
     </div>
 </section>
-<div class="wrapper">
-    <div class="container">
-        <div class="left">
-            <div class="top">
-                <input type="text" placeholder="Search" />
-                <a href="javascript:;" class="search"></a>
-            </div>
-            <ul class="people">
-                <li class="person" data-chat="person1">
-                    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/382994/thomas.jpg" alt="" />
-                    <span class="name">Thomas Bangalter</span>
-                    <span class="time">2:09 PM</span>
-                    <span class="preview">I was wondering...</span>
-                </li>
-                <li class="person" data-chat="person2">
-                    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/382994/dog.png" alt="" />
-                    <span class="name">Dog Woofson</span>
-                    <span class="time">1:44 PM</span>
-                    <span class="preview">I've forgotten how it felt before</span>
-                </li>
-                <li class="person" data-chat="person3">
-                    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/382994/louis-ck.jpeg" alt="" />
-                    <span class="name">Louis CK</span>
-                    <span class="time">2:09 PM</span>
-                    <span class="preview">But we’re probably gonna need a new carpet.</span>
-                </li>
-                <li class="person" data-chat="person4">
-                    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/382994/bo-jackson.jpg" alt="" />
-                    <span class="name">Bo Jackson</span>
-                    <span class="time">2:09 PM</span>
-                    <span class="preview">It’s not that bad...</span>
-                </li>
-                <li class="person" data-chat="person5">
-                    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/382994/michael-jordan.jpg" alt="" />
-                    <span class="name">Michael Jordan</span>
-                    <span class="time">2:09 PM</span>
-                    <span class="preview">
-                        Wasup for the third time like is
-                        you blind bitch
-                    </span>
-                </li>
-                <li class="person" data-chat="person6">
-                    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/382994/drake.jpg" alt="" />
-                    <span class="name">Drake</span>
-                    <span class="time">2:09 PM</span>
-                    <span class="preview">howdoyoudoaspace</span>
-                </li>
-            </ul>
-        </div>
-        <div class="right">
-            <div class="top"><span>To: <span class="name">Dog Woofson</span></span></div>
-            <div class="chat" data-chat="person1">
-                <div class="conversation-start">
-                    <span>Today, 6:48 AM</span>
-                </div>
-                <div class="bubble you">
-                    Hello,
-                </div>
-                <div class="bubble you">
-                    it's me.
-                </div>
-                <div class="bubble you">
-                    I was wondering...
-                </div>
-            </div>
-            <div class="chat" data-chat="person2">
-                <div class="conversation-start">
-                    <span>Today, 5:38 PM</span>
-                </div>
-                <div class="bubble you">
-                    Hello, can you hear me?
-                </div>
-                <div class="bubble you">
-                    I'm in California dreaming
-                </div>
-                <div class="bubble me">
-                    ... about who we used to be.
-                </div>
-                <div class="bubble me">
-                    Are you serious?
-                </div>
-                <div class="bubble you">
-                    When we were younger and free...
-                </div>
-                <div class="bubble you">
-                    I've forgotten how it felt before
-                </div>
-            </div>
-            <div class="chat" data-chat="person3">
-                <div class="conversation-start">
-                    <span>Today, 3:38 AM</span>
-                </div>
-                <div class="bubble you">
-                    Hey human!
-                </div>
-                <div class="bubble you">
-                    Umm... Someone took a shit in the hallway.
-                </div>
-                <div class="bubble me">
-                    ... what.
-                </div>
-                <div class="bubble me">
-                    Are you serious?
-                </div>
-                <div class="bubble you">
-                    I mean...
-                </div>
-                <div class="bubble you">
-                    It’s not that bad...
-                </div>
-                <div class="bubble you">
-                    But we’re probably gonna need a new carpet.
-                </div>
-            </div>
-            <div class="chat" data-chat="person4">
-                <div class="conversation-start">
-                    <span>Yesterday, 4:20 PM</span>
-                </div>
-                <div class="bubble me">
-                    Hey human!
-                </div>
-                <div class="bubble me">
-                    Umm... Someone took a shit in the hallway.
-                </div>
-                <div class="bubble you">
-                    ... what.
-                </div>
-                <div class="bubble you">
-                    Are you serious?
-                </div>
-                <div class="bubble me">
-                    I mean...
-                </div>
-                <div class="bubble me">
-                    It’s not that bad...
-                </div>
-            </div>
-            <div class="chat" data-chat="person5">
-                <div class="conversation-start">
-                    <span>Today, 6:28 AM</span>
-                </div>
-                <div class="bubble you">
-                    Wasup
-                </div>
-                <div class="bubble you">
-                    Wasup
-                </div>
-                <div class="bubble you">
-                    Wasup for the third time like is <br />you blind bitch
-                </div>
 
-            </div>
-            <div class="chat" data-chat="person6">
-                <div class="conversation-start">
-                    <span>Monday, 1:27 PM</span>
-                </div>
-                <div class="bubble you">
-                    So, how's your new phone?
-                </div>
-                <div class="bubble you">
-                    You finally have a smartphone :D
-                </div>
-                <div class="bubble me">
-                    Drake?
-                </div>
-                <div class="bubble me">
-                    Why aren't you answering?
-                </div>
-                <div class="bubble you">
-                    howdoyoudoaspace
-                </div>
-            </div>
-            <div class="write">
-                <a href="javascript:;" class="write-link attach"></a>
-                <input type="text" />
-                <a href="javascript:;" class="write-link smiley"></a>
-                <a href="javascript:;" class="write-link send"></a>
-            </div>
-        </div>
-    </div>
-</div>
 @* <body class="bodyctrl">
     <div class="wrapper">
         <div class="chat-box">
@@ -302,17 +132,84 @@
         }).catch(function (err) {
             alert('連線錯誤: ' + err.toString());
         });
+        // connection.on("UpdList", function (jsonList) {
+        //     list = JSON.parse(jsonList);
+        //     $("#IDList li").remove();
+        //     $('#sendToID').hide();
+        //     for (i = 0; i < list.length; i++) {
+        //         $("#IDList").append($("<li></li>").attr("class", "list-group-item").attr("onclick", "ccon(this)").text(list[i].Name));
+        //     }
+        //     var selfIDText = $("#SelfID").text().trim();
+        //     if (selfIDText !== "管理員") {
+        //         // 設定#sendToID的值為"管理員"
+        //         $('#sendToID').val("管理員");
+        //     } else {
+        //         // 否則，設定#sendToID的值為所點擊元素的文字內容
+        //         $('#sendToID').val($(element).text());
+        //     }
+        // });
+        // function ccon(element) {
+        //     $('#sendToID').val($(element).text());
+        //     $("#messageList").empty();
+        // }
+
         connection.on("UpdList", function (jsonList) {
             list = JSON.parse(jsonList);
             $("#IDList li").remove();
+            $('#sendToID').hide();
+
+            var hasAdmin = false; // 增加一個變數來追蹤是否有管理員
+
             for (i = 0; i < list.length; i++) {
                 $("#IDList").append($("<li></li>").attr("class", "list-group-item").attr("onclick", "ccon(this)").text(list[i].Name));
+
+                // 檢查是否有管理員
+                if (list[i].Name === "管理員") {
+                    hasAdmin = true;
+                }
+            }
+
+            // 如果IDList中不包含管理員，顯示提示訊息
+            if (!hasAdmin) {
+                alert("目前沒有客服人員請稍待片刻");
+            } else {
+                alert("請輸入想諮詢的問題，專人會幫您服務");
+            }
+
+            var selfIDText = $("#SelfID").text().trim();
+            if (selfIDText !== "管理員") {
+                // 設定#sendToID的值為"管理員"
+                $('#sendToID').val("管理員");
+            } else {
+                // 否則，設定#sendToID的值為所點擊元素的文字內容
+                $('#sendToID').val($(element).text());
             }
         });
 
         function ccon(element) {
-            $('#sendToID').val($(element).text())
+            $('#sendToID').val($(element).text());
+            $("#messageList").empty();
         }
+
+ 
+
+        //控制登入使用者看到的畫面
+        
+        var userName = document.getElementById("SelfID").innerText;
+        var leftbox1 = document.getElementById("1");
+        var leftbox2 = document.getElementById("2");
+        console.log(userName);
+
+       
+        if (userName === "管理員") {
+            leftbox1.style.display = "block"; 
+            leftbox2.style.display = "none";
+        } else {
+            leftbox1.style.display = "none"; 
+            leftbox2.style.display = "block";  
+        }
+
+
 
 
 
@@ -378,7 +275,8 @@
 
         //接收訊息
         connection.on("UpdContentCatch", function (data) {
-            var name = data.senderID;
+            console.log(data);
+            var name = data.senderName;
             var msg = data.message;
             // 取得現在的時間
             var currentTime = new Date().toLocaleTimeString();
@@ -423,7 +321,16 @@
             console.log(list);
             let selfname = $('#SelfID').html();
             let message = $('#message').val();
-            let sendToID = list.find(user => user.Name === $('#sendToID').val()).connectionID;
+            let sendToID = $('#sendToID').val();
+
+            // 檢查 SENDID 是否為空
+            if (sendToID.trim() === '') {
+                alert('請選擇一位會員！');
+                return;
+            }
+
+            // 查找對應的 connectionID
+            sendToID = list.find(user => user.Name === sendToID)?.connectionID;
 
             // 檢查訊息是否為空
             if (message.trim() !== '') {
@@ -438,55 +345,7 @@
             }
         });
 
-        //套版JS
-
-        document.querySelector('.chat[data-chat=person2]').classList.add('active-chat');
-        document.querySelector('.person[data-chat=person2]').classList.add('active');
-
-        let friends = {
-            list: document.querySelector('ul.people'),
-            all: document.querySelectorAll('.left .person'),
-            name: ''
-        },
-
-            chat = {
-                container: document.querySelector('.container .right'),
-                current: null,
-                person: null,
-                name: document.querySelector('.container .right .top .name')
-            };
-
-
-        friends.all.forEach(f => {
-            f.addEventListener('mousedown', () => {
-                f.classList.contains('active') || setAciveChat(f);
-            });
-        });
-
-        function setAciveChat(f) {
-            friends.list.querySelector('.active').classList.remove('active');
-            f.classList.add('active');
-            chat.current = chat.container.querySelector('.active-chat');
-            chat.person = f.getAttribute('data-chat');
-            chat.current.classList.remove('active-chat');
-            chat.container.querySelector('[data-chat="' + chat.person + '"]').classList.add('active-chat');
-            friends.name = f.querySelector('.name').innerText;
-            chat.name.innerHTML = friends.name;
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        
 
         //右下聊天室
         $(function () {

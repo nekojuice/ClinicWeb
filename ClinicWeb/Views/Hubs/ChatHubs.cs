@@ -46,7 +46,7 @@ namespace ClinicWeb.Views.Hubs
             await Clients.All.SendAsync("UpdList", jsonString);
 
             // 更新聊天內容
-            await Clients.All.SendAsync("UpdContent", user.Name + "已連線");
+            //await Clients.All.SendAsync("UpdContent", user.Name + "已連線");
 
             await base.OnConnectedAsync();
         }
@@ -69,7 +69,7 @@ namespace ClinicWeb.Views.Hubs
             await Clients.All.SendAsync("UpdList", jsonString);
 
             // 更新聊天內容
-            await Clients.All.SendAsync("UpdContent", user.Name + "已離線");
+            //await Clients.All.SendAsync("UpdContent", user.Name + "已離線");
 
             await base.OnDisconnectedAsync(ex);
         }
