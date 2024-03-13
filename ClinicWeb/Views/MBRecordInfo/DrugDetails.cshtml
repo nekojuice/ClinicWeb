@@ -1,0 +1,30 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model ClinicWeb.ViewModels.DrugDetailsViewModel
+
+@section Styles{
+    <style>
+        
+    </style>
+}
+<h1>測試</h1>
+<h2>藥品ID:@Model?.DrugId</h2>
+<h2>藥品名稱 @Model?.DrugName</h2>
+<form asp-controller="MBRecordInfo" asp-action="GetData" method="get">
+    <div>
+        <div class="from-group">
+            <dl class="row">
+                <dt class="col-sm-2">
+                   @Html.DisplayNameFor(model=>model.DrugId) :
+                </dt>
+                <dd class="col-sm-10">
+                    @Model?.DrugId
+                </dd>
+            </dl>
+        </div>
+    </div>
+</form>
