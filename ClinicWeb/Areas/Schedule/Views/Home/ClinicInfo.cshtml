@@ -88,13 +88,14 @@
                             <table id="datatable" class="table table-striped table-bordered" style="width:100%">
                                 <thead>
                                     <tr>
-                                        @*  <th>id</th> *@
+                                        <th style ="display:none">id</th>
                                         <th style="display:none">Week</th>
                                         <th>星期</th>
                                         <th>醫師</th>
                                         <th>時段</th>
                                         <th>科別</th>
                                         <th>診間</th>
+                                        <th>操作</th>
                                     </tr>
                                 </thead>
 
@@ -179,6 +180,86 @@
         </div>
     </div>
 </div>
+
+
+@* //彈跳小窗 刪除 *@
+<div class="modal fade" id="deleteData" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" id="divCreateInfo">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">
+                    刪除門診
+                </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+
+            </div>
+            <div class="modal-body d-flex flex-column">
+
+                <div class="mb-3 pb-2">
+                    <!-- 新添加的行 -->
+                    <div class="col-md-3">
+                        <label class="form-label" style="font-size:16px">id: </label>
+                        <select class="form-control" id="selidDelete" disabled="disabled">
+                        </select>
+                    </div>
+                </div>
+                <div class="mb-3 pb-2">
+                    <!-- 新添加的行 -->
+                    <div class="col-md-3">
+                        <label class="form-label" style="font-size:16px">星期: </label>
+                        <select class="form-control" id="selWeekDelete" disabled="disabled">
+                            <option disabled>請選擇</option>
+                            <option value=1>星期一</option>
+                            <option value=2>星期二</option>
+                            <option value=3>星期三</option>
+                            <option value=4>星期四</option>
+                            <option value=5>星期五</option>
+                            <option value=6>星期六</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mb-3 pb-2">
+                    <!-- 新添加的行 -->
+                    <div class="col-md-3">
+                        <label class="form-label" style="font-size:16px">醫師: </label>
+                        <select class="form-control" id="selDoctornameDelete" disabled="disabled">
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mb-3 pb-2">
+                    <!-- 新添加的行 -->
+                    <div class="col-md-3">
+                        <label class="form-label" style="font-size:16px">時段: </label>
+                        <select class="form-control" id="selShiftDelete" disabled="disabled">
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mb-3 pb-2">
+                    <!-- 新添加的行 -->
+                    <div class="col-md-3">
+                        <label class="form-label" style="font-size:16px">診間: </label>
+                        <select class="form-control" id="selRoomDelete" disabled="disabled">
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    關閉
+                </button>
+                <button id="ClinicDel" type="button" class="btn btn-primary">
+                    刪除門診
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
 
@@ -293,13 +374,21 @@
                 },
                 destroy: true,
                 columns: [
-                    // { "data": "id", "visible": false },
+                    { "data": "id", "visible": false },
                     {"data":"week","visible":false},
                     { "data": "星期" },
                     { "data": "醫師" },
                     { "data": "時段" },
                     { "data": "科別" },
-                    { "data": "診間" }
+                    { "data": "診間" },
+                    {
+                        "data": "mRid",
+                        "render": function (data, type, row) {
+                            return `<button id="delData" type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteData">刪除</button>`;
+
+                        
+                        } 
+                    }
                 ],
                 fixedHeader: {
                     header: true
@@ -307,7 +396,7 @@
                 language: {
                     url: "https://cdn.datatables.net/plug-ins/1.13.7/i18n/zh-HANT.json"
                 },
-                order: [[0, 'asc']]
+                order: [[1, 'asc']]
             });
 
         }
@@ -319,11 +408,11 @@
         function searchName() {
             const selectedDoctor = $('#selectedDoctorname option:selected').text()
             const table = $('#datatable').DataTable();
-            alert(selectedDoctor)
+            //alert(selectedDoctor)
             if (selectedDoctor === '全部') {
-                table.column(2).search("").draw();
+                table.column(3).search("").draw();
             } else {
-                table.column(2).search(selectedDoctor).draw();
+                table.column(3).search(selectedDoctor).draw();
             }
 
         }
@@ -334,9 +423,9 @@
             const table = $('#datatable').DataTable();
             //alert(selectedShift);
             if (selectedShift === 'allshift') {
-                table.column(3).search("").draw();
+                table.column(4).search("").draw();
             } else {
-                table.column(3).search(selectedShift).draw();
+                table.column(4).search(selectedShift).draw();
             }
 
         }
@@ -347,9 +436,9 @@
             const selectedDep = $(selDep).val();
             const table = $('#datatable').DataTable();
             if (selectedDep === 'alldep') {
-                table.column(4).search("").draw();
+                table.column(5).search("").draw();
             } else {
-                table.column(4).search(selectedDep).draw();
+                table.column(5).search(selectedDep).draw();
             }
         }
 
@@ -359,9 +448,9 @@
             const selectedWeek = $('#selectedWeek option:selected').text();
             const table = $('#datatable').DataTable();
             if (selectedWeek === '全部') {
-                table.column(1).search("").draw();
+                table.column(2).search("").draw();
             } else {
-                table.column(1).search(selectedWeek).draw();
+                table.column(2).search(selectedWeek).draw();
             }
         }
 
@@ -397,7 +486,7 @@
             const url = '@Url.Content("~/Schedule/ClinicInfo/ShowRoom")';
             const response = await fetch(url); 
             const datas = await response.json();
-            console.log(datas);
+            //console.log(datas);
 
             const optRooms = datas.map(room => `<option value=${room.roomId}>${room.name}</option>`);
             optRooms.unshift('<option value="none">請選擇</option>'); 
@@ -426,23 +515,132 @@
 
                 if (response.ok) {
                     $('#ClinicAdd').modal('hide')
-                    // 门诊不存在，执行添加操作
+                    // 門診新增
                     swal("門診新增成功！", "已成功新增門診！", "success", { button: "確定" });
 
-                    // 在此处执行任何其他必要的操作，例如关闭模态框或重新加载门诊表
+                    
                 } else {
-                    // 门诊已存在或其他错误
-                    swal("門診新增失敗！", "重複新增門診！", "error", { button: "確定" });
+                    // 重複新增
+                    swal("門診新增失敗！", "請勿重複新增同時段門診！", "error", { button: "確定" });
                 }
             } catch (error) {
-                // 捕获可能的网络错误或其他问题
+                // 其他錯誤
                 console.error('Error:', error);
-                swal("門診新增失敗！", "發生了一些問題！", "error", { button: "確定" });
+                swal("門診新增失敗！", "發生了一些問題，請洽系統管理員！", "error", { button: "確定" });
             }
         })
 
 
+        //彈跳小窗(刪除)元素
+        const DelDr = document.querySelector('#selDoctornameDelete');
+        const DelShift = document.querySelector('#selShiftDelete');
+        const DelRoom = document.querySelector('#selRoomDelete');
 
+            //刪除小窗醫生名匯入
+            (async () => {
+                const url = '@Url.Content("~/Schedule/api/SelectedDoctorName")';
+                const response = await fetch(url);
+                const datas = await response.json();
+
+                const optDoctornames = datas.map(name => `<option value=${name.empId}>${name.name}</option>`);
+                DelDr.innerHTML = optDoctornames.join("");
+            })();
+
+        //小窗下拉選單匯入時段
+        (async () => {
+            const url = '@Url.Content("~/Schedule/api/GetShifts")';
+            const response = await fetch(url);
+            const datas = await response.json();
+            //console.log(datas);
+
+            const optShifts = datas.map(shift => `<option value=${shift.clinicTimeId}>${shift.clinicShifts}</option>`);
+            DelShift.innerHTML = optShifts.join("");
+
+        })();
+
+        //小窗下拉選單匯入診間
+        (async () => {
+            const url = '@Url.Content("~/Schedule/ClinicInfo/ShowRoom")';
+            const response = await fetch(url);
+            const datas = await response.json();
+            //console.log(datas);
+
+            const optRooms = datas.map(room => `<option value=${room.roomId}>${room.name}</option>`);
+            DelRoom.innerHTML = optRooms.join("");
+
+        })();
+
+
+
+
+        // 點擊刪除按鈕觸發小窗
+        $('#deleteData').on('click', '#delData', function () {
+            // 獲取所選的資料
+            deleteData = $('#datatable').DataTable().row($(this).closest('tr')).data();
+            var id = deleteData.id;
+
+            // 資料匯入下拉選單
+            $('#selidDelete').val(id);
+            $('#selWeekDelete').val(deleteData.星期);
+            $('#selDoctornameDelete').val(deleteData.醫師);
+            $('#selShiftDelete').val(deleteData.時段);
+            $('#selRoomDelete').val(deleteData.診間);
+        });
+
+
+        //點擊確認刪除
+        $('#ClinicDel').on('click', async function () {
+            if (!deleteData) {
+                // 如果沒有選到數據要提示
+                toastr.error('請選擇要刪除的資料');
+                return;
+            }
+
+            var id = deleteData.id;
+            var selectedWeek = deleteData.星期;
+            var selectedDoctor = deleteData.醫師;
+            var selectedShift = deleteData.時段;
+            var selectedRoom = deleteData.診間;
+
+            // 构建请求参数对象
+            const requestData = {
+       
+                DoctorId: selectedWeek,
+                Week: selectedDoctor,
+                TimeId: selectedShift,
+                RoomId: selectedRoom
+            };
+
+            try {
+                const response = await fetch('@Url.Content("~/Schedule/ClinicInfo/DeleteClinic")', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestData)
+                });
+
+                if (response.ok) {
+                    // 刪除成功
+                    $('#deleteData').modal('hide');
+                    // 成功消息
+                    toastr.success('刪除成功');
+                    QueryWeekSchedule(); // 刷新表格
+                } else {
+                    // 刪除失敗
+                    toastr.error('刪除失敗,沒有找到資料');
+                }
+            } catch (error) {
+                // 刪除失敗
+                console.error('Error:', error);
+                toastr.error('刪除失敗');
+            }
+
+            // 清空
+            deleteData = null;
+        });
+
+       
 
 
     </script>

@@ -1,4 +1,5 @@
 ﻿using ClinicWeb.Areas.Schedule.Models;
+using ClinicWeb.Areas.Schedule.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,7 +20,7 @@ namespace ClinicWeb.Areas.Schedule.Controllers
             var WeekSchedule = _context.ScheduleClinicSchedule
                 .Select(x => new
                 {
-                    //id = x.ClinicInfoId,
+                    id = x.ScheduleId,
                     Week = x.Week,
                     醫師 = x.Doctor.Name,
                     星期 = GetDayOfWeek(x.Week),
@@ -54,6 +55,7 @@ namespace ClinicWeb.Areas.Schedule.Controllers
             {
                 return BadRequest("門診已存在");
             }
+            
 
             // 如果不存在，則創建新的門診
             var newClinic = new ScheduleClinicSchedule
@@ -94,6 +96,29 @@ namespace ClinicWeb.Areas.Schedule.Controllers
             }
         }
 
+        [HttpPost]
+        
+        public IActionResult DeleteClinic([FromBody] ClinicScheduleVM model)
+        {
+            if (ModelState.IsValid)
+            {
+                var clinicToDelete = _context.ScheduleClinicSchedule.FirstOrDefault(c => c.ScheduleId == model.ScheduleId);
+                if (clinicToDelete != null)
+                {
+                    _context.ScheduleClinicSchedule.Remove(clinicToDelete);
+                    _context.SaveChanges();
+                    return Ok("門診刪除成功");
+                }
+                else
+                {
+                    return NotFound("未找到要刪除的門診");
+                }
+            }
+            else
+            {
+                return BadRequest("無效請求");
+            }
+        }
 
     }
 }
