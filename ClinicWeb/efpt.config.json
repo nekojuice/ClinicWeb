@@ -72,6 +72,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[Chat]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[Member_Care]",
          "ObjectType": 0
       },
@@ -180,7 +184,7 @@
          "ObjectType": 0
       }
    ],
-   "UiHint": "desktop-pk4ksal.ClinicSys.dbo",
+   "UiHint": "desktop-mhg6ep7.ClinicSys.dbo",
    "UncountableWords": null,
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": false,

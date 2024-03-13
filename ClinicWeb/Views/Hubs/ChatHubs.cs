@@ -32,10 +32,6 @@ namespace ClinicWeb.Views.Hubs
 
             if (user != null)
             {
-                // 連線ID存入資料庫
-                //user.ConnectionId = Context.ConnectionId;
-                //_context.SaveChanges();
-
                 usersList.Add(new UserInfo
                 {
                     id = user.MemberId,
@@ -85,17 +81,24 @@ namespace ClinicWeb.Views.Hubs
         /// <param name="message"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task SendMessage(string selfID, string message, string sendToID)
+        public async Task SendMessage(string selfname, string message, string sendToID)
         {
+            var Claim = _httpContextAccessor.HttpContext?.User.Claims.ToList();//取使用者資料
+            var userId = Claim?.Where(a => a.Type == "MemberID").First().Value;
+
+
+            var user = _context.MemberMemberList.Find(int.Parse(userId));
+
             var messageContent = new
             {
-                SenderID = selfID,
+                SenderID = user.MemberId,
+                SenderName = selfname,
                 Message = message
             };
 
             if (string.IsNullOrEmpty(sendToID))
             {
-                await Clients.All.SendAsync("UpdContentAll", selfID + " 說: " + message);
+                await Clients.All.SendAsync("UpdContentAll", selfname + " 說: " + message);
             }
             else
             {

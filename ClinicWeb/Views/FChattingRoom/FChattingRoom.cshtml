@@ -4,14 +4,13 @@
 @model MemberMemberList;
 
 
-<h1>線上諮詢</h1>
 
-<h3>歡迎~ <span id="SelfID">@User.Identity.Name</span></h3>
 <section style="background-color: white">
-    <div class="container py-5">
+
+    <div class="container py-5" style="background-color: white; max-width:1300px">
 
         <div class="row">
-
+            <h3>線上諮詢   歡迎~ <span id="SelfID">@User.Identity.Name</span></h3>
             @* <div class="col-md-6 col-lg-5 col-xl-4 mb-4 mb-md-0">
 
                 <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
@@ -30,9 +29,9 @@
 
             </div> *@
 
-            <div class="col-md-6 col-lg-5 col-xl-4 mb-4 mb-md-0">
-
-                <h5 class="font-weight-bold mb-3 text-center text-lg-start">會員</h5>
+            <div style="border: 1px solid 	#0000E3;" class="col-md-6 col-lg-5 col-xl-4 mb-4 mb-md-0">
+                
+                <h5 class="font-weight-bold mb-3 text-center text-lg-start">線上清單</h5>
 
                 <div class="card">
                     <div class="card-body">
@@ -61,38 +60,8 @@
                 </div>
 
             </div>
-            <div class="col-md-6 col-lg-7 col-xl-8">
-                <ul class="list-unstyled" id="messageList" style="max-height: 400px; overflow-y: auto;">
-                    <li class="d-flex justify-content-between mb-4" id="msginsert">
-
-                        <div class="card">
-                            <div class="card-header d-flex justify-content-between p-3">
-                                <p class="fw-bold mb-0">Brad Pitt</p>
-                                <p class="text-muted small mb-0"><i class="far fa-clock"></i> 10 mins ago</p>
-                            </div>
-                            <div class="card-body">
-                                <p class="mb-0" id="msgshow">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                                    labore et dolore magna aliqua.
-                                </p>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="d-flex justify-content-between mb-4">
-
-                        <div class="card">
-                            <div class="card-header d-flex justify-content-between p-3">
-                                <p class="fw-bold mb-0" id="name">Brad Pitt</p>
-                                <p class="text-muted small mb-0" id="time"><i class="far fa-clock"></i> 10 mins ago</p>
-                            </div>
-                            <div class="card-body">
-                                <p class="mb-0" id="msgshow">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                                    labore et dolore magna aliqua.
-                                </p>
-                            </div>
-                        </div>
-                    </li>
+            <div class="col-md-6 col-lg-7 col-xl-8" style="border: 1px solid	#0000E3; max-height:100%">
+                <ul class="list-unstyled" id="messageList" style="max-height: 400px; overflow-y: auto;padding-top:5px; ">
                 </ul>
                 <div class="bg-white mb-3">
                     <div class="mb-3">
@@ -184,7 +153,8 @@
 
         //發送訊息
         connection.on("UpdContentSend", function (data) {
-            var name = data.senderID;
+            console.log(data);
+            var name = data.senderName;
             var msg = data.message;
             // 取得現在的時間
             var currentTime = new Date().toLocaleTimeString();
@@ -267,13 +237,13 @@
         //送出訊息事件
        $('#sendButton').on('click', function () {
             console.log(list);
-            let selfID = $('#SelfID').html();
+            let selfname = $('#SelfID').html();
             let message = $('#message').val();
             let sendToID = list.find(user => user.Name === $('#sendToID').val()).connectionID;
 
             // 檢查訊息是否為空
             if (message.trim() !== '') {
-                connection.invoke("SendMessage", selfID, message, sendToID).then(function () {
+                connection.invoke("SendMessage", selfname, message, sendToID).then(function () {
                     // 清空文本框
                     $('#message').val('');
                 }).catch(function (err) {
@@ -283,58 +253,6 @@
                 alert('訊息不能為空！');
             }
         });
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        function sendMessage() {
-            var msg = document.getElementById("textBig").value.trim();
-
-            if (msg !== '') {
-                // 清空 textarea
-                document.getElementById("textBig").value = '';
-
-                // 創建新的 li 元素
-                var newLi = document.createElement('li');
-                newLi.className = 'd-flex justify-content-between mb-4';
-
-                // 複製卡片內容
-                var cardContent = document.querySelector('#msginsert .card').cloneNode(true);
-                cardContent.querySelector('#msgshow').textContent = msg;
-
-                // 將內容插入新卡片
-                newLi.appendChild(cardContent);
-
-                // 將新卡片插入到列表中
-                var messageList = document.getElementById("messageList");
-                messageList.insertBefore(newLi, messageList.lastChild);
-
-                messageList.scrollTop = messageList.scrollHeight;
-
-                syncToBottomChat(msg);
-            }
-        }
-
-        document.getElementById("textBig").addEventListener("keydown", function (event) {
-            if (event.keyCode === 13) { // 檢查按下的按鍵是否是 Enter（keyCode 13）
-                event.preventDefault();
-                sendMessage();
-                }
-        });
-
-
-
-
-
 
         //右下聊天室
         $(function () {
