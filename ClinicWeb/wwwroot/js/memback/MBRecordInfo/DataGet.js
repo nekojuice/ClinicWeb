@@ -125,7 +125,6 @@ async function getPrescription(id) {
         myModal.show();
         getPrescriptionList(ID);
         console.log(rowData["prescriptionID"]);
-        alert('You clicked on ');
     });
 }
 
