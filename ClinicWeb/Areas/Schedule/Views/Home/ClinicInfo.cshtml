@@ -172,8 +172,8 @@
                 <button type="button" class="btn btn-default" data-dismiss="modal">
                     關閉
                 </button>
-                <button id="ClinicAdd" type="button" class="btn btn-primary">
-                    新增排班
+                <button id="ClinicCreate" type="button" class="btn btn-primary">
+                    新增門診
                 </button>
             </div>
         </div>
@@ -206,6 +206,8 @@
 
     <!--Toastr-->
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <!--sweetalert-->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 }
 
@@ -404,7 +406,42 @@
 
         })();
 
-  
+
+        // 新增門診
+        $('#ClinicCreate').on('click', async function () {
+            const selectedWeek = $('#selweek').val();
+            const selectedDoctor = $('#selDoctorname').val();
+            const selectedShift = $('#selShift').val();
+            const selectedRoom = $('#selRoom').val();
+
+            if (selectedWeek == 'none' || selectedDoctor == 'none' || selectedShift == 'none' || selectedRoom == 'none') {
+                swal("門診新增失敗！", "有選項尚未選擇！", "error", { button: "確定" });
+                return;
+            }
+
+            // 檢查門診是否已存在於資料庫中
+            try {
+                const response = await fetch(`/Schedule/ClinicInfo/AddClinic/${selectedWeek}/${selectedDoctor}/${selectedShift}/${selectedRoom}`);
+                const data = await response.text();
+
+                if (response.ok) {
+                    $('#ClinicAdd').modal('hide')
+                    // 门诊不存在，执行添加操作
+                    swal("門診新增成功！", "已成功新增門診！", "success", { button: "確定" });
+
+                    // 在此处执行任何其他必要的操作，例如关闭模态框或重新加载门诊表
+                } else {
+                    // 门诊已存在或其他错误
+                    swal("門診新增失敗！", "重複新增門診！", "error", { button: "確定" });
+                }
+            } catch (error) {
+                // 捕获可能的网络错误或其他问题
+                console.error('Error:', error);
+                swal("門診新增失敗！", "發生了一些問題！", "error", { button: "確定" });
+            }
+        })
+
+
 
 
 
