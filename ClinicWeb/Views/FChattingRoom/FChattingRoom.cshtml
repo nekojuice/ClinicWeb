@@ -3,7 +3,9 @@
 }
 @model MemberMemberList;
 
-
+@section Styles{
+	<link href="~/msit155e/css/fchattingroom/chatroom.css" rel="stylesheet" asp-append-version="true" />
+}
 
 <section style="background-color: white">
 
@@ -29,10 +31,10 @@
 
             </div> *@
 
-            <div style="border: 1px solid 	#0000E3;" class="col-md-6 col-lg-5 col-xl-4 mb-4 mb-md-0">
+            <div class="col-md-6 col-lg-5 col-xl-4 mb-4 mb-md-0 leftbox">
                 
                 <h5 class="font-weight-bold mb-3 text-center text-lg-start">線上清單</h5>
-
+                <hr />
                 <div class="card">
                     <div class="card-body">
 
@@ -60,7 +62,7 @@
                 </div>
 
             </div>
-            <div class="col-md-6 col-lg-7 col-xl-8" style="border: 1px solid	#0000E3; max-height:100%">
+            <div class="col-md-6 col-lg-7 col-xl-8 rightbox" style="max-height:100%">
                 <ul class="list-unstyled" id="messageList" style="max-height: 400px; overflow-y: auto;padding-top:5px; ">
                 </ul>
                 <div class="bg-white mb-3">
