@@ -317,11 +317,11 @@
         function searchName() {
             const selectedDoctor = $('#selectedDoctorname option:selected').text()
             const table = $('#datatable').DataTable();
-            //alert(selectedDoctor)
+            alert(selectedDoctor)
             if (selectedDoctor === '全部') {
-                table.column(1).search("").draw();
+                table.column(2).search("").draw();
             } else {
-                table.column(1).search(selectedDoctor).draw();
+                table.column(2).search(selectedDoctor).draw();
             }
 
         }
@@ -332,9 +332,9 @@
             const table = $('#datatable').DataTable();
             //alert(selectedShift);
             if (selectedShift === 'allshift') {
-                table.column(2).search("").draw();
+                table.column(3).search("").draw();
             } else {
-                table.column(2).search(selectedShift).draw();
+                table.column(3).search(selectedShift).draw();
             }
 
         }
@@ -345,9 +345,9 @@
             const selectedDep = $(selDep).val();
             const table = $('#datatable').DataTable();
             if (selectedDep === 'alldep') {
-                table.column(3).search("").draw();
+                table.column(4).search("").draw();
             } else {
-                table.column(3).search(selectedDep).draw();
+                table.column(4).search(selectedDep).draw();
             }
         }
 
@@ -357,9 +357,9 @@
             const selectedWeek = $('#selectedWeek option:selected').text();
             const table = $('#datatable').DataTable();
             if (selectedWeek === '全部') {
-                table.column(0).search("").draw();
+                table.column(1).search("").draw();
             } else {
-                table.column(0).search(selectedWeek).draw();
+                table.column(1).search(selectedWeek).draw();
             }
         }
 
