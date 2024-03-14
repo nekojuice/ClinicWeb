@@ -1,4 +1,6 @@
+using ClinicWeb;
 using ClinicWeb.Areas.Identity;
+using ClinicWeb.Controllers;
 using ClinicWeb.Data;
 using ClinicWeb.Hubs;
 using ClinicWeb.Models;
@@ -30,7 +32,7 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
-
+builder.Services.AddSignalR();
 
 //db switcher
 /// 0: nick's db server -- Nick�a���A��
@@ -194,6 +196,16 @@ builder.Services.AddAuthorization(o =>
 //    options.Filters.Add(new AuthorizeFilter());
 //});
 
+// 注册Email功能 要在var app = builder.Build();之前
+builder.Services.AddTransient<IEmailService, EmailService>();
+
+//var sendmail = WebApplication.CreateBuilder(args);
+//var mailserver = builder.Configuration["EmailSettings:MailServer"];
+//var mailport = builder.Configuration["EmailSettings:MailPort"];
+//var sendername = builder.Configuration["EmailSettings:SenderName"];
+//var senderemail = builder.Configuration["EmailSettings:SenderEmail"];
+//var senderpassword = builder.Configuration["EmailSettings:SenderPassword"];
+
 //允許angular4200
 builder.Services.AddCors(options =>
 {
@@ -234,6 +246,7 @@ app.UseCookiePolicy();
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.MapHub<ApptStateHub>("/ApptStateHub");
 app.MapHub<CallingHub>("/CallingHub");
 
 app.MapControllerRoute(
@@ -241,7 +254,7 @@ app.MapControllerRoute(
       pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
     );
 
-
+app.MapHub<ChatHubs>("/chatHub");
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");

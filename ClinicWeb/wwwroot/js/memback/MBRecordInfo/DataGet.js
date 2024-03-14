@@ -1,6 +1,9 @@
 ﻿//獲得主要病歷表資料
-var CASE_ID = 1;
-(() => {
+var CASE_ID;
+(async () => {
+    const response = await fetch(`/MBRecordInfo/Get_Memberdata`, { method: "GET" })
+    const data = await response.json();
+    CASE_ID = data.caseId;
     getRecord(CASE_ID);
     getReport(CASE_ID);
     getPrescription(CASE_ID);
@@ -125,7 +128,6 @@ async function getPrescription(id) {
         myModal.show();
         getPrescriptionList(ID);
         console.log(rowData["prescriptionID"]);
-        alert('You clicked on ');
     });
 }
 
@@ -166,6 +168,7 @@ async function getPrescriptionList(id) {
         }]
     });
     PLDT.rows.add(data).draw();
+}
 
     //PLDT.on('click', 'button', function (e) {
     //    let data = PLDT.row(e.target.closest('tr')).data();
@@ -341,3 +344,7 @@ const loadDetails = async () => {
 
 
 
+    async function getName() {
+        const response = await fetch(`/MBRecordInfo/Get_MemberName`, { method: "GET" })
+        const data = await response.json();
+    }

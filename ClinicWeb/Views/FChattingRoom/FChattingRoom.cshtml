@@ -1,14 +1,19 @@
 ﻿@{
     ViewData["Title"] = "聊天室";
 }
+@model MemberMemberList;
 
+@section Styles{
+	<link href="~/msit155e/css/fchattingroom/chatroom.css" rel="stylesheet" asp-append-version="true" />
+}
 
 <section style="background-color: white">
-    <div class="container py-5">
+
+    <div class="container py-5" style="background-color: white; max-width:1300px">
 
         <div class="row">
-
-            <div class="col-md-6 col-lg-5 col-xl-4 mb-4 mb-md-0">
+            <h3>線上諮詢   歡迎~ <span id="SelfID">@User.Identity.Name</span></h3>
+                <div class="col-md-6 col-lg-5 col-xl-4 mb-4 mb-md-0 leftbox" id="2">
 
                 <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
@@ -25,55 +30,70 @@
                 </div>
 
             </div>
+            <div class="col-md-6 col-lg-5 col-xl-4 mb-4 mb-md-0 leftbox" id="1">
+                
+                <h5 class="font-weight-bold mb-3 text-center text-lg-start">線上清單</h5>
+                <hr />
+                <div class="card">
+                    <div class="card-body">
 
-            <div class="col-md-6 col-lg-7 col-xl-8">
+                        <ul class="list-unstyled mb-0" id="IDList">
+                            @* <li class="p-2 border-bottom" style="background-color: white;">
+                                <a href="#!" class="d-flex justify-content-between">
+                                    <div class="d-flex flex-row">
+                                        <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-8.webp" alt="avatar"
+                                             class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60">
+                                        <div class="pt-1">
+                                            <p class="fw-bold mb-0" id="name">沉沉沉</p>
+                                            <p class="small text-muted" >Hello, Are you there?</p>
+                                        </div>
+                                    </div>
+                                    <div class="pt-1">
+                                        <p class="small text-muted mb-1"  id="time">12.30</p> 
+                                        <span class="badge bg-danger float-end">1</span>
+                                    </div>
+                                </a>
+                            </li> *@
+                            
+                        </ul>
 
-                <ul class="list-unstyled" id="messageList" style="max-height: 400px; overflow-y: auto;">
-                    <li class="d-flex justify-content-between mb-4" id="msginsert">
-
-                        <div class="card">
-                            <div class="card-header d-flex justify-content-between p-3">
-                                <p class="fw-bold mb-0">Brad Pitt</p>
-                                <p class="text-muted small mb-0"><i class="far fa-clock"></i> 10 mins ago</p>
-                            </div>
-                            <div class="card-body">
-                                <p class="mb-0" id="msgshow">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                                    labore et dolore magna aliqua.
-                                </p>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="d-flex justify-content-between mb-4">
-
-                        <div class="card">
-                            <div class="card-header d-flex justify-content-between p-3">
-                                <p class="fw-bold mb-0">Brad Pitt</p>
-                                <p class="text-muted small mb-0"><i class="far fa-clock"></i> 10 mins ago</p>
-                            </div>
-                            <div class="card-body">
-                                <p class="mb-0" id="msgshow">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                                    labore et dolore magna aliqua.
-                                </p>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-                <div class="bg-white mb-3">
-                    <div class="form-outline">
-                        <label class="form-label" for="textAreaExample2">輸入訊息</label>
-                        <textarea class="form-control" id="textBig" rows="4"></textarea>
                     </div>
                 </div>
-                <button type="button" class="btn btn-info btn-rounded float-end">送出</button>
+
+            </div>
+            <div class="col-md-6 col-lg-7 col-xl-8 rightbox" style=" height: 700px;">
+                <div style="height: 400px;">
+                <ul class="list-unstyled" id="messageList" style="max-height: 400px; overflow-y: auto;padding-top:5px; ">
+                </ul>
+                </div>
+                <div class="bg-white mb-3">
+                    <div class="mb-3">
+                        @* <label for="sendToID" class="form-label">指定 ID</label> *@
+                        <input type="text" class="form-control" id="sendToID">
+                    </div>
+                    <div class="form-outline" >
+                        <label class="form-label" for="textAreaExample2">輸入訊息</label>
+                        <input type="text" class="form-control" id="message" rows="4" style="height: 100px; font-size: 18px;">
+                    </div>
+                </div>
+                <label for="fileInput">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none" />
+                        <path d="M21 15v4a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-4H0l8-8 8 8h-3zm-2-7a8.963 8.963 0 0 1-.5 2.998L10 4.414 4.5 10A8.963 8.963 0 0 1 4 8a9 9 0 0 1 18 0c0 1.964-1.79 4.525-3.998 7.998L18 18v1h4a1 1 0 0 1 1 1v2h2v-2a3 3 0 0 0-3-3H2a3 3 0 0 0-3 3v2h2v-2a1 1 0 0 1 1-1h2v-1a7.963 7.963 0 0 1 2-5.002V7h2zm-8 1a6 6 0 0 0-6 6h2a4 4 0 0 1 8 0h2a6 6 0 0 0-6-6zm-1 8h2v-2h-2v2zm0-4h2V9h-2v2z" />
+                    </svg>
+                    選擇檔案
+                </label>
+                <input type="file" id="fileInput" style="display: none;" />
+                <button type="button">&#x1F604;</button>
+                <button type="button" class="btn btn-info btn-rounded float-end" id="sendButton">送出</button>
             </div>
 
         </div>
 
     </div>
 </section>
-<body class="bodyctrl">
+
+@* <body class="bodyctrl">
     <div class="wrapper">
         <div class="chat-box">
             <div class="chat-head">
@@ -88,75 +108,244 @@
             </div>
         </div>
     </div>
-</body>
+</body> *@
 
 
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
 
                 @section Scripts{
-    <link href="~/css/chatroom.css" rel="stylesheet" />
+    @*     <link href="~/css/chatroom.css" rel="stylesheet" /> *@
+   @*  <link href="~/css/chatstyle.css" rel="stylesheet" /> *@
     <script>
-        //大聊天室
-        // document.getElementById("textBig").addEventListener("keydown", function (event) {
-        //     if (event.keyCode === 13) { // 檢查按下的按鍵是否是 Enter（keyCode 13）
-        //         var msg = textarea.value.trim();
+        //美化alert
 
-        //         if (msg !== '') {
-        //             // 清空 textarea
-        //             textarea.value = '';
 
-        //             // 在 .msg-insert 的最前面插入一個包含輸入內容的 div 元素
-        //             var msgDiv = document.createElement('div');
-        //             msgDiv.textContent = msg;
 
-        //             var msgInsert = document.getElementById('msginsert');
-        //             msgInsert.insertBefore(msgDiv, msgInsert.firstChild);
-        //         }
 
-        //         // 防止換行
-        //         event.preventDefault();
-        //     }
-        // });
 
-        function sendMessage() {
-            var msg = document.getElementById("textBig").value.trim();
+        let list;
+        var connection = new signalR.HubConnectionBuilder()
+            .withUrl("/chatHub")
+            .withHubProtocol(new signalR.JsonHubProtocol())
+            .build();
 
-            if (msg !== '') {
-                // 清空 textarea
-                document.getElementById("textBig").value = '';
+            
+        //與Server建立連線
+        connection.start().then(function () {
+            console.log("Hub 連線完成");
+        }).catch(function (err) {
+            alert('連線錯誤: ' + err.toString());
+        });
+      
+        //登入會員的清單
+        connection.on("UpdList", function (jsonList) {
+            list = JSON.parse(jsonList);
+            $("#IDList li").remove();
+            $('#sendToID').hide();
 
-                // 創建新的 li 元素
-                var newLi = document.createElement('li');
-                newLi.className = 'd-flex justify-content-between mb-4';
+            var hasAdmin = false; // 增加一個變數來追蹤是否有管理員
 
-                // 複製卡片內容
-                var cardContent = document.querySelector('#msginsert .card').cloneNode(true);
-                cardContent.querySelector('#msgshow').textContent = msg;
+            for (i = 0; i < list.length; i++) {
+                $("#IDList").append($("<li></li>").attr("class", "list-group-item").attr("onclick", "ccon(this)").text(list[i].Name));
 
-                // 將內容插入新卡片
-                newLi.appendChild(cardContent);
-
-                // 將新卡片插入到列表中
-                var messageList = document.getElementById("messageList");
-                messageList.insertBefore(newLi, messageList.lastChild);
-
-                messageList.scrollTop = messageList.scrollHeight;
-
-                syncToBottomChat(msg);
+                // 檢查是否有管理員
+                if (list[i].Name === "管理員") {
+                    hasAdmin = true;
+                }
             }
+
+            // 如果IDList中不包含管理員，顯示提示訊息
+            // if (!hasAdmin) {
+            //     alert("目前沒有客服人員請稍待片刻");
+            // } else {
+            //     alert("請輸入想諮詢的問題，專人會幫您服務");
+            // }
+            var selfIDText = $("#SelfID").text().trim();
+            if (selfIDText !== "管理員") {
+                if (!hasAdmin) {
+                    alert("目前沒有客服人員請稍待片刻");
+
+                } else {
+                    alert("請輸入想諮詢的問題，專人會幫您服務");
+ 
+                }
+            } 
+
+
+            var selfIDText = $("#SelfID").text().trim();
+            if (selfIDText !== "管理員") {
+                // 設定#sendToID的值為"管理員"
+                $('#sendToID').val("管理員");
+            } else {
+                // 否則，設定#sendToID的值為所點擊元素的文字內容
+                $('#sendToID').val($(element).text());
+            }
+        });
+
+        
+
+        function ccon(element) {
+            var selfIDText = $("#SelfID").text().trim();
+            if (selfIDText !== "管理員") {
+                $("#messageList").empty();
+            }
+            $('#sendToID').val($(element).text());
+            // $("#messageList").empty();
         }
 
-        document.getElementById("textBig").addEventListener("keydown", function (event) {
-            if (event.keyCode === 13) { // 檢查按下的按鍵是否是 Enter（keyCode 13）
-                event.preventDefault();
-                sendMessage();
-                
-            }
+ 
+
+        //控制登入使用者看到的畫面
+        
+        var userName = document.getElementById("SelfID").innerText;
+        var leftbox1 = document.getElementById("1");
+        var leftbox2 = document.getElementById("2");
+        console.log(userName);
+
+       
+        if (userName === "管理員") {
+            leftbox1.style.display = "block"; 
+            leftbox2.style.display = "none";
+        } else {
+            leftbox1.style.display = "none"; 
+            leftbox2.style.display = "block";  
+        }
+
+
+
+
+
+
+        // 更新聊天內容事件
+        connection.on("UpdContent", function (msg) {
+            // 創建一個新的列表項目，並使用style屬性增加空白
+            var listItem = $("<li></li>").attr("class", "list-group-item").text(msg).css("margin-bottom", "25px");
+
+            // 將列表項目添加到 #messageList
+            $("#messageList").append(listItem);
+
+            // 滾動到列表底部
+            var messageList = document.getElementById("messageList");
+            messageList.scrollTop = messageList.scrollHeight;
+        });
+
+
+        //發送訊息
+        connection.on("UpdContentSend", function (data) {
+            console.log(data);
+            var name = data.senderName;
+            var msg = data.message;
+            // 取得現在的時間
+            var currentTime = new Date().toLocaleTimeString();
+
+            // 生成新的列表項目
+            var listItem = $("<li></li>").addClass("d-flex justify-content-between mb-4");
+
+            // 生成卡片元素
+            var card = $("<div></div>").addClass("card");
+
+            // 卡片標題（name）
+            var nameParagraph = $("<p></p>").addClass("fw-bold mb-0").attr("id", "name").text(name).css("margin-right", "20px");
+
+            // 時間（time）
+            var timeParagraph = $("<p></p>").addClass("text-muted small mb-0").attr("id", "time")
+                .html("<i class='far fa-clock'></i> " + currentTime);
+
+            // 卡片主體內容（msgshow）
+            var msgParagraph = $("<p></p>").addClass("mb-0").attr("id", "msgshow").text(msg);
+
+            // 將元素組裝起來
+            card.append($("<div></div>").addClass("card-header d-flex justify-content-between p-3")
+                .append(nameParagraph).append(timeParagraph));
+            card.append($("<div></div>").addClass("card-body").append(msgParagraph));
+            listItem.append(card);
+
+            // 將新的列表項目添加到 messageList 中
+            $("#messageList").append(listItem);
+
+            // 滾動到底部
+            var messageList = document.getElementById("messageList");
+            messageList.scrollTop = messageList.scrollHeight;
+
+            // 可選：在此處調用其他需要的函式（例如 syncToBottomChat）
+        });
+
+
+        //接收訊息
+        connection.on("UpdContentCatch", function (data) {
+            console.log(data);
+            var name = data.senderName;
+            var msg = data.message;
+            // 取得現在的時間
+            var currentTime = new Date().toLocaleTimeString();
+
+            // 生成新的列表項目
+            var listItem = $("<li></li>").addClass("d-flex justify-content-end mb-4");
+
+            // 生成卡片元素
+            var card = $("<div></div>").addClass("card");
+
+            // 卡片標題（name）
+            var nameParagraph = $("<p></p>").addClass("fw-bold mb-0").attr("id", "name").text(name).css("margin-right", "20px");
+
+            // 時間（time）
+            var timeParagraph = $("<p></p>").addClass("text-muted small mb-0").attr("id", "time")
+                .html("<i class='far fa-clock'></i> " + currentTime);
+
+            // 卡片主體內容（msgshow）
+            var msgParagraph = $("<p></p>").addClass("mb-0").attr("id", "msgshow").text(msg);
+
+            // 調整元素位置
+            card.append($("<div></div>").addClass("card-header d-flex justify-content-end p-3")
+                .append(nameParagraph).append(timeParagraph));
+            card.append($("<div></div>").addClass("card-body text-end").append(msgParagraph));
+            listItem.append(card);
+
+            // 將新的列表項目添加到 messageList 中
+            $("#messageList").append(listItem);
+
+            // 滾動到底部
+            var messageList = document.getElementById("messageList");
+            messageList.scrollTop = messageList.scrollHeight;
+
+            // 可選：在此處調用其他需要的函式（例如 syncToBottomChat）
         });
 
 
 
 
+        //送出訊息事件
+       $('#sendButton').on('click', function () {
+            console.log(list);
+            let selfname = $('#SelfID').html();
+            let message = $('#message').val();
+            let sendToID = $('#sendToID').val();
 
+            // 檢查 SENDID 是否為空
+            if (sendToID.trim() === '') {
+                alert('請選擇一位會員！');
+                return;
+            }
+
+            // 查找對應的 connectionID
+            sendToID = list.find(user => user.Name === sendToID)?.connectionID;
+
+            // 檢查訊息是否為空
+            if (message.trim() !== '') {
+                connection.invoke("SendMessage", selfname, message, sendToID).then(function () {
+                    // 清空文本框
+                    $('#message').val('');
+                }).catch(function (err) {
+                    alert('傳送錯誤: ' + err.toString());
+                });
+            } else {
+                alert('訊息不能為空！');
+            }
+        });
+
+        
 
         //右下聊天室
         $(function () {
@@ -165,7 +354,7 @@
             var chatBody = $('.chat-body'); // 聊天區塊元素
 
             // 初始化時隱藏聊天區塊
-            chatBody.fadeOut('fast');
+             chatBody.fadeOut('fast');
             arrow.on('click', function () {
                 var src = arrow.attr('src');
 
@@ -183,39 +372,13 @@
                 // 檢查點擊事件的目標是否是 .chat-head 或 .chat-body 的子元素
                 if (!$(event.target).closest('.chat-head, .chat-body').length) {
                     // 隱藏聊天區塊
-                    chatBody.fadeOut('fast');
+                     chatBody.fadeOut('fast');
 
                     // 將箭頭設置為向下的圖片
                     arrow.attr('src', 'https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_down-16.png');
                 }
             });
 
-            // 同步到右下方聊天窗口
-            function syncToBottomChat(msg) {
-                var currentTime = new Date();
-                var hours = currentTime.getHours();
-                var minutes = currentTime.getMinutes();
-                var amOrPm = hours >= 12 ? '下午' : '上午';
-                hours = hours % 12;
-                hours = hours ? hours : 12; // 將 0 轉換為 12
-                var formattedTime = amOrPm + '  ' + hours + ':' + (minutes < 10 ? '0' : '') + minutes;
-
-                // 在 .msg-insert 的最前面插入一個包含輸入內容的 div 元素
-                var msgDiv = document.createElement('div');
-                msgDiv.className = 'msg-send';
-                msgDiv.textContent = msg;
-
-                // 建立包含時間的 div 元素
-                var timeDiv = document.createElement('div');
-                timeDiv.className = 'msg-time';
-                timeDiv.textContent = formattedTime;
-
-                var msgInsert = document.querySelector('.msg-insert');
-                msgInsert.appendChild(timeDiv, msgInsert.lastChild);
-                msgInsert.appendChild(msgDiv, msgInsert.lastChild);
-
-                msgInsert.scrollTop = msgInsert.scrollHeight;
-            }
 
             var textarea = document.getElementById('text'); // 將 'yourTextareaId' 替換成實際的 textarea 元素的 id
 

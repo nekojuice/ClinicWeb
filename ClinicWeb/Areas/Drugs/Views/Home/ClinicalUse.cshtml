@@ -1,4 +1,6 @@
-﻿@{
+﻿@model PharmacyTClinicalUseList
+
+@{
     ViewData["Title"] = "藥師管理系統";
 }
 
@@ -29,25 +31,42 @@
             <ul class="nav navbar-right panel_toolbox">
                 <li>
                     <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">Settings 1</a>
-                        <a class="dropdown-item" href="#">Settings 2</a>
-                    </div>
-                </li>
+                </li>               
                 <li>
                     <a class="close-link"><i class="fa fa-close"></i></a>
                 </li>
             </ul>
             <div class="clearfix"></div>
         </div>
-        @* 如果要加搜尋選項放這裡 *@
+        <!--新增按鈕的排版-->
+        <div class="mb-6" style="overflow: auto">
+            <div class="col-md-6">
+                <label class="form-label"> </label>
+                <button id="newClinicalUsebtn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#ClinicalUseCreate">新增適應症</button>
+            </div>
+        </div>
+        <!--新增畫面的內容-->
+        <div class="modal fade" id="ClinicalUseCreate" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <partial name="~/Areas/Drugs/Views/Partial/_ClinicalUseCreatePartial.cshtml" />
+                </div>
+            </div>
+        </div>
+        <!--如果要加搜尋選項放這裡-->        
         <div class="x_content">
             <div class="row">
                 <div class="col-sm-12">
                     <div class="card-box table-responsive">
+                        <!--編輯畫面的內容-->
+                        <div class="modal fade" id="ClinicalUseEdit" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content" id="divEditInfo">
+                                    <partial name="~/Areas/Drugs/Views/Partial/_ClinicalUseEditPartial.cshtml" />
+                                </div>
+                            </div>
+                        </div>
+
                         <table id="dtCU" class="table table-striped table-bordered" style="width:100%">
                             <thead>
                                 <tr>
@@ -67,16 +86,9 @@
     </div>
 </div>
 @* 沒有用到model暫時保留 *@
-<div class="row">
-   
+@* <div class="row">   
     <div class="col-md-10">
-        <form asp-area="Drugs" asp-controller="DrugsApi" asp-action="Details">
-            @* <div class="form-group">
-                <label asp-for="FTypeCode" class="control-label"> 劑型代碼 </label>
-                <input asp-for="FTypeCode" class="form-control" id="fTypeCode" />
-                <label asp-for="FType" class="control-label"> 劑型名稱 </label>
-                <input asp-for="FType" class="form-control" id="fType" />
-            </div> *@
+        <form asp-area="Drugs" asp-controller="DrugsApi" asp-action="Details">           
             <div class="form-group">
                 <label class="control-label"> 適應症代碼 </label>
                 <input class="form-control" id="fClinicalUseCode" />
@@ -86,52 +98,10 @@
         </form>
     </div>
    
-</div>
+</div> *@
 
-@section Scripts {
-        
 
-    <script>                        
-        $(document).ready(function () {
-            //alert("CUList");
-            $('#dtCU').dataTable({
-                
-                ajax: {
-                    type: 'GET',
-                    url: (`/Drugs/DrugsApi/ClinicalUseInfo`),
-                    dataSrc: function (json) { return json; }
-                },
-                destroy: true,
-                columns: [
-                    { "data": "id", "visible": false },
-                    { "data": "適應症代碼", "width": "20%" },
-                    { "data": "適應症名稱", "width": "60%" },
-                    {
-                        "data": null, title: "操作功能", "width": "20%",
-                        render: function (data, type, row) {
-                            return '<button type="button" name="Editor" class="btn btn-warning btn-sm"> 編輯 </button>'
-                        },
-                    }
-                ],
-                fixedHeader: {
-                    header: true
-                },
-                language: {
-                    url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/zh-HANT.json'
-                }
-            });
-        })
-        const CUCode = document.getElementById('fClinicalUseCode');
-        const CU = document.getElementById('fClinicalUse');
-        $(document).on('click', 'button[name=Editor]', function () {
-            var table = $('#dtCU').DataTable();
-            var tr = $(this).closest('tr');
-            var data = table.row(tr).data();
-            CUCode.value = data.適應症代碼;
-            CU.value = data.適應症名稱;
-        })
-    </script>
-}
+
 
 @section Modules
 {
@@ -155,3 +125,158 @@
     <script src="~/vendors/pdfmake/build/vfs_fonts.js"></script>
 
 }
+
+@section Scripts {
+
+    @{
+        await Html.RenderPartialAsync("~/Views/Shared/_ValidationScriptsPartial.cshtml");
+    }
+    <script>
+        //進入畫面時或新增刪出修改完畢，載入DB中適應症的資料
+        function QueryClinicalUseInfo(){
+            //alert("CUList");
+            $('#dtCU').dataTable({
+
+                ajax: {
+                    type: 'GET',
+                    url: (`/Drugs/DrugsApi/ClinicalUseInfo`),
+                    dataSrc: function (json) { return json; }
+                },
+                destroy: true,
+                columns: [
+                    { "data": "id", "visible": false },
+                    { "data": "適應症代碼", "width": "20%" },
+                    { "data": "適應症名稱", "width": "60%" },
+                    {
+                        "data": null, title: "操作功能", "width": "20%",
+                        render: function (data, type, row) {
+                            return '<button type="button" name="Editor" data-id="'+row.id+'" class="btn btn-warning btn-sm"> 編輯 </button>'+
+                                   '<button type="button"  name="Delete" class="btn btn-danger btn-sm"> 刪除 </button>'
+                        },
+                    }
+                ],
+                fixedHeader: {
+                    header: true
+                },
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/zh-HANT.json'
+                }
+            });
+
+        }
+        QueryClinicalUseInfo();
+        
+        //修改適應症按鈕-->彈出 modal
+        $(document).on('click', 'button[name=Editor]', function () {
+            var id = $(this).data('id');
+            console.log(id);
+            //AJAX讀選取到的DB
+            $.ajax({
+                type: 'GET',
+                url: '/Drugs/DrugsApi/EditClinicalUse/'+id,
+                //dataType: 'json',
+                success: function (data) {
+                    //成功拿到的話將資料代入modal中
+                    $('#ClinicalUseEdit .modal-content').html(data);
+                    //顯示modal視窗
+                    $('#ClinicalUseEdit').modal('show');
+                },
+                error: function (error) {
+                    console.log('Error fetching data:', error);
+                }
+
+            });
+        });
+        //保存按鈕
+        const btnEdit = document.querySelector('#editSaveButton');
+        $(document).on('click', '#editSaveButton', async (event) => {
+            event.preventDefault();
+            const id = $('#FIdClinicalUse').val();
+            const formData = new FormData($('#form_ClinicalUseEdit')[0]);
+            const urlEdit = `/Drugs/DrugsApi/EditClinicalUse/${id}`;
+            try {
+                const response = await fetch(urlEdit, {
+                    "method": "POST",
+                    "body": formData
+                });
+                if (response.ok) {
+                    alert('修改成功'); 
+                    QueryClinicalUseInfo();
+                    $('#ClinicalUseEdit').modal('hide');
+                   
+                } else {
+                    console.error('Update failed, status code:', response.status);
+                    const errorData = await response.json();
+                    console.error('修改失敗，狀態碼：', response.status);
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        })
+
+       
+
+
+        //保存按鈕
+        // const btnEdit = document.querySelector('#editSaveButton');
+        // btnEdit.addEventListener('click', async (event)=> {
+        //     event.preventDefault();
+        //     alert('editSaveButton');
+        // })
+
+
+        // //帶入指向的資料在畫面上
+        // const CUCode = document.getElementById('fClinicalUseCode');
+        // const CU = document.getElementById('fClinicalUse');
+        // $(document).on('click', 'button[name=Editor]', function () {
+        //     var table = $('#dtCU').DataTable();
+        //     var tr = $(this).closest('tr');
+        //     var data = table.row(tr).data();
+        //     CUCode.value = data.適應症代碼;
+        //     CU.value = data.適應症名稱;
+        // })
+
+        //新增適應症按鈕
+        
+        const btnSubmit = document.querySelector('#saveButton');        
+        
+        
+        btnSubmit.addEventListener('click', async (event)=> {
+            console.log(btnSubmit); //測始有無抓到按鈕;
+            //alert('儲存');
+            event.preventDefault(); //停止預設行為
+            
+            //FormData
+            const formData = new FormData(document.querySelector('#ClinicalUseForm'));
+           
+            //測試是否有抓取Form上的值
+            for(const pair of formData.entries()){
+                console.log(pair[0]);
+                console.log(pair[1]);
+            }
+            const url='@Url.Content("~/Drugs/DrugsApi/ClinicalUseCreate")';
+            const response = await fetch(url, {
+                "method": "POST",
+                "body": formData
+            });
+            const data = await response.text();
+            //console.log(data); --> <html>內容
+            clearForm();
+            addModalClose();
+            alert('新增成功');
+            
+            QueryClinicalUseInfo();
+        })
+        
+        //新增按鈕按下後會清空modal內容
+        function clearForm() {
+            document.getElementById('ClinicalUseForm').reset();
+        }
+        
+        //新增按鈕按下後關閉modal視窗
+        function addModalClose() {
+            $('#ClinicalUseCreate').modal('hide');
+        }
+    </script>
+}
+

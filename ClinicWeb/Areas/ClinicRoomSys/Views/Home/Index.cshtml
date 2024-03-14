@@ -51,6 +51,9 @@
         const URL_Get_EmpId = '@Url.Content("~/ClinicRoomSys/CallingSys/Get_EmpId")';
         const Get_EmpInfo = '@Url.Content("~/ClinicRoomSys/CallingSys/Get_EmpInfo")';
 
+        const URL_Put_JunpState = '@Url.Content("~/ClinicRoomSys/CallingSys/Put_JunpState")';
+        const URL_Put_PatientState = '@Url.Content("~/ClinicRoomSys/CallingSys/Put_PatientState")';
+
         //撈取狀態: 員工id
         (async () => {
             const response = await fetch('@Url.Content("~/ClinicRoomSys/CallingSys/Get_EmpId")', { method: 'POST' });

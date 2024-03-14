@@ -23,7 +23,15 @@
         </thead>
         <tbody>
           <tr *ngFor="let _ of clinicDataArray;let i = index">
-            <td *ngFor="let data of getClinicDataDetail(i)"><div class="cal-div cal-td">{{getShiftDetail(i)}}<br /><button (click)="goAppt(data.clinicInfoId)" *ngIf="data.limit">{{data.count}}/{{data.limit}}</button></div></td>
+            <td *ngFor="let data of getClinicDataDetail(i)">
+              <div class="cal-div cal-td">
+                {{getShiftDetail(i)}}<br />
+                <button (click)="goAppt(data)" *ngIf="data.count < data.limit && !data.isAppted">{{data.count}}/{{data.limit}}</button>
+                <span *ngIf="data.count >= data.limit" style="color:red">已額滿</span>
+                <br *ngIf="data.isAppted"/>
+                <span *ngIf="data.isAppted" style="color:red">已預約</span>
+              </div>
+            </td>
           </tr>
         </tbody>
       </table>

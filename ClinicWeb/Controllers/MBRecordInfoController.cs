@@ -1,14 +1,16 @@
 ﻿using ClinicWeb.Areas.Drugs.Controllers;
 using ClinicWeb.Models;
 using ClinicWeb.ViewModels;
+using System.Collections;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using System.Collections;
-using System.Collections.Generic;
 
 namespace ClinicWeb.Controllers
 {
+    [Authorize(Policy = "frontendpolicy")]
     public class MBRecordInfoController : Controller
     {
         private readonly ClinicSysContext _context;
@@ -20,6 +22,32 @@ namespace ClinicWeb.Controllers
         {
             return View();
         }
+        public IActionResult Get_MemberName()
+        {
+            var user = HttpContext.User;
+            var MemberName = user.Claims.FirstOrDefault(c => c.Type == "MemberName")?.Value;
+            if(!MemberName.IsNullOrEmpty())
+            {
+                return Json(MemberName);
+            }
+            
+            return View();
+        }
+        public IActionResult Get_Memberdata()
+        {
+            var user = HttpContext.User;
+            var MemberID = user.Claims.FirstOrDefault(c => c.Type == "MemberID")?.Value;
+
+            if (!MemberID.ToString().IsNullOrEmpty())
+            {
+                return Json(_context.CasesMainCase
+                    .Where(x => x.MemberId == Convert.ToInt32(MemberID))
+                    .FirstOrDefault(x => x.CaseId != null)
+                    );
+            }
+            return View();
+        }
+        
         public JsonResult GRD(string id) //GETRECORD
         {
             return Json(_context.CasesMedicalRecords

@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 
+
+
 namespace ClinicWeb.Areas.Employee.Controllers
 {
 
@@ -44,22 +46,18 @@ namespace ClinicWeb.Areas.Employee.Controllers
         [HttpPost]
         public IActionResult LoginForStaff(MemberEmployeeList e)
         {
-            var user = (from a in _context.MemberEmployeeList
-                        where a.StaffNumber == e.StaffNumber
-                        && a.EmpPassword == e.EmpPassword
-                        select a).SingleOrDefault();
+            // 根據StaffNumber找人
+            var user = _context.MemberEmployeeList
+                               .SingleOrDefault(a => a.StaffNumber == e.StaffNumber);
 
-			//if (user == null)
-			//{
-			//    return Content("帳號密碼錯誤");
-			//}
-			if (user == null)
-			{
-				ViewData["ErrorMessage"] = "帳號密碼輸入有誤";
-				return View("~/Areas/Employee/Views/Main/Login/Login.cshtml");
-			}
-			
-			else
+            // 比密碼
+            if (user == null || !BCrypt.Net.BCrypt.Verify(e.EmpPassword, user.EmpPassword))
+            {
+                ViewData["ErrorMessage"] = "帳號密碼輸入有誤";
+                return View("~/Areas/Employee/Views/Main/Login/Login.cshtml");
+            }
+
+            else
             {
                 //這邊等等寫驗證加角色
                 var claims = new List<Claim>
