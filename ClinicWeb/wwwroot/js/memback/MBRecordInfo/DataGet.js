@@ -3,7 +3,10 @@ var CASE_ID;
 (async () => {
     const response = await fetch(`/MBRecordInfo/Get_Memberdata`, { method: "GET" })
     const data = await response.json();
+    const nameresponse = await fetch(`/MBRecordInfo/Get_MemberName`, { method: "GET" })
+    const namedata = await nameresponse.json();
     CASE_ID = data.caseId;
+    console.log(namedata);
     getRecord(CASE_ID);
     getReport(CASE_ID);
     getPrescription(CASE_ID);
@@ -180,6 +183,5 @@ async function getPrescriptionList(id) {
         //});
     });
     async function getName() {
-        const response = await fetch(`/MBRecordInfo/Get_MemberName`, { method: "GET" })
-        const data = await response.json();
+
     }
