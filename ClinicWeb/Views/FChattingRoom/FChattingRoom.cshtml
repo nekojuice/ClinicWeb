@@ -119,6 +119,12 @@
     @*     <link href="~/css/chatroom.css" rel="stylesheet" /> *@
    @*  <link href="~/css/chatstyle.css" rel="stylesheet" /> *@
     <script>
+        //美化alert
+
+
+
+
+
         let list;
         var connection = new signalR.HubConnectionBuilder()
             .withUrl("/chatHub")
@@ -132,27 +138,8 @@
         }).catch(function (err) {
             alert('連線錯誤: ' + err.toString());
         });
-        // connection.on("UpdList", function (jsonList) {
-        //     list = JSON.parse(jsonList);
-        //     $("#IDList li").remove();
-        //     $('#sendToID').hide();
-        //     for (i = 0; i < list.length; i++) {
-        //         $("#IDList").append($("<li></li>").attr("class", "list-group-item").attr("onclick", "ccon(this)").text(list[i].Name));
-        //     }
-        //     var selfIDText = $("#SelfID").text().trim();
-        //     if (selfIDText !== "管理員") {
-        //         // 設定#sendToID的值為"管理員"
-        //         $('#sendToID').val("管理員");
-        //     } else {
-        //         // 否則，設定#sendToID的值為所點擊元素的文字內容
-        //         $('#sendToID').val($(element).text());
-        //     }
-        // });
-        // function ccon(element) {
-        //     $('#sendToID').val($(element).text());
-        //     $("#messageList").empty();
-        // }
-
+      
+        //登入會員的清單
         connection.on("UpdList", function (jsonList) {
             list = JSON.parse(jsonList);
             $("#IDList li").remove();
@@ -170,11 +157,22 @@
             }
 
             // 如果IDList中不包含管理員，顯示提示訊息
-            if (!hasAdmin) {
-                alert("目前沒有客服人員請稍待片刻");
-            } else {
-                alert("請輸入想諮詢的問題，專人會幫您服務");
-            }
+            // if (!hasAdmin) {
+            //     alert("目前沒有客服人員請稍待片刻");
+            // } else {
+            //     alert("請輸入想諮詢的問題，專人會幫您服務");
+            // }
+            var selfIDText = $("#SelfID").text().trim();
+            if (selfIDText !== "管理員") {
+                if (!hasAdmin) {
+                    alert("目前沒有客服人員請稍待片刻");
+
+                } else {
+                    alert("請輸入想諮詢的問題，專人會幫您服務");
+ 
+                }
+            } 
+
 
             var selfIDText = $("#SelfID").text().trim();
             if (selfIDText !== "管理員") {
@@ -186,9 +184,15 @@
             }
         });
 
+        
+
         function ccon(element) {
+            var selfIDText = $("#SelfID").text().trim();
+            if (selfIDText !== "管理員") {
+                $("#messageList").empty();
+            }
             $('#sendToID').val($(element).text());
-            $("#messageList").empty();
+            // $("#messageList").empty();
         }
 
  
@@ -213,10 +217,6 @@
 
 
 
-        // 更新用戶個人連線 ID 事件
-        // connection.on("UpdSelfID", function (id) {
-        //     $('#SelfID').html(id);
-        // });
 
         // 更新聊天內容事件
         connection.on("UpdContent", function (msg) {
