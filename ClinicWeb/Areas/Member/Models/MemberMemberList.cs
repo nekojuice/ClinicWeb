@@ -18,32 +18,32 @@ public partial class MemberMemberList
     [Column("Member_Number")]
     public int MemberNumber { get; set; }
 
-
+    [Required]
     [StringLength(50)]
     public string Name { get; set; }
 
     public bool? Gender { get; set; }
 
-  
+    [Required]
     [Column("Blood_Type")]
     [StringLength(50)]
     public string BloodType { get; set; }
 
-
+    [Required]
     [Column("National_ID")]
     [StringLength(50)]
     public string NationalId { get; set; }
 
-
+    [Required]
     [StringLength(50)]
     public string Address { get; set; }
 
- 
+    [Required]
     [Column("Contact_Address")]
     [StringLength(50)]
     public string ContactAddress { get; set; }
 
-   
+    [Required]
     [StringLength(50)]
     public string Phone { get; set; }
 
@@ -63,10 +63,18 @@ public partial class MemberMemberList
     public string MemPassword { get; set; }
 
     [Column("Mem_Email")]
-    //[StringLength(50)]
+    [StringLength(50)]
     public string MemEmail { get; set; }
 
     public bool? Verification { get; set; }
+
+    [StringLength(50)]
+    public string ActivateToken { get; set; }
+
+    public byte[] MemPhoto { get; set; }
+
+    [StringLength(50)]
+    public string GoogleSub { get; set; }
 
     [InverseProperty("Member")]
     public virtual ICollection<CasesNewBornList> CasesNewBornList { get; set; } = new List<CasesNewBornList>();

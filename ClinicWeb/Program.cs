@@ -1,4 +1,6 @@
+using ClinicWeb;
 using ClinicWeb.Areas.Identity;
+using ClinicWeb.Controllers;
 using ClinicWeb.Data;
 using ClinicWeb.Hubs;
 using ClinicWeb.Models;
@@ -193,6 +195,16 @@ builder.Services.AddAuthorization(o =>
 //{
 //    options.Filters.Add(new AuthorizeFilter());
 //});
+
+// 注册Email功能 要在var app = builder.Build();之前
+builder.Services.AddTransient<IEmailService, EmailService>();
+
+//var sendmail = WebApplication.CreateBuilder(args);
+//var mailserver = builder.Configuration["EmailSettings:MailServer"];
+//var mailport = builder.Configuration["EmailSettings:MailPort"];
+//var sendername = builder.Configuration["EmailSettings:SenderName"];
+//var senderemail = builder.Configuration["EmailSettings:SenderEmail"];
+//var senderpassword = builder.Configuration["EmailSettings:SenderPassword"];
 
 //允許angular4200
 builder.Services.AddCors(options =>

@@ -1,13 +1,17 @@
-﻿@model MemberMemberList
+﻿@* @model  MemberMemberList *@
+@model ClinicWeb.Areas.Member.Models.MemberMemberList
 
-<link href="~/msit155e/css/MemberLogin/MemberLogin.css" rel="stylesheet">
 
+@section Styles{
+    <link href="~/msit155e/css/MemberLogin/MemberLogin.css" rel="stylesheet">
+}
 
 
 <!------ Include the above in your HEAD tag ---------->
 
 <!--輪播區-->
 <div class="container">
+    <partial name="_SweetAlertPartial" />
     <div class="row">
         <!-- 輪播圖 -->
         <div class="col-md-6">
@@ -92,7 +96,7 @@
                                             </div>
                                           
                                             <div class="text-center">
-                                                <a href="https://phpoll.com/recover" tabindex="5" class="forgot-password">忘記密碼?</a>
+                                                <a asp-controller="ForgotPassword" asp-action="ForgotPasswordIndex" class="forgot-password">忘記密碼?</a>
                                             </div>
                                             <div class="text-center">
                                                 <a asp-controller="ClientPage" asp-action="Register" class="forgot-password">還不是會員? 前往註冊</a>
@@ -113,9 +117,25 @@
 </div>
 
 
-@section Scripts
-{
-    @if (TempData["Msg"] != null)
+@* @section Scripts
+{ *@
+
+
+   @*  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script> *@
+   @*  @if (TempData["Error"] != null)
+    {
+        <script>
+            swal.fire({
+                position: "center",
+                icon: "error",
+                title: "@TempData["Error"]",
+                showComfirmButton: true,
+               
+            });
+        </script>
+    } *@
+
+   @*  @if (TempData["Msg"] != null)
     {
         <script type="text/javascript">
             
@@ -127,8 +147,8 @@
         <script type="text/javascript">
             alert("@Html.Raw(TempData["RegisterPrompt"])");
         </script>
-    }
+    } *@
 
 
-}
+@* } *@
 
