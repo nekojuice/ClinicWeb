@@ -190,9 +190,9 @@ public partial class ClinicSysContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Cases_Medical_Records_Cases_MainCase");
 
-            entity.HasOne(d => d.Clinic).WithMany(p => p.CasesMedicalRecords)
+            entity.HasOne(d => d.ClinicList).WithMany(p => p.CasesMedicalRecords)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Cases_Medical_Records_Schedule_ClinicInfo");
+                .HasConstraintName("FK_Cases_Medical_Records_Appt_ClinicList");
         });
 
         modelBuilder.Entity<CasesNewBornList>(entity =>

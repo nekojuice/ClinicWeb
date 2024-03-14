@@ -39,7 +39,61 @@ namespace ClinicWeb.Areas.Identity
 
             if (controller.RouteValues.Any()
                 && controller.RouteValues.TryGetValue("area", out apiArea)
-                && apiArea.Equals("Appointment"))
+                && apiArea.Equals("Attend"))
+            {
+                controller.Filters.Add(new AuthorizeFilter("backendpolicy"));
+            }
+            if (controller.RouteValues.Any()
+                && controller.RouteValues.TryGetValue("area", out apiArea)
+                && apiArea.Equals("Cases"))
+            {
+                controller.Filters.Add(new AuthorizeFilter("backendpolicy"));
+            }
+            if (controller.RouteValues.Any()
+                && controller.RouteValues.TryGetValue("area", out apiArea)
+                && apiArea.Equals("Chatroom"))
+            {
+                controller.Filters.Add(new AuthorizeFilter("backendpolicy"));
+            }
+
+            if (controller.RouteValues.Any()
+                && controller.RouteValues.TryGetValue("area", out apiArea)
+                && apiArea.Equals("ClinicRoomSys"))
+            {
+                controller.Filters.Add(new AuthorizeFilter("backendpolicy"));
+            }
+
+            if (controller.RouteValues.Any()
+                && controller.RouteValues.TryGetValue("area", out apiArea)
+                && apiArea.Equals("Drugs"))
+            {
+                controller.Filters.Add(new AuthorizeFilter("backendpolicy"));
+            }
+
+            if (controller.RouteValues.Any()
+                && controller.RouteValues.TryGetValue("area", out apiArea)
+                && apiArea.Equals("Employee"))
+            {
+                controller.Filters.Add(new AuthorizeFilter("backendpolicy"));
+            }
+
+            if (controller.RouteValues.Any()
+                && controller.RouteValues.TryGetValue("area", out apiArea)
+                && apiArea.Equals("Member"))
+            {
+                controller.Filters.Add(new AuthorizeFilter("backendpolicy"));
+            }
+
+            if (controller.RouteValues.Any()
+                && controller.RouteValues.TryGetValue("area", out apiArea)
+                && apiArea.Equals("Room"))
+            {
+                controller.Filters.Add(new AuthorizeFilter("backendpolicy"));
+            }
+
+            if (controller.RouteValues.Any()
+                && controller.RouteValues.TryGetValue("area", out apiArea)
+                && apiArea.Equals("Schedule"))
             {
                 controller.Filters.Add(new AuthorizeFilter("backendpolicy"));
             }

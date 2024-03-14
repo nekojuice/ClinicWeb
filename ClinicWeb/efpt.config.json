@@ -7,7 +7,7 @@
    "IncludeConnectionString": false,
    "ModelNamespace": null,
    "OutputContextPath": null,
-   "OutputPath": "Areas\/Member\/Models",
+   "OutputPath": "Areas\/Room\/Models\/",
    "PreserveCasingWithRegex": true,
    "ProjectRootNamespace": "ClinicWeb",
    "Schemas": null,
@@ -16,11 +16,7 @@
    "T4TemplatePath": null,
    "Tables": [
       {
-         "Name": "[dbo].[Cases_NewBornList]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[Member_Care]",
+         "Name": "[dbo].[Appointment_Room_Schedule]",
          "ObjectType": 0
       },
       {
@@ -30,9 +26,17 @@
       {
          "Name": "[dbo].[Member_MemberList]",
          "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[RoomList]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[RoomTypeList]",
+         "ObjectType": 0
       }
    ],
-   "UiHint": "laptop-pgmmepo1\\sqlexpress.ClinicSys.dbo",
+   "UiHint": "desktop-mhg6ep7.ClinicSys.dbo",
    "UncountableWords": null,
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": false,

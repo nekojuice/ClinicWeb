@@ -11,6 +11,7 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using NuGet.Protocol;
 using System.Security.Claims;
+using System.Text;
 
 namespace ClinicWeb.Controllers
 {
@@ -182,6 +183,9 @@ namespace ClinicWeb.Controllers
          };
                 var claimsIdentity = new ClaimsIdentity(claims, "frontendForCustomer");   //注意!!!
                 HttpContext.SignInAsync("frontend", new ClaimsPrincipal(claimsIdentity));    //注意!!!
+
+                //JWT擴充區塊 20240305-1532
+                //SymmetricSecurityKey securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
             }
 
             //return Content("你是會員 登入成功了 喔喔");

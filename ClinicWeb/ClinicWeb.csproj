@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -8,7 +8,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\Room\Controllers\HomeController1.cs" />
+    <Compile Remove="Areas\Room\Controllers\RoomReservationController.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="bundleconfig.json" />
+    <Content Remove="wwwroot\msit155e\js\Schedule\Satisfaction.js" />
+    <Content Remove="wwwroot\js\memback\MBRecordInfo\DOM_use.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\js\memback\MBRecordInfo\DOM_use.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,6 +42,7 @@
 
   <ItemGroup>
     <None Include="bundleconfig.json" />
+    <None Include="wwwroot\js\memback\MBRecordInfo\DOM_use.js" />
     <None Include="wwwroot\vendors\bootstrap-icons\bootstrap-icons.scss" />
     <None Include="wwwroot\vendors\bootstrap-icons\fonts\bootstrap-icons.woff2" />
     <None Include="wwwroot\vendors\bootstrap\.github\CODEOWNERS" />
@@ -208,13 +220,15 @@
     <PackageReference Include="Google.Apis.Auth" Version="1.67.0" />
     <PackageReference Include="MailKit" Version="4.4.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="7.0.16" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.16" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Negotiate" Version="7.0.16" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="7.0.14" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.14" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.14" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.15" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.14" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.15">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.16">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -234,7 +248,6 @@
     <Folder Include="Areas\Employee\Models\" />
     <Folder Include="Areas\Member\Data\" />
     <Folder Include="Areas\Room\Data\" />
-    <Folder Include="Areas\Room\Models\" />
     <Folder Include="Areas\Schedule\Data\" />
     <Folder Include="Areas\Shop\Data\" />
     <Folder Include="Areas\Shop\Models\" />
@@ -243,13 +256,11 @@
     <Folder Include="wwwroot\msit155e\js\MemberProfile\" />
     <Folder Include="wwwroot\msit155e\css\Attend\" />
     <Folder Include="wwwroot\msit155e\css\Attend\" />
-    <Folder Include="wwwroot\msit155e\css\Drugs\" />
     <Folder Include="wwwroot\msit155e\css\Shop\" />
-    <Folder Include="wwwroot\msit155e\css\Schedule\" />
     <Folder Include="wwwroot\msit155e\css\Room\" />
+    <Folder Include="wwwroot\msit155e\images\Appointment\" />
     <Folder Include="wwwroot\msit155e\images\Attend\" />
     <Folder Include="wwwroot\msit155e\images\Cases\" />
-    <Folder Include="wwwroot\msit155e\images\Drugs\" />
     <Folder Include="wwwroot\msit155e\images\Member\" />
     <Folder Include="wwwroot\msit155e\images\Room\" />
     <Folder Include="wwwroot\msit155e\images\Schedule\" />
@@ -257,7 +268,6 @@
     <Folder Include="wwwroot\msit155e\js\Attend\" />
     <Folder Include="wwwroot\msit155e\js\Drugs\" />
     <Folder Include="wwwroot\msit155e\js\Room\" />
-    <Folder Include="wwwroot\msit155e\js\Schedule\" />
     <Folder Include="wwwroot\msit155e\js\Shop\" />
   </ItemGroup>
 
