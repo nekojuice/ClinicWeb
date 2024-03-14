@@ -37,11 +37,11 @@ namespace ClinicWeb.Controllers.MBRoomInfoController
                     return RedirectToAction(nameof(Index));
                 }
 
-                var existingAppointments = _context.AppointmentRoomSchedule
-     .Where(a => a.RoomId == order.RoomId &&
-                 ((a.StartDate < order.EndDate && a.EndDate > order.StartDate) ||
-                  (a.StartDate <= order.StartDate && a.EndDate >= order.EndDate)))
-     .ToList();
+               var existingAppointments = _context.AppointmentRoomSchedule
+    .Where(a => a.RoomId == order.RoomId &&
+                ((a.StartDate < order.EndDate && a.EndDate > order.StartDate) ||
+                 (a.StartDate <= order.StartDate && a.EndDate >= order.EndDate)))
+    .ToList();
 
 
                 if (existingAppointments.Any())

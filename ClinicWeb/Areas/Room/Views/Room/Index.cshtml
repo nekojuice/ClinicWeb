@@ -4,70 +4,79 @@
     <button type="submit" class="btn btn-primary">新增</button>
 </form>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="x_panel">
+            <div class="x_content">
 
-    <table class="table">
-        <thead>
-            <tr>
-                
-                <th>起</th>
-                <th>迄</th>
-                <th>房名</th>
-                <th>患者</th>
-                <th>醫生</th>
-                <th>護士</th>
-                                          
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    
-                    <td>@item.StartDate</td>
-                    <td>@item.EndDate</td>
-                    <td>@item.RoomName</td>
-                    <td>@item.MemberName</td>
-                    <td>@item.DoctorName</td>
-                    <td>@item.NurseName</td>
-                   
-                    
-                    <td>
-                    <a href="#" onclick="editItem('@item.AppointmentId')">Edit</a> |
-                    |
-                    
-                    <a href="#" onclick="confirmDelete('@item.AppointmentId')">Delete</a>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
 
-                    </td>
-                </tr>
-            }
-        <script>
-            function confirmDelete(id) {
-                if (confirm('您確定要刪除嗎?')) {
-                    deleteItem(id);
-                }
-            }
+                            <th>起</th>
+                            <th>迄</th>
+                            <th>房名</th>
+                            <th>患者</th>
+                            <th>醫生</th>
+                            <th>護士</th>
 
-            function deleteItem(id) {
-                let delurl = '@Url.Content("~/Room/Room/DeleteConfirmed/")'
-                $.ajax({
-                        url: `${delurl}${id}`,
-                    type: 'POST',
-                    // dataType: 'json',
-                    success: function (data) {
-                     
-                        location.reload();
-                    },
-                    error: function () {
-                        alert('Error deleting item.');
-                    }
-                });
-            }
-            function editItem(id) {
-               
-                window.location.href = '@Url.Action("Edit", "Room")' + '?id=' + id;
-            }
-        </script>
-        </tbody>
-    </table>
-    
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+
+                                <td>@item.StartDate</td>
+                                <td>@item.EndDate</td>
+                                <td>@item.RoomName</td>
+                                <td>@item.MemberName</td>
+                                <td>@item.DoctorName</td>
+                                <td>@item.NurseName</td>
+
+
+                                <td>
+                                    <a href="#" onclick="editItem('@item.AppointmentId')">編輯</a> |
+                                    |
+
+                                    <a href="#" onclick="confirmDelete('@item.AppointmentId')">刪除</a>
+
+                                </td>
+                            </tr>
+                        }
+                        <script>
+                            function confirmDelete(id) {
+                                if (confirm('您確定要刪除嗎?')) {
+                                    deleteItem(id);
+                                }
+                            }
+
+                            function deleteItem(id) {
+                                let delurl = '@Url.Content("~/Room/Room/DeleteConfirmed/")'
+                                $.ajax({
+                                    url: `${delurl}${id}`,
+                                    type: 'POST',
+                                    // dataType: 'json',
+                                    success: function (data) {
+
+                                        location.reload();
+                                    },
+                                    error: function () {
+                                        alert('Error deleting item.');
+                                    }
+                                });
+                            }
+                            function editItem(id) {
+
+                                window.location.href = '@Url.Action("Edit", "Room")' + '?id=' + id;
+                            }
+
+
+                        </script>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 
