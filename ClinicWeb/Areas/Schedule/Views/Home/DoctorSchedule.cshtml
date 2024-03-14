@@ -385,7 +385,7 @@
             fetch(`/Schedule/api/Scheduling/${year}/${month}`)
                 .then(response => {
                     if (response.status == 200) {
-                        swal("排班成功！", "已成功新增班表！", "success", { button: "確定" });
+                        swal("排班成功！", "已成功新增班表！", "success", { button: "確定" })
                         .then(() => {
                             //toastr.success('排班成功');
                             window.location.reload();
