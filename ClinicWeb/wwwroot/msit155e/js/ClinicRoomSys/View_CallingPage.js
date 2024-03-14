@@ -1,5 +1,7 @@
 ﻿"use strict";
 
+const callingSound = document.getElementById('callingSound');
+
 let connection = new signalR.HubConnectionBuilder()
     .withUrl("/CallingHub")
     .withAutomaticReconnect()
@@ -9,6 +11,7 @@ let connection = new signalR.HubConnectionBuilder()
 //document.getElementById("sendButton").disabled = true;
 
 //新醫生登入事件
+let isCallintArray = [];
 connection.on("Listener_ClinicInfo", function (jsonstring) {
     const jsondata = JSON.parse(jsonstring)
     console.log(jsondata)
@@ -21,13 +24,22 @@ connection.on("Listener_ClinicInfo", function (jsonstring) {
         $(`#cp-${i}`).find('.cp-num').text('')
     }
     //填入
+    isCallintArray = [] //清空陣列
     for (var i = 0; i < jsondata.length; i++) {
         $(`#cp-${i}`).find('.cp-dept').text(jsondata[i].department)
         $(`#cp-${i}`).find('.cp-room').text(jsondata[i].room)
         $(`#cp-${i}`).find('.cp-doc').text(jsondata[i].doctorName)
         $(`#cp-${i}`).find('.cp-shift').text(jsondata[i].shift)
         $(`#cp-${i}`).find('.cp-num').text(jsondata[i].number)
+        //撈出叫號者
+        isCallintArray.push(jsondata[i].isCalling)
     }
+    //尋找最大值(正在叫號的index)
+    let callingIndex = isCallintArray.indexOf(Math.max(...isCallintArray));
+    console.log(callingIndex)
+    if (callingIndex < 0) { return; }
+    callingSound.play()
+    $(`#cp-${callingIndex}`).find('.cp-num').fadeOut(500).fadeIn(500).fadeOut(500).fadeIn(500).fadeOut(500).fadeIn(500).fadeOut(500).fadeIn(500);
 });
 
 

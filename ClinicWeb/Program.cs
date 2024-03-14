@@ -36,7 +36,7 @@ builder.Services.AddControllersWithViews();
 /// 0: nick's db server -- Nick�a���A��
 /// 1: localhost db server -- localhost������Ʈw���A��
 /// 2: ispan classroom 201 db server cat -- 201�Ы�ip��m14��(nkj)
-int db_source_switcher = 0;
+int db_source_switcher = 1;
 
 var ConnString = "";
 switch (db_source_switcher)
@@ -234,6 +234,7 @@ app.UseCookiePolicy();
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.MapHub<ApptStateHub>("/ApptStateHub");
 app.MapHub<CallingHub>("/CallingHub");
 
 app.MapControllerRoute(

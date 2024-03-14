@@ -1,6 +1,6 @@
 ﻿@model ClinicWeb.Areas.Appointment.Models.ScheduleClinicInfo
 <div class="row" style="display: block;">
-    <div class="col-md-3 col-sm-3">
+    <div class="col-md-4 col-sm-3">
         <div class="x_panel callingTablePanel">
             @*<div class="x_title">
             <h2>門診資訊</h2>
@@ -77,7 +77,7 @@
             </div>
         </div>
 
-        <div class="col-md-3 col-sm-3 callingControlPanel">
+        <div class="col-md-4 col-sm-3 callingControlPanel">
             <div class="x_panel">
 
                 <div class="row" style="display: block;">
@@ -95,16 +95,16 @@
                                 <button id="btn_call" class="btn btn-info nkj-btn-xxl">叫號</button>
                             </div>
                             <div class="col">
-                                <button class="btn btn-success nkj-btn-xxl">看診</button>
+                                <button id="btn_start" class="btn btn-success nkj-btn-xxl">看診</button>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row" style="display: block;">
                     <div class="col-md-3 col-sm-3">
-                        <button class="btn btn-warning pull-right">未到</button>
-                        <button class="btn btn-primary pull-right">檢查</button>
-                        <button class="btn btn-danger pull-right">結束</button>
+                        <button id="btn_late" class="btn btn-warning pull-right">未到</button>
+                        <button id="btn_exam" class="btn btn-primary pull-right">檢查</button>
+                        <button id="btn_fin" class="btn btn-danger pull-right">結束</button>
                     </div>
                 </div>
             </div>
