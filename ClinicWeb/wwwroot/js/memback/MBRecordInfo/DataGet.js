@@ -160,7 +160,8 @@ async function getPrescriptionList(id) {
         },
         language: {
             url: "https://cdn.datatables.net/plug-ins/1.13.7/i18n/zh-HANT.json"
-        }
+        },
+        hover: true,
     });
     PLDT.rows.add(data).draw();
 }
