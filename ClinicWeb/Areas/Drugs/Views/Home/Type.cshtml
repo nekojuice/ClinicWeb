@@ -45,6 +45,22 @@
             </ul>
             <div class="clearfix"></div>
         </div>
+        @* 新增按鈕的排版 *@
+        <div class="mb-6" style="overflow: auto">
+            <div class="col-md-2">
+                <label class="form-label"> </label>
+                <button id="newTypebtn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#TypeCreate">新增劑型</button>
+            </div>
+        </div>
+        <!--新增畫面的內容-->
+        <div class="modal fade" id="TypeCreate" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <partial name="~/Areas/Drugs/Views/Partial/_TypeCreatePartial.cshtml" />
+                </div>
+            </div>
+        </div>
+
         @* 如果要加搜尋選項放這裡 *@
         <div class="x_content">
             <div class="row">
@@ -67,17 +83,20 @@
             </div>
         </div>
     </div>
-</div>
+</div> 
 @* 沒有用到model暫時保留 *@
 <div class="row">
     @*  <dl class="row"> *@
     <div class="col-md-10">
-        <form asp-area="Drugs" asp-controller="DrugsApi" asp-action="Details">
+        <form>
             <div class="form-group">
-                <label asp-for="FTypeCode" class="control-label"> 劑型代碼 </label>
-                <input asp-for="FTypeCode" class="form-control" id="fTypeCode" />
-                <label asp-for="FType" class="control-label"> 劑型名稱 </label>
-                <input asp-for="FType" class="form-control" id="fType" />
+                <label class="control-label"> 劑型代碼 </label>
+                <input class="form-control" id="fTypeCode" />
+                <label class="control-label"> 劑型名稱 </label>
+                <input class="form-control" id="fType" />                
+            </div>
+            <div class="form-group">
+                <button type="button" id="btnEdit">修改</button>
             </div>
         </form>
     </div>
@@ -92,7 +111,7 @@
 
 @section Scripts {
     <script>
-        //dataTable 讀取資料 
+        //dataTable 讀取資料，要加try catch防止讀不到資料 
         $(document).ready(function () {
             //alert("ready");
             $('#dtType').dataTable({
@@ -139,7 +158,7 @@
             //TypeCode.innerHTML = data.劑型代碼;
             // (JSON.stringify(data.劑型代碼)) = TypeCode.textContent;
             //TypeCode.textContent = JSON.stringify(data.劑型代碼)
-
+            
         })
         
     </script>

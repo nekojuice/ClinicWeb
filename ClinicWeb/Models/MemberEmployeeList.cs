@@ -59,12 +59,14 @@ public partial class MemberEmployeeList
     public string Department { get; set; }
 
     [Column("Emp_Password")]
-    [StringLength(50)]
     public string EmpPassword { get; set; }
 
     public byte[] EmpPhoto { get; set; }
 
     public bool? Quit { get; set; }
+
+    [StringLength(50)]
+    public string EmpMail { get; set; }
 
     [InverseProperty("Doctor")]
     public virtual ICollection<AppointmentRoomSchedule> AppointmentRoomScheduleDoctor { get; set; } = new List<AppointmentRoomSchedule>();

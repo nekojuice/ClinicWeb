@@ -1,11 +1,21 @@
-<div class="container relative">
-  <div class="row" style="margin:10px;">
-    <div class="col-6"><button (click)="changeDepartment(0)" class="btn" style="width: 100%; background-color: navy;">婦產科</button></div>
-    <div class="col-6"><button (click)="changeDepartment(1)" class="btn" style="width: 100%; background-color: navy;">小兒科</button></div>
 
-  </div>
-  <div [ngSwitch]="deptSwitch">
-    <app-fappointment *ngSwitchCase="0"></app-fappointment>
-    <app-fappointment2 *ngSwitchCase="1"></app-fappointment2>
-  </div>
-</div>
+  <header>
+    <app-navbar></app-navbar>
+  </header>
+
+  <main role="main" class="pb-3">
+
+    <div class="container relative">
+      <div class="row" style="margin:10px;">
+        <div class="col-6"><button (click)="changeDepartment(0)" class="btn" style="width: 100%; background-color: navy;">婦產科</button></div>
+        <div class="col-6"><button (click)="changeDepartment(1)" class="btn" style="width: 100%; background-color: navy;">小兒科</button></div>
+
+      </div>
+      <div [ngSwitch]="deptSwitch">
+        <app-fappointment *ngSwitchCase="0"></app-fappointment>
+        <app-fappointment2 *ngSwitchCase="1"></app-fappointment2>
+      </div>
+    </div>
+
+  </main>
+

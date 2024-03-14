@@ -96,6 +96,7 @@ namespace ClinicWeb.Areas.Schedule.Controllers
 
         }
 
+        //排班
         [Route("{area}/{controller}/{action}/{year}/{month}/{drid}/{nurseid}")]
         public IActionResult Scheduling(string year, string month, int drid, int nurseid)
         {
@@ -114,7 +115,7 @@ namespace ClinicWeb.Areas.Schedule.Controllers
             if (nurseScheduleExists)
             {
                 // 提示已存在相同月份的排班
-                return Ok("該護士已存在相同月份的排班");
+                return BadRequest("該護士已存在相同月份的排班");
             }
             else
             {

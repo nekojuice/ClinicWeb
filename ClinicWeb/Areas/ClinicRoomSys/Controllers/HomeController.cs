@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
 {
@@ -12,5 +13,12 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
 		{
 			return View();
 		}
-	}
+
+		[AllowAnonymous]
+		[HttpGet]
+		public IActionResult CallingSound() 
+		{
+			return File("~/msit155e/audio/callingSound.mp3", "audio/mp3");
+        }
+    }
 }
