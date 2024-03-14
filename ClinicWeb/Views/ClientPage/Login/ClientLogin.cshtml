@@ -1,13 +1,17 @@
-﻿@model MemberMemberList
+﻿@* @model  MemberMemberList *@
+@model ClinicWeb.Areas.Member.Models.MemberMemberList
 
-<link href="~/msit155e/css/MemberLogin/MemberLogin.css" rel="stylesheet">
 
+@section Styles{
+    <link href="~/msit155e/css/MemberLogin/MemberLogin.css" rel="stylesheet">
+}
 
 
 <!------ Include the above in your HEAD tag ---------->
 
 <!--輪播區-->
 <div class="container">
+    <partial name="_SweetAlertPartial" />
     <div class="row">
         <!-- 輪播圖 -->
         <div class="col-md-6">
@@ -58,15 +62,23 @@
                                 <div class="form-group mb-3">
                                     <input type="password" asp-for="MemPassword" tabindex="2" class="form-control" placeholder="請輸入密碼">
                                 </div>
-
+                                <!--帳密輸入錯誤的提醒-->
                                 @if (ViewData["ErrorMessage"] != null)
                                 {
                                     <div class="text-danger" style="color:red">@ViewData["ErrorMessage"]</div>
                                 }
-                                @if (ViewData["RegisterPrompt"] != null)
+                                <!--google帳號授權失敗-->
+                                @if (TempData["Msg"] != null)
                                 {
                                     <div class="alert alert-warning" role="alert">
-                                        @TempData["RegisterPrompt"]
+                                        @Html.Raw(TempData["Msg"])
+                                    </div>
+                                }
+                                <!--沒有對應帳號的提醒-->
+                                @if (TempData["RegisterPrompt"] != null)
+                                {
+                                    <div class="alert alert-warning" role="alert">
+                                        @Html.Raw(TempData["RegisterPrompt"])
                                     </div>
                                 }
 
@@ -84,7 +96,7 @@
                                             </div>
                                           
                                             <div class="text-center">
-                                                <a href="https://phpoll.com/recover" tabindex="5" class="forgot-password">忘記密碼?</a>
+                                                <a asp-controller="ForgotPassword" asp-action="ForgotPasswordIndex" class="forgot-password">忘記密碼?</a>
                                             </div>
                                             <div class="text-center">
                                                 <a asp-controller="ClientPage" asp-action="Register" class="forgot-password">還不是會員? 前往註冊</a>
@@ -105,21 +117,38 @@
 </div>
 
 
-@section Scripts
-{
-    @if (TempData["Msg"] != null)
-    {
-        <script type="text/javascript">
-            alert("@TempData["Msg"]");
-        </script>
-    }
-    @if (ViewData["RegisterPrompt"] != null)
-    {
-        <script type="text/javascript">
-            alert("@TempData["RegisterPrompt"]");
-        </script>
-    }
+@* @section Scripts
+{ *@
 
 
-}
+   @*  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script> *@
+   @*  @if (TempData["Error"] != null)
+    {
+        <script>
+            swal.fire({
+                position: "center",
+                icon: "error",
+                title: "@TempData["Error"]",
+                showComfirmButton: true,
+               
+            });
+        </script>
+    } *@
+
+   @*  @if (TempData["Msg"] != null)
+    {
+        <script type="text/javascript">
+            
+            alert("@Html.Raw(TempData["Msg"])");
+        </script>
+    }
+    @if (TempData["RegisterPrompt"] != null)
+    {
+        <script type="text/javascript">
+            alert("@Html.Raw(TempData["RegisterPrompt"])");
+        </script>
+    } *@
+
+
+@* } *@
 
