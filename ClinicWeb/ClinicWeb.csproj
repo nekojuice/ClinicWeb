@@ -254,7 +254,6 @@
     <Folder Include="wwwroot\msit155e\css\Attend\" />
     <Folder Include="wwwroot\msit155e\css\Attend\" />
     <Folder Include="wwwroot\msit155e\css\Shop\" />
-    <Folder Include="wwwroot\msit155e\css\Schedule\" />
     <Folder Include="wwwroot\msit155e\css\Room\" />
     <Folder Include="wwwroot\msit155e\images\Appointment\" />
     <Folder Include="wwwroot\msit155e\images\Attend\" />
