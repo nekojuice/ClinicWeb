@@ -179,6 +179,9 @@
     <!--Toastr-->
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
+    <!--sweetalert-->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 }
 
 @section Scripts
@@ -375,18 +378,47 @@
 
         //排班
         scheduling.addEventListener('click', () => { Scheduling(); });
+
         function Scheduling() {
             const year = selcreateMonth.value.substring(0, 4);
             const month = selcreateMonth.value.substring(5, 7);
             fetch(`/Schedule/api/Scheduling/${year}/${month}`)
                 .then(response => {
-                    if (response.status==200) {
-                        toastr.success('排班成功');
-                        window.location.reload();
-                       
+                    if (response.status == 200) {
+                        swal("排班成功！", "已成功新增班表！", "success", { button: "確定" });
+                        .then(() => {
+                            //toastr.success('排班成功');
+                            window.location.reload();
+                        });
+                    } else if (response.status == 400) {
+                        // 如果遇到重复排班
+                        response.text().then(message => {
+                            swal("排班失败", "請勿重複排班！", "error", { button: "確定" });
+                        });
+                    } else if (response.status == 404) {
+                        // 如果遇到重复排班
+                        response.text().then(message => {
+                            swal("排班失败", "無醫師班表無法排進跟診護士！", "error", { button: "確定" });
+                        });
                     }
-                    
-                })
+
+
+                });
+        }
+        // //function Scheduling() {
+        //     const year = selcreateMonth.value.substring(0, 4);
+        //     const month = selcreateMonth.value.substring(5, 7);
+        //     fetch(`/Schedule/api/Scheduling/${year}/${month}`)
+        //         .then(response => {
+        //             if (response.status==200) {
+        //                 swal("排班成功！", "已成功新增班表！", "success", { button: "確定" });
+        //                 toastr.success('排班成功');
+        //                 window.location.reload();
+                        
+                       
+        //             }
+                   
+        //         })
                 // .then(data => {
 
                 //     // 關閉小窗
@@ -401,7 +433,7 @@
                 
 
 
-        }
+        //}
 
 
     </script>

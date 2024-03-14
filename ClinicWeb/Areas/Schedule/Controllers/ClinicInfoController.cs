@@ -27,50 +27,60 @@ namespace ClinicWeb.Areas.Schedule.Controllers
                     時段 = x.Time.ClinicShifts,
                     科別 = x.Doctor.Department,
                     診間 = x.Room.Name
-                    
+
                 });
-            
+
             return Json(WeekSchedule);
         }
 
         public IActionResult ShowRoom()
         {
             var Week = _context.RoomList
-                .Where(m =>m.TypeId==3)
+                .Where(m => m.TypeId == 3)
                 .Select(x => new
                 {
-                   x.RoomId,
-                   x.Name
+                    x.RoomId,
+                    x.Name
                 });
             return Json(Week);
         }
 
-        public IActionResult AddClinic(int week, int drid, int shiftid, int roomid)
+        //新增門診
+        [Route("{area}/{controller}/{action}/{drid}/{week}/{shiftid}/{roomid}")]
+        public IActionResult AddClinic(string drid, string week, string shiftid, string roomid)
         {
             // 檢查是否已存在相同門診
             var existingClinic = _context.ScheduleClinicSchedule
-                .FirstOrDefault(x => x.Week == week && x.DoctorId == drid && x.TimeId == shiftid && x.RoomId == roomid);
+                .Any(x => x.DoctorId == Convert.ToInt32(drid) &&
+                x.Week == Convert.ToInt32(week) &&
+                x.TimeId == Convert.ToInt32(shiftid) &&
+                x.RoomId == Convert.ToInt32(roomid));
 
-            if (existingClinic != null)
+            if (existingClinic == false)
+            {// 如果不存在，則創建新的門診
+                var newClinic = new ScheduleClinicSchedule
+                {
+                    DoctorId = Convert.ToInt32(drid),
+                    Week = Convert.ToInt32(week),
+                    TimeId = Convert.ToInt32(shiftid),
+                    RoomId = Convert.ToInt32(roomid)
+                };
+
+                // 將新的門存進資料庫
+                _context.ScheduleClinicSchedule.Add(newClinic);
+                _context.SaveChanges();
+
+                return Ok("門診已成功添加");
+
+            }
+            else
             {
+
                 return BadRequest("門診已存在");
             }
-            
 
-            // 如果不存在，則創建新的門診
-            var newClinic = new ScheduleClinicSchedule
-            {
-                DoctorId = drid,
-                Week = week,
-                TimeId = shiftid,
-                RoomId = roomid
-            };
 
-            // 將新的門存進資料庫
-            _context.ScheduleClinicSchedule.Add(newClinic);
-            _context.SaveChanges();
 
-            return Ok("門診已成功添加");
         }
 
         private static string GetDayOfWeek(int week)
@@ -97,27 +107,23 @@ namespace ClinicWeb.Areas.Schedule.Controllers
         }
 
         [HttpPost]
-        
+
         public IActionResult DeleteClinic([FromBody] ClinicScheduleVM model)
         {
-            if (ModelState.IsValid)
+
+            var clinicToDelete = _context.ScheduleClinicSchedule.FirstOrDefault(c => c.ScheduleId == model.ScheduleId);
+            if (clinicToDelete != null)
             {
-                var clinicToDelete = _context.ScheduleClinicSchedule.FirstOrDefault(c => c.ScheduleId == model.ScheduleId);
-                if (clinicToDelete != null)
-                {
-                    _context.ScheduleClinicSchedule.Remove(clinicToDelete);
-                    _context.SaveChanges();
-                    return Ok("門診刪除成功");
-                }
-                else
-                {
-                    return NotFound("未找到要刪除的門診");
-                }
+                _context.ScheduleClinicSchedule.Remove(clinicToDelete);
+                _context.SaveChanges();
+                return Ok("門診刪除成功");
             }
             else
             {
-                return BadRequest("無效請求");
+                return NotFound("未找到要刪除的門診");
             }
+
+
         }
 
     }

@@ -173,7 +173,7 @@
                 <button type="button" class="btn btn-default" data-dismiss="modal">
                     關閉
                 </button>
-                <button id="ClinicCreate" type="button" class="btn btn-primary">
+                <button id="btnClinicCreate" type="button" class="btn btn-primary">
                     新增門診
                 </button>
             </div>
@@ -201,8 +201,8 @@
                     <!-- 新添加的行 -->
                     <div class="col-md-3">
                         <label class="form-label" style="font-size:16px">id: </label>
-                        <select class="form-control" id="selidDelete" disabled="disabled">
-                        </select>
+                        <input class="form-control" id="selidDelete" disabled="disabled" value="">
+                        </input>
                     </div>
                 </div>
                 <div class="mb-3 pb-2">
@@ -384,7 +384,7 @@
                     {
                         "data": "mRid",
                         "render": function (data, type, row) {
-                            return `<button id="delData" type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteData">刪除</button>`;
+                            return `<button type="button" class="btn btn-danger btn-sm delData" data-toggle="modal" data-target="#deleteData">刪除</button>`;
 
                         
                         } 
@@ -497,7 +497,7 @@
 
 
         // 新增門診
-        $('#ClinicCreate').on('click', async function () {
+        $('#btnClinicCreate').on('click', async function () {
             const selectedWeek = $('#selweek').val();
             const selectedDoctor = $('#selDoctorname').val();
             const selectedShift = $('#selShift').val();
@@ -510,14 +510,15 @@
 
             // 檢查門診是否已存在於資料庫中
             try {
-                const response = await fetch(`/Schedule/ClinicInfo/AddClinic/${selectedWeek}/${selectedDoctor}/${selectedShift}/${selectedRoom}`);
+                const response = await fetch(`/Schedule/ClinicInfo/AddClinic/${selectedDoctor}/${selectedWeek}/${selectedShift}/${selectedRoom}`);
                 const data = await response.text();
 
                 if (response.ok) {
+                 
                     $('#ClinicAdd').modal('hide')
                     // 門診新增
                     swal("門診新增成功！", "已成功新增門診！", "success", { button: "確定" });
-
+                    QueryWeekSchedule();
                     
                 } else {
                     // 重複新增
@@ -574,42 +575,52 @@
 
 
         // 點擊刪除按鈕觸發小窗
-        $('#deleteData').on('click', '#delData', function () {
+        $('#datatable').on('click', '.delData', function () {
             // 獲取所選的資料
             deleteData = $('#datatable').DataTable().row($(this).closest('tr')).data();
             var id = deleteData.id;
 
-            // 資料匯入下拉選單
-            $('#selidDelete').val(id);
-            $('#selWeekDelete').val(deleteData.星期);
-            $('#selDoctornameDelete').val(deleteData.醫師);
-            $('#selShiftDelete').val(deleteData.時段);
-            $('#selRoomDelete').val(deleteData.診間);
+            // 資料匯入選單
+            $('#selidDelete').val(deleteData.id);
+            $("#selWeekDelete option").filter(function () {
+                return $(this).text() == deleteData.星期;
+            }).prop('selected', true);
+            //$('#selWeekDelete').val(deleteData.星期).change();
+            $("#selDoctornameDelete option").filter(function () {
+                return $(this).text() == deleteData.醫師;
+            }).prop('selected', true);
+            $("#selShiftDelete option").filter(function () {
+                return $(this).text() == deleteData.時段;
+            }).prop('selected', true);
+            $("#selRoomDelete option").filter(function () {
+                return $(this).text() == deleteData.診間;
+            }).prop('selected', true);
         });
 
 
         //點擊確認刪除
         $('#ClinicDel').on('click', async function () {
-            if (!deleteData) {
-                // 如果沒有選到數據要提示
-                toastr.error('請選擇要刪除的資料');
-                return;
-            }
-
-            var id = deleteData.id;
-            var selectedWeek = deleteData.星期;
-            var selectedDoctor = deleteData.醫師;
-            var selectedShift = deleteData.時段;
-            var selectedRoom = deleteData.診間;
+            var id = $('#selidDelete').val();
+            var selectedWeek = $('#selWeekDelete').val();
+            var selectedDoctor = $('#selDoctornameDelete').val();
+            var selectedShift = $('#selShiftDelete').val();
+            var selectedRoom = $('#selRoomDelete').val();
 
             // 构建请求参数对象
             const requestData = {
-       
-                DoctorId: selectedWeek,
-                Week: selectedDoctor,
+                ScheduleId: id,
+                Week: selectedWeek,
+                DoctorId: selectedDoctor,
                 TimeId: selectedShift,
                 RoomId: selectedRoom
             };
+
+            if (requestData==null) {
+                // 如果沒有選到數據要提示
+                //toastr.error('請選擇要刪除的資料');
+                swal("刪除失敗！", "請選擇要刪除的門診資料！", "error", { button: "確定" });
+                return;
+            }
 
             try {
                 const response = await fetch('@Url.Content("~/Schedule/ClinicInfo/DeleteClinic")', {
@@ -624,20 +635,18 @@
                     // 刪除成功
                     $('#deleteData').modal('hide');
                     // 成功消息
-                    toastr.success('刪除成功');
+                    swal("刪除成功！", "已成功刪除門診！", "success", { button: "確定" });
                     QueryWeekSchedule(); // 刷新表格
                 } else {
                     // 刪除失敗
-                    toastr.error('刪除失敗,沒有找到資料');
+                    swal("刪除失敗！", "刪除失敗,沒有找到門診資料！", "error", { button: "確定" });
+                    //toastr.error('刪除失敗,沒有找到資料');
                 }
             } catch (error) {
                 // 刪除失敗
-                console.error('Error:', error);
-                toastr.error('刪除失敗');
+                swal("刪除失敗！", "刪除失敗,請洽系統管理員！", "error", { button: "確定" });
+                //toastr.error('刪除失敗');
             }
-
-            // 清空
-            deleteData = null;
         });
 
        

@@ -96,6 +96,7 @@ namespace ClinicWeb.Areas.Schedule.Controllers
 
         }
 
+        //排班
         [Route("{area}/{controller}/{action}/{year}/{month}/{drid}/{nurseid}")]
         public IActionResult Scheduling(string year, string month, int drid, int nurseid)
         {
