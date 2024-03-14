@@ -210,6 +210,7 @@
 
   <ItemGroup>
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+    <PackageReference Include="ECPay.Payment.Integration" Version="1.0.0.8" />
     <PackageReference Include="Google.Apis.Auth" Version="1.67.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="7.0.16" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.16" />
