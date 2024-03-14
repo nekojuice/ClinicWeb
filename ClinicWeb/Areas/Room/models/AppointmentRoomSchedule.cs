@@ -21,11 +21,11 @@ public partial class AppointmentRoomSchedule
     [Column("Member_ID")]
     public int? MemberId { get; set; }
 
-    [StringLength(50)]
-    public string StartDate { get; set; }
+    [Column(TypeName = "datetime")]
+    public DateTime? StartDate { get; set; }
 
-    [StringLength(50)]
-    public string EndDate { get; set; }
+    [Column(TypeName = "datetime")]
+    public DateTime? EndDate { get; set; }
 
     [Column("Doctor_ID")]
     public int? DoctorId { get; set; }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using ClinicWeb.Models;
+using ClinicWeb.Areas.Room.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -31,19 +31,18 @@ namespace ClinicWeb.Controllers.MBRoomInfoController
         {
             if (ModelState.IsValid)
             {
-                //if (!DateTime.TryParseExact(order.StartDate, "yyyy/MM/dd", null, System.Globalization.DateTimeStyles.None, out startDate) ||
-                //    !DateTime.TryParseExact(order.EndDate, "yyyy/MM/dd", null, System.Globalization.DateTimeStyles.None, out endDate))
-                if(order.StartDate.CompareTo(order.EndDate) >=0)
+                if (order.StartDate >= order.EndDate)
                 {
                     TempData["ErrorMessage"] = "結束日期必須大於開始日期";
                     return RedirectToAction(nameof(Index));
                 }
 
                 var existingAppointments = _context.AppointmentRoomSchedule
-                    .Where(a => a.RoomId == order.RoomId &&
-                                //(DateTime.Parse(a.StartDate) >= startDate || DateTime.Parse(a.EndDate) <= endDate))
-                                (a.StartDate.CompareTo(order.StartDate) >=0 || a.EndDate.CompareTo(order.EndDate) <=0))
-                    .ToList();
+     .Where(a => a.RoomId == order.RoomId &&
+                 ((a.StartDate < order.EndDate && a.EndDate > order.StartDate) ||
+                  (a.StartDate <= order.StartDate && a.EndDate >= order.EndDate)))
+     .ToList();
+
 
                 if (existingAppointments.Any())
                 {
@@ -68,5 +67,6 @@ namespace ClinicWeb.Controllers.MBRoomInfoController
             ViewData["Nurses"] = _context.MemberEmployeeList.Where(e => e.EmpType == "護士").ToList();
             return View("Index", order);
         }
+
     }
 }
