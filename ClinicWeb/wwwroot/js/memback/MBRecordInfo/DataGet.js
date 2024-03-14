@@ -132,6 +132,12 @@ async function getPrescription(id) {
         getPrescriptionList(ID);
         console.log(rowData["prescriptionID"]);
     });
+    $('#prescriptionDataTable tbody').on('mouseover', 'tr', function (event) {
+        $(this).css({
+            '	background-color': '#E6CAFF',
+            '	cursor': ' pointer',
+        });
+    });
 }
 
 
@@ -161,7 +167,7 @@ async function getPrescriptionList(id) {
         language: {
             url: "https://cdn.datatables.net/plug-ins/1.13.7/i18n/zh-HANT.json"
         },
-        hover: true,
+        Hover: true,
     });
     PLDT.rows.add(data).draw();
 }
@@ -183,6 +189,7 @@ async function getPrescriptionList(id) {
         //    }
         //});
     });
+
     async function getName() {
 
     }
