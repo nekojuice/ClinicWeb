@@ -195,6 +195,9 @@
     <!--Toastr-->
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
+    <!--sweetalert-->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 }
 
 @section Scripts
@@ -409,30 +412,37 @@
         })();
 
         //護士排班
-        btnScheduling.addEventListener('click', () => {
+        btnScheduling.addEventListener('click', () => { Scheduling(); });
+        function Scheduling() {
             const year = selcreateMonth.value.substring(0, 4);
             const month = selcreateMonth.value.substring(5, 7);
             const drid = selcreateDrName.value; // 獲取選到的醫師 ID
             const nurseid = selcreateNurseName.value; // 獲取選到的護士 ID
-
             fetch(`/Schedule/NurseApi/Scheduling/${year}/${month}/${drid}/${nurseid}`)
                 .then(response => {
                     if (response.status == 200) {
-                        throw new Error('Network response was not ok');
+                        // 關閉小窗
+                        $('#ScheduleCreate').modal('hide');
+                        swal("排班成功！", "已成功新增班表！", "success", { button: "確定" })
+                            .then(() => {
+                                //toastr.success('排班成功');
+                                window.location.reload();
+                            });
+                    } else if (response.status == 400) {
+                        // 如果遇到重复排班
+                        response.text().then(message => {
+                            swal("排班失败", "請勿重複排班！", "error", { button: "確定" });
+                        });
+                    } else if (response.status == 404) {
+                        // 如果遇到重复排班
+                        response.text().then(message => {
+                            swal("排班失败", "無醫師班表無法排進跟診護士！", "error", { button: "確定" });
+                        });
                     }
-                    return response.json();
-                })
-                .then(data => {
 
-                    // 關閉小窗
-                    $('#ScheduleCreate').modal('hide');
-
-                    // 顯示排班成功
-                    alert('排班成功！');
-                    QueryMemberInfo(selectedMonth);
-                })
-                .catch(alert('排班錯誤'));
-        });
+                });
+                    
+        }
        
 
 
