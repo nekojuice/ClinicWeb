@@ -1,5 +1,6 @@
 using ClinicWeb.Areas.Identity;
 using ClinicWeb.Data;
+using ClinicWeb.Hubs;
 using ClinicWeb.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -12,13 +13,15 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using NuGet.Protocol;
-using ClinicWeb.Hubs;
+using Microsoft.AspNetCore.Authentication.Negotiate;
+
 var builder = WebApplication.CreateBuilder(args);
 var Server = builder.Configuration["ClinicSys:Server"];
 var User = builder.Configuration["ClinicSys:USER"];
 var Pass = builder.Configuration["ClinicSys:PASS"];
 
 // Add services to the container.
+builder.Services.AddSignalR();
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
@@ -65,6 +68,7 @@ builder.Services.AddDbContext<ClinicWeb.Areas.Member.Models.ClinicSysContext>(op
 builder.Services.AddDbContext<ClinicWeb.Areas.Drugs.Models.ClinicSysContext>(options => options.UseSqlServer(ConnString));
 builder.Services.AddDbContext<ClinicWeb.Areas.Schedule.Models.ClinicSysContext>(options => options.UseSqlServer(ConnString));
 builder.Services.AddDbContext<ClinicWeb.Areas.Appointment.Models.ClinicSysContext>(options => options.UseSqlServer(ConnString));
+builder.Services.AddDbContext<ClinicWeb.Areas.Room.Models.ClinicSysContext>(options => options.UseSqlServer(ConnString));
 builder.Services.AddDbContext<ClinicSysContext>(options => options.UseSqlServer(ConnString));
 
 
@@ -128,7 +132,15 @@ builder.Services.AddAuthentication()
 		options.ClientId = con["Authentication:Google:ClientId"];
         options.ClientSecret = con["Authentication:Google:ClientSecret"];
         options.ClaimActions.MapJsonKey("urn:google:picture", "picture", "url");
-    });
+    })
+    .AddJwtBearer("Angular", option =>
+    {
+        //等待插入JWT驗證
+        option.ForwardForbid = new PathString("https://localhost:7071/ClientPage/Login"); //登入
+        option.ForwardSignIn = new PathString("https://localhost:7071/ClientPage/Login"); //登入
+        option.ForwardSignOut= new PathString("https://localhost:7071/ClientPage"); //外面首頁
+    })
+    ;
 
 
 
@@ -182,6 +194,19 @@ builder.Services.AddAuthorization(o =>
 //    options.Filters.Add(new AuthorizeFilter());
 //});
 
+//允許angular4200
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: "AngularAccess",
+                      policy =>
+                      {
+                          policy
+                          .AllowAnyMethod()
+                          .AllowAnyHeader()
+                          .WithOrigins("http://localhost:4200");
+                      });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -201,10 +226,16 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+//允許angular4200
+app.UseCors("AngularAccess");
+
 //順序要一樣
 app.UseCookiePolicy();
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.MapHub<ApptStateHub>("/ApptStateHub");
+app.MapHub<CallingHub>("/CallingHub");
 
 app.MapControllerRoute(
       name: "areas",

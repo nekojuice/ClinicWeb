@@ -11,6 +11,7 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using NuGet.Protocol;
 using System.Security.Claims;
+using System.Text;
 
 namespace ClinicWeb.Controllers
 {
@@ -132,6 +133,9 @@ namespace ClinicWeb.Controllers
                 };
                 var claimsIdentity = new ClaimsIdentity(claims, "frontendForCustomer");   //注意!!!
                 HttpContext.SignInAsync("frontend", new ClaimsPrincipal(claimsIdentity));    //注意!!!
+
+                //JWT擴充區塊 20240305-1532
+                //SymmetricSecurityKey securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
             }
 
             //return Content("你是會員 登入成功了 喔喔");
@@ -236,8 +240,52 @@ namespace ClinicWeb.Controllers
         //    }
 
         //}
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult LoginForClient2(string email, string password)
+        {
+            var user = (from a in _context.MemberMemberList
+                        where a.MemEmail == email
+                        && a.MemPassword == password
+                        select a).SingleOrDefault();
+
+            if (user == null)
+            {
+                ViewData["ErrorMessage"] = "帳號密碼輸入有誤";
+                return BadRequest("帳號密碼輸入有誤");
+            }
+
+            else
+            {
+                //這邊等等寫驗證加角色
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Email, user.MemEmail.ToString()),
+                       new Claim(ClaimTypes.Name, user.Name),
+                    new Claim("MemberNumber", user.MemberNumber.ToString()),
+                     new Claim("MemberName", user.Name),
+                      new Claim("MemberID", user.MemberId.ToString()),
 
 
+                };
+                var claimsIdentity = new ClaimsIdentity(claims, "frontendForCustomer");   //注意!!!
+                HttpContext.SignInAsync("frontend", new ClaimsPrincipal(claimsIdentity));    //注意!!!
+            }
 
-    }
+            //return Content("你是會員 登入成功了 喔喔");
+            //登入後進入網頁主畫面 之後會想直接顯示前台會員中心
+            return Ok("登入成功");
+        }
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult LoginId()
+        { 
+            var idText = HttpContext.User.Claims.Where(m=>m.Type== "MemberID").FirstOrDefault()?.Value;
+            if (idText == null) { return BadRequest("目前無人登入"); };
+            int memberId = Convert.ToInt32(idText);
+            return Ok(new { Data = memberId });
+        }
+
+
+        }
 }

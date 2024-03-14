@@ -324,10 +324,10 @@
         //護士搜尋功能
         selNursename.addEventListener('change', () => { searchName(); });
         function searchName() {
-            const selectedNurse = $(selNursename).val();
+            const selectedNurse = $('#selectedNursename option:selected').text();
             const table = $('#datatable').DataTable();
-            //alert(selectedDoctor)
-            if (selectedNurse === 'allnurse') {
+            //alert(selectedNurse)
+            if (selectedNurse === '全部') {
                 table.column(1).search("").draw();
             } else {
                 table.column(1).search(selectedNurse).draw();
@@ -417,7 +417,7 @@
 
             fetch(`/Schedule/NurseApi/Scheduling/${year}/${month}/${drid}/${nurseid}`)
                 .then(response => {
-                    if (!response.ok) {
+                    if (response.status == 200) {
                         throw new Error('Network response was not ok');
                     }
                     return response.json();

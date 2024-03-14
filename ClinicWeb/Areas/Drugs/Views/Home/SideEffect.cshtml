@@ -43,6 +43,21 @@
             </ul>
             <div class="clearfix"></div>
         </div>
+        @* 新增按鈕的排版 *@
+        <div class="mb-6" style="overflow: auto">
+            <div class="col-md-2">
+                <label class="form-label"> </label>
+                <button id="newSideEffectbtn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#SideEffectCreate">新增副作用</button>
+            </div>
+        </div>
+        <!--新增畫面的內容-->
+        <div class="modal fade" id="SideEffectCreate" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <partial name="~/Areas/Drugs/Views/Partial/_SideEffectCreatePartial.cshtml" />
+                </div>
+            </div>
+        </div>
         @* 如果要加搜尋選項放這裡 *@
         <div class="x_content">
             <div class="row">
@@ -82,6 +97,9 @@
                 <input class="form-control" id="fSideEffectCode" />
                 <label class="control-label"> 副作用名稱 </label>
                 <input class="form-control" id="fSideEffect" />
+            </div>
+            <div class="form-group">
+                <button  id="btnEdit">修改</button>
             </div>
         </form>
     </div>

@@ -5,7 +5,8 @@
 ////修改用區域
 //修改用全域變數
 //isCancelled修改前是否退掛
-let isCancelled = "";
+let isCancelled = '';
+let originStateString = '';
 //打開修改視窗
 async function ModApptForm_OPEN(clinicAppt_id) {
     const response = await fetch(`/Appointment/ApptSys/GET_ApptRecordOne/${clinicAppt_id}`, { method: "POST" });
@@ -22,7 +23,13 @@ async function ModApptForm_OPEN(clinicAppt_id) {
     $("#ModApptBirthDate").val(data.生日)
     $("#ModApptBloodType").val(data.血型)
     $("#ModApptClinicNumber").val(data.診號)
-    $("#ModApptState").val(data.看診狀態)
+    originStateString = data.看診狀態
+    $("#ModApptState option")
+        .filter(function () {
+            return $(this).text() == data.看診狀態;
+        })
+        .prop('selected', true);
+
     isCancelled = data.退掛 == "是" ? "True" : "False"
     $("#ModApptIsCancelled").val(isCancelled)
 
@@ -36,16 +43,19 @@ async function ModApptForm_OPEN(clinicAppt_id) {
 async function ModAppt() {
     //[區域]putCancell 更變後的值, [全域]isCancelled 原始的值
     const putCancell = $("#ModApptIsCancelled").val()
+    const putState = $("#ModApptState option:selected").text()
+    const putStateVal = $("#ModApptState").val()
     //未更變則直接退出
-    if (isCancelled == putCancell || isCancelled == "") {
+    if ((isCancelled == putCancell || isCancelled == '') && (originStateString == putState || originStateString == '')) {
         modApptFormClose()
         return
     }
+
     //執行更新資料
     const clinicAppt_id = $('#apptDataTable').DataTable().row(_index_apptDataTable).data().clinicAppt_id;
     let result;
     try {
-        const response = await fetch(`/Appointment/ApptSys/PUT_ApptRecord_Cancelled/${clinicAppt_id}/${putCancell}`, { method: "POST" });
+        const response = await fetch(`/Appointment/ApptSys/PUT_ApptRecord_Cancelled/${clinicAppt_id}/${putCancell}/${putStateVal}`, { method: "POST" });
         result = await response.json()
     } catch (e) {
         new PNotify({
