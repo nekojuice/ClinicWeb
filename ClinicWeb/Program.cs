@@ -30,7 +30,7 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
-
+builder.Services.AddSignalR();
 
 //db switcher
 /// 0: nick's db server -- Nick�a���A��
@@ -242,7 +242,7 @@ app.MapControllerRoute(
       pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
     );
 
-
+app.MapHub<ChatHubs>("/chatHub");
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
