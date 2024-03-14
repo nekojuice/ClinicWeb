@@ -73,6 +73,9 @@ public partial class MemberMemberList
 
     public byte[] MemPhoto { get; set; }
 
+    [StringLength(50)]
+    public string GoogleSub { get; set; }
+
     [InverseProperty("Member")]
     public virtual ICollection<CasesNewBornList> CasesNewBornList { get; set; } = new List<CasesNewBornList>();
 }

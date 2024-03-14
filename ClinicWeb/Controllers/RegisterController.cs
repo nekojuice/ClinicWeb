@@ -45,7 +45,7 @@ namespace ClinicWeb.Controllers
         //生成寄信連結裡面的token
         public static string GenerateActivationToken()
         {
-            using (var rng = new RNGCryptoServiceProvider())
+            using (var rng = RandomNumberGenerator.Create())
             {
                 byte[] tokenData = new byte[32]; // 生成驗證token
                 rng.GetBytes(tokenData);
@@ -108,7 +108,7 @@ namespace ClinicWeb.Controllers
                         catch (Exception)
                         {
 
-                            return Json(new { Warning = false, message = "註冊成功，但發送啟用郵件失敗，請聯繫管理員。" });
+                            return Json(new { error = false, message = "註冊成功，但發送啟用郵件失敗，請聯繫管理員。" });
                         }
 
                         return Json(new { success = true, message = "註冊成功，請去信箱點選啟用帳戶連結。\n點選確認回到登入畫面。" });
@@ -130,12 +130,5 @@ namespace ClinicWeb.Controllers
             // 默認返回，防止出現未處理的情況
             return Json(new { error = false, message = "註冊失敗，請檢查輸入的數據。" });
         }
-
-
-
-
-
-
-
     }
 }

@@ -1,5 +1,7 @@
 ﻿using MimeKit;
-using SmtpClient = MailKit.Net.Smtp.SmtpClient;
+//using SmtpClient = MailKit.Net.Smtp.SmtpClient;
+using MailKit.Net.Smtp;
+
 
 //製作信件內容介面
 public interface IEmailService
@@ -42,6 +44,8 @@ public class EmailService : IEmailService
         }
        
     }
+
+ 
 
 }
 

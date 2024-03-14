@@ -1,0 +1,22 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Activation Success</title>
+    <script>
+        // 當頁面載入完畢後執行
+        window.onload = function () {
+            // 顯示啟用成功信息
+            alert('Account activated successfully!');
+
+            // 2秒後自動跳轉到登錄頁面
+            setTimeout(function () {
+                window.location.href = '~ClientPage/login'; // 假設登錄頁面的URL是/login
+            }, 2000);
+        };
+    </script>
+</head>
+<body>
+    <p>Your account has been successfully activated. Redirecting to login page...</p>
+</body>
+</html>

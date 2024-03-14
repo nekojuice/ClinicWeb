@@ -35,7 +35,7 @@ builder.Services.AddControllersWithViews();
 /// 0: nick's db server -- Nick�a���A��
 /// 1: localhost db server -- localhost������Ʈw���A��
 /// 2: ispan classroom 201 db server cat -- 201�Ы�ip��m14��(nkj)
-int db_source_switcher = 1;
+int db_source_switcher = 0;
 
 var ConnString = "";
 switch (db_source_switcher)
@@ -186,6 +186,14 @@ builder.Services.AddAuthorization(o =>
 
 // 注册Email功能 要在var app = builder.Build();之前
 builder.Services.AddTransient<IEmailService, EmailService>();
+
+//var sendmail = WebApplication.CreateBuilder(args);
+//var mailserver = builder.Configuration["EmailSettings:MailServer"];
+//var mailport = builder.Configuration["EmailSettings:MailPort"];
+//var sendername = builder.Configuration["EmailSettings:SenderName"];
+//var senderemail = builder.Configuration["EmailSettings:SenderEmail"];
+//var senderpassword = builder.Configuration["EmailSettings:SenderPassword"];
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

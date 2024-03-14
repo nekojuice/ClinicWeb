@@ -176,19 +176,23 @@ namespace ClinicWeb.Areas.Member.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         /* [Bind("MemberId,MemberNumber,Name,Gender,BloodType,NationalId,Address,ContactAddress,Phone,BirthDate,IceName,MemPassword,MemEmail,Verification,IsEnabled")]*/
-        public async Task<IActionResult> Edit(int empId, MemberEmployeeList emp, IFormFile EmpPhotoEdit)
+        public async Task<IActionResult> Edit(int empId, MemberEmployeeList emp, IFormFile? EmpPhotoEdit)
         {
             if (empId != emp.EmpId)
             {
                 return NotFound();
             }
+            //var target = _context.MemberEmployeeList.Where(x => x.EmpId == empId).FirstOrDefault();
+            //if (EmpPhotoEdit == null)
+            //{
+            //    emp.EmpPhoto = target?.EmpPhoto;
+            //}
 
             if (ModelState.IsValid)
             {
                 try
                 {
-
-
+                 
                     // 直接將圖片轉成二進位
                     byte[]? imgByte = null;
                     if (EmpPhotoEdit != null)
