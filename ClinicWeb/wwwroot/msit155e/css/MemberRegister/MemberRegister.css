@@ -1,0 +1,108 @@
+﻿.card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 400px;
+    margin: auto;
+}
+
+.card-header {
+    background: #007bff;
+    color: white;
+    padding: 16px 20px;
+    text-align: center;
+    font-size: 1.25rem;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="tel"],
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+
+    color: white;
+    margin-top: 20px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+    button:hover {
+        background: #0056b3;
+    }
+
+.has-feedback .form-control {
+    padding-left: 30px; /* 上方的樣式 */
+}
+
+.input-group-text {
+    border: none;
+    background: transparent;
+}
+
+.input-group .fa {
+    min-width: 20px; /* 確保圖標寬度足夠 */
+    text-align: center;
+}
+
+/* 調整驗證訊息的位置 */
+.text-danger {
+    display: block;
+    margin-top: 5px;
+}
+
+/*按鈕樣式*/
+.custom-button {
+    padding: 10px 20px; /* 按鈕內邊距 */
+    font-size: 16px; /* 文本大小 */
+    color: white; /* 文本顏色 */
+    border: none; /* 去除邊框 */
+    cursor: pointer; /* 鼠標指標 */
+}
+
+    .custom-button.clear {
+        background-color: #808080; /* 清除按鈕背景顏色 */
+    }
+
+    .custom-button.submit {
+        background-color: #1e3c84; /* 確認送出按鈕背景顏色 */
+    }
+
+/* 調整按鈕容器間距 */
+.form-group.row {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+
+@media (max-width: 768px) {
+    .custom-button {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+}
+

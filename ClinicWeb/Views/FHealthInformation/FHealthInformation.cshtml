@@ -1,5 +1,119 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@section Styles {
+    <link href="~/msit155e/css/drugs/stylesheet.css" rel="stylesheet" />
+}
+
+
 @{
+    ViewData["Title"] = "衛教資訊";
+}
+<div class="article">
+    <div class="container" style="padding-bottom:100px">
+        <ul class="nav nav-pills nav-fill">
+            <li class="nav-item" id="a1">
+                <a class="nav-link" aria-current="page" href="#">婦科</a>
+            </li>
+            <li class="nav-item" id="b1">
+                <a class="nav-link" href="#">產科</a>
+            </li>
+            <li class="nav-item" id="c1">
+                <a class="nav-link" href="#">兒科</a>
+            </li>
+
+        </ul>
+        
+    </div>
+    <div id="D1" style="display:none">
+        <table class="table table-primary table-bordered table-hover table-striped">
+            <thead>
+                <tr style="text-align:center">
+                    <th style="width:300px">編號</th>
+                    <th>文章標題</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style ="text-align:center">
+                    <td>1</td>
+                    <td><a href="~/FHealthInformation/Blog2">子宮頸抺片檢查</a></td>
+                </tr>
+                <tr style="text-align:center">
+                    <td style="text-align:center">2</td>
+                    <td><a href="~/FHealthInformation/Blog3">乳房超音波檢查</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="D2" style="display:none">
+        <table class="table table-primary table-bordered table-hover table-striped">
+            <thead>
+                <tr style="text-align:center">
+                    <th style ="width:300px">編號</th>
+                    <th>文章標題</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="text-align:center">
+                    <td>1</td>
+                    <td><a href="~/FHealthInformation/Blog1">孕吐</a></td>
+                </tr>
+                <tr style="text-align:center">
+                    <td style="text-align:center">2</td>
+                    <td><a href="~/FHealthInformation/Blog4">高層次超音波檢查</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="D3" style="display:none">
+        <table class="table table-primary table-bordered table-hover table-striped">
+            <thead>
+                <tr style="text-align:center">
+                    <th style="width:300px">編號</th>
+                    <th>文章標題</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="text-align:center">
+                    <td>1</td>
+                    <td><a href="~/FHealthInformation/Blog5">新生兒黃疸</a></td>
+                </tr>
+                <tr style="text-align:center">
+                    <td style="text-align:center">2</td>
+                    <td><a href="~/FHealthInformation/Blog6">新生兒感覺神經性聽損基因篩檢</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+@section Scripts {
+    <script>
+        const a1 = document.getElementById('a1');
+        const D1 = document.getElementById('D1');
+
+        $(document).ready(function () {
+            D1.style.display = 'block';
+        });
+
+        a1.addEventListener('click', function () {
+            D1.style.display = 'block';
+            D2.style.display = 'none';
+            D3.style.display = 'none';
+        });
+
+        const b1 = document.getElementById('b1');
+        const D2 = document.getElementById('D2');
+        b1.addEventListener('click', function () {
+            D2.style.display = 'block';
+            D1.style.display = 'none';
+            D3.style.display = 'none';
+        });
+
+        const c1 = document.getElementById('c1');
+        const D3 = document.getElementById('D3');
+        c1.addEventListener('click', function () {
+            D3.style.display = 'block';
+            D1.style.display = 'none';
+            D2.style.display = 'none';
+        });
+    </script>
 }

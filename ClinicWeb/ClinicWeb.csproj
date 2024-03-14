@@ -8,8 +8,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\Room\Controllers\HomeController1.cs" />
+    <Compile Remove="Areas\Room\Controllers\RoomReservationController.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="bundleconfig.json" />
     <Content Remove="wwwroot\msit155e\js\Schedule\Satisfaction.js" />
+    <Content Remove="wwwroot\js\memback\MBRecordInfo\DOM_use.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\js\memback\MBRecordInfo\DOM_use.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,6 +42,9 @@
 
   <ItemGroup>
     <None Include="bundleconfig.json" />
+    <None Include="wwwroot\js\memback\MBRecordInfo\DOM_use.js" />
+    <None Include="wwwroot\vendors\bootstrap-icons\bootstrap-icons.scss" />
+    <None Include="wwwroot\vendors\bootstrap-icons\fonts\bootstrap-icons.woff2" />
     <None Include="wwwroot\vendors\bootstrap\.github\CODEOWNERS" />
     <None Include="wwwroot\vendors\bootstrap\.github\CONTRIBUTING.md" />
     <None Include="wwwroot\vendors\bootstrap\.github\ISSUE_TEMPLATE\bug.md" />
@@ -204,6 +217,10 @@
 
   <ItemGroup>
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+    <PackageReference Include="Google.Apis.Auth" Version="1.67.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="7.0.16" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.16" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Negotiate" Version="7.0.16" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="7.0.14" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.14" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.14" />
@@ -229,21 +246,19 @@
     <Folder Include="Areas\Employee\Models\" />
     <Folder Include="Areas\Member\Data\" />
     <Folder Include="Areas\Room\Data\" />
-    <Folder Include="Areas\Room\Models\" />
     <Folder Include="Areas\Schedule\Data\" />
     <Folder Include="Areas\Shop\Data\" />
     <Folder Include="Areas\Shop\Models\" />
     <Folder Include="Areas\Temp\Data\" />
     <Folder Include="Areas\Temp\Models\" />
+    <Folder Include="wwwroot\msit155e\js\MemberProfile\" />
     <Folder Include="wwwroot\msit155e\css\Attend\" />
     <Folder Include="wwwroot\msit155e\css\Attend\" />
-    <Folder Include="wwwroot\msit155e\css\Drugs\" />
     <Folder Include="wwwroot\msit155e\css\Shop\" />
-    <Folder Include="wwwroot\msit155e\css\Schedule\" />
     <Folder Include="wwwroot\msit155e\css\Room\" />
+    <Folder Include="wwwroot\msit155e\images\Appointment\" />
     <Folder Include="wwwroot\msit155e\images\Attend\" />
     <Folder Include="wwwroot\msit155e\images\Cases\" />
-    <Folder Include="wwwroot\msit155e\images\Drugs\" />
     <Folder Include="wwwroot\msit155e\images\Member\" />
     <Folder Include="wwwroot\msit155e\images\Room\" />
     <Folder Include="wwwroot\msit155e\images\Schedule\" />

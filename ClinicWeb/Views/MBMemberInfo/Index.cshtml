@@ -1,0 +1,238 @@
+﻿    @model ClinicWeb.Areas.Member.Models.MemberMemberList
+@* @model ClinicWeb.Models.MemberMemberList *@
+
+@section styles
+{
+    <link href="~/msit155e/css/cases/responsivetable.css" rel="stylesheet" />
+    <!-- Favicons -->
+    <link href="assets/img/favicon.png" rel="icon">
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <!-- Google Fonts -->
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="~/msit155e/css/MemberProfile/bootstrap.min.css" rel="stylesheet">
+    <link href="~/msit155e/css/MemberProfile/bootstrap-icons.css" rel="stylesheet">
+    <link href="~/msit155e/css/MemberProfile/boxicons.min.css" rel="stylesheet">
+    <link href="~/msit155e/css/MemberProfile/quill.snow.css" rel="stylesheet">
+    <link href="~/msit155e/css/MemberProfile/quill.bubble.css" rel="stylesheet">
+    <link href="~/msit155e/css/MemberProfile/remixicon.css" rel="stylesheet">
+    <link href="~/msit155e/css/MemberProfile/style.css" rel="stylesheet">
+
+    <!--會員資料表的位置以及樣式微調-->
+    <link href="~/msit155e/css/MemberProfile/MemberProfile.css" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="~/msit155e/css/MemberProfile/style.css" rel="stylesheet">
+    <!--sweetalert-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.min.css">
+
+}
+<div class="row d-flex align-items-start">
+
+    <div class="col-xl-3">
+        <div class="card">
+            <div class="card text-center">
+                <img src="~/images/person_4.jpg" class="card-img-top" alt="..." style="width: 60%; border-radius: 50%; margin: 0 auto; margin-top: 2em; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);">
+                <div class="card-body">
+                    <div class="btn-group" role="group" style="margin: 1rem;">
+                        <a href="#" class="btn btn-primary btn-sm me-2" title="Upload new profile image">更新照片</a>
+                    @*     <i class="bi bi-upload"></i>
+                            <i class="bi bi-trash"></i> *@
+                        <a href="#" class="btn btn-danger btn-sm ms-2" title="Remove my profile image">刪除照片</a>
+                    </div>
+                    <h5 class="card-title">會員姓名：</h5>
+                </div>
+            </div>
+
+
+            <div class="card-body profile-card pt-4 d-flex flex-column">
+                <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                     <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">會員資料檢視</button> 
+                   @*  <button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">修改資料</button> *@
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-9">
+        <div class="card">
+            <div class="card-body pt-3">
+            </div>
+            <div class="card-body pt-3">
+               @*  <div class="tab-content" id="v-pills-tabContent"> *@
+                   @*  <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                        <!--會員資料檢視-->
+                        <partial name="_MemberProfilePartial">
+                    </div> *@
+                   @*  <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab"> *@
+                <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                        <!--會員資料修改-->
+
+                        <div class="container">
+                            <h1>修改資料</h1>
+                            <form id="memberInfo">
+                                <div class="row mb-3">
+                                  @*   <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
+                                    <div class="col-md-8 col-lg-9"> *@
+                                      @*   <img src="~/images/person_4.jpg" class="card-img-top" alt="Profile" style="width: 60%;border-radius: 50%;margin: 0 auto;margin-top:2em;box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);"> *@
+                                      @*   <div class="pt-2">
+                                            <a href="#" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></a>
+                                            <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
+                                        </div>
+                                    </div>*@
+                                </div> 
+
+                                <div class="row mb-3">
+                                    <label asp-for="Name" class="col-md-4 col-lg-3 col-form-label"></label>
+                                    <div class="col-md-8 col-lg-9">
+                                        <input asp-for="Name" type="text" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label asp-for="NationalId" class="col-md-4 col-lg-3 col-form-label"></label>
+                                    <div class="col-md-8 col-lg-9">
+                                        <input asp-for="NationalId" type="text" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label asp-for="MemEmail" class="col-md-4 col-lg-3 col-form-label"></label>
+                                    <div class="col-md-8 col-lg-9">
+                                        <input asp-for="MemEmail" type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <!-- 聯絡電話 -->
+                                <div class="row mb-3">
+                                    <label asp-for="Phone" class="col-md-4 col-lg-3 col-form-label"></label>
+                                    <div class="col-md-8 col-lg-9">
+                                        <input asp-for="Phone" type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <!--性別-->
+                                <div class="row mb-3">
+                                    <label asp-for="Gender" class="col-md-4 col-lg-3 col-form-label"></label>
+                                    <div class="col-md-8 col-lg-9">
+                                        <select asp-for="Gender" class="form-control">
+                                            <!option value='true' @if ((bool)Model.Gender)
+                                            {
+                                                @("selected")
+                                            }> 男 </!option >
+                                            <!option value='false'  @if (!(bool)Model.Gender)
+                                            {
+                                                @("selected")
+                                            }> 女 </!option >
+                                        </select>
+                                    </div>
+                                </div>
+                                <!-- 血型 -->
+                                <div class="row mb-3">
+                                    <label asp-for="BloodType" class="col-md-4 col-lg-3 col-form-label"></label>
+                                    <div class="col-md-8 col-lg-9">
+                                        <select class="form-control" asp-for="BloodType">
+
+                                            <option>A</option>
+                                            <option>B</option>
+                                            <option>O</option>
+                                            <option>AB</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <!--戶籍地址-->
+                                <div class="row mb-3">
+                                    <label asp-for="Address" class="col-md-4 col-lg-3 col-form-label"></label>
+                                    <div class="col-md-8 col-lg-9">
+                                        <input asp-for="Address" type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <!--聯絡地址-->
+                                <div class="row mb-3">
+                                    <label asp-for="ContactAddress" class="col-md-4 col-lg-3 col-form-label"></label>
+                                    <div class="col-md-8 col-lg-9">
+                                        <input asp-for="ContactAddress" type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <!--生日-->
+                                <div class="row mb-3">
+                                    <label asp-for="BirthDate" class="col-md-4 col-lg-3 col-form-label"></label>
+                                    <div class="col-md-8 col-lg-9">
+
+                                        <input asp-for="BirthDate" class="date-picker form-control" type="date">
+                                    </div>
+                                </div>
+                                <!--緊急聯絡人-->
+                                <div class="row mb-3">
+                                    <label asp-for="IceName" class="col-md-4 col-lg-3 col-form-label"></label>
+                                    <div class="col-md-8 col-lg-9">
+                                        <input asp-for="IceName" type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <!--緊急聯絡人電話-->
+                                <div class="row mb-3">
+                                    <label asp-for="IceNumber" class="col-md-4 col-lg-3 col-form-label"></label>
+                                    <div class="col-md-8 col-lg-9">
+                                        <input asp-for="IceNumber" type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <!--會員密碼-->
+                                <div class="row mb-3">
+                                    <label asp-for="MemPassword" class="col-md-4 col-lg-3 col-form-label"></label>
+                                    <div class="col-md-8 col-lg-9">
+                                        <input asp-for="MemPassword" type="text" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary">保存變更</button>
+                                </div>
+                            </form><!-- End Profile Edit Form -->
+                        </div>
+                    </div>
+
+                </div>
+
+                <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts
+{
+
+    <!-- Vendor JS Files -->
+    <script src="~/msit155e/js/MemberProfile/apexcharts.min.js"></script>
+    <script src="~/msit155e/js/MemberProfile/bootstrap.bundle.min.js"></script>
+    <script src="~/msit155e/js/MemberProfile/chart.umd.js"></script>
+    <script src="~/msit155e/js/MemberProfile/echarts.min.js"></script>
+    <script src="~/msit155e/js/MemberProfile/quill.min.js"></script>
+    <script src="~/msit155e/js/MemberProfile/simple-datatables.js"></script>
+    <script src="~/msit155e/js/MemberProfile/tinymce.min.js"></script>
+    <script src="~/msit155e/js/MemberProfile/validate.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.min.js"></script>
+
+    <!-- Template Main JS File -->
+    <script src="~/msit155e/js/MemberProfile/main.js"></script>
+    <script>
+        $(document).ready(function () {
+            // 檢查 TempData 中的 SuccessMessage
+            var successMessage = '@TempData["SuccessMessage"]';
+            if (successMessage) {
+                // 顯示 SweetAlert 成功消息
+                Swal.fire({
+                    icon: 'success',
+                    title: '成功！',
+                    text: successMessage
+                });
+            }
+        });
+    </script>
+
+
+
+
+}

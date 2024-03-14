@@ -1,0 +1,323 @@
+﻿@section Styles
+{
+    <link href="~/msit155e/css/cases/responsivetable.css" rel="stylesheet" />
+    <link href="~/msit155e/css/schedule/mbsatisfaction.css" rel="stylesheet" />
+    <!-- Datatables -->
+    <link href="//cdn.datatables.net/plug-ins/2.0.1/integration/font-awesome/dataTables.fontAwesome.css" rel="stylesheet">
+    <link href="~/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="~/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+    <link href="~/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+    <link href="~/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+    <link href="~/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+    <link href="~/vendors/bootstrap-icons/bootstrap-icons.min.css" rel="stylesheet" />
+    <!-- Datatables -->
+    <link href="~/lib/datatables/css/datatables.bootstrap.min.css" rel="stylesheet" />
+    <link href="~/lib/datatables/css/jquery.datatables.min.css" rel="stylesheet" />
+    <link href="//cdn.datatables.net/plug-ins/2.0.1/integration/font-awesome/dataTables.fontAwesome.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="~/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+
+
+
+}
+
+
+
+
+<div class="row d-flex align-items-start">
+
+    <div class="col-xl-3">
+        <div class="card">
+            <div class="card">
+                <img src="~/images/person_4.jpg" class="card-img-top" alt="..." style="width: 60%;border-radius: 50%;margin: 0 auto;margin-top:2em;box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);">
+                <div class="card-body">
+                    <h5 class="card-title">Coding Yaar</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+            </div>
+            <div class="card-body profile-card pt-4 d-flex flex-column">
+                <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                    <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">我的評價</button>
+                    @* <button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">檢查報告</button>
+                    <button class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">處方籤</button>
+                    <button class="nav-link" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings" type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">Chart</button> *@
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-9">
+        <div class="card">
+            <div class="card-body pt-3">
+                <div class="tab-content" id="v-pills-tabContent">
+                    <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                        <table id="MedicalRecordsTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th style="display:none">mRid</th>
+                                    <th>就診日期</th>
+                                    <th>醫師</th>
+                                    <th>時段</th>
+                                    <th>科別</th>
+                                    <th>診間</th>
+                                    <th style="display:none">patientSatisfaction</th>
+                                    <th style="display:none">docSatisfaction</th>
+                                    <th style="display:none">clinicSatisfaction</th>
+                                    <th style="display:none">sysSatisfaction</th>
+                                    <th>評價</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+
+              @*   <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /> *@
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@* //彈跳小窗 *@
+<div class="modal fade" id="MBReviews" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" id="divCreateInfo">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">
+                    診後評價
+                </h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+            </div>
+            <div class="modal-body d-flex flex-column">
+
+                    <div class="rating-lists">
+                        <label class="title" for="comment">就診滿意度：</label>
+                        <div class="row">
+                            <div class="col-lg-12">
+                            <div class="star-rating" id="PatientSatisfaction">
+                                    <span class="fa fa-star-o" data-rating="1"></span>
+                                    <span class="fa fa-star-o" data-rating="2"></span>
+                                    <span class="fa fa-star-o" data-rating="3"></span>
+                                    <span class="fa fa-star-o" data-rating="4"></span>
+                                    <span class="fa fa-star-o" data-rating="5"></span>
+                                  
+                                </div>
+                            </div>
+                        </div>
+                      
+                    </div>
+
+                    <div class="rating-lists">
+                        <label class="title" for="comment">醫師積極度：</label>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="star-rating" id="DocSatisfaction">
+                                <span class="fa fa-star-o" data-rating="1"></span>
+                                <span class="fa fa-star-o" data-rating="2"></span>
+                                <span class="fa fa-star-o" data-rating="3"></span>
+                                <span class="fa fa-star-o" data-rating="4"></span>
+                                <span class="fa fa-star-o" data-rating="5"></span>
+                             
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="rating-lists">
+                        <label class="title" for="comment">診間整潔度：</label>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="star-rating" id="ClinicSatisfaction">
+                                <span class="fa fa-star-o" data-rating="1"></span>
+                                <span class="fa fa-star-o" data-rating="2"></span>
+                                <span class="fa fa-star-o" data-rating="3"></span>
+                                <span class="fa fa-star-o" data-rating="4"></span>
+                                <span class="fa fa-star-o" data-rating="5"></span>
+                            
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="rating-lists">
+                        <label class="title" for="comment">系統滿意度：</label>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="star-rating" id="SysSatisfaction">
+                                <span class="fa fa-star-o" data-rating="1"></span>
+                                <span class="fa fa-star-o" data-rating="2"></span>
+                                <span class="fa fa-star-o" data-rating="3"></span>
+                                <span class="fa fa-star-o" data-rating="4"></span>
+                                <span class="fa fa-star-o" data-rating="5"></span>
+                             
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+   
+            </div>
+            <div class="modal-footer">
+@*                 <button id="buttonDemo" type="button" class="btn btn-primary">
+                    Demo
+                </button> *@
+                <button type="button" class="btn btn-default" data-bs-dismiss="modal" id="buttonClear">
+                    關閉
+                </button>
+                <button id="buttonAdd" type="button" class="btn btn-primary">
+                    確定
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+
+    
+        <!-- Datatables -->
+    <script src="~/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+    <script src="~/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="~/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="~/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+    <script src="~/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+    <script src="~/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="~/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+    <script src="~/vendors/jszip/dist/jszip.min.js"></script>
+    <script src="~/vendors/pdfmake/build/pdfmake.min.js"></script>
+    <script src="~/vendors/pdfmake/build/vfs_fonts.js"></script>
+    <!-- Datatables -->
+    <script src="~/lib/datatables/js/datatables.bootstrap.min.js"></script>
+    <script src="~/lib/datatables/js/datatables.datatables.min.js"></script>
+    <script src="~/lib/datatables/js/jquery.datatables.min.js"></script>
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <script src="~/js/memback/mbsatisfaction/mbsatisfaction.js"></script>
+
+    <script>
+
+
+       // var $star_rating = $('.star-rating .fa');
+        //data-*  data-a data-n data-abc  dataset.abc
+        const data = {};
+        $('.star-rating').on('click', function (event) {
+            const rating = $(event.target);  
+            data[event.currentTarget.id]=rating.data("rating")
+           // console.log(data);
+          
+            rating.siblings().removeClass('fa-star').addClass('fa-star-o');
+            rating.prevAll().addBack().removeClass('fa-star-o').addClass('fa-star');
+          //  console.log(event.currentTarget)
+        })
+
+        function addMrid(id) {
+            data["mRid"] = id;
+        }
+
+        //JS
+        // const clear = document.querySelector('#buttonClear');
+        // clear.addEventListener('click', function () {
+        //   const starts = document.querySelectorAll('.fa')
+        //     starts.forEach(start => {
+        //         start.classList.remove('fa-star')
+        //         start.classList.add('fa-star-o')
+        //     })
+        // })
+
+        //jQuery
+        $('#buttonClear').on('click', function () {
+           $('.fa').removeClass('fa-star').addClass('fa-star-o')
+        })
+       async function  send() {
+
+            const response = await fetch('@Url.Content("~/MBSatisfaction/Get_Review")', {
+                'method':'POST',
+                            'body': JSON.stringify(data),
+                'headers': {
+                    'Content-Type': 'application/json'
+                }
+            });
+            if (response.ok) {
+                swal("評價完成！", "感謝您的反饋！", "success");
+                
+            }
+
+            QueryMedicalRecords();
+        }
+
+        // //demo按鈕
+        // $('#buttonDemo').on('click', function () {
+        //     // 修改就診滿意度星级评分
+        //     $('#PatientSatisfaction .fa-star-o').slice(0, 5).removeClass('fa-star-o').addClass('fa-star');
+            
+        //     // 修改醫師積極度星级评分
+        //     $('#DocSatisfaction .fa-star-o').slice(0, 3).removeClass('fa-star-o').addClass('fa-star');
+        
+        //     // 修改診間整潔度星级评分
+        //     $('#ClinicSatisfaction .fa-star-o').slice(0, 4).removeClass('fa-star-o').addClass('fa-star');
+           
+        //     // 修改系統滿意度星级评分
+        //     $('#SysSatisfaction .fa-star-o').slice(0, 4).removeClass('fa-star-o').addClass('fa-star');
+            
+        // });
+
+
+
+        $('#buttonAdd').on('click', function () {
+            let valid = true;
+          
+
+            if (!('PatientSatisfaction' in data)) {
+                valid = false;
+            } else if (!('DocSatisfaction' in data)) {
+                valid = false;
+            } else if (!('ClinicSatisfaction' in data)) {
+                valid = false;
+            } else if (!('SysSatisfaction' in data)) {
+                valid = false;
+            }
+
+
+
+            if (valid) {
+                $('.fa').removeClass('fa-star').addClass('fa-star-o')
+                $('#MBReviews').modal('hide')
+                send();
+                
+            }else{
+                swal("尚未評價完畢！", "請為所有項目進行評價 ,謝謝", "warning", { button: "確定" });
+            }    
+        })
+
+
+
+
+
+        // var SetRatingStar = function () {
+        //     return $star_rating.each(function () {
+        //         if (parseInt($star_rating.siblings('input.rating-value').val()) >= parseInt($(this).data('rating'))) {
+        //             return $(this).removeClass('fa-star-o').addClass('fa-star');
+        //         } else {
+        //             return $(this).removeClass('fa-star').addClass('fa-star-o');
+        //         }c
+        //     });
+        // };
+
+        // $star_rating.on('click', function () {
+        //     $star_rating.siblings('input.rating-value').val($(this).data('rating'));
+        //     return SetRatingStar();
+        // });
+
+       // SetRatingStar();
+        $(document).ready(function () {
+
+        });
+
+    </script>
+
+}

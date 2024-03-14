@@ -17,6 +17,9 @@
     <link href="~/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
     <link href="~/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
 
+    <!--Toastr-->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+
 }
 
 
@@ -45,6 +48,12 @@
                         </li>
                     </ul>
                     <div class="clearfix"></div>
+
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label"> </label>
+                    @* 按鈕觸發小窗 *@
+                    <button id="newSchedulebtn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#ScheduleCreate">新增排班</button>
                 </div>
                 <div class="mb-3" style="overflow: auto">
                     <div class="col-md-3">
@@ -108,6 +117,57 @@
     </div>
 </div>
 
+@* //彈跳小窗 *@
+<div class="modal fade" id="ScheduleCreate" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" id="divCreateInfo">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">
+                    新增排班
+                </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+
+            </div>
+            <div class="modal-body d-flex flex-column">
+                <div class="mb-3 pb-2">
+                    <!-- 新添加的行 -->
+                    <div class="col-md-3">
+                        <label class="form-label" style="font-size:16px">月份: </label>
+                        <select class="form-control" id="selMonth">
+                        </select>
+                    </div>
+                </div>
+                <div class="mb-3 pb-2">
+                    <!-- 新添加的行 -->
+                    <div class="col-md-3">
+                        <label class="form-label" style="font-size:16px">醫師: </label>
+                        <select class="form-control" id="selDoctorname" >
+                        </select>
+                    </div>
+                </div>
+                <div class="pt-2">
+                    <!-- 新添加的行 -->
+                    <div class="col-md-3">
+                        <label class="form-label" style="font-size:16px">護士: </label>
+                        <select class="form-control" id="selNursename">
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    關閉
+                </button>
+                <button id="btnScheduling" type="button" class="btn btn-primary">
+                    新增排班
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
 
@@ -132,6 +192,9 @@
     <script src="~/vendors/pdfmake/build/pdfmake.min.js"></script>
     <script src="~/vendors/pdfmake/build/vfs_fonts.js"></script>
 
+    <!--Toastr-->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
 }
 
 @section Scripts
@@ -142,6 +205,25 @@
         const selMonth = document.querySelector('#selectedMonth');
         const selShift = document.querySelector('#selectedShift');
         const selDep = document.querySelector('#selectedDepartment');
+        // 取得新增小窗元素
+        const selcreateMonth = document.querySelector('#selMonth');
+        const selcreateDrName = document.querySelector('#selDoctorname');
+        const selcreateNurseName = document.querySelector('#selNursename');
+        const btnScheduling = document.querySelector('#btnScheduling');
+
+        // 套件
+        toastr.options = {
+            "closeButton": true,
+            "showDuration": "300",
+            "hideDuration": "500",
+            "timeOut": "1000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+        
         
 
         //下拉選單匯入護士名
@@ -151,7 +233,7 @@
             const datas = await response.json();
 
             //console.log(datas);
-            const optNursenames = datas.map(name => `<option value=${name}>${name}</option>`);
+            const optNursenames = datas.map(name => `<option value=${name.empId}>${name.name}</option>`);
             optNursenames.unshift('<option value="allnurse">全部</option>');
 
 
@@ -202,6 +284,10 @@
 
         })();
 
+
+
+
+
         //匯入護士班表
         function QueryMemberInfo(selectedMonth) {
             //alert(selectedMonth)
@@ -228,7 +314,7 @@
                 language: {
                     url: "https://cdn.datatables.net/plug-ins/1.13.7/i18n/zh-HANT.json"
                 },
-                order: [[1, 'asc']]
+                order: [[0, 'asc']]
             });
 
         }
@@ -238,10 +324,10 @@
         //護士搜尋功能
         selNursename.addEventListener('change', () => { searchName(); });
         function searchName() {
-            const selectedNurse = $(selNursename).val();
+            const selectedNurse = $('#selectedNursename option:selected').text();
             const table = $('#datatable').DataTable();
-            //alert(selectedDoctor)
-            if (selectedNurse === 'allnurse') {
+            //alert(selectedNurse)
+            if (selectedNurse === '全部') {
                 table.column(1).search("").draw();
             } else {
                 table.column(1).search(selectedNurse).draw();
@@ -281,6 +367,73 @@
 
         }
 
+
+        //小窗月份匯入
+        (async () => {
+            const url = '@Url.Content("~/Schedule/api/GetNowMonth")';
+            const response = await fetch(url);
+            const datas = await response.json();
+
+            const optNowMonth = datas.map(month => `<option value=${month}>${month}</option>`)
+            optNowMonth.unshift('<option value="nomonth">請選擇</option>')
+
+            selcreateMonth.innerHTML = optNowMonth.join("");
+
+        })();
+
+        //小窗醫生名匯入
+        (async() => {
+            const url = '@Url.Content("~/Schedule/api/SelectedDoctorName")';
+            const response = await fetch(url);
+            const datas = await response.json();
+
+            const optDoctornames = datas.map(name => `<option value=${name.empId}>${name.name}</option>`);
+            optDoctornames.unshift('<option value="alldoctor">請選擇</option>');
+
+            selcreateDrName.innerHTML = optDoctornames.join("");
+        })();
+
+
+        //小窗護士名匯入
+        (async () => {
+            const url = '@Url.Content("~/Schedule/nurseapi/SelectedNurseName")';
+            const response = await fetch(url);
+            const datas = await response.json();
+
+            //console.log(datas);
+            const optNursenames = datas.map(name => `<option value=${name.empId}>${name.name}</option>`);
+            optNursenames.unshift('<option value="allnurse">請選擇</option>');
+
+
+            selcreateNurseName.innerHTML = optNursenames.join("");
+        })();
+
+        //護士排班
+        btnScheduling.addEventListener('click', () => {
+            const year = selcreateMonth.value.substring(0, 4);
+            const month = selcreateMonth.value.substring(5, 7);
+            const drid = selcreateDrName.value; // 獲取選到的醫師 ID
+            const nurseid = selcreateNurseName.value; // 獲取選到的護士 ID
+
+            fetch(`/Schedule/NurseApi/Scheduling/${year}/${month}/${drid}/${nurseid}`)
+                .then(response => {
+                    if (response.status == 200) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+
+                    // 關閉小窗
+                    $('#ScheduleCreate').modal('hide');
+
+                    // 顯示排班成功
+                    alert('排班成功！');
+                    QueryMemberInfo(selectedMonth);
+                })
+                .catch(alert('排班錯誤'));
+        });
+       
 
 
 
