@@ -1,0 +1,23 @@
+﻿@model ClinicWeb.Areas.Room.Models.AppointmentRoomSchedule
+
+@section scripts {
+    <script>
+        function confirmDelete() {
+            return confirm('請問您確定要刪除嗎?');
+        }
+    </script>
+}
+
+<div>
+    <h4>AppointmentRoomSchedule</h4>
+    <hr />
+    <dl class="row">
+       
+    </dl>
+
+    <form asp-action="Delete" method="post" onsubmit="return confirmDelete()">
+        <input type="hidden" asp-for="AppointmentId" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

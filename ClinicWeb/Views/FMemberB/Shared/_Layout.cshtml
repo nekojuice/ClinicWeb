@@ -187,11 +187,11 @@
                 </li><!-- End Messages Nav --> *@
                 <li class="nav-item dropdown pe-3">
 
-                    <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                    <a class="nav-link nav-profile d-flex align-items-center pe-0" asp-controller="MBMemberInfo" asp-action="Index">@*  data-bs-toggle="dropdown" *@
                         <span class="d-none d-md-block ps-2">會員資訊</span>
                     </a><!-- End Profile Iamge Icon -->
 
-                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+@*                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
 
                         <li>
                             <a asp-controller="MBMemberInfo" asp-action="Index" class="dropdown-item d-flex align-items-center">
@@ -207,7 +207,7 @@
                                 <span>編輯</span>
                             </a>
                         </li>
-                    </ul><!-- End Profile Dropdown Items -->
+                    </ul><!-- End Profile Dropdown Items --> *@
                 </li><!-- End mem Nav -->
 
                 <li class="nav-item pe-3">
@@ -218,10 +218,11 @@
 
                 <li class="nav-item dropdown pe-3">
 
-                    <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                        <span class="d-none d-md-block ps-2">掛號查詢</span>
+                    <a class="nav-link nav-profile d-flex align-items-center pe-0" asp-controller="MBAppointmentInfo" asp-action="Index">
+                        @* data-bs-toggle="dropdown" *@
+                        <span class="d-none d-md-block ps-2">掛號繳費查詢</span>
                     </a><!-- End Profile Iamge Icon -->
-
+@* 
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
 
                         <li>
@@ -238,7 +239,7 @@
                                 <span>編輯</span>
                             </a>
                         </li>
-                    </ul><!-- End Profile Dropdown Items -->
+                    </ul><!-- End Profile Dropdown Items --> *@
                 </li><!-- End appt Nav -->
 
                 <li class="nav-item dropdown pe-3">
