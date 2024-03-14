@@ -35,7 +35,7 @@ namespace ClinicWeb.ViewModels
         [Display(Name = "藥品注意事項")]
         public string? Warnings { get;set; }
 
-        [Display(Name = "藥品懷孕藥品分級")]
+        [Display(Name = "懷孕風險藥品分級類別")]
         public string? PregnancyCategory { get; set; }
 
         [Display(Name = "藥品圖片")]
@@ -54,6 +54,10 @@ namespace ClinicWeb.ViewModels
         public string? Dosage {  get; set; }
         //口服、外用等
 
+        [Display(Name = "適應症")]
+        public List<string>? ClinicalUse { get; set; }
 
+        [Display(Name ="副作用")]
+        public List<string>? SideEffect { get; set; }
     }
 }

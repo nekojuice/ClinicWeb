@@ -135,7 +135,7 @@ async function getPrescription(id) {
 var currentDrugId;
 var PLDT;
 
-// DataTable 設定加上 hover:true跟className
+// DataTable 設定加上 hover:true跟className，並把藥品明細查詢欄位移除
 async function getPrescriptionList(id) {
     const response = await fetch(`/MBRecordInfo/GPL/${id}`, { method: "POST" })
     const data = await response.json();
@@ -146,12 +146,12 @@ async function getPrescriptionList(id) {
             { title: "藥品ID", data: "drugId", visible: false },
             { title: "藥品名稱", data: "name" },
             { title: "開立天數", data: "days" },
-            { title: "總量", data: "total" },
-            {title: "藥品明細查詢", data:null, // 這邊是欄位
-            render: function (data, type, row) {
-                return `<button id="detail" type="button" class="btn btn-primary btn-sm style = "padding-left:10px"">明細</button> `
-                }
-            },
+            { title: "總量", data: "total" }
+            //{title: "藥品明細查詢", data:null, // 這邊是欄位
+            //render: function (data, type, row) {
+            //    return `<button id="detail" type="button" class="btn btn-primary btn-sm style = "padding-left:10px"">明細</button> `
+            //    }
+            //},
         ],
         fixedHeader: {
             header: true
@@ -167,23 +167,23 @@ async function getPrescriptionList(id) {
     });
     PLDT.rows.add(data).draw();
 
-    PLDT.on('click', 'button', function (e) {
-        let data = PLDT.row(e.target.closest('tr')).data();
-        console.log(data);
-        let id = data['drugId'];
-        alert('You clicked on :' + id);
+    //PLDT.on('click', 'button', function (e) {
+    //    let data = PLDT.row(e.target.closest('tr')).data();
+    //    console.log(data);
+    //    let id = data['drugId'];
+    //    alert('You clicked on :' + id);
 
 
-        //$.ajax({
-        //    type: 'GET',
-        //    url: `/MBRecordInfo/GP/${id}`,
-        //    //data: { id: mlaId },
-        //    //cache: false,
-        //    success: function (result) {
+    //    $.ajax({
+    //        type: 'GET',
+    //        url: `/MBRecordInfo/GP/${id}`,
+    //        //data: { id: mlaId },
+    //        //cache: false,
+    //        success: function (result) {
 
-        //    }
-        //});
-    });
+    //        }
+    //    });
+    //});
 
     // 分支:DrugsDetails_20240312
     
@@ -208,16 +208,13 @@ async function getPrescriptionList(id) {
         });
         loadDetails();
         //loadClinicalUseDetails();
-        //更新 小框框infoBox位子
+
+        //小框框infoBox位子，固定從網頁邊界出現 right,topy在 MBRecordInfo/index的 style中
         var infoBox = document.getElementById("infoBox");
-        var offsetX = 5; // 位移X軸的距離
-        var offsetY = 0; // 位移Y軸的距離
+        
         console.log(event.pageX);
         console.log(event.pageY);
-        infoBox.style.left = event.pageX + offsetX + "px";
-        console.log(infoBox.style.left);
-        infoBox.style.top = event.pageY + offsetY + "px";
-        console.log(infoBox.style.left);
+        
         infoBox.style.display = "block"
     });
     
@@ -229,6 +226,34 @@ async function getPrescriptionList(id) {
         infoBox.style.display = "none"; // 隱藏小框框
     });
 
+    $("#prescriptionListDataTable tbody").on('click', 'td.DrugName', function () {
+        //測試 click
+        //alert('click');
+
+        // Ajax換頁 帶出 DrugDetails.cshtml
+        var cell = PLDT.cell($(this).closest('td'));
+        if (cell.node() !== null) {
+            var rowIndex = cell.index().row;
+            var rowData = PLDT.row(rowIndex).data();
+            currentDrugId = rowData.drugId;  //(要跟columns的data名稱相同)
+            
+            console.log('currentDrugId:', currentDrugId);
+        }
+        $.ajax({
+            url: `/MBRecordInfo/GetData`,
+            type: 'GET',
+            data: { drugId: currentDrugId },
+            success: function (response) {
+                console.log(response);
+                window.location.href = '/MBRecordInfo/GetPage?drugId=' + currentDrugId;
+
+            },
+            error: function (error) {
+                console.error('Ajax request failed:', error);
+            }
+        })
+
+    })
 }
 //var infoBox = document.getElementById("infoBox"); 
 
@@ -313,4 +338,6 @@ const loadDetails = async () => {
 
     infoBox.innerHTML = display + display2 + display3;
 }
+
+
 

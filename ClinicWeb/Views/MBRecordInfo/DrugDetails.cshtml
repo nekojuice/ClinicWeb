@@ -1,30 +1,244 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model ClinicWeb.ViewModels.DrugDetailsViewModel
+
 @{
+    ViewData["Title"] = "藥品明細表";
 }
-
-@model ClinicWeb.ViewModels.DrugDetailsViewModel
-
 @section Styles{
     <style>
-        
+        /* 格式還是有點問題 */
+        .texts{
+            font-size:20px;
+            margin-top:3px;
+            
+            border-bottom:solid 1px
+        }
+
     </style>
 }
-<h1>測試</h1>
-<h2>藥品ID:@Model?.DrugId</h2>
-<h2>藥品名稱 @Model?.DrugName</h2>
+
+<h2>藥品明細表-@Model?.DrugName</h2>
+<br /><hr />
+
 <form asp-controller="MBRecordInfo" asp-action="GetData" method="get">
     <div>
         <div class="from-group">
-            <dl class="row">
-                <dt class="col-sm-2">
-                   @Html.DisplayNameFor(model=>model.DrugId) :
+            <dl>
+                <!--藥品ID-->
+                <div class="row texts mb-3" > @* mb- 調整邊界距離*@
+                <dt class="col-sm-3">
+                    <strong>
+                        @Html.DisplayNameFor(model => model.DrugId) :
+                    </strong>
                 </dt>
-                <dd class="col-sm-10">
+                <dd class="col-sm-9">
                     @Model?.DrugId
                 </dd>
+                </div>
+                <!--藥品代碼-->
+                <div class="row texts mb-3">
+                <dt class="col-sm-3">
+                    <strong>
+                        @Html.DisplayNameFor(model => model.DrugCode) :
+                    </strong>
+                </dt>
+                <dd class="col-sm-9">
+                    @Model?.DrugCode
+                </dd>
+                </div>
+                <!--藥品學名-->
+                <div class="row texts mb-3">
+                <dt class="col-sm-3">
+                    <strong>
+                        @Html.DisplayNameFor(model => model.GenericName) :
+                    </strong>
+                </dt>
+                <dd class="col-sm-9">
+                    @Model?.GenericName
+                </dd>
+                </div>
+                <!--藥品商品名-->
+                <div class="row texts mb-3">
+                <dt class="col-sm-3">
+                    <strong>
+                        @Html.DisplayNameFor(model => model.TradeName) :
+                    </strong>
+                </dt>
+                <dd class="col-sm-9">
+                    @Model?.TradeName
+                </dd>
+                </div>
+                <!--藥品中文名-->
+                <div class="row texts mb-3">
+                <dt class="col-sm-3">
+                    <strong>
+                        @Html.DisplayNameFor(model => model.DrugName) :
+                    </strong>
+                </dt>
+                <dd class="col-sm-9">
+                    @Model?.DrugName
+                </dd>
+                </div>
+                <!--藥品適應症-->
+                <div class="row texts mb-3">
+                    <dt class="col-sm-3">
+                        <strong>
+                            @Html.DisplayNameFor(model => model.ClinicalUse) :
+                        </strong>
+                    </dt>
+                    <dd class="col-sm-9">
+                        @if(Model?.ClinicalUse!=null && Model.ClinicalUse.Any())
+                        {
+                            <ul>
+                                @foreach(var list in Model.ClinicalUse)
+                                {
+                                    <li>@list</li>
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            <span>此藥品沒提供適應症資料，請直接諮詢醫師。</span>
+                        }
+                    </dd>
+                </div>
+                <!--藥品副作用-->
+                <div class="row texts mb-3">
+                    <dt class="col-sm-3">
+                        <strong>
+                            @Html.DisplayNameFor(model => model.SideEffect) :
+                        </strong>
+                    </dt>
+                    <dd class="col-sm-9">
+                        @if (Model?.SideEffect != null && Model.SideEffect.Any())
+                        {
+                            <ul>
+                                @foreach (var list in Model.SideEffect)
+                                {
+                                    <li>@list</li>
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            <span>此藥品沒提供副作用資料，請直接諮詢醫師。</span>
+                        }
+                    </dd>
+                </div>
+                <!--藥品劑型-->
+                <div class="row texts mb-3">
+                <dt class="col-sm-3">
+                    <strong>
+                        @Html.DisplayNameFor(model => model.DrugType) :
+                    </strong>
+                </dt>
+                <dd class="col-sm-9">
+                    @Model?.DrugType
+                </dd>
+                </div>
+                <!--藥品常用劑量-->
+                <div class="row texts mb-3">
+                <dt class="col-sm-3">
+                    <strong>
+                        @Html.DisplayNameFor(model => model.DrugDose) :
+                    </strong>
+                </dt>
+                <dd class="col-sm-9">
+                    @Model?.DrugDose
+                </dd>
+                </div>
+                <!--藥品最大劑量-->
+                <div class="row texts mb-3">
+                <dt class="col-sm-3">
+                    <strong>
+                        @Html.DisplayNameFor(model => model.MaxDose) :
+                    </strong>
+                </dt>
+                <dd class="col-sm-9">
+                    @Model?.MaxDose
+                </dd>
+                </div>
+                <!--藥品警語/禁忌-->
+                <div class="row texts mb-3">
+                <dt class="col-sm-3">
+                    <strong>
+                        @Html.DisplayNameFor(model => model.Precautions) :
+                    </strong>
+                </dt>
+                <dd class="col-sm-9">
+                    @Model?.Precautions
+                </dd>
+                </div>
+                <!--藥品注意事項-->
+                <div class="row texts mb-3">
+                <dt class="col-sm-3">
+                    <strong>
+                        @Html.DisplayNameFor(model => model.Warnings) :
+                    </strong>
+                </dt>
+                <dd class="col-sm-9">
+                    @Model?.Warnings
+                </dd>
+                </div>
+                <!--藥品懷孕-->
+                <div class="row texts mb-3">
+                <dt class="col-sm-3">
+                    <strong>
+                        @Html.DisplayNameFor(model => model.PregnancyCategory) :
+                    </strong>
+                </dt>
+                <dd class="col-sm-9">
+                    <a href="@Url.Content("~/FHealthInformation/pregnancycategory")" asp-append-version="true">
+                        @Model?.PregnancyCategory
+                    </a>
+                </dd>
+                </div>
+                <!--保存方法-->
+                <div class="row texts mb-3">
+                <dt class="col-sm-3">
+                    <strong>
+                        @Html.DisplayNameFor(model => model.Storage) :
+                    </strong>
+                </dt>
+                <dd class="col-sm-9">
+                    @Model?.Storage
+                </dd>
+                </div>
+                <!--藥商-->
+                <div class="row texts mb-3">
+                <dt class="col-sm-3">
+                    <strong>
+                        @Html.DisplayNameFor(model => model.Supplier) :
+                    </strong>
+                </dt>
+                <dd class="col-sm-9">
+                    @Model?.Supplier
+                </dd>
+                </div>
+                <!--廠牌-->
+                <div class="row texts mb-3">
+                <dt class="col-sm-3">
+                    <strong>
+                        @Html.DisplayNameFor(model => model.Brand) :
+                    </strong>
+                </dt>
+                <dd class="col-sm-9">
+                    @Model?.Brand
+                </dd>
+                </div>
+                <!--用法-->
+                <div class="row texts mb-3">
+                <dt class="col-sm-3">
+                    <strong>
+                        @Html.DisplayNameFor(model => model.Dosage) :
+                    </strong>
+                </dt>
+                <dd class="col-sm-9">
+                    @Model?.Dosage
+                </dd>
+                </div>
             </dl>
         </div>
     </div>
 </form>
+
+@* 適應症&副作用沒有的情況沒測試 *@
