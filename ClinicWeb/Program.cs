@@ -12,7 +12,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using NuGet.Protocol;
-using ClinicWeb.Views.Hubs;
+using ClinicWeb.Hubs;
 var builder = WebApplication.CreateBuilder(args);
 var Server = builder.Configuration["ClinicSys:Server"];
 var User = builder.Configuration["ClinicSys:USER"];

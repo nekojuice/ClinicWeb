@@ -4,10 +4,10 @@ using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
-namespace ClinicWeb.Views.Hubs
+namespace ClinicWeb.Hubs
 {
     [Authorize(Policy = "frontendpolicy")]
-    public class ChatHubs:Hub
+    public class ChatHubs : Hub
     {
         private readonly ClinicSysContext _context;
         private readonly IHttpContextAccessor _httpContextAccessor;//抓到現在使用者資訊
