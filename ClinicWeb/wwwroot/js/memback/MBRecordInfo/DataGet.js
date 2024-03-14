@@ -1,6 +1,9 @@
 ﻿//獲得主要病歷表資料
-var CASE_ID = 1;
-(() => {
+var CASE_ID;
+(async () => {
+    const response = await fetch(`/MBRecordInfo/Get_Memberdata`, { method: "GET" })
+    const data = await response.json();
+    CASE_ID = data.caseId;
     getRecord(CASE_ID);
     getReport(CASE_ID);
     getPrescription(CASE_ID);
@@ -125,7 +128,6 @@ async function getPrescription(id) {
         myModal.show();
         getPrescriptionList(ID);
         console.log(rowData["prescriptionID"]);
-        alert('You clicked on ');
     });
 }
 
@@ -136,16 +138,17 @@ async function getPrescriptionList(id) {
     const response = await fetch(`/MBRecordInfo/GPL/${id}`, { method: "POST" })
     const data = await response.json();
     //return data;
-    var PLDT =$('#prescriptionListDataTable').DataTable({
+    var PLDT = $('#prescriptionListDataTable').DataTable({
         "bDestroy": true,
         columns: [
             { title: "藥品ID", data: "drugId", visible: false },
             { title: "藥品名稱", data: "name" },
             { title: "開立天數", data: "days" },
             { title: "總量", data: "total" },
-            {title: "藥品明細查詢", data:null, // 這邊是欄位
-            render: function (data, type, row) {
-                return `<button id="detail" type="button" class="btn btn-primary btn-sm style = "padding-left:10px"">明細</button> `
+            {
+                title: "藥品明細查詢", data: null, // 這邊是欄位
+                render: function (data, type, row) {
+                    return `<button id="detail" type="button" class="btn btn-primary btn-sm style = "padding-left:10px"">明細</button> `
                 }
             },
         ],
@@ -157,6 +160,7 @@ async function getPrescriptionList(id) {
         }
     });
     PLDT.rows.add(data).draw();
+}
 
     PLDT.on('click', 'button', function (e) {
         let data = PLDT.row(e.target.closest('tr')).data();
@@ -175,5 +179,7 @@ async function getPrescriptionList(id) {
         //    }
         //});
     });
-}
-
+    async function getName() {
+        const response = await fetch(`/MBRecordInfo/Get_MemberName`, { method: "GET" })
+        const data = await response.json();
+    }
