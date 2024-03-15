@@ -1,4 +1,53 @@
-﻿//獲得主要病歷表資料
+﻿//datatable初始化
+$('#recordDataTable').DataTable({
+    columns: [
+        { title: "看診紀錄ID", data: "recordID", visible: false },
+        { title: "日期", data: "date" },
+        { title: "血壓", data: "bloodPresure" },
+        { title: "脈搏", data: "pulse" },
+        { title: "體溫", data: "bodyTemparture" },
+        { title: "主述", data: "chiefComplaint" },
+        { title: "醫囑", data: "disposal" },
+        { title: "處方", data: "prescribe" },
+    ],
+    fixedHeader: {
+        header: true
+    },
+    language: {
+        url: "https://cdn.datatables.net/plug-ins/1.13.7/i18n/zh-HANT.json"
+    }
+});
+
+$('#reportDataTable').DataTable({
+    columns: [
+        { title: "報告ID", data: "reportID", visible: false },
+        { title: "檢查名稱", data: "testName" },
+        { title: "檢查日期", data: "testDate" },
+        { title: "報告日期", data: "reportDate" },
+        { title: "結果", data: "result" },
+    ],
+    fixedHeader: {
+        header: true
+    },
+    language: {
+        url: "https://cdn.datatables.net/plug-ins/1.13.7/i18n/zh-HANT.json"
+    }
+});
+
+$('#prescriptionDataTable').DataTable({
+    columns: [
+        { title: "處方ID", data: "prescriptionID", visible: false },
+        { title: "處方日期", data: "prescriptionDate" },
+        { title: "調劑方式", data: "dispensing" },
+    ],
+    fixedHeader: {
+        header: true
+    },
+    language: {
+        url: "https://cdn.datatables.net/plug-ins/1.13.7/i18n/zh-HANT.json"
+    }
+});
+//獲得主要病歷表資料
 async function getCase(id) {
     const response = await fetch(`/ClinicRoomSys/Cases/GM/${id}`, { method: "POST" })
     const data = await response.json();
@@ -12,34 +61,16 @@ async function getCase(id) {
     document.getElementById("inputAllergyRecord").value = data.allergyRecord;
     console.log(data);
     CASE_ID = data.casesID;
-    console.log(CASE_ID);
-    const record = getRecord(CASE_ID);
-    const report = getReport(CASE_ID);
-    const prescription = getPrescription(CASE_ID);
+    getRecord(CASE_ID);
+    getReport(CASE_ID);
+    getPrescription(CASE_ID);
 }
 
 //獲得看診紀錄資料
 async function getRecord(id) {
     const response = await fetch(`/ClinicRoomSys/Cases/GRD/${id}`, { method: "POST" })
     const data = await response.json();
-    $('#recordDataTable').DataTable({
-        columns: [
-            { title: "看診紀錄ID", data: "recordID", visible: false },
-            { title: "日期", data: "date" },
-            { title: "血壓", data: "bloodPresure" },
-            { title: "脈搏", data: "pulse" },
-            { title: "體溫", data: "bodyTemparture" },
-            { title: "主述", data: "chiefComplaint" },
-            { title: "醫囑", data: "disposal" },
-            { title: "處方", data: "prescribe" },
-        ],
-        fixedHeader: {
-            header: true
-        },
-        language: {
-            url: "https://cdn.datatables.net/plug-ins/1.13.7/i18n/zh-HANT.json"
-        }
-    });
+    
     $('#recordDataTable').DataTable().clear();
     $('#recordDataTable').DataTable().rows.add(data).draw();
 }
@@ -49,21 +80,6 @@ async function getReport(id) {
     const data = await response.json();
     console.log(data);
     //return data;
-    $('#reportDataTable').DataTable({
-        columns: [
-            { title: "報告ID", data: "reportID", visible: false },
-            { title: "檢查名稱", data: "testName" },
-            { title: "檢查日期", data: "testDate" },
-            { title: "報告日期", data: "reportDate" },
-            { title: "結果", data: "result" },
-        ],
-        fixedHeader: {
-            header: true
-        },
-        language: {
-            url: "https://cdn.datatables.net/plug-ins/1.13.7/i18n/zh-HANT.json"
-        }
-    });
     $('#reportDataTable').DataTable().clear();
     $('#reportDataTable').DataTable().rows.add(data).draw();
 }
@@ -73,49 +89,36 @@ async function getPrescription(id) {
     const data = await response.json();
     console.log(data);
     //return data;
-    $('#prescriptionDataTable').DataTable({
-        columns: [
-            { title: "處方ID", data: "prescriptionID", visible: false },
-            { title: "處方日期", data: "prescriptionDate" },
-            { title: "調劑方式", data: "dispensing" },
-        ],
-        fixedHeader: {
-            header: true
-        },
-        language: {
-            url: "https://cdn.datatables.net/plug-ins/1.13.7/i18n/zh-HANT.json"
-        }
-    });
-    $('#rprescriptionDataTable').DataTable().clear();
+    $('#prescriptionDataTable').DataTable().clear();
     $('#prescriptionDataTable').DataTable().rows.add(data).draw();
 }
 
-//async function uploadFormData(formData) {
-//    try {
-//        const response = await fetch('/upload', {
-//            method: 'PUT',
-//            body: formData
-//        });
-//        if (response.ok) {
-//            console.log('上传成功');
-//        } else {
-//            console.error('上传失败');
-//        }
-//    } catch (error) {
-//        console.error('上传出错', error);
-//    }
-//}
+async function uploadFormData(id) {
+    const record =
+    {
+        Height: $('#inputHeight').val(),
+        Weight: $('#inputWeight').val(),
+        PastHistory: $('#inputPastHistory').val(),
+        AllergyRecord: $('#inputAllergyRecord').val(),
+    }
+    const response = await fetch(`/ClinicRoomSys/Cases/UpdateCase/${id}`, { // 注意调整URL为实际的API路由
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(record),
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+            // 这里可以添加一些成功后的操作
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+}
 
-//async function getCase(id) {
-//    // 读取表单数据
-//    const form = document.getElementById('MainForm');
-//    const formData = new FormData(form);
-    
-
-//    // 上传表单数据
-//    await uploadFormData(formData);
-//}
-//document.getElementById("submitButton").addEventListener("click", function (event) {
-//    event.preventDefault(); // 防止表單提交
-//    getCase(CASE_ID);
-//});
+document.getElementById("submit").addEventListener("click", function (event) {
+    event.preventDefault(); // 防止表單提交
+    uploadFormData(CASE_ID);
+});

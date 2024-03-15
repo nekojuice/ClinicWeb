@@ -59,7 +59,6 @@
             const response = await fetch('@Url.Content("~/ClinicRoomSys/CallingSys/Get_EmpId")', { method: 'POST' });
             const memberData = await response.text()
             DOCTOR_ID = memberData
-            getCase(MEMBER_ID);
         })();
 
         //點選左表後觸發的事件 fetch右表
