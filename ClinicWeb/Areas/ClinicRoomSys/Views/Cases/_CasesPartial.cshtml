@@ -22,20 +22,18 @@
                 <br><br>
                 <div class="x_content">
                     <div class="col-sm-12">
-                        <label>姓名</label>
+                        <label style="margin-top:6px">姓名</label>
                         <input type="text" class="form-control" id="inputName" disabled>
 
-                        <label>性別</label>
+                        <label style="margin-top:6px">性別</label>
                         <input type="text" class="form-control" id="inputGender" disabled>
 
-                        <label>出生日期</label>
+                        <label style="margin-top:6px">出生日期</label>
                         <input type="text" class="form-control" id="inputBirthDate" disabled>
-                    <div class="form-group">
-                        <label>血型</label>
+                        <label style="margin-top:6px">血型</label>
                         <input type="text" class="form-control" id="inputBloodType" disabled>
-                    </div>
                     <form id="MainForm" >
-                    <div class="form-group">
+                            <div class="form-group" style="margin-top:6px">
                         <label for="inputHeight">身高</label>
                         <input type="number" class="form-control" id="inputHeight" placeholder="請輸入身高">
                     </div>
@@ -82,6 +80,7 @@
                     </li>
                 </ul>
                 <div class="clearfix"></div>
+                <button type="button" id="addrecord" class="btn" style="margin-left:11px;background-color:deepskyblue" data-toggle="modal" data-target="#recordModal">New</button>
             </div>
 
             <div class="x_content">
@@ -209,3 +208,4 @@
         </div>
     </div>
 </div>
+<partial name="/Areas/ClinicRoomSys/Views/Cases/_caseModalPartial.cshtml" />

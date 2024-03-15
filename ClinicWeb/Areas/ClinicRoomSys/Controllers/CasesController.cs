@@ -99,39 +99,26 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
                 );
         }
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UpdateCase(int id,[FromBody] MainCaseViewModel caseUpdateModel)
+        public async Task<IActionResult> UpdateCase(int id, [FromBody] CasesMainCase caseUpdateModel)
         {
-            // 根据 id 获取要更新的病例
-            var caseToUpdate = _context.CasesMainCase.FirstOrDefault(x => x.CaseId == id);
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                caseToUpdate.Height = caseUpdateModel.Height;
-                caseToUpdate.Weight = caseUpdateModel.Weight;
-                caseToUpdate.PastHistory = caseUpdateModel.PastHistory;
-                caseToUpdate.AllergyRecord = caseUpdateModel.AllergyRecord;
-
-                await _context.SaveChangesAsync();
-                return Ok(new { success = true, message = "Record added successfully" });
+                return BadRequest(new { success = false, message = "Invalid data" });
             }
-            return BadRequest(new { success = false, message = "Invalid data" });
+
+            var caseToUpdate = await _context.CasesMainCase.FirstOrDefaultAsync(x => x.CaseId == id);
+            if (caseToUpdate == null)
+            {
+                return NotFound(new { success = false, message = "Case not found" });
+            }
+
+            caseToUpdate.Height = caseUpdateModel.Height;
+            caseToUpdate.Weight = caseUpdateModel.Weight;
+            caseToUpdate.PastHistory = caseUpdateModel.PastHistory;
+            caseToUpdate.AllergyRecord = caseUpdateModel.AllergyRecord;
+
+            await _context.SaveChangesAsync();
+            return Ok(new { success = true, message = "Record updated successfully" });
         }
-
-
-            //if (caseToUpdate == null)
-            //{
-            //    return NotFound(); // 如果找不到對應的病例，返回 404 Not Found
-            //}
-
-            //// 更新病例信息
-            //caseToUpdate.Height = caseUpdateModel.Height;
-            //caseToUpdate.Weight = caseUpdateModel.Weight;
-            //caseToUpdate.PastHistory = caseUpdateModel.PastHistory;
-            //caseToUpdate.AllergyRecord = caseUpdateModel.AllergyRecord;
-
-            //_context.SaveChanges();
-
-            //return Ok(); // 返回 200 OK 表示更新成功
-        }
-
     }
+ }

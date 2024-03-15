@@ -1,0 +1,45 @@
+﻿<div class="modal fade" id="recordModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">處方籤明細</h5>
+                <button id="close" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                    <div class="col-sm-12">
+                        <label>姓名</label>
+                        <input type="text" class="form-control" id="inputName" disabled>
+
+                        <label style="margin-top:6px">性別</label>
+                        <input type="text" class="form-control" id="inputGender" disabled>
+
+                        <label style="margin-top:6px">出生日期</label>
+                        <input type="text" class="form-control" id="inputBirthDate" disabled>
+                        <label style="margin-top:6px">血型</label>
+                        <input type="text" class="form-control" id="inputBloodType" disabled>
+                        <form id="MainForm">
+                            <div class="form-group" style="margin-top:6px">
+                                <label for="inputHeight">身高</label>
+                                <input type="number" class="form-control" id="inputHeight" placeholder="請輸入身高">
+                            </div>
+                            <div class="form-group">
+                                <label for="inputWeight">體重</label>
+                                <input type="number" class="form-control" id="inputWeight" placeholder="請輸入體重">
+                            </div>
+                            <div class="form-group">
+                                <label for="inputPastHistory">既往病史</label>
+                                <textarea class="form-control" id="inputPastHistory" rows="3"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputAllergyRecord">過敏紀錄</label>
+                                <textarea class="form-control" id="inputAllergyRecord" rows="3"></textarea>
+                            </div>
+                        </form>
+                        <button id="submit" class="btn btn-primary">新增</button>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>

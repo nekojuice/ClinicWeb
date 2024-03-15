@@ -93,30 +93,68 @@ async function getPrescription(id) {
     $('#prescriptionDataTable').DataTable().rows.add(data).draw();
 }
 
+//async function uploadFormData(id) {
+//    const record =
+//    {
+//        Height: $('#inputHeight').val(),
+//        Weight: $('#inputWeight').val(),
+//        PastHistory: $('#inputPastHistory').val(),
+//        AllergyRecord: $('#inputAllergyRecord').val(),
+//    }
+//    const response = await fetch(`/ClinicRoomSys/Cases/UpdateCase/${id}`, { // 注意调整URL为实际的API路由
+//        method: 'POST',
+//        headers: {
+//            'Content-Type': 'application/json',
+//        },
+//        body: JSON.stringify(record),
+//    })
+//        .then(response => response.json())
+//        .then(data => {
+//            console.log('Success:', data);
+//            // 这里可以添加一些成功后的操作
+//        })
+//        .catch((error) => {
+//            console.error('Error:', error);
+//        });
+//}
+
 async function uploadFormData(id) {
-    const record =
-    {
+    const record = {
         Height: $('#inputHeight').val(),
         Weight: $('#inputWeight').val(),
         PastHistory: $('#inputPastHistory').val(),
         AllergyRecord: $('#inputAllergyRecord').val(),
-    }
-    const response = await fetch(`/ClinicRoomSys/Cases/UpdateCase/${id}`, { // 注意调整URL为实际的API路由
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(record),
-    })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Success:', data);
-            // 这里可以添加一些成功后的操作
-        })
-        .catch((error) => {
-            console.error('Error:', error);
+    };
+
+    try {
+        const response = await fetch(`/ClinicRoomSys/Cases/UpdateCase/${id}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(record),
         });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log('Success:', data);
+        // 這裡可以添加一些成功後的操作，比如更新UI或者是頁面導覽
+        new PNotify({
+            title: '成功',
+            text: '病歷表修改成功',
+            type: 'info',
+            styling: 'bootstrap3',
+            setTimeout: 500
+        })
+    } catch (error) {
+        console.error('Error:', error);
+        // 這裡可以處理錯誤，比如提示用户操作失敗
+    }
 }
+
 
 document.getElementById("submit").addEventListener("click", function (event) {
     event.preventDefault(); // 防止表單提交
