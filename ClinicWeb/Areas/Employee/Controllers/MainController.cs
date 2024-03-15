@@ -158,10 +158,14 @@ namespace ClinicWeb.Areas.Employee.Controllers
         [HttpPost]
         public JsonResult Show_Satisfaction()
         {
-            int Paverage = 0;
-            int Daverage = 0;
-            int Caverage = 0;
-            int Saverage = 0;
+            //int Paverage = 0;
+            //int Daverage = 0;
+            //int Caverage = 0;
+            //int Saverage = 0;
+            double Paverage = 0.0;
+            double Daverage = 0.0;
+            double Caverage = 0.0;
+            double Saverage = 0.0;
 
             var a = _context.CasesMedicalRecords
                 .Select(s => new
@@ -197,10 +201,10 @@ namespace ClinicWeb.Areas.Employee.Controllers
 
 
             }
-            Paverage = Paverage / pc;
-            Daverage = Daverage / dc;
-            Caverage = Caverage / dc;
-            Saverage = Saverage / dc;
+            Paverage = Math.Round(Paverage / pc, 1);
+            Daverage = Math.Round(Daverage / dc, 1);
+            Caverage = Math.Round(Caverage / cc, 1);
+            Saverage = Math.Round(Saverage / sc, 1);
 
             return Json(new {
                 PatientSatisfaction = Paverage,
