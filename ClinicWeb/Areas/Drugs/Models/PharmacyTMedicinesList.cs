@@ -56,14 +56,11 @@ public partial class PharmacyTMedicinesList
     [Unicode(false)]
     public string FPregnancyCategory { get; set; }
 
-    [Required]
     [Column("fApperance")]
-    [StringLength(50)]
-    public string FApperance { get; set; }
+    public byte[] FApperance { get; set; }
 
     [Column("fImages")]
-    [StringLength(50)]
-    public string FImages { get; set; }
+    public byte[] FImages { get; set; }
 
     [Required]
     [Column("fStorage")]

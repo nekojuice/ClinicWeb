@@ -13,6 +13,8 @@ public partial class ClinicSysContext : DbContext
     {
     }
 
+    public virtual DbSet<PharmacyHealthInformation> PharmacyHealthInformation { get; set; }
+
     public virtual DbSet<PharmacyTClinicalUseDetails> PharmacyTClinicalUseDetails { get; set; }
 
     public virtual DbSet<PharmacyTClinicalUseList> PharmacyTClinicalUseList { get; set; }

@@ -16,6 +16,10 @@
    "T4TemplatePath": null,
    "Tables": [
       {
+         "Name": "[dbo].[Pharmacy_HealthInformation]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[Pharmacy_tClinicalUseDetails]",
          "ObjectType": 0
       },
@@ -62,6 +66,7 @@
    "UseNoObjectFilter": false,
    "UseNodaTime": false,
    "UseNullableReferences": false,
+   "UsePrefixNavigationNaming": false,
    "UseSchemaFolders": false,
    "UseSchemaNamespaces": false,
    "UseSpatial": false,
