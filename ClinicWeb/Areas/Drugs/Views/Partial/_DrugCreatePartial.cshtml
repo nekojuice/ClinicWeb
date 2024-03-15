@@ -1,0 +1,123 @@
+﻿
+<div class="x_panel">
+    <div class="x_title">
+        <h2>新增藥品</h2>
+
+        <div class="clearfix"></div>
+    </div>
+    <div class="x_content">
+        <br>
+        <form id="DrugForm" class="form-label-left input_mask">
+
+            <!--藥品代碼-->
+            <div class="form-group row">
+                <label class="col-form-label col-md-3 col-sm-3 ">藥品代碼</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <input type="text" class="form-control" placeholder="藥品代碼" name="fDrugCode">
+                </div>
+            </div>
+            <!--學名-->
+            <div class="form-group row">
+                <label class="col-form-label col-md-3 col-sm-3 ">學名</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <input type="text" class="form-control" placeholder="學名" name="fGenericName">
+                </div>
+            </div>
+            <!--商品名-->
+            <div class="form-group row">
+                <label class="col-form-label col-md-3 col-sm-3 ">商品名</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <input type="text" class="form-control" placeholder="商品名" name="fTradeName">
+                </div>
+            </div>
+            <!--中文名-->
+            <div class="form-group row">
+                <label class="col-form-label col-md-3 col-sm-3 ">中文名</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <input type="text" class="form-control" placeholder="中文名" name="fDrugName">
+                </div>
+            </div>
+            <!--劑型-->
+            <div class="form-group row">
+                <label class="col-form-label col-md-3 col-sm-3 ">劑型</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <input type="text" class="form-control" placeholder="劑型" name="fType">
+                </div>
+            </div>
+            <!--懷孕藥品分級-->
+            <div class="form-group row">
+                <label class="col-form-label col-md-3 col-sm-3 ">懷孕藥品分級</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <input type="text" class="form-control" placeholder="懷孕藥品分級" name="fPregnancyCategory">
+                </div>
+            </div>           
+            <!--建議劑量-->
+            <div class="form-group row">
+                <label class="col-form-label col-md-3 col-sm-3 ">建議劑量</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <input type="text" class="form-control" placeholder="建議劑量" name="fDrugDose">
+                </div>
+            </div>
+            <!--最大劑量-->
+            <div class="form-group row">
+                <label class="col-form-label col-md-3 col-sm-3 ">最大劑量</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <input type="text" class="form-control" placeholder="最大劑量" name="fMaxDose">
+                </div>
+            </div>
+            <!--用法-->
+            <div class="form-group row">
+                <label class="col-form-label col-md-3 col-sm-3 ">用法</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <input type="text" class="form-control" placeholder="用法" name="fDosage">
+                </div>
+            </div>
+            <!--禁忌-->
+            <div class="form-group row">
+                <label class="col-form-label col-md-3 col-sm-3 ">禁忌</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <input type="text" class="form-control" placeholder="禁忌" name="fPrecautions">
+                </div>
+            </div>
+            <!--注意事項-->
+            <div class="form-group row">
+                <label class="col-form-label col-md-3 col-sm-3 ">注意事項</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <input type="text" class="form-control" placeholder="注意事項" name="fWarnings">
+                </div>
+            </div>
+            <!--儲存方法-->
+            <div class="form-group row">
+                <label class="col-form-label col-md-3 col-sm-3 ">儲存方法</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <input type="text" class="form-control" placeholder="儲存方法" name="fStorage">
+                </div>
+            </div>
+            <!--廠商-->
+            <div class="form-group row">
+                <label class="col-form-label col-md-3 col-sm-3 ">廠商</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <input type="text" class="form-control" placeholder="廠商" name="fSupplier">
+                </div>
+            </div>
+            <!--廠牌-->
+            <div class="form-group row">
+                <label class="col-form-label col-md-3 col-sm-3 ">廠牌</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <input type="text" class="form-control" placeholder="廠牌" name="fBrand">
+                </div>
+            </div>
+
+           
+            <!--按鈕-->
+            <div class="form-group row" style="margin:30px">
+                <div class="col-md-9 col-sm-9  offset-md-8">
+
+                    <button id="closeButton" type="button" class="btn btn-secondary" data-dismiss="modal"> 關閉 </button>
+                    <button class="btn btn-primary" type="reset"> 清除 </button>
+                    <button id="saveButton" type="submit" class="btn btn-primary"> 新增 </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
