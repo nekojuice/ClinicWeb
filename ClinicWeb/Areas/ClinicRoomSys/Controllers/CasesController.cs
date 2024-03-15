@@ -120,5 +120,16 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
             await _context.SaveChangesAsync();
             return Ok(new { success = true, message = "Record updated successfully" });
         }
+
+        [HttpPost]
+        public IActionResult AddMedicalRecord([FromBody] CasesMedicalRecords record)
+        {
+            // 在這裡處理表單提交的資料，例如將資料儲存到資料庫中
+            _context.CasesMedicalRecords.Add(record);
+            _context.SaveChanges();
+
+            // 返回適當的回應
+            return Ok();
+        }
     }
  }
