@@ -14,10 +14,18 @@ async function getCase(id) {
     CASE_ID = data.casesID;
     console.log(CASE_ID);
     const record = getRecord(CASE_ID);
+    const report = getReport(CASE_ID);
+    const prescription = getPrescription(CASE_ID);
+}
+
+//獲得看診紀錄資料
+async function getRecord(id) {
+    const response = await fetch(`/ClinicRoomSys/Cases/GRD/${id}`, { method: "POST" })
+    const data = await response.json();
     $('#recordDataTable').DataTable({
         columns: [
             { title: "看診紀錄ID", data: "recordID", visible: false },
-            { title: "日期", data: "date"},
+            { title: "日期", data: "date" },
             { title: "血壓", data: "bloodPresure" },
             { title: "脈搏", data: "pulse" },
             { title: "體溫", data: "bodyTemparture" },
@@ -32,8 +40,15 @@ async function getCase(id) {
             url: "https://cdn.datatables.net/plug-ins/1.13.7/i18n/zh-HANT.json"
         }
     });
-    // $('#recordDataTable').DataTable().clear();
-    // $('#recordDataTable').DataTable().rows.add(record).draw();
+    $('#recordDataTable').DataTable().clear();
+    $('#recordDataTable').DataTable().rows.add(data).draw();
+}
+//獲得檢查報告資料
+async function getReport(id) {
+    const response = await fetch(`/ClinicRoomSys/Cases/GRT/${id}`, { method: "POST" })
+    const data = await response.json();
+    console.log(data);
+    //return data;
     $('#reportDataTable').DataTable({
         columns: [
             { title: "報告ID", data: "reportID", visible: false },
@@ -49,6 +64,15 @@ async function getCase(id) {
             url: "https://cdn.datatables.net/plug-ins/1.13.7/i18n/zh-HANT.json"
         }
     });
+    $('#reportDataTable').DataTable().clear();
+    $('#reportDataTable').DataTable().rows.add(data).draw();
+}
+//獲得處方資料
+async function getPrescription(id) {
+    const response = await fetch(`/ClinicRoomSys/Cases/GP/${id}`, { method: "POST" })
+    const data = await response.json();
+    console.log(data);
+    //return data;
     $('#prescriptionDataTable').DataTable({
         columns: [
             { title: "處方ID", data: "prescriptionID", visible: false },
@@ -62,32 +86,7 @@ async function getCase(id) {
             url: "https://cdn.datatables.net/plug-ins/1.13.7/i18n/zh-HANT.json"
         }
     });
-    const report = getReport(CASE_ID);
-    const prescription = getPrescription(CASE_ID);
-}
-
-//獲得看診紀錄資料
-async function getRecord(id) {
-    const response = await fetch(`/ClinicRoomSys/Cases/GRD/${id}`, { method: "POST" })
-    const data = await response.json();
-    console.log(data);
-    // return data;
-    $('#recordDataTable').DataTable().rows.add(data).draw();
-}
-//獲得檢查報告資料
-async function getReport(id) {
-    const response = await fetch(`/ClinicRoomSys/Cases/GRT/${id}`, { method: "POST" })
-    const data = await response.json();
-    console.log(data);
-    //return data;
-    $('#reportDataTable').DataTable().rows.add(data).draw();
-}
-//獲得處方資料
-async function getPrescription(id) {
-    const response = await fetch(`/ClinicRoomSys/Cases/GP/${id}`, { method: "POST" })
-    const data = await response.json();
-    console.log(data);
-    //return data;
+    $('#rprescriptionDataTable').DataTable().clear();
     $('#prescriptionDataTable').DataTable().rows.add(data).draw();
 }
 
