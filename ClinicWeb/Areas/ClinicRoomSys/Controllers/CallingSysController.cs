@@ -1,6 +1,8 @@
 ﻿using ClinicWeb.Areas.Appointment.Models;
 using ClinicWeb.Areas.ClinicRoomSys.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NuGet.Protocol;
 
 namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
 {
@@ -70,10 +72,44 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
                 }).FirstOrDefault());
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public IActionResult View_CallingPage()
         {
             return View("~/Areas/ClinicRoomSys/Views/CallingPage/View_CallingPage.cshtml");
+        }
+
+        //更改跳號序
+        public IActionResult Put_JunpState(string clinicInfoId, string stateId)
+        {
+            return Ok();
+        }
+
+        //更改病患報到狀態
+        [HttpPost]
+        [Route("{area}/{controller}/{action}/{clinicListId}/{stateId}")]
+        public async Task<IActionResult> Put_PatientState(string clinicListId, string stateId)
+        {
+            Console.WriteLine($"{clinicListId}, {stateId}");
+            var target = _context.ApptClinicList.Where(x => x.ClinicListId == Convert.ToInt32(clinicListId)).FirstOrDefault();
+            if (target == null)
+            {
+                return NotFound();
+            }
+            target.PatientStateId = Convert.ToInt32(stateId);
+            await _context.SaveChangesAsync();
+
+            return Json(_context.ApptClinicList.Where(x=>x.ClinicListId == Convert.ToInt32(clinicListId)).Select(x=> new
+            {
+                member_id = x.MemberId,
+                clinicListId = x.ClinicListId,
+                status_id = x.PatientStateId,
+                診號 = x.ClinicNumber,
+                姓名 = x.Member.Name,
+                性別 = x.Member.Gender ? "男" : "女",
+                狀態 = x.PatientState.PatientStateName
+            }
+            ).FirstOrDefault());
         }
     }
 }

@@ -1,7 +1,20 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@section Styles{
+    <!-- Datatables -->
+    <link href="//cdn.datatables.net/plug-ins/2.0.1/integration/font-awesome/dataTables.fontAwesome.css" rel="stylesheet">
+    <link href="~/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="~/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+    <link href="~/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+    <link href="~/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+    <link href="~/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet" />
+    <!-- Datatables -->
+    <link href="~/lib/datatables/css/datatables.bootstrap.min.css" rel="stylesheet" />
+    <link href="~/lib/datatables/css/jquery.datatables.min.css" rel="stylesheet" />
+    <link href="//cdn.datatables.net/plug-ins/2.0.1/integration/font-awesome/dataTables.fontAwesome.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="~/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="~/msit155e/css/schedule/starrating.css" rel="stylesheet" />
 }
 <style>
     td {
@@ -29,7 +42,19 @@
   padding:10px;
 }
 
+    ﻿.star-rating {
+        line-height: 32px;
+        font-size: 1.25em;
+    }
+
+    .star-rating .fa-star {
+        color: yellow;
+    }
+
+
 </style>
+
+
 
 <div id="comp-lfkudben" style="margin-top:30px"><h1 style="text-align:center; font-size:47px; color:#003153 "><span style="letter-spacing:0.3em;border-bottom:3px solid #E69966  ">門診表</span></h1></div>
 <div class="container-fluid" style="display:flex; flex-wrap:wrap; justify-content:center; margin:30px;  width:fit-content; margin:0 auto;">
@@ -184,7 +209,58 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree" style="background-color:#53B0AE">
+                            評價
+                        </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse">
+                        <div class="accordion-body">
+                            <div class="rating-lists">
+                                <label class="title" for="comment" style="font-size:20px">就診滿意度：</label>
+                      
+                                <div class="row" >
+                                    <label class="title" for="comment" style="font-size:20px" id="scorep1" >分</label>
+                                    <div class="col-lg-12" >
+                                        <div class="star-rating" id="PatientSatisfaction1" >
+                                            <span class="fa fa-star-o" data-rating="1"></span>
+                                            <span class="fa fa-star-o" data-rating="2"></span>
+                                            <span class="fa fa-star-o" data-rating="3"></span>
+                                            <span class="fa fa-star-o" data-rating="4"></span>
+                                            <span class="fa fa-star-o" data-rating="5"></span>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="rating-lists">
+                                <label class="title" for="comment" style="font-size:20px">醫師積極度：</label>
+                                <div class="row">
+                                    <label class="title" for="comment" style="font-size:20px" id="scored1">分</label>
+                                    <div class="col-lg-12">
+                                        <div class="star-rating" id="DocSatisfaction1">
+                                            <span class="fa fa-star-o" data-rating="1"></span>
+                                            <span class="fa fa-star-o" data-rating="2"></span>
+                                            <span class="fa fa-star-o" data-rating="3"></span>
+                                            <span class="fa fa-star-o" data-rating="4"></span>
+                                            <span class="fa fa-star-o" data-rating="5"></span>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+
+
+
          
             
 
@@ -234,6 +310,54 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThreethree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree" style="background-color:#53B0AE">
+                            評價
+                        </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseThreethree" class="accordion-collapse collapse">
+                        <div class="accordion-body">
+                            <div class="rating-lists">
+                                <label class="title" for="comment" style="font-size:20px">就診滿意度：</label>
+
+                                <div class="row">
+                                    <label class="title" for="comment" style="font-size:20px" id="scorep2">分</label>
+                                    <div class="col-lg-12">
+                                        <div class="star-rating" id="PatientSatisfaction2">
+                                            <span class="fa fa-star-o" data-rating="1"></span>
+                                            <span class="fa fa-star-o" data-rating="2"></span>
+                                            <span class="fa fa-star-o" data-rating="3"></span>
+                                            <span class="fa fa-star-o" data-rating="4"></span>
+                                            <span class="fa fa-star-o" data-rating="5"></span>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="rating-lists">
+                                <label class="title" for="comment" style="font-size:20px">醫師積極度：</label>
+                                <div class="row">
+                                    <label class="title" for="comment" style="font-size:20px" id="scored2">分</label>
+                                    <div class="col-lg-12">
+                                        <div class="star-rating" id="DocSatisfaction2">
+                                            <span class="fa fa-star-o" data-rating="1"></span>
+                                            <span class="fa fa-star-o" data-rating="2"></span>
+                                            <span class="fa fa-star-o" data-rating="3"></span>
+                                            <span class="fa fa-star-o" data-rating="4"></span>
+                                            <span class="fa fa-star-o" data-rating="5"></span>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
 
@@ -278,6 +402,53 @@
                             <span style="font-size:20px;" class="wixui-rich-text__text">
                                 周產期醫學、高危險妊娠、高層次超音波、3D/4D超音波、產科手術、子宮頸癌預防篩檢、子宮卵巢微創手術、單孔腹腔鏡手術、子宮鏡手術、婦科腫瘤
                             </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse33" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree" style="background-color:#53B0AE">
+                            評價
+                        </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapse33" class="accordion-collapse collapse">
+                        <div class="accordion-body">
+                            <div class="rating-lists">
+                                <label class="title" for="comment" style="font-size:20px">就診滿意度：</label>
+
+                                <div class="row">
+                                    <label class="title" for="comment" style="font-size:20px" id="scorep3">分</label>
+                                    <div class="col-lg-12">
+                                        <div class="star-rating" id="PatientSatisfaction3">
+                                            <span class="fa fa-star-o" data-rating="1"></span>
+                                            <span class="fa fa-star-o" data-rating="2"></span>
+                                            <span class="fa fa-star-o" data-rating="3"></span>
+                                            <span class="fa fa-star-o" data-rating="4"></span>
+                                            <span class="fa fa-star-o" data-rating="5"></span>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="rating-lists">
+                                <label class="title" for="comment" style="font-size:20px">醫師積極度：</label>
+                                <div class="row">
+                                    <label class="title" for="comment" style="font-size:20px" id="scored3">分</label>
+                                    <div class="col-lg-12">
+                                        <div class="star-rating" id="DocSatisfaction3">
+                                            <span class="fa fa-star-o" data-rating="1"></span>
+                                            <span class="fa fa-star-o" data-rating="2"></span>
+                                            <span class="fa fa-star-o" data-rating="3"></span>
+                                            <span class="fa fa-star-o" data-rating="4"></span>
+                                            <span class="fa fa-star-o" data-rating="5"></span>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -330,6 +501,53 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse43" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree" style="background-color:#53B0AE">
+                            評價
+                        </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapse43" class="accordion-collapse collapse">
+                        <div class="accordion-body">
+                            <div class="rating-lists">
+                                <label class="title" for="comment" style="font-size:20px">就診滿意度：</label>
+
+                                <div class="row">
+                                    <label class="title" for="comment" style="font-size:20px" id="scorep4">分</label>
+                                    <div class="col-lg-12">
+                                        <div class="star-rating" id="PatientSatisfaction4">
+                                            <span class="fa fa-star-o" data-rating="1"></span>
+                                            <span class="fa fa-star-o" data-rating="2"></span>
+                                            <span class="fa fa-star-o" data-rating="3"></span>
+                                            <span class="fa fa-star-o" data-rating="4"></span>
+                                            <span class="fa fa-star-o" data-rating="5"></span>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="rating-lists">
+                                <label class="title" for="comment" style="font-size:20px">醫師積極度：</label>
+                                <div class="row">
+                                    <label class="title" for="comment" style="font-size:20px" id="scored4">分</label>
+                                    <div class="col-lg-12">
+                                        <div class="star-rating" id="DocSatisfaction4">
+                                            <span class="fa fa-star-o" data-rating="1"></span>
+                                            <span class="fa fa-star-o" data-rating="2"></span>
+                                            <span class="fa fa-star-o" data-rating="3"></span>
+                                            <span class="fa fa-star-o" data-rating="4"></span>
+                                            <span class="fa fa-star-o" data-rating="5"></span>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
 
@@ -378,6 +596,53 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse53" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree" style="background-color:#53B0AE">
+                            評價
+                        </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapse53" class="accordion-collapse collapse">
+                        <div class="accordion-body">
+                            <div class="rating-lists">
+                                <label class="title" for="comment" style="font-size:20px">就診滿意度：</label>
+
+                                <div class="row">
+                                    <label class="title" for="comment" style="font-size:20px" id="scorep5">分</label>
+                                    <div class="col-lg-12">
+                                        <div class="star-rating" id="PatientSatisfaction5">
+                                            <span class="fa fa-star-o" data-rating="1"></span>
+                                            <span class="fa fa-star-o" data-rating="2"></span>
+                                            <span class="fa fa-star-o" data-rating="3"></span>
+                                            <span class="fa fa-star-o" data-rating="4"></span>
+                                            <span class="fa fa-star-o" data-rating="5"></span>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="rating-lists">
+                                <label class="title" for="comment" style="font-size:20px">醫師積極度：</label>
+                                <div class="row">
+                                    <label class="title" for="comment" style="font-size:20px" id="scored5">分</label>
+                                    <div class="col-lg-12">
+                                        <div class="star-rating" id="DocSatisfaction5">
+                                            <span class="fa fa-star-o" data-rating="1"></span>
+                                            <span class="fa fa-star-o" data-rating="2"></span>
+                                            <span class="fa fa-star-o" data-rating="3"></span>
+                                            <span class="fa fa-star-o" data-rating="4"></span>
+                                            <span class="fa fa-star-o" data-rating="5"></span>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
 
@@ -391,6 +656,7 @@
             <p style="font-size:30px; line-height:normal;"><span style="letter-spacing:normal;border-left:6px solid #003153;padding:5px " class="wixui-rich-text__text">趙美琴</span><span style="letter-spacing:normal; font-size:25px">&nbsp;醫師</span></p>
 
             <div class="accordion" id="accordionPanelsStayOpenExample6">
+               @*學經歷*@
                 <div class="accordion-item">
                     <h2 class="accordion-header">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOnesix" aria-expanded="false" aria-controls="panelsStayOpen-collapseOne" style="background-color:#53B0AE">
@@ -411,6 +677,7 @@
                         </div>
                     </div>
                 </div>
+               @*專長*@
                 <div class="accordion-item">
                     <h2 class="accordion-header">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwosix" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo" style="background-color:#E69966">
@@ -424,7 +691,57 @@
                             </span>
                         </div>
                     </div>
+
                 </div>
+
+                @*評價*@
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThreesix" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree" style="background-color:#53B0AE">
+                            評價
+                        </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseThreesix" class="accordion-collapse collapse">
+                        <div class="accordion-body">
+                            <div class="rating-lists">
+                                <label class="title" for="comment" style="font-size:20px">就診滿意度：</label>
+
+                                <div class="row">
+                                    <label class="title" for="comment" style="font-size:20px" id="scorep6">分</label>
+                                    <div class="col-lg-12">
+                                        <div class="star-rating" id="PatientSatisfaction6">
+                                            <span class="fa fa-star-o" data-rating="1"></span>
+                                            <span class="fa fa-star-o" data-rating="2"></span>
+                                            <span class="fa fa-star-o" data-rating="3"></span>
+                                            <span class="fa fa-star-o" data-rating="4"></span>
+                                            <span class="fa fa-star-o" data-rating="5"></span>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="rating-lists">
+                                <label class="title" for="comment" style="font-size:20px">醫師積極度：</label>
+                                <div class="row">
+                                    <label class="title" for="comment" style="font-size:20px" id="scored6">分</label>
+                                    <div class="col-lg-12">
+                                        <div class="star-rating" id="DocSatisfaction6">
+                                            <span class="fa fa-star-o" data-rating="1"></span>
+                                            <span class="fa fa-star-o" data-rating="2"></span>
+                                            <span class="fa fa-star-o" data-rating="3"></span>
+                                            <span class="fa fa-star-o" data-rating="4"></span>
+                                            <span class="fa fa-star-o" data-rating="5"></span>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
         </div>
@@ -433,4 +750,225 @@
 
 @section Scripts{
     <script src="~/msit155e/js/schedule/fclinicweekschedule.js"></script>
+    <script>
+        //1
+        (async () => {
+            const url = '@Url.Content("~/WeekSchedule/GS/1")';
+            //console.log(url);
+            const response = await fetch(url, { method: "POST" });
+            const datas = await response.json();
+            console.log(datas);
+
+            // 更新 醫師满意度评分
+            const docScore = datas.docSatisfaction;
+            const patScore = datas.patientSatisfaction;
+
+            // 更新病人满意度星级评分
+            const scoredLabelp = document.getElementById('scorep1');
+            scoredLabelp.textContent = patScore + '分';
+
+            const patientSatisfaction = document.getElementById('PatientSatisfaction1');
+            const stars = patientSatisfaction.getElementsByClassName('fa');
+            for (let i = 0; i < patScore; i++) {
+                stars[i].classList.remove('fa-star-o');
+                stars[i].classList.add('fa-star');
+            }
+
+            // //醫師積極度評分
+            const scoredLabeld = document.getElementById('scored1');
+            scoredLabeld.textContent = docScore + '分';
+
+            const docSatisfaction = document.getElementById('DocSatisfaction1');
+            const starsd = docSatisfaction.getElementsByClassName('fa');
+            for (let i = 0; i < docScore; i++) {
+                starsd[i].classList.remove('fa-star-o');
+                starsd[i].classList.add('fa-star');
+            }
+
+        })();
+
+        //2
+        (async () => {
+            const url = '@Url.Content("~/WeekSchedule/GS/2")';
+            //console.log(url);
+            const response = await fetch(url, { method: "POST" });
+            const datas = await response.json();
+            console.log(datas);
+
+            // 更新 醫師满意度评分
+            const docScore = datas.docSatisfaction;
+            const patScore = datas.patientSatisfaction;
+
+            // 更新病人满意度星级评分
+            const scoredLabelp = document.getElementById('scorep2');
+            scoredLabelp.textContent = patScore + '分';
+
+            const patientSatisfaction = document.getElementById('PatientSatisfaction2');
+            const stars = patientSatisfaction.getElementsByClassName('fa');
+            for (let i = 0; i < patScore; i++) {
+                stars[i].classList.remove('fa-star-o');
+                stars[i].classList.add('fa-star');
+            }
+
+            // //醫師積極度評分
+            const scoredLabeld = document.getElementById('scored2');
+            scoredLabeld.textContent = docScore + '分';
+
+            const docSatisfaction = document.getElementById('DocSatisfaction2');
+            const starsd = docSatisfaction.getElementsByClassName('fa');
+            for (let i = 0; i < docScore; i++) {
+                starsd[i].classList.remove('fa-star-o');
+                starsd[i].classList.add('fa-star');
+            }
+
+        })();
+
+        //3
+        (async () => {
+            const url = '@Url.Content("~/WeekSchedule/GS/3")';
+            //console.log(url);
+            const response = await fetch(url, { method: "POST" });
+            const datas = await response.json();
+            console.log(datas);
+
+            // 更新 醫師满意度评分
+            const docScore = datas.docSatisfaction;
+            const patScore = datas.patientSatisfaction;
+
+            // 更新病人满意度星级评分
+            const scoredLabelp = document.getElementById('scorep3');
+            scoredLabelp.textContent = patScore + '分';
+
+            const patientSatisfaction = document.getElementById('PatientSatisfaction3');
+            const stars = patientSatisfaction.getElementsByClassName('fa');
+            for (let i = 0; i < patScore; i++) {
+                stars[i].classList.remove('fa-star-o');
+                stars[i].classList.add('fa-star');
+            }
+
+            // //醫師積極度評分
+            const scoredLabeld = document.getElementById('scored3');
+            scoredLabeld.textContent = docScore + '分';
+
+            const docSatisfaction = document.getElementById('DocSatisfaction3');
+            const starsd = docSatisfaction.getElementsByClassName('fa');
+            for (let i = 0; i < docScore; i++) {
+                starsd[i].classList.remove('fa-star-o');
+                starsd[i].classList.add('fa-star');
+            }
+
+        })();
+
+        //4
+        (async () => {
+            const url = '@Url.Content("~/WeekSchedule/GS/4")';
+            //console.log(url);
+            const response = await fetch(url, { method: "POST" });
+            const datas = await response.json();
+            console.log(datas);
+
+            // 更新 醫師满意度评分
+            const docScore = datas.docSatisfaction;
+            const patScore = datas.patientSatisfaction;
+
+            // 更新病人满意度星级评分
+            const scoredLabelp = document.getElementById('scorep4');
+            scoredLabelp.textContent = patScore + '分';
+
+            const patientSatisfaction = document.getElementById('PatientSatisfaction4');
+            const stars = patientSatisfaction.getElementsByClassName('fa');
+            for (let i = 0; i < patScore; i++) {
+                stars[i].classList.remove('fa-star-o');
+                stars[i].classList.add('fa-star');
+            }
+
+            // //醫師積極度評分
+            const scoredLabeld = document.getElementById('scored4');
+            scoredLabeld.textContent = docScore + '分';
+
+            const docSatisfaction = document.getElementById('DocSatisfaction4');
+            const starsd = docSatisfaction.getElementsByClassName('fa');
+            for (let i = 0; i < docScore; i++) {
+                starsd[i].classList.remove('fa-star-o');
+                starsd[i].classList.add('fa-star');
+            }
+
+        })();
+
+        //5
+        (async () => {
+            const url = '@Url.Content("~/WeekSchedule/GS/5")';
+            //console.log(url);
+            const response = await fetch(url, { method: "POST" });
+            const datas = await response.json();
+            console.log(datas);
+
+            // 更新 醫師满意度评分
+            const docScore = datas.docSatisfaction;
+            const patScore = datas.patientSatisfaction;
+
+            // 更新病人满意度星级评分
+            const scoredLabelp = document.getElementById('scorep5');
+            scoredLabelp.textContent = patScore + '分';
+
+            const patientSatisfaction = document.getElementById('PatientSatisfaction5');
+            const stars = patientSatisfaction.getElementsByClassName('fa');
+            for (let i = 0; i < patScore; i++) {
+                stars[i].classList.remove('fa-star-o');
+                stars[i].classList.add('fa-star');
+            }
+
+            // //醫師積極度評分
+            const scoredLabeld = document.getElementById('scored5');
+            scoredLabeld.textContent = docScore + '分';
+
+            const docSatisfaction = document.getElementById('DocSatisfaction5');
+            const starsd = docSatisfaction.getElementsByClassName('fa');
+            for (let i = 0; i < docScore; i++) {
+                starsd[i].classList.remove('fa-star-o');
+                starsd[i].classList.add('fa-star');
+            }
+
+        })();
+
+
+
+        //6
+        (async () => {
+            const url = '@Url.Content("~/WeekSchedule/GS/6")';
+            //console.log(url);
+            const response = await fetch(url, { method:"POST" });
+            const datas = await response.json();
+            //console.log(datas);
+
+            // 更新 醫師满意度评分
+            const docScore = datas.docSatisfaction;
+            const patScore = datas.patientSatisfaction;
+
+            // 更新病人满意度星级评分
+            const scoredLabelp = document.getElementById('scorep6');
+            scoredLabelp.textContent = patScore + '分';
+
+            const patientSatisfaction = document.getElementById('PatientSatisfaction6');
+            const stars = patientSatisfaction.getElementsByClassName('fa');
+            for (let i = 0; i < patScore; i++) {
+                stars[i].classList.remove('fa-star-o');
+                stars[i].classList.add('fa-star');
+            }
+
+            // //醫師積極度評分
+            const scoredLabeld = document.getElementById('scored6');
+            scoredLabeld.textContent = docScore + '分';
+
+            const docSatisfaction = document.getElementById('DocSatisfaction6');
+            const starsd = docSatisfaction.getElementsByClassName('fa');
+            for (let i = 0; i < docScore; i++) {
+                starsd[i].classList.remove('fa-star-o');
+                starsd[i].classList.add('fa-star');
+            }
+
+        })();
+
+    </script>
+    
 }

@@ -1,0 +1,21 @@
+﻿@section Styles{
+    <link href="~/msit155e/css/drugs/stylesheet.css" rel="stylesheet" />
+    <link href="~/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+}
+
+<div>   
+    <button class="btn btn btn-outline-success" id="btn1"><i class="fa-regular fa-bookmark"></i>收藏</button>    
+</div>
+
+
+
+@section Scripts{
+    <script>
+        //這裡寫的JS會讀不到
+        const btn1 = document.getElementById('btn1');
+        btn1.addEventListener('click', function () {
+            console.log('click');
+
+        });
+    </script>
+}

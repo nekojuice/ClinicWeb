@@ -45,5 +45,45 @@ namespace ClinicWeb.Controllers.ScheduleAPI
             return Json(rebuildFormat);
         }
         //用法: fetch("/Schedule/Api/Get_WeekSchedule/小兒科")
+
+
+        //醫師評價平均值
+        [HttpPost]
+        //[Route("{controller}/{action}/{id}")]
+        public JsonResult GS(string id) //GET
+        {
+            int Daverage = 0;
+            int Caverage = 0;
+
+            var a = _context.CasesMedicalRecords
+                .Include(x => x.ClinicList.Clinic.Doctor)
+                .Where(x => x.ClinicList.Clinic.Doctor.EmpId == Convert.ToInt32(id))
+                .Select(x => new
+                {
+                    sat = x.DocSatisfaction,
+                    at = x.PatientSatisfaction
+                });
+
+
+            int dc = a.Count();
+            int cc = a.Count();
+            foreach (var item in a)
+            {
+                if (item.sat.HasValue)
+                { Daverage += item.sat.Value; }
+                else
+                { dc--; }
+                if (item.at.HasValue)
+                { Caverage += item.at.Value; }
+                else
+                { cc--; }
+
+
+            }
+            Daverage = Daverage / dc;
+            Caverage = Caverage / cc;
+            return Json(new { DocSatisfaction = Daverage, PatientSatisfaction = Caverage });
+        }
     }
 }
+    

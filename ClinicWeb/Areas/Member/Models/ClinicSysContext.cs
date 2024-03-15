@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using ClinicWeb.Areas.Member.ViewModels;
 
 namespace ClinicWeb.Areas.Member.Models;
 
@@ -54,6 +53,4 @@ public partial class ClinicSysContext : DbContext
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
-
-    public DbSet<ClinicWeb.Areas.Member.ViewModels.Membermetadata> MemberViewModel { get; set; } = default!;
 }

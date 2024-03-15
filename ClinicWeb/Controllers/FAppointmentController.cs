@@ -47,8 +47,8 @@ namespace ClinicWeb.Controllers
         /// <param name="day">日 (string)</param>
         /// <returns></returns>
         [HttpGet]
-        [Route("{controller}/{action}/{doctorId}/{year}/{month}/{day}")]
-        public IActionResult Get_ClinicApptInfo(string doctorId, string year, string month, string day)
+        [Route("{controller}/{action}/{doctorId}/{year}/{month}/{day}/{memId?}")]
+        public IActionResult Get_ClinicApptInfo(string doctorId, string year, string month, string day, string? memId)
         {
             DateTime start = new DateTime(Convert.ToInt32(year), Convert.ToInt32(month), Convert.ToInt32(day));
             DateTime end = start.AddDays(6);
@@ -62,8 +62,9 @@ namespace ClinicWeb.Controllers
                     clinicInfoId = x.ClinicInfoId,
                     date = x.Date,
                     shift = x.ClinicTime.ClinicShifts,
-                    count = x.ApptClinicList.Count(),
+                    count = x.ApptClinicList.Where(y => y.IsCancelled == false).Count(),
                     limit = x.RegistrationLimit,
+                    isAppted = x.ApptClinicList.Any(y => y.MemberId == Convert.ToInt32(memId) && y.IsCancelled == false)
                 })
                 );
         }
@@ -72,7 +73,7 @@ namespace ClinicWeb.Controllers
         /// 撈取使用者登入資訊
         /// </summary>
         /// <returns>jsonobject</returns>
-        [Authorize(AuthenticationSchemes = "Angular")]
+        //[Authorize(AuthenticationSchemes = "Angular")]
         public IActionResult Get_MemberStatus()
         {
             var user = HttpContext.User;
@@ -95,14 +96,76 @@ namespace ClinicWeb.Controllers
         }
 
         //[Authorize(Policy = "frontendpolicy")]
-        public IActionResult Add_NewAppt()
+        [HttpPost]
+        public async Task<IActionResult> Add_NewAppt([FromBody] NewAppt_DataBody vm)
         {
-            var user = HttpContext.User;
-            if (user == null)
+            if (vm.memid == null || vm.apptId == null)
             {
                 return BadRequest();
             }
+
+
+            Console.WriteLine($"{vm.apptId}, {vm.memid}");
+
+            bool isDuplicate = _context.ApptClinicList
+                .Where(x => x.ClinicId == vm.apptId && x.MemberId == vm.memid && x.IsCancelled == false)
+                .Any();
+            //非重複掛號時
+            bool isVIP = false;
+
+            if (!isDuplicate)
+            {
+                //計算診號邏輯
+                //未有已掛號號碼，初始計算值
+                int maxClinicNumber = Convert.ToBoolean(isVIP) ? -1 : 0;
+                //如果有已掛號號碼，撈取最大值
+                try
+                {
+                    maxClinicNumber = _context.ApptClinicList
+                                    .Where(x => x.IsVip == Convert.ToBoolean(isVIP) && x.ClinicId == vm.apptId)
+                                    .Select(x => x.ClinicNumber)
+                                    .Max();
+                }
+                catch (Exception) { }
+                //Console.WriteLine($"clinicId={clinicId} memberId={memberId} isVIP={isVIP}");
+                try
+                {
+                    ApptClinicList newappt = new ApptClinicList
+                    {
+                        ClinicId = (int)vm.apptId,
+                        MemberId = (int)vm.memid,
+                        IsVip = Convert.ToBoolean(isVIP),
+                        ClinicNumber = maxClinicNumber + 2,
+                        PatientStateId = 8,
+                        IsCancelled = false
+                    };
+
+                    _context.ApptClinicList.Add(newappt);
+                    await _context.SaveChangesAsync();
+                }
+                catch (Exception)
+                {
+                    return NotFound();
+                }
+            }
+
             return Ok();
         }
+
+        [HttpGet]
+        public IActionResult Get_MemberName(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return NotFound();
+            }
+            return Json(_context.MemberMemberList.Where(x => x.MemberId == Convert.ToInt32(id)).Select(x => x.Name).FirstOrDefault());
+        }
+    }
+
+    public class NewAppt_DataBody
+    {
+        public int? apptId { get; set; }
+        public int? memid { get; set; }
     }
 }
