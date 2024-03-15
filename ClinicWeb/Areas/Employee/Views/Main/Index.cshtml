@@ -2,4 +2,96 @@
 	ViewData["Title"] = "首頁";
 }
 
-<h2>這是首頁，想想放甚麼</h2>
+@section Styles{
+	<!-- Font Awesome -->
+	<link href="~/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+}
+
+<style>
+    ﻿.star-rating {
+        line-height: 32px;
+        font-size: 5em;
+    }
+
+    .star-rating .fa-star {
+        color: yellow;
+    }
+</style>
+
+
+
+<h2>會員評價統計</h2>
+
+
+
+<div class="rating-lists" >
+    <label class="title" for="comment" style="font-size:20px">就診滿意度：</label>
+    <div class="col">
+        <div class="star-rating" id="PatientSatisfaction6">
+            <span class="fa fa-star-o" data-rating="1" style="font-size:2em"></span>
+            <span class="fa fa-star-o" data-rating="2" style="font-size:2em"></span>
+            <span class="fa fa-star-o" data-rating="3" style="font-size:2em"></span>
+            <span class="fa fa-star-o" data-rating="4" style="font-size:2em"></span>
+            <span class="fa fa-star-o" data-rating="5" style="font-size:2em"></span>
+        </div>
+    </div>
+</div>
+
+<div class="rating-lists">
+    <label class="title" for="comment" style="font-size:20px">醫師積極度：</label>
+    <div class="col">
+        <div class="star-rating" id="PatientSatisfaction6">
+            <span class="fa fa-star-o" data-rating="1" style="font-size:2em"></span>
+            <span class="fa fa-star-o" data-rating="2" style="font-size:2em"></span>
+            <span class="fa fa-star-o" data-rating="3" style="font-size:2em"></span>
+            <span class="fa fa-star-o" data-rating="4" style="font-size:2em"></span>
+            <span class="fa fa-star-o" data-rating="5" style="font-size:2em"></span>
+        </div>
+    </div>
+</div>
+<div class="rating-lists">
+    <label class="title" for="comment" style="font-size:20px">診間整潔度：</label>
+    <div class="col">
+        <div class="star-rating" id="PatientSatisfaction6">
+            <span class="fa fa-star-o" data-rating="1" style="font-size:2em"></span>
+            <span class="fa fa-star-o" data-rating="2" style="font-size:2em"></span>
+            <span class="fa fa-star-o" data-rating="3" style="font-size:2em"></span>
+            <span class="fa fa-star-o" data-rating="4" style="font-size:2em"></span>
+            <span class="fa fa-star-o" data-rating="5" style="font-size:2em"></span>
+        </div>
+    </div>
+</div>
+<div class="rating-lists">
+    <label class="title" for="comment" style="font-size:20px">系統滿意度：</label>
+    <div class="col">
+        <div class="star-rating" id="PatientSatisfaction6">
+            <span class="fa fa-star-o" data-rating="1" style="font-size:2em"></span>
+            <span class="fa fa-star-o" data-rating="2" style="font-size:2em"></span>
+            <span class="fa fa-star-o" data-rating="3" style="font-size:2em"></span>
+            <span class="fa fa-star-o" data-rating="4" style="font-size:2em"></span>
+            <span class="fa fa-star-o" data-rating="5" style="font-size:2em"></span>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+@section Scripts{
+	<script>
+		(async() => {
+			const url = '@Url.Content("~/Employee/Main/Show_Satisfaction")';
+			const response = await fetch(url, { method: "POST" });
+			const datas = await response.json();
+			console.log(datas);
+		
+		
+		})();
+
+	</script>
+}

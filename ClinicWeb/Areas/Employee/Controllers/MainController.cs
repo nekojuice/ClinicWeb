@@ -157,5 +157,62 @@ namespace ClinicWeb.Areas.Employee.Controllers
         }
 
 
+        [HttpPost]
+        public JsonResult Show_Satisfaction()
+        {
+            int Paverage = 0;
+            int Daverage = 0;
+            int Caverage = 0;
+            int Saverage = 0;
+
+            var a = _context.CasesMedicalRecords
+                .Select(s => new
+                {
+                   pat= s.PatientSatisfaction,
+                   doc= s.DocSatisfaction,
+                   cli= s.ClinicSatisfaction,
+                   sys = s.SysSatisfaction
+                });
+
+            int pc = a.Count();
+            int dc = a.Count();
+            int cc = a.Count();
+            int sc = a.Count();
+
+            foreach(var item in a)
+            {
+                if (item.pat.HasValue)
+                { Paverage += item.pat.Value; }
+                else
+                { pc--; }
+
+                if (item.doc.HasValue)
+                { Daverage += item.doc.Value; }
+                else
+                { dc--; }
+
+                if (item.cli.HasValue) {  Caverage += item.cli.Value; }
+                else { cc--; }
+
+                if (item.sys.HasValue) {  Saverage += item.sys.Value; }
+                else {  sc--; }
+
+
+            }
+            Paverage = Paverage / pc;
+            Daverage = Daverage / dc;
+            Caverage = Caverage / dc;
+            Saverage = Saverage / dc;
+
+            return Json(new {
+                PatientSatisfaction = Paverage,
+                DocSatisfaction = Daverage,
+                ClinicSatisfaction = Caverage,
+                SysSatisfaction = Saverage
+
+            });
+        }
+
+
     }
 }
