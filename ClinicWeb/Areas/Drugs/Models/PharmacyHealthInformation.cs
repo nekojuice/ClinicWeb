@@ -28,4 +28,8 @@ public partial class PharmacyHealthInformation
     [Column("fFilePath")]
     [StringLength(200)]
     public string FFilePath { get; set; }
+
+    [ForeignKey("FIdDrug")]
+    [InverseProperty("PharmacyHealthInformation")]
+    public virtual PharmacyTMedicinesList FIdDrugNavigation { get; set; }
 }

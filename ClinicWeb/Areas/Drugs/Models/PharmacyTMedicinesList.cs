@@ -93,6 +93,9 @@ public partial class PharmacyTMedicinesList
     public int? FQty { get; set; }
 
     [InverseProperty("FIdDrugNavigation")]
+    public virtual ICollection<PharmacyHealthInformation> PharmacyHealthInformation { get; set; } = new List<PharmacyHealthInformation>();
+
+    [InverseProperty("FIdDrugNavigation")]
     public virtual ICollection<PharmacyTClinicalUseDetails> PharmacyTClinicalUseDetails { get; set; } = new List<PharmacyTClinicalUseDetails>();
 
     [InverseProperty("FIdDrugNavigation")]
