@@ -5,12 +5,16 @@
 @{
     ViewData["Title"] = "「害喜」整天都好想吐！孕吐的非藥物治療與藥物治療選擇";
 }
+
+
+
+
 <div class="article">
     <h2 class="bold">「害喜」整天都好想吐！孕吐的非藥物治療與藥物治療選擇</h2><br />
     <img src="~/msit155e/images/drugs/pregnant_woman.jpg" />
     <br /><hr />
-
-
+    
+    <partial name="Partial/_favorite" />
     <ul style="font-size:larger">
         生活方式和飲食調整
 
@@ -37,7 +41,17 @@
     </div>
 
 </div>
+@section Scripts {
+    <script>
+        var currentURL = window.location.href;
 
+        const btn1 = document.getElementById('btn1');
+        btn1.addEventListener('click', function () {
+            console.log('click');
+            console.log("完整URL:", currentURL);
+        });
+    </script>
+}
 
 
 

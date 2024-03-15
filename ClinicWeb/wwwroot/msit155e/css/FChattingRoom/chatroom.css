@@ -1,0 +1,54 @@
+﻿.leftbox {
+    border: 1px solid #cbcbcb;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: rgba(0,0,0,0.4) -5px 5px 15px;
+}
+
+    .leftbox h5 {
+        margin: 10px
+    }
+    .leftbox div.card {
+        height: 85%;
+        border: 1px solid #cbcbcb;
+    }
+
+    .leftbox ul {
+        border: 1px solid #828282;
+    }
+
+.rightbox {
+    border: 1px solid #cbcbcb;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: rgba(0,0,0,0.4) 5px 5px 15px;
+}
+
+    .rightbox > div {
+        width: 95%;
+        margin: auto;
+    }
+
+    .rightbox li {
+        width: 95%;
+        margin: auto;
+    }
+
+    .rightbox button {
+        margin: 10px;
+    }
+
+    .rightbox .list-group-item {
+        background-color: lightgray;
+        border-radius: 10px 10px;
+    }
+
+    .rightbox .card-header {
+        height: 20px;
+        line-height: 5px;
+    }
+
+    .rightbox .card-body.text-end{
+        background-color: #C3F69D;
+    }
+/*#C3F69D*/

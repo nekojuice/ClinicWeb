@@ -25,8 +25,8 @@ function QueryMemberInfo() {
                 {
                     "data": "修改",
                     "render": function (data, type, row) {
-                        return '<button type="button" class="btn btn-round btn-info" indexSelector" style="border: none;" data-toggle="modal" data-target="#MemEdit" onclick="handleButtonClick(' + row.會員id + ')">編輯</button>' +
-                            '<button type="button" class="btn btn-round btn-warning" indexSelector" style="border: none;" data-toggle="modal" data-target="#MemView" onclick="handleViewButtonClick(' + row.會員id + ')">檢視</button>';
+                        return '<button type="button" class="btn btn-round btn-info indexSelector" style="border: none;" data-toggle="modal" data-target="#MemEdit" onclick="handleButtonClick(' + row.會員id + ')">編輯</button>' +
+                            '<button type="button" class="btn btn-round btn-warning indexSelector" style="border: none;" data-toggle="modal" data-target="#MemView" onclick="handleViewButtonClick(' + row.會員id + ')">檢視</button>';
                     }
                 }
             ],
