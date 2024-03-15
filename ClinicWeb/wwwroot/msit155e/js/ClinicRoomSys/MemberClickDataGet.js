@@ -158,7 +158,7 @@ async function uploadFormData(id) {
 async function AddNMR() {
     const addrecord = {
         CaseId: CASE_ID,
-        ClinicList_ID: CLINICLIST_ID,
+        ClinicListId: CLINICLIST_ID,
         Bp: $('#addbp').val(),
         Pulse: $('#addpulse').val(),
         Bt: $('#addbt').val(),
