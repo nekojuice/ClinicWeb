@@ -142,5 +142,25 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
             // 返回適當的回應
             return Ok();
         }
+        [HttpPost]
+        public IActionResult AddPrescription([FromBody] CasesPrescription record)
+        {
+            // 在這裡處理表單提交的資料，例如將資料儲存到資料庫中
+            _context.CasesPrescription.Add(record);
+            _context.SaveChanges();
+
+            // 返回適當的回應
+            return Ok();
+        }
+        [HttpPost]
+        public IActionResult AddPrescriptionL([FromBody] CasesPrescriptionlist record)
+        {
+            // 在這裡處理表單提交的資料，例如將資料儲存到資料庫中
+            _context.CasesPrescriptionlist.Add(record);
+            _context.SaveChanges();
+
+            // 返回適當的回應
+            return Ok();
+        }
     }
  }
