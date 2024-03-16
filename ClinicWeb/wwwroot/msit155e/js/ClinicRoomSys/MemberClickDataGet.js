@@ -93,31 +93,8 @@ async function getPrescription(id) {
     $('#prescriptionDataTable').DataTable().rows.add(data).draw();
 }
 
-//async function uploadFormData(id) {
-//    const record =
-//    {
-//        Height: $('#inputHeight').val(),
-//        Weight: $('#inputWeight').val(),
-//        PastHistory: $('#inputPastHistory').val(),
-//        AllergyRecord: $('#inputAllergyRecord').val(),
-//    }
-//    const response = await fetch(`/ClinicRoomSys/Cases/UpdateCase/${id}`, { // 注意调整URL为实际的API路由
-//        method: 'POST',
-//        headers: {
-//            'Content-Type': 'application/json',
-//        },
-//        body: JSON.stringify(record),
-//    })
-//        .then(response => response.json())
-//        .then(data => {
-//            console.log('Success:', data);
-//            // 这里可以添加一些成功后的操作
-//        })
-//        .catch((error) => {
-//            console.error('Error:', error);
-//        });
-//}
 
+//修改主病例資料
 async function uploadFormData(id) {
     const record = {
         Height: $('#inputHeight').val(),
@@ -155,6 +132,7 @@ async function uploadFormData(id) {
     }
 }
 
+//新增看診紀錄
 async function AddNMR() {
     const addrecord = {
         CaseId: CASE_ID,
@@ -196,11 +174,14 @@ async function AddNMR() {
     }
 }
 
+
+//修改主病例資料-事件
 document.getElementById("submit").addEventListener("click", function (event) {
     event.preventDefault(); // 防止表單提交
     uploadFormData(CASE_ID);
 });
 
+//新增看診紀錄-事件
 document.getElementById("submitrd").addEventListener("click", function (event) {
     event.preventDefault(); // 防止表單提交
     AddNMR();
