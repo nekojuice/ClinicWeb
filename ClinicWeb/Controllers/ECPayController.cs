@@ -88,7 +88,7 @@ namespace ClinicWeb.Controllers
             try
             {
                 //ApptEcpay Orders = new ApptEcpay();
-                var Orders = _context.ApptEcpay.Where(x => x.FClinicListId == 26).FirstOrDefault();
+                var Orders = _context.ApptEcpay.Where(x => x.FClinicListId == Convert.ToInt32(json.apptlistid)).FirstOrDefault();
                 Orders.MemberId = json.MerchantID;
                 Orders.MerchantTradeNo = json.MerchantTradeNo;
                 Orders.RtnCode = 0; //未付款
@@ -130,7 +130,8 @@ namespace ClinicWeb.Controllers
                 ecpayOrder.SimulatePaid = int.Parse(id["SimulatePaid"]);
                 _context.SaveChanges();
             }
-            return View("EcpayView", data);
+            //return View("EcpayView", data);
+            return RedirectToAction("Index", "MBAppointmentInfo");
         }
         /// step5 : 取得虛擬帳號 資訊
         [HttpPost]
@@ -225,5 +226,6 @@ namespace ClinicWeb.Controllers
         public string EncryptType { get; set; }
         public string CheckMacValue { get; set; }
         
+        public string apptlistid { get; set; }//指定掛號序列
     }
 }
