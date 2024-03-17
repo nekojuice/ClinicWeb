@@ -116,9 +116,9 @@ namespace ClinicWeb.Areas.Schedule.Controllers
         //排班
         public IActionResult Scheduling(string year,string month)
         {
-
+            string start = year + "/" + month;    //假設排2023-12月班表
             // 檢查重複排班
-            bool hasExistingSchedule = _context.ScheduleClinicInfo.Any(s => s.Date.StartsWith(month));
+            bool hasExistingSchedule = _context.ScheduleClinicInfo.Any(s => s.Date.StartsWith(start));
 
             if (hasExistingSchedule)
             {
@@ -137,7 +137,7 @@ namespace ClinicWeb.Areas.Schedule.Controllers
 
             ////取得排班起始日
             ////用textbox, combobox, DateTime.Now...等其他方法決定start日期
-            string start = year+"/"+month;    //假設排2023-12月班表
+            
 
             string week = DateTime.Now.DayOfWeek.ToString("");    //取得今天 星期
             string startWeek = DateTime.Parse(start).DayOfWeek.ToString();  //1號的星期(英文) //五

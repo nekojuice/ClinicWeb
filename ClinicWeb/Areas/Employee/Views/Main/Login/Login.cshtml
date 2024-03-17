@@ -13,7 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>登入</title>
-@* 
+@*
     <!-- Bootstrap -->
     <link href="~/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -26,13 +26,13 @@
     <!-- Custom Theme Style -->
     <link href="~/build/css/custom.min.css" rel="stylesheet"> *@
 
-@* 
-    
+@*
+
 </head> *@
 
 
 
-@* 
+@*
 <body class="login">
     <div>
         <a class="hiddenanchor" id="signup"></a>
@@ -112,7 +112,7 @@
                             <div class="clearfix"></div>
                             <br />
 
-                          
+
                         </div>
                     </form>
                 </section>
@@ -131,8 +131,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Form</title>
 
-     
-        <link href="~/msit155e/css/StaffLogin/StaffLogin.css" rel="stylesheet" >
+
+    <link href="~/msit155e/css/StaffLogin/StaffLogin.css" rel="stylesheet">
 
 </head>
 <body>
@@ -141,28 +141,41 @@
         <div class="logo">
             <img src="~/msit155e/images/LOGO.png" alt=" Logo">
         </div>
-         <form asp-area="Employee" asp-controller="Main" asp-action="LoginForStaff" method="post">
-        <div class="form-control">
-            <label for="username">員工編號</label>
+        <form asp-area="Employee" asp-controller="Main" asp-action="LoginForStaff" method="post">
+            <div class="form-control">
+                <label for="username">員工編號</label>
                 <input type="text" asp-for="StaffNumber">
-        </div>
-        <div class="form-control">
-            <label for="password">員工密碼</label>
+            </div>
+            <div class="form-control">
+                <label for="password">員工密碼</label>
                 <input type="password" asp-for="EmpPassword">
-        </div>
+            </div>
 
             @if (ViewData["ErrorMessage"] != null)
             {
                 <div class="text-danger" style="color:red">@ViewData["ErrorMessage"]</div>
             }
-          
-       
-        <div class="buttons">
-            <button type="reset" class="button reset">清除</button>
-            <button type="submit" class="button login">登入</button>
-        </div>
+
+
+            <div class="buttons">
+                <button type="reset" class="button reset">清除</button>
+                <button type="submit" class="button login">登入</button>
+            </div>
         </form>
+
     </div>
 
+    <div>
+        <button type="button" onclick="fillDemo('1001', 'aeew234')">1001 護士 陳小華 </button>
+        <button type="button" onclick="fillDemo('1004', 'aeew234')">1004 行政 黃小勇</button>
+        <button type="button" onclick="fillDemo('1010', 'aeew234')">1010 管理員 張秀娟</button>
+    </div>
+
+    <script>
+        function fillDemo(staffNumber, password) {
+            document.getElementById('StaffNumber').value = staffNumber;
+            document.getElementById('EmpPassword').value = password;
+        }
+    </script>
 </body>
 </html>
