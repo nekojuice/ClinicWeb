@@ -248,6 +248,7 @@ app.UseAuthorization();
 
 app.MapHub<ApptStateHub>("/ApptStateHub");
 app.MapHub<CallingHub>("/CallingHub");
+app.MapHub<ArrivalHub>("/ArrivalHub");
 
 app.MapControllerRoute(
       name: "areas",

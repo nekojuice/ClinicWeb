@@ -14,8 +14,11 @@ namespace SmartCardTest
     {
         public delegate void D_info(SmartCardDataModel info);
         public delegate void D_infoclear();
+        static CardReaderHttpClient client = new CardReaderHttpClient();
         public static void Main()
         {
+            
+
             //讀卡機名稱
             string cReader;
             //尋找本機讀卡機設備
@@ -37,12 +40,16 @@ namespace SmartCardTest
             //建立事件監控
             using (var oMonitor = PCSC.Monitoring.MonitorFactory.Instance.Create(PCSC.SCardScope.System))
             {
-                oMonitor.CardRemoved += (oSender, oArgs) => { Console.WriteLine("# 偵測到晶片卡移除。"); };
+                oMonitor.CardRemoved += (oSender, oArgs) =>
+                {
+                    Console.WriteLine("# 偵測到晶片卡移除。");
+                    SmartCardPull();
+                };
                 oMonitor.CardInserted += (oSender, oArgs) =>
                 {
                     Console.WriteLine("# 偵測到晶片卡插入。");
                     var data = GetCardInfo(cReader);  //讀取健保卡顯性資料
-                    
+
                     //讀卡
                     SmartCardRead(data);
 
@@ -169,13 +176,11 @@ namespace SmartCardTest
                 }
                 return null;
             }
-            
+
 
         }
         static async void SmartCardRead(SmartCardDataModel info)
         {
-            CardReaderHttpClient client = new CardReaderHttpClient();
-
             string response = await client.GET_ApptData(info.cID);
             try
             {
@@ -188,6 +193,10 @@ namespace SmartCardTest
             ApptDataModel data = response == null ? new ApptDataModel() { } : JsonConvert.DeserializeObject<ApptDataModel>(response);
             //播放聲音 還沒裝
             //checkInPlaySound(data.number);
+        }
+        static async void SmartCardPull() 
+        {
+            await client.PullCard();
         }
     }
 }

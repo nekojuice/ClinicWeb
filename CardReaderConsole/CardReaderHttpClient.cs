@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Security;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,14 +16,20 @@ namespace CardReader
         static string Arrivaldate = "2023/12/01";
         string ip = GetLocalIPAddress();
 
-        HttpClient httpClient = new HttpClient();
+        
         //string apiUrl = $"https://localhost:7071/Appointment/Arrival/GET_Arrival/{Arrivaldate}";//舊報到路由
-        string apiUrl = $"https://localhost:7071/FArrival/Remote_CardInsert";
+        //string apiUrl = $"https://localhost:7071/FArrival/Remote_CardInsert";
+        string serverUrl = "https://192.168.0.20:7071";
+        string insertCardUrl = "FArrival/Remote_CardInsert";
+        string pullCardUrl = "FArrival/Remote_PullCard";
 
         async public Task<string> GET_ApptData(string nationalId) 
         {
-            
-            HttpResponseMessage response = await httpClient.GetAsync($"{apiUrl}/{Arrivaldate}/{nationalId}/{ip}");
+            HttpClientHandler clientHandler = new HttpClientHandler();
+            clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+            HttpClient httpClient = new HttpClient(clientHandler);
+
+            HttpResponseMessage response = await httpClient.GetAsync($"{serverUrl}/{insertCardUrl}/{Arrivaldate}/{nationalId}/{ip}");
             if (response.IsSuccessStatusCode)
             {
                 string content = await response.Content.ReadAsStringAsync();
@@ -30,6 +37,17 @@ namespace CardReader
             }
             return null;
         }
+        async public Task<string> PullCard()
+        {
+            HttpClientHandler clientHandler = new HttpClientHandler();
+            clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+            HttpClient httpClient = new HttpClient(clientHandler);
+
+            await httpClient.GetAsync($"{serverUrl}/{pullCardUrl}/{ip}");
+
+            return "卡片已拔除";
+        }
+
         public static string GetLocalIPAddress()
         {
             var host = Dns.GetHostEntry(Dns.GetHostName());
