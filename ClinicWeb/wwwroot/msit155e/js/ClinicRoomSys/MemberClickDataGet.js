@@ -174,6 +174,47 @@ async function AddNMR() {
     }
 }
 
+async function AddNPre() {
+    const addrecord = {
+        CaseId: CASE_ID,
+        ClinicListId: CLINICLIST_ID,
+        Bp: $('#addbp').val(),
+        Pulse: $('#addpulse').val(),
+        Bt: $('#addbt').val(),
+        Cc: $('#addcc').val(),
+        Disposal: $('#adddisposal').val(),
+        Prescribe: $('#addprescribe').val(),
+    };
+
+    try {
+        const response = await fetch(`/ClinicRoomSys/Cases/AddMedicalRecord`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(addrecord),
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log('Success:', data);
+        // 這裡可以添加一些成功後的操作，比如更新UI或者是頁面導覽
+        new PNotify({
+            title: '成功',
+            text: '新增成功',
+            type: 'info',
+            styling: 'bootstrap3',
+            setTimeout: 500
+        })
+    } catch (error) {
+        console.error('Error:', error);
+        // 這裡可以處理錯誤，比如提示用户操作失敗
+    }
+}
+
 
 //修改主病例資料-事件
 document.getElementById("submit").addEventListener("click", function (event) {

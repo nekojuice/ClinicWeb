@@ -99,6 +99,21 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
                 );
         }
         [HttpPost]
+        public JsonResult GPL(string id) //GETPRESCRIPTIONLIST
+        {
+            return Json(_context.CasesPrescriptionlist
+                .Include(x => x.Drug)
+                .Where(x => x.PrescriptionId == Convert.ToInt32(id))
+                .Select(x => new
+                {
+                    DrugId = x.DrugId,
+                    Name = x.Drug.FDrugName,
+                    Days = x.Days,
+                    total = x.TotalAmount,
+                })
+                );
+        }
+        [HttpPost]
         public async Task<IActionResult> UpdateCase(int id, [FromBody] CasesMainCase caseUpdateModel)
         {
             if (!ModelState.IsValid)
@@ -161,6 +176,28 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
 
             // 返回適當的回應
             return Ok();
+        }
+
+        public async Task<IActionResult> UpdateMR(int id, [FromBody] CasesMainCase caseUpdateModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new { success = false, message = "Invalid data" });
+            }
+
+            var recordToUpdate = await _context.CasesMedicalRecords.FirstOrDefaultAsync(x => x.MrId == id);
+            if (recordToUpdate == null)
+            {
+                return NotFound(new { success = false, message = "Case not found" });
+            }
+
+            recordToUpdate.Height = caseUpdateModel.Height;
+            recordToUpdate.Weight = caseUpdateModel.Weight;
+            recordToUpdate.PastHistory = caseUpdateModel.PastHistory;
+            recordToUpdate.AllergyRecord = caseUpdateModel.AllergyRecord;
+
+            await _context.SaveChangesAsync();
+            return Ok(new { success = true, message = "Record updated successfully" });
         }
     }
  }
