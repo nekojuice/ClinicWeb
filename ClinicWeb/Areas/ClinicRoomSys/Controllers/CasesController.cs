@@ -178,7 +178,7 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
             return Ok();
         }
 
-        public async Task<IActionResult> UpdateMR(int id, [FromBody] CasesMainCase caseUpdateModel)
+        public async Task<IActionResult> UpdateMR(int id, [FromBody] CasesMedicalRecords UpdateModel)
         {
             if (!ModelState.IsValid)
             {
@@ -191,10 +191,10 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
                 return NotFound(new { success = false, message = "Case not found" });
             }
 
-            recordToUpdate.Height = caseUpdateModel.Height;
-            recordToUpdate.Weight = caseUpdateModel.Weight;
-            recordToUpdate.PastHistory = caseUpdateModel.PastHistory;
-            recordToUpdate.AllergyRecord = caseUpdateModel.AllergyRecord;
+            //recordToUpdate.Height = UpdateModel.Height;
+            //recordToUpdate.Weight = UpdateModel.Weight;
+            //recordToUpdate.PastHistory = UpdateModel.PastHistory;
+            //recordToUpdate.AllergyRecord = UpdateModel.AllergyRecord;
 
             await _context.SaveChangesAsync();
             return Ok(new { success = true, message = "Record updated successfully" });

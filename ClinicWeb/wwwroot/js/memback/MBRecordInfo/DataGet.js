@@ -257,7 +257,6 @@ async function getPrescriptionList(id) {
         })
 
     })
-}
 //var infoBox = document.getElementById("infoBox"); 
 
 //小框框 infoBox 的內容
