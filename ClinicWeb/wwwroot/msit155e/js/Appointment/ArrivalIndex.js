@@ -24,8 +24,8 @@ function init_ArrivalTable() {
                             return data;
                         }
                     }
-                },
-                { defaultContent: '<button type="button" class="btn btn-info btn_edit indexSelector" data-toggle="modal" data-target=".modApptModal">編輯</button>' }
+                }
+                /*,{ "data": "編輯", "render": function (data, type, row) { return `<button type="button" class="btn btn-info btn_edit indexSelector" data-toggle="modal" data-target=".modApptModal" onclick="ModApptForm_OPEN('${row.clinicAppt_id}')">編輯</button>` } }*/
             ],
             fixedHeader: {
                 header: true
@@ -40,11 +40,11 @@ function init_ArrivalTable() {
 init_ArrivalTable();
 
 //欄位index監聽器
-let _index_arrivalDataTable;
+let _index_apptDataTable;
 $("#arrivalDataTable tbody").on('click', '.indexSelector', function () {
     const selectTr = $(this).closest('tr')
-    _index_arrivalDataTable = $('#arrivalDataTable').DataTable().row(selectTr).index()
-    console.log(_index_arrivalDataTable)
+    _index_apptDataTable = $('#arrivalDataTable').DataTable().row(selectTr).index()
+    console.log(_index_apptDataTable)
 });
 
 //執行今天查詢
@@ -78,5 +78,5 @@ async function set_arrival(clinicAppt_id, national_id) {
     const response2 = await fetch(`/Appointment/Arrival/Get_ArrivalManagerList/${today}/${clinicAppt_id}`, { method: "GET" })
     const data2 = await response2.json()
     //console.log(data2)
-    $('#arrivalDataTable').DataTable().row(_index_arrivalDataTable).data(data2)
+    $('#arrivalDataTable').DataTable().row(_index_apptDataTable).data(data2)
 }

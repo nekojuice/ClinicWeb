@@ -19,8 +19,12 @@ namespace ClinicWeb.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string? id)
         {
+            if (!string.IsNullOrEmpty(id))
+            {
+                ViewBag.isSuccessString = id;
+            }
 			var orderId = Guid.NewGuid().ToString().Replace("-", "").Substring(0, 20);
 			var website = $"https://localhost:7071"; //記得確認一下數字有沒有一樣
 			var order = new Dictionary<string, string>
@@ -48,6 +52,7 @@ namespace ClinicWeb.Controllers
 			order["CheckMacValue"] = GetCheckMacValue(order);
 			return View(order);
 		}
+
 		private string GetCheckMacValue(Dictionary<string, string> order)
 		{
 			var param = order.Keys.OrderBy(x => x).Select(key => key + "=" + order[key]).ToList();

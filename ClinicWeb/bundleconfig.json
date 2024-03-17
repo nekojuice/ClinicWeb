@@ -34,5 +34,11 @@
     "inputFiles": [
       "wwwroot/vendors/nprogress/nprogress.css"
     ]
+  },
+  {
+    "outputFileName": "wwwroot/lib/dataTables.fontAwesome.min.css",
+    "inputFiles": [
+      "wwwroot/lib/dataTables.fontAwesome.css"
+    ]
   }
 ]

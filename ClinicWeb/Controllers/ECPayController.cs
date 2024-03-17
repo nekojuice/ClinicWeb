@@ -131,7 +131,7 @@ namespace ClinicWeb.Controllers
                 _context.SaveChanges();
             }
             //return View("EcpayView", data);
-            return RedirectToAction("Index", "MBAppointmentInfo");
+            return RedirectToAction("Index", "MBAppointmentInfo", "CatReceivedMoney");
         }
         /// step5 : 取得虛擬帳號 資訊
         [HttpPost]
