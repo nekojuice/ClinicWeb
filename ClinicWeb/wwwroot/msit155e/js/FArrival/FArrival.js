@@ -31,3 +31,38 @@
     }
 }
 init_ApptTable()
+
+let connection = new signalR.HubConnectionBuilder()
+    .withUrl("/ArrivalHub")
+    .withAutomaticReconnect()
+    .build();
+
+connection.on("CardInsert", function (ip, memInfo, jsonstring) {
+    const memInfodata = JSON.parse(memInfo)
+    const jsondata = JSON.parse(jsonstring)
+    console.log(memInfodata)
+    console.log(jsondata)
+
+    $("#c_name").text(memInfodata.c_name);
+    $("#c_gender").text(memInfodata.c_gender);
+    $("#c_nationalid").text(memInfodata.c_nationalid);
+    $("#c_birthday").text(memInfodata.c_birthday);
+    $("#apptDataTable").DataTable().clear();
+    $("#apptDataTable").DataTable().rows.add(jsondata).draw()
+});
+connection.on("CardPull", function (ip) {
+    $("#c_name").text("");
+    $("#c_gender").text("");
+    $("#c_nationalid").text("");
+    $("#c_birthday").text("");
+    $("#apptDataTable").DataTable().clear().draw()
+})
+connection.start().then(function () {
+    //try {
+    //    connection.invoke("Get_ClinicInfo");
+    //} catch (err) {
+    //    console.error(err);
+    //}
+}).catch(function (err) {
+    return console.error(err.toString());
+});
