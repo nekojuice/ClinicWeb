@@ -16,6 +16,11 @@
         "dist/browser/signalr.js.map",
         "dist/browser/signalr.min.js.map"
       ]
+    },
+    {
+      "provider": "cdnjs",
+      "library": "emojione@4.5.0",
+      "destination": "wwwroot/lib/emojione/"
     }
   ]
 }

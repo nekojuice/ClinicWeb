@@ -248,7 +248,7 @@ app.UseAuthorization();
 
 app.MapHub<ApptStateHub>("/ApptStateHub");
 app.MapHub<CallingHub>("/CallingHub");
-
+app.MapHub<DrawHub>("/drawHub");
 app.MapControllerRoute(
       name: "areas",
       pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"

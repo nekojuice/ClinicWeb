@@ -110,6 +110,31 @@ namespace ClinicWeb.Hubs
             }
         }
 
+        public async Task SendDraw(DrawModel drawData)
+        {
+            await Clients.All.SendAsync("ReceiveDraw", drawData);
+        }
+        public async Task ClearCanvas()
+        {
+            await Clients.All.SendAsync("ClearCanvas");
+        }
+
+        public async Task SendImage(string selfname, string imageSrc,string sendToID)
+        {
+            var Claim = _httpContextAccessor.HttpContext?.User.Claims.ToList();//取使用者資料
+            var userId = Claim?.Where(a => a.Type == "MemberID").First().Value;
+            var user = _context.MemberMemberList.Find(int.Parse(userId));
+            var imgContent = new
+            {
+                SenderID = user.MemberId,
+                SenderName = selfname,
+                image = imageSrc
+            };
+
+
+            await Clients.Client(sendToID).SendAsync("SendImage", imgContent);
+            await Clients.Client(Context.ConnectionId).SendAsync("ReceiveImage", imgContent);
+        }
     }
 }
 
