@@ -160,6 +160,9 @@ function rebindAll_create() {
     document.getElementById('closeButton').addEventListener('click', function () {
         deleteCreateForm();
     });
+    document.getElementById('fillDemoButton').addEventListener('click', function () {
+        fillDemoData();
+    });
 }
 
 //宣告事件綁定為一方法，給裡頭遞迴使用
@@ -388,27 +391,29 @@ async function buttonEventFunc() {
 function fillDemoData() {
 
     // 名字
-    document.querySelector('[asp-for="Name"]').value = '張三 ';
+    document.querySelector('input[name="Name"]').value = '張三 ';
     // 身份證號 
-    document.querySelector('[asp-for="NationalId"]').value = 'A123456789';
+    document.querySelector('input[name="NationalId"]').value = 'A123456789';
     // 電話 
-    document.querySelector('[asp-for="Phone"]').value = '0912345678';
+    document.querySelector('input[name="Phone"]').value = '0912345678';
+    // 信箱 
+    document.querySelector('input[name="EmpMail"]').value = '123@gmail.com';
     // 性別 
-    document.querySelector('[asp-for="Gender"]').value = 'true'; // 男
+    document.querySelector('select[name="Gender"]').value = "True";// 男
     // 血型
-    document.querySelector('[asp-for="BloodType"]').value = 'O';
+    document.querySelector('select[name="BloodType"]').value = 'O';
     // 戶籍地址 
-    document.querySelector('[asp-for="Address"]').value = '臺北市中正區 ';
+    document.querySelector('input[name="Address"]').value = '臺北市中正區 ';
     // 聯絡地址 
-    document.querySelector('[asp-for="ContactAddress"]').value = '臺南市 ';
+    document.querySelector('input[name="ContactAddress"]').value = '臺南市 ';
     // 密碼 
-    document.querySelector('[asp-for="EmpPassword"]').value = 'Password123!';
+    document.querySelector('input[name="EmpPassword"]').value = 'Password123!';
     // 生日
-    document.querySelector('[asp-for="BirthDate"]').value = '1980-01-01';
+    document.querySelector('input[name="BirthDate"]').value = '1980-01-01';
     // 員工類比
-    document.querySelector('[asp-for="EmpType"]').value = '醫生 ';
+    document.querySelector('select[name="EmpType"]').value = '醫生';
     // 部門
-    document.querySelector('[asp-for="Department"]').value = '小兒科 ';
+    document.querySelector('select[name="Department"]').value = '小兒科';
 
     document.querySelector('#Quit').checked = true;
 };

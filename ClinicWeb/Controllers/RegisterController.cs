@@ -26,7 +26,7 @@ namespace ClinicWeb.Controllers
                 return Json(new { success = true, message = "註冊成功!" });
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return Json(new { Error = false, message = "註冊時發生錯誤，請聯繫服務人員。" });
             }
@@ -121,7 +121,7 @@ namespace ClinicWeb.Controllers
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception )
             {
              // 其他未知異常
                     return Json(new { success = false, message = "註冊失敗，未知錯誤，請聯繫系統管理員 。" });

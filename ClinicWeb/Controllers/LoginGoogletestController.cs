@@ -41,6 +41,7 @@ namespace ClinicWeb.Controllers
 
         public async Task<IActionResult> GoogleResponse(MemberMemberList e)
         {
+           
             var result = await HttpContext.AuthenticateAsync("Google");
 
             if (result == null || result.Principal == null)
@@ -98,9 +99,10 @@ namespace ClinicWeb.Controllers
                         TempData["RegisterPrompt"] = "沒有找到匹配會員，請點選下方註冊";
                         //沒有匹配會員要倒到註冊頁面並且填上信箱
                         TempData["ForRegister"] = emailClaim.Value;
-                        HttpContext.SignOutAsync("Google");
+                        await HttpContext.SignOutAsync();
+                        TempData["Error"] = "沒有找到匹配會員，請點選下方註冊";
                         return RedirectToAction("Register", "ClientPage");
-                        //return View("~/Views/ClientPage/Login/ClientLogin.cshtml");
+                        //return View("~/Views/ClientPage/Login/Register.cshtml");
                     }
 
 
@@ -245,7 +247,7 @@ namespace ClinicWeb.Controllers
 
                     
                     GoogleLoginToken tokenObj = JsonConvert.DeserializeObject<GoogleLoginToken>(responseStr);
-                    string id_token = tokenObj.id_token;
+                    string ?id_token = tokenObj?.id_token;
                     var jst = new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(id_token);
                     var userId = jst.Payload.Sub;
 
@@ -254,7 +256,7 @@ namespace ClinicWeb.Controllers
 
                   
                     int currentMemberId = GetCurrentMemberId();
-                    //沒有綁定的人要登入
+                
                     if (dbMember == null && currentMemberId == 0) { return Content("尚未綁定Google帳號"); }
                     //已登入，在帳號設定頁面請求綁定
                     else if (dbMember == null && currentMemberId != 0)
@@ -331,12 +333,12 @@ namespace ClinicWeb.Controllers
 
         public class GoogleLoginToken
         {
-            public string access_token { get; set; }
-            public int expires_in { get; set; }
-            public string id_token { get; set; }
-            public string refresh_token { get; set; }
-            public string scope { get; set; }
-            public string token_type { get; set; }
+            public string ?access_token { get; set; }
+            public int ?expires_in { get; set; }
+            public string ?id_token { get; set; }
+            public string ?refresh_token { get; set; }
+            public string ?scope { get; set; }
+            public string ?token_type { get; set; }
         }
     }
 }
