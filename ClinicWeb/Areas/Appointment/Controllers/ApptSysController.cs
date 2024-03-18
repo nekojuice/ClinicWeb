@@ -33,7 +33,8 @@ namespace ClinicWeb.Areas.Appointment.Controllers
 
             ViewBag.Date = new SelectList(_context.ScheduleClinicInfo
                 .Select(tSchedule => tSchedule.Date.Substring(0, 7))
-                .Distinct());
+                .Distinct()
+                .OrderBy(x=>x));
 
             ViewBag.Department = new SelectList(_context.MemberEmployeeList
                 .Where(x => x.Department != "門診" && !string.IsNullOrEmpty(x.Department))
