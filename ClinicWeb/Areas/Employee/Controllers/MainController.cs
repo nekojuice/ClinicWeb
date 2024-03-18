@@ -145,12 +145,13 @@ namespace ClinicWeb.Areas.Employee.Controllers
             // 如果找到了對應的員工且員工有大頭照數據
             if (employee != null && employee.EmpPhoto != null && employee.EmpPhoto.Length > 0)
             {
-                                return File(employee.EmpPhoto, "image/jpeg"); 
+                return File(employee.EmpPhoto, "image/jpeg");
             }
             else
             {
-              
-                return NotFound(); 
+
+                //return NotFound(); 
+                return Content("沒圖片");
             }
         }
 
