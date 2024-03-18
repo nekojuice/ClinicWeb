@@ -1,0 +1,33 @@
+﻿@* @model ClinicWeb.Areas.Drugs.ViewModels.DrugDetailsViewModel *@
+
+<div class="x_panel">
+    <div class="x_title">
+        <h2>新增適應症</h2>
+
+        <div class="clearfix"></div>
+    </div>
+    <div class="x_content">
+        <br>
+        <div id ="checkbox">
+    
+        </div>
+       
+     @*    @if (Model?.ClinicalUseLists != null&& Model.ClinicalUseLists.Any())
+        {
+            <h2>選取藥品適應症、副作用</h2>
+            <form asp-controller="DrugsApi" asp-action="DrugDetails" method="get">
+                @foreach (var clinicalUse in Model.ClinicalUseLists)
+                {
+                    <div class="checked">
+                        <label>
+                            <input type="checkbox" name="selectedClinicalUse" value="@clinicalUse.ClinicalUseId" />
+                            @clinicalUse.ClinicalUseCode - @clinicalUse.ClinicalUseName
+                        </label>
+                    </div>
+                }
+                <button type="submit">確認</button>                
+            </form>
+        } *@
+        <button id="closeButton" type="button" class="btn btn-secondary" data-dismiss="modal"> 關閉 </button>
+    </div>
+</div>
