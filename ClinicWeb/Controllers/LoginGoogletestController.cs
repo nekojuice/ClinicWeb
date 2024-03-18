@@ -41,6 +41,7 @@ namespace ClinicWeb.Controllers
 
         public async Task<IActionResult> GoogleResponse(MemberMemberList e)
         {
+           
             var result = await HttpContext.AuthenticateAsync("Google");
 
             if (result == null || result.Principal == null)
@@ -98,7 +99,7 @@ namespace ClinicWeb.Controllers
                         TempData["RegisterPrompt"] = "沒有找到匹配會員，請點選下方註冊";
                         //沒有匹配會員要倒到註冊頁面並且填上信箱
                         TempData["ForRegister"] = emailClaim.Value;
-                        HttpContext.SignOutAsync();
+                        await HttpContext.SignOutAsync();
                         TempData["Error"] = "沒有找到匹配會員，請點選下方註冊";
                         return RedirectToAction("Register", "ClientPage");
                         //return View("~/Views/ClientPage/Login/Register.cshtml");
@@ -255,7 +256,7 @@ namespace ClinicWeb.Controllers
 
                   
                     int currentMemberId = GetCurrentMemberId();
-                    //沒有綁定的人要登入
+                
                     if (dbMember == null && currentMemberId == 0) { return Content("尚未綁定Google帳號"); }
                     //已登入，在帳號設定頁面請求綁定
                     else if (dbMember == null && currentMemberId != 0)

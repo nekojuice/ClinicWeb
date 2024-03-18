@@ -17,7 +17,7 @@ namespace ClinicWeb.Areas.Employee.Controllers
     public class MainController : Controller
     {
         private ClinicSysContext _context;
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        //private readonly IHttpContextAccessor _httpContextAccessor;
         public MainController(ClinicSysContext context)
         {
             _context = context;
