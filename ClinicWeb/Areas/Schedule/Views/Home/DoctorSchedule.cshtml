@@ -393,12 +393,12 @@
                     } else if (response.status == 400) {
                         // 如果遇到重复排班
                         response.text().then(message => {
-                            swal("排班失败", "請勿重複排班！", "error", { button: "確定" });
+                            swal("排班失敗", "請勿重複排班！", "error", { button: "確定" });
                         });
                     } else if (response.status == 404) {
                         // 如果遇到重复排班
                         response.text().then(message => {
-                            swal("排班失败", "無醫師班表無法排進跟診護士！", "error", { button: "確定" });
+                            swal("排班失敗", "無醫師班表無法排進跟診護士！", "error", { button: "確定" });
                         });
                     }
 

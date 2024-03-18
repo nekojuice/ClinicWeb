@@ -254,6 +254,7 @@
     <Folder Include="Areas\Shop\Models\" />
     <Folder Include="Areas\Temp\Data\" />
     <Folder Include="Areas\Temp\Models\" />
+    <Folder Include="wwwroot\msit155e\css\Schedule\" />
     <Folder Include="wwwroot\msit155e\js\MemberProfile\" />
     <Folder Include="wwwroot\msit155e\css\Attend\" />
     <Folder Include="wwwroot\msit155e\css\Attend\" />
