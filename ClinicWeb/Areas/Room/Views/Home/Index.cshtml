@@ -1,5 +1,109 @@
-﻿@{
-	ViewData["Title"] = "各別功能的首頁";
+﻿
+@{
+    ViewBag.Title = "Home Page";
 }
+<h2>設施預約系統</h2>
+<aside id="colorlib-hero">
+    <div class="flexslider">
+     
+    </div>
+</aside>
+<div id="colorlib-reservation">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 search-wrap">
+                <form method="post" class="colorlib-form">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="date">起:</label>
+                                <div class="form-field">
+                                    <i class="icon icon-calendar2"></i>
+                                    <input type="text" id="date" class="form-control date" placeholder="Check-in date">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="date">迄:</label>
+                                <div class="form-field">
+                                    <i class="icon icon-calendar2"></i>
+                                    <input type="text" id="date" class="form-control date" placeholder="Check-out date">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="adults">護士</label>
+                                <div class="form-field">
+                                    <i class="icon icon-arrow-down3"></i>
+                                    <select name="people" id="people" class="form-control">
+                                        <option value="#">吳美玲</option>
+                                        <option value="#">陳小華</option>
+                                        <option value="#">鄭美玲</option>
+                                        <option value="#">劉雅文</option>
+                                        <option value="#">郭嘉芸</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="children">醫生</label>
+                                <div class="form-field">
+                                    <i class="icon icon-arrow-down3"></i>
+                                    <select name="people" id="people" class="form-control">
+                                        <option value="#">吳予成</option>
+                                        <option value="#">李培芸</option>
+                                        <option value="#">林子軒</option>
+                                        <option value="#">趙美琴</option>
+                                        <option value="#">陳珮璇</option>
+                                        <option value="#">黃育維</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                       
+                        <div class="col-md-2">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="children">房間</label>
+                                    <div class="form-field">
+                                        <i class="icon icon-arrow-down3"></i>
+                                        <select name="people" id="people" class="form-control">
+                                            <option value="#">產房1</option>
+                                            <option value="#">產房2</option>
+                                            <option value="#">產房3</option>
+                                            <option value="#">病房1</option>
+                                            <option value="#">病房2</option>
+                                            <option value="#">病房3</option>
+                                            <option value="#">101</option>
+                                            <option value="#">102</option>
+                                            <option value="#">103</option>
+                                            <option value="#">104</option>
+                                            <option value="#">201</option>
+                                            <option value="#">202</option>
+                                            <option value="#">203</option>
+                                            <option value="#">204</option>
+                                            <option value="#">301</option>
+                                            <option value="#">302</option>
+                                            <option value="#">303</option>
+                                            <option value="#">304</option>
 
-<h2>各別功能的首頁</h2>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <br />
+                            <br />
+                            <input type="submit" name="submit" id="submit" value="Search" class="btn btn-primary btn-block">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+

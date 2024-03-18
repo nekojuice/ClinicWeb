@@ -1,7 +1,10 @@
 ﻿using ClinicWeb.Areas.Appointment.Models;
+using ClinicWeb.Hubs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol;
 
 namespace ClinicWeb.Areas.Appointment.Controllers
 {
@@ -13,21 +16,28 @@ namespace ClinicWeb.Areas.Appointment.Controllers
     public class ApptSysController : Controller
     {
         private ClinicSysContext _context;
-        public ApptSysController(ClinicSysContext context) { _context = context; }
+        private IHubContext<ApptStateHub, IApptStateHub> _hub { get; set; }
+        public ApptSysController(ClinicSysContext context, IHubContext<ApptStateHub, IApptStateHub> hub)
+        {
+            _context = context;
+            _hub = hub;
+        }
 
-		/// <summary>
-		/// 顯示 掛號管理頁面
-		/// </summary>
-		/// <returns>[html] Index</returns>
-		public IActionResult Index()
+        /// <summary>
+        /// 顯示 掛號管理頁面
+        /// </summary>
+        /// <returns>[html] Index</returns>
+        public IActionResult Index()
         {
             var result = (from tSchedule in _context.ScheduleClinicInfo select tSchedule.Date.Substring(0, 7)).Distinct();
 
             ViewBag.Date = new SelectList(_context.ScheduleClinicInfo
                 .Select(tSchedule => tSchedule.Date.Substring(0, 7))
-                .Distinct());
+                .Distinct()
+                .OrderBy(x=>x));
 
             ViewBag.Department = new SelectList(_context.MemberEmployeeList
+                .Where(x => x.Department != "門診" && !string.IsNullOrEmpty(x.Department))
                 .Select(x => x.Department)
                 .Distinct());
 
@@ -97,8 +107,8 @@ namespace ClinicWeb.Areas.Appointment.Controllers
                     member_id = x.MemberId,
                     診號 = x.ClinicNumber,
                     姓名 = x.Member.Name,
-                    生日 = x.Member.BirthDate.ToString("yyyy/MM/dd"),
-                    性別 = x.Member.Gender ? "男" : "女",
+                    生日 = ((DateTime)x.Member.BirthDate).ToString("yyyy/MM/dd"),
+                    性別 = (bool)x.Member.Gender ? "男" : "女",
                     身分證字號 = x.Member.NationalId,
                     退掛 = x.IsCancelled ? "是" : "否",
                     看診狀態 = x.PatientState.PatientStateName
@@ -121,8 +131,8 @@ namespace ClinicWeb.Areas.Appointment.Controllers
                     id = x.MemberId,
                     身分證字號 = x.NationalId,
                     姓名 = x.Name,
-                    性別 = x.Gender ? "男" : "女",
-                    生日 = x.BirthDate.ToString("yyyy-MM-dd")
+                    性別 = (bool)x.Gender ? "男" : "女",
+                    生日 = ((DateTime)x.BirthDate).ToString("yyyy-MM-dd")
                 })
                 .Take(5)
                 );
@@ -145,8 +155,8 @@ namespace ClinicWeb.Areas.Appointment.Controllers
                     MemberNumber = x.MemberNumber,
                     NationalId = x.NationalId,
                     Name = x.Name,
-                    Gender = x.Gender ? "男" : "女",
-                    BirthDate = x.BirthDate.ToString("yyyy-MM-dd"),
+                    Gender = (bool)x.Gender ? "男" : "女",
+                    BirthDate = ((DateTime)x.BirthDate).ToString("yyyy-MM-dd"),
                     BloodType = x.BloodType,
                     ContactAddress = x.ContactAddress,
                     Phone = x.Phone,
@@ -230,8 +240,8 @@ namespace ClinicWeb.Areas.Appointment.Controllers
                     會員號碼 = x.Member.MemberNumber,
                     診號 = x.ClinicNumber,
                     姓名 = x.Member.Name,
-                    生日 = x.Member.BirthDate.ToString("yyyy/MM/dd"),
-                    性別 = x.Member.Gender ? "男" : "女",
+                    生日 = ((DateTime)x.Member.BirthDate).ToString("yyyy/MM/dd"),
+                    性別 = (bool)x.Member.Gender ? "男" : "女",
                     血型 = x.Member.BloodType,
                     身分證字號 = x.Member.NationalId,
                     退掛 = x.IsCancelled ? "是" : "否",
@@ -246,15 +256,16 @@ namespace ClinicWeb.Areas.Appointment.Controllers
                 );
         }
 
-		/// <summary>
-		/// 修改掛號紀錄
-		/// </summary>
-		/// <param name="id">掛號紀錄id ClinicListId (int)</param>
-		/// <param name="cancelled">是否退掛 IsCancelled (bool)</param>
-		/// <returns>[JSON] 複合資料: 會員資料</returns>
-		[Route("{area}/{controller}/{action}/{id}/{cancelled}")]
+        /// <summary>
+        /// 修改掛號紀錄
+        /// </summary>
+        /// <param name="id">掛號紀錄id ClinicListId (int)</param>
+        /// <param name="cancelled">是否退掛 IsCancelled (bool)</param>
+        /// <param name="state">更改狀態 PatientStateId (int)</param>
+        /// <returns>[JSON] 複合資料: 會員資料</returns>
+        [Route("{area}/{controller}/{action}/{id}/{cancelled}/{state}")]
         [HttpPost]
-        public async Task<IActionResult> PUT_ApptRecord_Cancelled(string id, string cancelled)
+        public async Task<IActionResult> PUT_ApptRecord_Cancelled(string id, string cancelled, string state)
         {
             try
             {
@@ -262,7 +273,23 @@ namespace ClinicWeb.Areas.Appointment.Controllers
                     .Where(x => x.ClinicListId == Convert.ToInt32(id))
                     .First();
                 target.IsCancelled = Convert.ToBoolean(cancelled);
+                target.PatientStateId = Convert.ToInt32(state);
                 await _context.SaveChangesAsync();
+
+                //websocket連線 更新醫師看診畫面
+                var selMessage = _context.ApptClinicList
+                    .Where(x => x.ClinicListId == Convert.ToInt32(id))
+                    .Select(x => new
+                {
+                    member_id = x.MemberId,
+                    clinicListId = x.ClinicListId,
+                    status_id = x.PatientStateId,
+                    診號 = x.ClinicNumber,
+                    姓名 = x.Member.Name,
+                    性別 = (bool)x.Member.Gender ? "男" : "女",
+                    狀態 = x.PatientState.PatientStateName
+                }).FirstOrDefault();
+                await _hub.Clients.All.Set_State(selMessage.ToJson());
             }
             catch (Exception)
             {

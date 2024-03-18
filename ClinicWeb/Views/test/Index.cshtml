@@ -1,0 +1,22 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
+@section Scripts {
+    <script>
+      var connection = new signalR.HubConnectionBuilder()
+            .withUrl("/chatHub")
+            .withHubProtocol(new signalR.JsonHubProtocol())
+            .build();
+
+
+        //與Server建立連線
+        connection.start().then(function () {
+            console.log("Hub 連線完成");
+        }).catch(function (err) {
+            alert('連線錯誤: ' + err.toString());
+        });
+    </script>
+}

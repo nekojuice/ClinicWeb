@@ -1,4 +1,4 @@
-﻿//using ClinicWeb.Models;
+﻿using ClinicWeb.Models;
 using System.ComponentModel.DataAnnotations;
 
 namespace ClinicWeb.Areas.Member.Models.Models

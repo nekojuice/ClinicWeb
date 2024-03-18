@@ -26,8 +26,8 @@ function QueryEmpInfo() {
                 {
                     "data": "修改",
                     "render": function (data, type, row) {
-                        return '<button type="button" class="fa fa-edit border:none indexSelector" style="border: none;" data-toggle="modal" data-target="#EmpEdit" onclick="handleButtonClick(' + row.員工id + ')"></button>' +
-                            '<button type="button" class="fa fa-file-word-o border:none indexSelector" style="border: none;" data-toggle="modal" data-target="#EmpView" onclick="handleViewButtonClick(' + row.員工id + ')"></button>';
+                        return '<button type="button"  class="btn btn-round btn-info indexSelector" style="border: none;" data-toggle="modal" data-target="#EmpEdit" onclick="handleButtonClick(' + row.員工id + ')">編輯</button>' +
+                            '<button type="button" class="btn btn-round btn-warning indexSelector" style="border: none;" data-toggle="modal" data-target="#EmpView" onclick="handleViewButtonClick(' + row.員工id + ')">檢視</button>';
                     }
                 }
             ],
@@ -135,6 +135,13 @@ $("#newEmpbtn").on('click', async function () {
 
     //保定
     rebindAll_create()
+    //demo按鍵的功能
+  
+
+
+    triggerImageUpload('.empcardSelector', 'EmpImageUpload');
+    handleImageUpload('EmpImageUpload', 'EmpPreviewImage');
+
 })
 
 function rebindAll_create() {
@@ -152,6 +159,9 @@ function rebindAll_create() {
     //關閉綁定
     document.getElementById('closeButton').addEventListener('click', function () {
         deleteCreateForm();
+    });
+    document.getElementById('fillDemoButton').addEventListener('click', function () {
+        fillDemoData();
     });
 }
 
@@ -214,6 +224,9 @@ function event_AddMemBtn() {
 
                 //綁定
                 rebindAll_create()
+                //圖片的功能 保險起見再綁一下
+                triggerImageUpload('.empcardSelector', 'EmpImageUpload');
+                handleImageUpload('EmpImageUpload', 'EmpPreviewImage');
             }
 
         } catch {
@@ -282,22 +295,29 @@ async function handleButtonClick(empId) {
     try {
         const response = await fetch(`${url_EmpEdit_Form}?empId=${empId}`);
         if (!response.ok) {
-            throw new Error('在取得會員資料並打開編輯畫面出現錯誤，請洽系統管理員');
+            throw new Error('在取得員工資料並打開編輯畫面出現錯誤，請洽系統管理員');
         }
         const data = await response.text();
-
+        // 假設 response 包含了 Base64 編碼的圖片數據
+        //const imageBase64 = response.imageBase64; // 從後端獲取的 Base64 字符串
+        //const imageElement = document.getElementById('EmpEditPreviewImage'); // 假設這是您想要顯示圖片的 img 元素
+        //imageElement.src = `data:image/jpeg;base64,${imageBase64}`;
         _divEditInfo.innerHTML = data;
 
         //重新綁定
         rebindAll_Edit()
+        //重新綁定圖片預覽功能
+        triggerImageUpload('.EmpEditCardSelector', 'EmpPhotoEdit');
+        handleImageUpload('EmpPhotoEdit', 'EmpEditPreviewImage');
+
 
     } catch (error) {
-        console.error('在取得會員資料並打開編輯畫面出現錯誤，請洽系統管理員:', error);
+        console.error('在取得員工資料並打開編輯畫面出現錯誤，請洽系統管理員:', error);
 
         // 顯示給使用者
         new PNotify({
             title: '錯誤',
-            text: '在取得會員資料並打開編輯畫面出現錯誤，請洽系統管理員',
+            text: '在取得員工資料並打開編輯畫面出現錯誤，請洽系統管理員',
             type: 'error',
             styling: 'bootstrap3'
         });
@@ -321,11 +341,12 @@ async function buttonEventFunc() {
         let result;
         const Quit = $("#Quit").is(":checked")
         formData.set('Quit', Quit);
-
+       
         try {
             const response = await fetch(url_EmpEdit_save, {
                 "method": "POST",
                 "body": formData
+                
             });
             result = await response.json();
         }
@@ -360,5 +381,40 @@ async function buttonEventFunc() {
         $('#empdatatable').DataTable().page(currentPage).draw('page')
 
     });
+
+  
+   
+
+
+   
 }
+function fillDemoData() {
+
+    // 名字
+    document.querySelector('input[name="Name"]').value = '張三 ';
+    // 身份證號 
+    document.querySelector('input[name="NationalId"]').value = 'A123456789';
+    // 電話 
+    document.querySelector('input[name="Phone"]').value = '0912345678';
+    // 信箱 
+    document.querySelector('input[name="EmpMail"]').value = '123@gmail.com';
+    // 性別 
+    document.querySelector('select[name="Gender"]').value = "True";// 男
+    // 血型
+    document.querySelector('select[name="BloodType"]').value = 'O';
+    // 戶籍地址 
+    document.querySelector('input[name="Address"]').value = '臺北市中正區 ';
+    // 聯絡地址 
+    document.querySelector('input[name="ContactAddress"]').value = '臺南市 ';
+    // 密碼 
+    document.querySelector('input[name="EmpPassword"]').value = 'Password123!';
+    // 生日
+    document.querySelector('input[name="BirthDate"]').value = '1980-01-01';
+    // 員工類比
+    document.querySelector('select[name="EmpType"]').value = '醫生';
+    // 部門
+    document.querySelector('select[name="Department"]').value = '小兒科';
+
+    document.querySelector('#Quit').checked = true;
+};
 

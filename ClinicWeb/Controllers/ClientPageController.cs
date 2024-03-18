@@ -11,6 +11,7 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using NuGet.Protocol;
 using System.Security.Claims;
+using System.Text;
 
 namespace ClinicWeb.Controllers
 {
@@ -28,13 +29,13 @@ namespace ClinicWeb.Controllers
         {
             return View();
         }
-		public IActionResult Essence() 
-		{
-			return View();
-		}
+        public IActionResult Essence()
+        {
+            return View();
+        }
 
-		[AllowAnonymous]
-		public IActionResult Index()
+        [AllowAnonymous]
+        public IActionResult Index()
         {
             return View();
         }
@@ -59,28 +60,29 @@ namespace ClinicWeb.Controllers
             return View();
         }
 
-		[AllowAnonymous]
-		public IActionResult Login()
-		{
-			if (HttpContext.User.Identity.IsAuthenticated)
+        [AllowAnonymous]
+        public IActionResult Login()
+        {
+            if (HttpContext.User.Identity.IsAuthenticated)
 
-                //考慮寫成claims.count===0
-			{
+            //考慮寫成claims.count===0
+            {
                 //未來會加上會員中心畫面以及個人資料
-				return Content("現在是登入狀態喔");
-			}
-			else
-			{
-				return View("~/Views/ClientPage/Login/ClientLogin.cshtml");
-			}
-		}
+                return View("~/Views/FMemberB/MemberIndex.cshtml");
+                //return Content("現在是登入狀態喔");
+            }
+            else
+            {
+                return View("~/Views/ClientPage/Login/ClientLogin.cshtml");
+            }
+        }
 
         [AllowAnonymous]
         public IActionResult LoginTest()
         {
-           
-                return View("~/Views/ClientPage/Login/ClientLogin.cshtml");
-            
+
+            return View("~/Views/ClientPage/Login/ClientLogin.cshtml");
+
         }
 
         [AllowAnonymous]
@@ -101,6 +103,48 @@ namespace ClinicWeb.Controllers
 
 
 
+        //[AllowAnonymous]
+        //[HttpPost]
+        //public IActionResult LoginForClient(MemberMemberList m)
+        //{
+        //    var user = _context.MemberMemberList
+        //               .SingleOrDefault(a => a.MemEmail == m.MemEmail);
+
+        //    if (user == null)
+        //    {
+        //        // 如果系統中找不到該郵箱對應的用戶
+        //        TempData["LoginError"] = "找不到會員，請先去註冊。";
+        //        return RedirectToAction("Login", "ClientPage");
+        //    }
+        //    else if (user.MemPassword != m.MemPassword)
+        //    {
+        //        // 如果密碼不匹配
+        //        TempData["LoginError"] = "帳號密碼輸入有誤。";
+        //        return RedirectToAction("Login", "ClientPage");
+        //    }
+        //    else if ((bool)!user.Verification)
+        //    {
+        //        // 如果帳號未啟用
+        //        TempData["LoginError"] = "您的帳號尚未啟用，請至信箱點選啟用連結。";
+        //        return RedirectToAction("Login", "ClientPage");
+        //    }
+        //    //這邊等等寫驗證加角色
+        //    var claims = new List<Claim>
+        //        {
+        //            new Claim(ClaimTypes.Email, user.MemEmail.ToString()),
+        //            new Claim(ClaimTypes.Name, user.Name),
+        //            new Claim("MemberNumber", user.MemberNumber.ToString()),
+        //            new Claim("MemberName", user.Name),
+        //            new Claim("MemberID", user.MemberId.ToString()),
+        //        };
+        //    var claimsIdentity = new ClaimsIdentity(claims, "frontendForCustomer");   //注意!!!
+        //    HttpContext.SignInAsync("frontend", new ClaimsPrincipal(claimsIdentity));    //注意!!!
+
+
+        //    //return Content("你是會員 登入成功了 喔喔");
+        //    //登入後進入網頁主畫面 之後會想直接顯示前台會員中心
+        //    return RedirectToAction("Index");
+        //}
         [AllowAnonymous]
         [HttpPost]
         public IActionResult LoginForClient(MemberMemberList m)
@@ -109,6 +153,9 @@ namespace ClinicWeb.Controllers
                         where a.MemEmail == m.MemEmail
                         && a.MemPassword == m.MemPassword
                         select a).SingleOrDefault();
+            //var MemberMemberList? dbmember = _context.MemberMemberList
+            //    .Where(MemberMemberList member => member.MemEmail == m.MemEmail)
+            //    .SingleOrDefault();
 
             if (user == null)
             {
@@ -118,24 +165,36 @@ namespace ClinicWeb.Controllers
 
             else
             {
+                if ((bool)!user.Verification)
+                {
+                    // 帳號啟用
+                    TempData["Error"] = "您的帳號尚未啟用，請至信箱點選啟用連結。";
+                    return View("~/Views/ClientPage/Login/ClientLogin.cshtml");
+                    //return RedirectToAction("Login", "ClientPage");
+                }
                 //這邊等等寫驗證加角色
                 var claims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Email, user.MemEmail.ToString()),
-                    new Claim("MemberNumber", user.MemberNumber.ToString()),
-                     new Claim("MemberName", user.Name),
-                      new Claim("MemberID", user.MemberId.ToString()),
-
-
-                };
+         {
+             new Claim(ClaimTypes.Email, user.MemEmail.ToString()),
+             new Claim(ClaimTypes.Name, user.Name),
+             new Claim("MemberNumber", user.MemberNumber.ToString()),
+             new Claim("MemberName", user.Name),
+             new Claim("MemberID", user.MemberId.ToString()),
+         };
                 var claimsIdentity = new ClaimsIdentity(claims, "frontendForCustomer");   //注意!!!
                 HttpContext.SignInAsync("frontend", new ClaimsPrincipal(claimsIdentity));    //注意!!!
+
+                //JWT擴充區塊 20240305-1532
+                //SymmetricSecurityKey securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
             }
 
             //return Content("你是會員 登入成功了 喔喔");
             //登入後進入網頁主畫面 之後會想直接顯示前台會員中心
             return RedirectToAction("Index");
         }
+
+
+
 
         //回傳登入者相關資訊
         [AllowAnonymous]
@@ -167,8 +226,8 @@ namespace ClinicWeb.Controllers
         {
             try
             {
-            HttpContext.SignOutAsync("frontend");
-            HttpContext.SignOutAsync();
+                HttpContext.SignOutAsync("frontend");
+                HttpContext.SignOutAsync();
             }
             catch (Exception)
             {
@@ -185,56 +244,53 @@ namespace ClinicWeb.Controllers
             return View("~/Views/ClientPage/Login/Register.cshtml");
         }
 
-        //註冊帳號
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        ////[Bind("Name,Gender,BloodType,NationalId,Address,ContactAddress,Phone,BirthDate,IceName,IceNumber,MemPassword,MemEmail,Verification")]
-        //public IActionResult Register([Bind("Name,BloodType,NationalId,Address,ContactAddress,Phone,BirthDate,IceName,IceNumber,MemPassword,MemEmail")][FromBody] MemberMemberList member)
-        //{
 
-        //    if (member == null)
-        //    {
-        //        Console.WriteLine("null~~");
-        //    }
-        //    else
-        //    {
-        //        Console.WriteLine(member.Name);
-        //        Console.WriteLine(member.Gender);
-        //        Console.WriteLine(member.BloodType);
-        //        Console.WriteLine(member.NationalId);
-        //        Console.WriteLine(member.Address);
-        //        Console.WriteLine(member.ContactAddress);
-        //        Console.WriteLine(member.Phone);
-        //        Console.WriteLine(member.BirthDate);
-        //        Console.WriteLine(member.IceName);
-        //        Console.WriteLine(member.IceNumber);
-        //        Console.WriteLine(member.MemPassword);
-        //        Console.WriteLine(member.MemEmail);
-        //        Console.WriteLine(member.Verification);
-        //    }
-        //    //檢查驗證
-        //    if (!ModelState.IsValid)
-        //    {
-        //        // 如果模型驗證失敗，重新顯示包含錯誤信息的表單
-        //        Console.WriteLine("驗證失敗");
-        //        return Content("~/Areas/Member/Views/Partial/_MemberCreatePartial.cshtml"); // 返回相同的視圖，這將會顯示錯誤信息
-        //        //return Json(member);
-        //    }
-        //    else
-        //    {
-        //        //加入資料庫
 
-        //        var maxMemberNumber = _context.MemberMemberList.Max(m => m.MemberNumber);
-        //        var nextMemberNumber = maxMemberNumber + 1;
-        //        member.MemberNumber = nextMemberNumber;
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult LoginForClient2(string email, string password)
+        {
+            var user = (from a in _context.MemberMemberList
+                        where a.MemEmail == email
+                        && a.MemPassword == password
+                        select a).SingleOrDefault();
 
-        //        _context.MemberMemberList.Add(member);
-        //        _context.SaveChanges();
-        //        return Content("success");
-        //    }
+            if (user == null)
+            {
+                ViewData["ErrorMessage"] = "帳號密碼輸入有誤";
+                return BadRequest("帳號密碼輸入有誤");
+            }
 
-        //}
+            else
+            {
+                //這邊等等寫驗證加角色
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Email, user.MemEmail.ToString()),
+                       new Claim(ClaimTypes.Name, user.Name),
+                    new Claim("MemberNumber", user.MemberNumber.ToString()),
+                     new Claim("MemberName", user.Name),
+                      new Claim("MemberID", user.MemberId.ToString()),
 
+
+                };
+                var claimsIdentity = new ClaimsIdentity(claims, "frontendForCustomer");   //注意!!!
+                HttpContext.SignInAsync("frontend", new ClaimsPrincipal(claimsIdentity));    //注意!!!
+            }
+
+            //return Content("你是會員 登入成功了 喔喔");
+            //登入後進入網頁主畫面 之後會想直接顯示前台會員中心
+            return Ok("登入成功");
+        }
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult LoginId()
+        {
+            var idText = HttpContext.User.Claims.Where(m => m.Type == "MemberID").FirstOrDefault()?.Value;
+            if (idText == null) { return BadRequest("目前無人登入"); };
+            int memberId = Convert.ToInt32(idText);
+            return Ok(new { Data = memberId });
+        }
 
 
     }

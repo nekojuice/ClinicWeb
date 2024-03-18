@@ -100,7 +100,8 @@ namespace ClinicWeb.Areas.Member.Models
 
         [Display(Name = "啟用")]
         public bool? Verification { get; set; }
-    
-        public string? VerificationString { get; set; }
+
+        public IFormFile? ImageUpload { get; set; }
+
     }
 }

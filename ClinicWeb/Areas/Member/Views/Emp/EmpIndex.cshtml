@@ -46,11 +46,13 @@
                 <!--新增員工的-->
                 <div class="col-md-2">
                     <label class="form-label"> </label>
-                    <button id="newEmpbtn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#EmpCreate">新增員工</button>
+                    <button id="newEmpbtn" type="button" class="btn btn-info" data-toggle="modal" data-target="#EmpCreate">新增員工</button>
                 </div>
                 <!--生日區間-->
                 <div class="col-md-1">
-                    <label class="form-label" for="startDate">生日區間</label>
+                
+                        <label class="form-label" for="startDate" style="font-size: 16px;">生日區間</label> <!-- 设置标签的字体大小 -->
+              
                 </div>
                 <div class="col-md-3">
 
@@ -95,6 +97,7 @@
             <div class="modal fade" id="EmpCreate" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content" id="divCreateInfo">
+                       
                         @* <partial name="~/Areas/Member/Views/Partial/_EmpCreatePartial.cshtml" /> *@
                     </div>
                 </div>

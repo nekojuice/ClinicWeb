@@ -1,0 +1,51 @@
+<div class="row" style="text-align: center; margin:20px">
+
+  <div class="col-md-3" style="align-self: center;">
+    <div class="doctor_img_div">
+      <img class="doctor_img" src="https://localhost:7071/images/user.png">
+    </div>
+    <div class="doctor_name">
+      {{dataInput.docName}}
+      醫師
+    </div>
+
+    <a class="btn btn-default" id="intro" href="/"><i class="fa fa-user"></i>醫師簡介</a>
+  </div>
+
+
+  <div class="col-md-9">
+    <div class="row">
+      <table class="cal">
+        <thead>
+          <tr>
+            <th class="cal-div cal-th" *ngFor="let item of dateObjectArr">{{item.date}}<br />{{item.week}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let _ of clinicDataArray;let i = index">
+            <td *ngFor="let data of getClinicDataDetail(i)">
+              <div class="cal-div cal-td">
+                {{getShiftDetail(i)}}<br />
+                <button (click)="goAppt(data)" *ngIf="data.count < data.limit && !data.isAppted">{{data.count}}/{{data.limit}}</button>
+                <span *ngIf="data.count >= data.limit" style="color:red">已額滿</span>
+                <br *ngIf="data.isAppted"/>
+                <span *ngIf="data.isAppted" style="color:red">已預約</span>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <button class="cal-btn" (click)="weekChange(-1)" [disabled]="weekPage<=0">上一週</button>
+      </div>
+      <div class="col-md-6">
+        <button class="cal-btn" (click)="weekChange(1)" [disabled]="weekPage>=7">下一週</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+<hr />

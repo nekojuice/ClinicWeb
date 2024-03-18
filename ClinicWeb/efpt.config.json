@@ -7,7 +7,7 @@
    "IncludeConnectionString": false,
    "ModelNamespace": null,
    "OutputContextPath": null,
-   "OutputPath": "Areas\/Appointment\/Models",
+   "OutputPath": "Areas\/Appointment\/Models\/",
    "PreserveCasingWithRegex": true,
    "ProjectRootNamespace": "ClinicWeb",
    "Schemas": null,
@@ -17,6 +17,10 @@
    "Tables": [
       {
          "Name": "[dbo].[Appt_ClinicList]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Appt_ECPay]",
          "ObjectType": 0
       },
       {
@@ -66,6 +70,7 @@
    "UseNoObjectFilter": false,
    "UseNodaTime": false,
    "UseNullableReferences": false,
+   "UsePrefixNavigationNaming": false,
    "UseSchemaFolders": false,
    "UseSchemaNamespaces": false,
    "UseSpatial": false,

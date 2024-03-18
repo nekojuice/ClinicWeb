@@ -2,6 +2,7 @@
 //using ClinicWeb.Models;
 using ClinicWeb.Areas.Drugs.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace ClinicWeb.Areas.Drugs.Controllers
 {
@@ -27,10 +28,24 @@ namespace ClinicWeb.Areas.Drugs.Controllers
                 儲存方法 = x.FStorage
             }));
         }
+        //public JsonResult DrugsDetail(int id) 
+        //{
+        //    return Json(_context.PharmacyTMedicinesList
+        //        .Where(x=>x.FIdDrug==id)
+        //        .Include(x=>x.PharmacyTTypeDetails)                
+        //        .Select(x=>new 
+        //        {
+        //            識別碼 = x.FIdDrug,
+        //            劑型=x.PharmacyTTypeDetails
+
+        //        }));
+                    
+        //}
 
         //讀取DB劑型資訊傳回JSON
         //GET:Drugs/DrugsApi/TypeInfo
-        public JsonResult TypeInfo() {
+        public JsonResult TypeInfo()
+        {
             return Json(_context.PharmacyTTypeList.Select(x => new
             {
                 id = x.FIdType,
@@ -77,5 +92,77 @@ namespace ClinicWeb.Areas.Drugs.Controllers
         //    }
         //    return Json(Type);
         //}
+
+        //新增適應症資料
+        [HttpPost]
+        public IActionResult ClinicalUseCreate(PharmacyTClinicalUseList clinicalUseList)
+        {
+            //return Content("測試API是否有連到前端");
+            //var maxClinicalUseId = _context.PharmacyTClinicalUseList.Max(c => c.FIdClinicalUse);
+            //var nextClinicalUseId = maxClinicalUseId + 1;
+            //clinicalUseList.FIdClinicalUse = nextClinicalUseId;
+            _context.PharmacyTClinicalUseList.Add(clinicalUseList);
+            _context.SaveChanges();
+
+            return View("~/Areas/Drugs/Views/Home/ClinicalUse.cshtml");
+        }
+
+        //修改適應症資料-->給modal讀單一一筆資料
+        [HttpGet]
+       // [Route("GetClinicalUse/{id}")]
+        public async Task<IActionResult> EditClinicalUse(int? id)
+        {
+            if (id == null || _context.PharmacyTClinicalUseList==null)
+            {
+                return NotFound();
+            }
+
+            var pharmacyTClinicalUseList = await _context.PharmacyTClinicalUseList.FindAsync(id);
+            if (pharmacyTClinicalUseList == null)
+            {
+                return NotFound();
+            }
+            return PartialView("~/Areas/Drugs/Views/Partial/_ClinicalUseEditPartial.cshtml", pharmacyTClinicalUseList);
+        }
+        //Update回DB
+        //[Bind("FIdClinicalUse,FClinicalUseCode,FClinicalUse")]
+        [HttpPost]
+        //[ValidateAntiForgeryToken] 加了這個會BadResqust
+        
+        public async Task<IActionResult> EditClinicalUse(PharmacyTClinicalUseList pharmacyTClinicalUseList)
+        {           
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(pharmacyTClinicalUseList);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException ex)
+                {
+                    if (!PharmacyTClinicalUseListExists(pharmacyTClinicalUseList.FIdClinicalUse))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Update failed: {ex.Message}");
+                    }
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine($"Update failed: {ex.Message}");  
+                }
+               
+            }
+            return View("~/Areas/Drugs/Views/Home/ClinicalUse.cshtml");
+           // return View(pharmacyTClinicalUseList);
+        }
+
+        private bool PharmacyTClinicalUseListExists(int id)
+        {
+            return (_context.PharmacyTClinicalUseList?.Any(e => e.FIdClinicalUse == id)).GetValueOrDefault();
+        }
+
     }
 }

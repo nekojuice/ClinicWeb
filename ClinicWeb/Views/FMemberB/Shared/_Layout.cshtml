@@ -24,27 +24,27 @@
     <header id="header" class="header fixed-top d-flex sticky-top align-items-center">
 
         <div class="d-flex align-items-center justify-content-between">
-            <a asp-controller="FmemberB" asp-action="MemberIndex" class="logo d-flex align-items-center">
+            <a asp-controller="MBMemberInfo" asp-action="Index" class="logo d-flex align-items-center">
                 <img src="~/images/logo.png" alt="logo" />
                 <span class="d-none d-lg-block">會員專區</span>
             </a>
         </div><!-- End Logo -->
 
-        <div class="search-bar">
+@*         <div class="search-bar">
             <form class="search-form d-flex align-items-center" method="POST" action="#">
                 <input type="text" name="query" placeholder="Search" title="Enter search keyword">
                 <button type="submit" title="Search"><i class="bi bi-search"></i></button>
             </form>
-        </div><!-- End Search Bar -->
+        </div><!-- End Search Bar --> *@
 
         <nav class="header-nav ms-auto">
             <ul class="d-flex align-items-center">
 
-                <li class="nav-item d-block d-lg-none">
+@*                 <li class="nav-item d-block d-lg-none">
                     <a class="nav-link nav-icon search-bar-toggle " href="#">
                         <i class="bi bi-search"></i>
                     </a>
-                </li><!-- End Search Icon-->
+                </li><!-- End Search Icon--> *@
                 @*               <li class="nav-item dropdown">
 
                 <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
@@ -187,11 +187,11 @@
                 </li><!-- End Messages Nav --> *@
                 <li class="nav-item dropdown pe-3">
 
-                    <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                    <a class="nav-link nav-profile d-flex align-items-center pe-0" asp-controller="MBMemberInfo" asp-action="Index">@*  data-bs-toggle="dropdown" *@
                         <span class="d-none d-md-block ps-2">會員資訊</span>
                     </a><!-- End Profile Iamge Icon -->
 
-                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+@*                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
 
                         <li>
                             <a asp-controller="MBMemberInfo" asp-action="Index" class="dropdown-item d-flex align-items-center">
@@ -207,40 +207,26 @@
                                 <span>編輯</span>
                             </a>
                         </li>
-                    </ul><!-- End Profile Dropdown Items -->
+                    </ul><!-- End Profile Dropdown Items --> *@
                 </li><!-- End mem Nav -->
 
                 <li class="nav-item dropdown pe-3">
-
-                    <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                    <a asp-controller="MBRecordInfo" asp-action="Index" class="nav-link nav-profile d-flex align-items-center pe-0">
                         <span class="d-none d-md-block ps-2">看診紀錄</span>
                     </a><!-- End Profile Iamge Icon -->
-
-                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-
-                        <li>
-                            <a asp-controller="MBRecordInfo" asp-action="Index" class="dropdown-item d-flex align-items-center">
-                                <span>基本資訊</span>
-                            </a>
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-
-                        <li>
-                            <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
-                                <span>編輯</span>
-                            </a>
-                        </li>
-                    </ul><!-- End Profile Dropdown Items -->
                 </li><!-- End rec Nav -->
-
+                <li class="nav-item pe-3">
+                    <a asp-controller="MBRoomInfo" asp-action="Index" class="nav-link nav-profile d-flex align-items-center pe-0">
+                        <span class="d-none d-md-block ps-2">預約月子中心</span>
+                    </a><!-- End Profile Iamge Icon -->
+                </li><!-- End rec Nav -->
                 <li class="nav-item dropdown pe-3">
 
-                    <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                        <span class="d-none d-md-block ps-2">掛號查詢</span>
+                    <a class="nav-link nav-profile d-flex align-items-center pe-0" asp-controller="MBAppointmentInfo" asp-action="Index">
+                        @* data-bs-toggle="dropdown" *@
+                        <span class="d-none d-md-block ps-2">掛號繳費查詢</span>
                     </a><!-- End Profile Iamge Icon -->
-
+@* 
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
 
                         <li>
@@ -257,7 +243,7 @@
                                 <span>編輯</span>
                             </a>
                         </li>
-                    </ul><!-- End Profile Dropdown Items -->
+                    </ul><!-- End Profile Dropdown Items --> *@
                 </li><!-- End appt Nav -->
 
                 <li class="nav-item dropdown pe-3">
@@ -289,13 +275,13 @@
                 <li class="nav-item dropdown pe-3">
 
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                        <img src="~/images/person-1.jpg" alt="Profile" class="rounded-circle">
-                        <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
+                        <img src="~/images/user.png" alt="Profile" class="rounded-circle" id="ClientPicLogout">
+                        <span class="d-none d-md-block dropdown-toggle ps-2">@User.Identity.Name</span>
                     </a><!-- End Profile Iamge Icon -->
 
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                         <li class="dropdown-header">
-                            <h6>Kevin Anderson</h6>
+                            <h6>@User.Identity.Name</h6>
                             <span>Web Designer</span>
                         </li>
                         <li>
@@ -333,9 +319,8 @@
                         </li>
 
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <i class="bi bi-box-arrow-right"></i>
-                                <span>Sign Out</span>
+                            <a class="dropdown-item d-flex align-items-center" asp-controller="ClientPage" asp-action="Logout">
+                                <i class="bi bi-box-arrow-right"></i><span>登出</span>
                             </a>
                         </li>
 
@@ -356,6 +341,7 @@
     <script src="~/js/memback/main.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/msit155e/js/MemberInfoPic/MemberInfoPic.js"></script>
     @*     <script src="~/js/site.js" asp-append-version="true"></script> *@
     @await RenderSectionAsync("Scripts", required: false)
 </body>

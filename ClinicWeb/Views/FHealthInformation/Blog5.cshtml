@@ -1,0 +1,95 @@
+﻿@section Styles {
+    <link href="~/msit155e/css/drugs/stylesheet.css" rel="stylesheet" />
+    <style>
+        .list {
+            text-decoration: underline;
+            text-decoration-color: #B9B9FF;
+            font-weight: 900;
+        }
+
+            .list ul li {
+                text-decoration: none;
+                font-weight: normal;
+            }
+
+    </style>
+
+
+}
+@{
+    ViewData["Title"] = "新生兒黃疸";
+}
+
+<div class="article">
+
+    <!--- 標題 --->
+
+    <h2>
+        新生兒黃疸
+    </h2><br />
+    <img src="~/msit155e/images/drugs/blog5.png" width="800px"/>
+    <br /><hr />
+
+    <!--- 說明 --->
+    <div>
+        <div>
+            <p class="fw-bold">新生兒黃疸是什麼？</p>
+            <ul>
+                <li style="text-decoration: underline; font-weight:900;">
+                    生理性黃疸：
+                    <ul>
+                        <li>
+                            新生兒黃疸是新生兒常見的問題，大部分是屬於生理性黃疸，有黃疸的寶寶約出生後第二至三天皮膚開始慢慢變黃，爾後隨著時間黃疸值會漸漸爬升，出生後第五至十天為高峰期，之後才慢慢消退。有少部分的寶寶於高峰值時期，仍可能超過黃疸危險值，需要照光治療。
+                        </li>
+                    </ul>
+                </li>
+                <li class="list">
+                    病理性黃疸：
+                    <ul>
+                        <li>
+                            只有少部分為病理性黃疸，也就是有其他特殊原因造成的，包含血型不合、蠶豆症、頭血腫、膽道閉鎖、感染等等。病理性黃疸的表現，其黃疸值會過早出現（小於三天），或者黃疸值上升過快，或者持續過久。
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <p class="fw-bold">黃疸要如何觀察？</p>
+            <p>
+                通常需在相同的白光底下觀察寶寶的膚色，但肉眼判斷極不準確，因此仍建議黃疸高峰值期間（出生後五至十天），帶寶寶回診由醫師判斷及儀器檢測。
+            </p>
+        </div>
+        <div>
+            <p class="fw-bold">黃疸值過高會對寶寶有什麼影響？</p>
+            <p>
+                黃疸值過高，在學理上稱為膽紅素過高，此過高的膽紅素毒素可能跑到腦脊髓液中，沈積在中樞神經裡，造成中樞神經的症狀，例如肌肉張力低下、意識模糊、角弓反張等等。
+            </p>
+        </div>
+        <div>
+            <p class="fw-bold">新生兒黃疸應如何治療？</p>
+            <p>
+                一般性的黃疸照光治療即有效。此時寶寶應盡量將身上皮膚暴露出來，接受特殊波長的藍光照射，可以有效抑制黃疸的上升。但嚴重的黃疸寶寶，甚至得換血治療才能改善。
+            </p>
+        </div>
+    </div>
+
+    <!--- 常見問題 --->
+    <div>
+        <p class="fw-bold">常見Q&A</p>
+        <br />
+        <div class="text">
+            <p>Q:黃疸可以自行在家照窗邊的太陽或日光燈嗎？</p>
+            <p>
+                A:不行！太陽光和日光為各種顏色光的混合光，其中所含的特殊波長的藍光極低，無法達到照光治療的效果。
+            </p>
+            <p>Q:寶寶有黃疸可以繼續哺餵母乳嗎？</p>
+            <p>A:原則上可以繼續哺餵母乳，但仍需視寶寶的天數、喝奶的狀況、黃疸數值的高低等等因素綜合判斷。因此建議跟醫師或護理師討論之後再做決定。</p>
+        </div>
+    </div>
+    <!-- 返回列表按鈕:水平置中 -->
+    <div class="text-center">
+        <a class="btn btn-secondary" href="~/FHealthInformation/FHealthInformation" role="button">返回列表</a>
+    </div>
+</div>
+
+

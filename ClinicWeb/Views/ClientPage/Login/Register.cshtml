@@ -1,95 +1,221 @@
-﻿@model MemberMemberList
+﻿@model ClinicWeb.Areas.Member.Models.MemberMemberList
+@section styles
+{
 
-<link href="~/msit155e/css/MemberLogin/MemberLogin.css" rel="stylesheet">
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="...">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="..." crossorigin="anonymous"></script>
-<!------ Include the above in your HEAD tag ---------->
-<!--輪播區-->
-<div class="container">
-    <div class="row">
-        <!-- 輪播圖 -->
-        <div class="col-md-6">
-            <!-- 輪播圖 -->
-            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src="~/msit155e/images/MemLogin/01Edu.jpg" class="d-block w-100" alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="~/msit155e/images/MemLogin/02Edu.jpg" class="d-block w-100" alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="~/msit155e/images/MemLogin/03Edu.jpg" class="d-block w-100" alt="...">
-                    </div>
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
-            </div>
-        </div>
+    <link href="~/msit155e/css/MemberRegister/MemberRegister.css" rel="stylesheet">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+}
+@{
+    ViewData["Title"] = "RegisterMem";
+}
 
-        <!-- 右側表單區域 -->
-        <div class="col-md-6">
 
-            <div class="panel panel-login" style="margin:100px">
+
+<div class="register-container">
+    <div class="row justify-content-center">
+        <!-- 將所有內容置中 -->
+
+        <div class="col-md-6 forform" style="margin:50px">
+            <!-- 注册 -->
+            <div class="panel panel-register">
                 <div class="panel-heading">
                     <div class="row">
-                        <div class="col-xs-6 ">
-                            <a href="#" class="active" id="login-form-link">註冊</a>
-                        </div>
+                        <div class="col-xs-12 text-center">
+                            <!-- 表單置中 -->
 
+                        </div>
                     </div>
-                    <hr>
                 </div>
-                <div class="panel-body">
+                <!-- 表單底色為白色 -->
+                <div class="panel-body" style="background-color:white;">
+
                     <div class="row">
                         <div class="col-lg-12">
-                            <form id="login-form" asp-controller="ClientPage" asp-action="LoginForClient" method="post" role="form" style="display: block;">
-                                <div class="form-group">
-                                    <input type="text" asp-for="MemEmail" tabindex="1" class="form-control" placeholder="請輸入信箱" value="">
-                                </div>
-                                <div class="form-group">
-                                    <input type="password" asp-for="MemPassword" tabindex="2" class="form-control" placeholder="請輸入密碼">
-                                </div>
 
-                                @if (ViewData["ErrorMessage"] != null)
-                                {
-                                    <div class="text-danger" style="color:red">@ViewData["ErrorMessage"]</div>
-                                }
-
-                                <a asp-controller="LoginGoogletest" asp-action="Logingoogle">
-                                    <img src="~/msit155e/images/MemLogin/Fa-Team-Fontawesome-Brands-FontAwesome-Brands-Google-Plus.512.png" alt="Google 登入" style="width: 24px; height: 24px;" />
-                                </a>
-
-
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="text-center">
-                                                <button type="submit" class="login-content_submit">登入</button>
+                            <form asp-controller="Register" asp-action="Register" id="form_MemberRegister" method="post" class="form-label-left input_mask" style="margin:50px">
+                                <h1 style="font-weight: bold; text-align: center;">註冊</h1>
+                                <div style="border-bottom: 1px solid #ccc; margin: 20px 0;"></div>
+                                <div style="margin:8px">
+                                    <!--姓名-->
+                                    <div class="form-group row">
+                                        <div class="form-group has-feedback">
+                                            <label for="Name">姓名</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fa fa-user"></i></span>
+                                                <input asp-for="Name" type="text" class="form-control" placeholder="姓名">
                                             </div>
-
-                                            <div class="text-center">
-                                                <a href="https://phpoll.com/recover" tabindex="5" class="forgot-password">忘記密碼?</a>
-                                            </div>
-                                            <div class="text-center">
-                                                <a asp-controller="ClientPage" asp-action="Login" class="forgot-password">已經是會員? 前往登入</a>
-                                            </div>
+                                          @*   <span asp-validation-for="Name" class="text-danger"></span> *@
                                         </div>
                                     </div>
+
+                                    <!--身分證字號-->
+                                    <div class="form-group row">
+                                        <div class="form-group has-feedback">
+                                            <label for="Name">身分證字號</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fa fa-id-card"></i></span>
+                                                <input asp-for="NationalId" type="text" class="form-control" placeholder="身分證字號">
+                                            </div>
+                                           @*  <span asp-validation-for="NationalId" class="text-danger"></span> *@
+                                        </div>
+                                    </div>
+
+
+
+
+                                    <!--信箱-->
+                                    <div class="form-group row">
+                                        <div class="form-group has-feedback">
+                                            <label for="Name">信箱</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+                                                <input asp-for="MemEmail" type="text" class="form-control" placeholder="信箱" value="@TempData["ForRegister"]">
+                                            </div>
+                                           @*  <span asp-validation-for="MemEmail" class="text-danger"></span> *@
+                                        </div>
+                                    </div>
+
+
+
+
+
+                                    <!--填上電話-->
+                                    <div class="form-group row">
+                                        <div class="form-group has-feedback">
+                                            <label for="Name">電話</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fa fa-phone"></i></span>
+                                                <input asp-for="Phone" type="text" class="form-control" placeholder="電話">
+                                            </div>
+                                          @*   <span asp-validation-for="Phone" class="text-danger"></span> *@
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12 col-sm-12"><!--排版用空白 避免錯誤欄推擠亂版--></div>
+
+                                    <!--性別-->
+
+                                    <div class="form-group row">
+                                        <label class="control-label col-md-3 col-sm-3">性別</label>
+                                        <div class="col-md-9 col-sm-9">
+                                            @Html.RadioButtonFor(m => m.Gender, "true", new { @class = "form-check-input", id = "male" })
+                                            <label class="form-check-label" for="male">男</label>
+
+                                            @Html.RadioButtonFor(m => m.Gender, "false", new { @class = "form-check-input", id = "female" })
+                                            <label class="form-check-label" for="female">女</label>
+
+                                          @*   <span asp-validation-for="Gender" class="text-danger"></span> *@
+                                        </div>
+                                    </div>
+
+
+                                    <!--血型-->
+                                    <div class="form-group row">
+                                        <label class="control-label col-md-3 col-sm-3 ">血型</label>
+                                        <div class="col-md-9 col-sm-9 ">
+                                            <select asp-for="BloodType" class="form-control">
+                                                <option value="">---請選擇---</option>
+                                                <option>A</option>
+                                                <option>B</option>
+                                                <option>O</option>
+                                                <option>AB</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                    <!--戶籍地址-->
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-md-3 col-sm-3 ">戶籍地址</label>
+                                        <div class="col-md-9 col-sm-9 ">
+                                            <input asp-for="Address" type="text" class="form-control" placeholder="戶籍地址">
+                                          @*   <span asp-validation-for="Address" class="text-danger"></span> *@
+                                        </div>
+                                    </div>
+                                    <!--聯絡地址-->
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-md-3 col-sm-3 "> 聯絡地址</label>
+                                        <div class="col-md-9 col-sm-9 ">
+                                            <input asp-for="ContactAddress" type="text" class="form-control" placeholder="聯絡地址">
+                                          @*   <span asp-validation-for="ContactAddress" class="text-danger"></span> *@
+                                        </div>
+                                    </div>
+                                    <!--緊急聯絡人-->
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-md-3 col-sm-3 ">緊急聯絡人</label>
+                                        <div class="col-md-9 col-sm-9 ">
+                                            <input asp-for="IceName" type="text" class="form-control" placeholder="緊急聯絡人">
+                                           @*  <span asp-validation-for="IceName" class="text-danger"></span> *@
+                                        </div>
+                                    </div>
+                                    <!--緊急聯絡人電話-->
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-md-3 col-sm-3 ">緊急聯絡人電話</label>
+                                        <div class="col-md-9 col-sm-9 ">
+                                            <input asp-for="IceNumber" type="text" class="form-control" placeholder="緊急聯絡人電話">
+                                         @*    <span asp-validation-for="IceNumber" class="text-danger"></span> *@
+                                        </div>
+                                    </div>
+
+                                    <!--會員密碼-->
+                                    <div class="form-group row">
+
+
+
+                                        <label class="col-form-label col-md-3 col-sm-3 ">會員密碼</label>
+                                        <div class="col-md-9 col-sm-9 ">
+                                            <input asp-for="MemPassword" class="form-control" type="password" title="Minimum 8 Characters Including An Upper And Lower Case Letter, A Number And A Unique Character">
+                                          @*   <span asp-validation-for="MemPassword" class="text-danger"></span> *@
+                                            <span style="position: absolute;right:15px;top:7px;" onclick="hideshow()">
+                                                <i id="slash" class="fa fa-eye-slash" style="display: none;"></i>
+
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <!--啟用權限-->
+                                    @*   <div class="form-group row">
+                                    <label class="control-label col-md-3 col-sm-3 ">啟用</label>
+                                    <div class="col-md-9 col-sm-9 ">
+                                    <div class="col-md-9 col-sm-9 ">
+                                    <div class="">
+                                    <label>
+                                    <input name="Verification" type="checkbox" id="Verification" class="js-switch" checked />
+                                    </label>
+                                    </div>
+                                    </div>
+                                    </div>
+                                    </div> *@
+
+                                    <!--選生日-->
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-md-3 col-sm-3 ">
+                                            生日 <span class="required"></span>
+                                        </label>
+
+                                        <div class="col-md-9 col-sm-9 ">
+                                            <input asp-for="BirthDate" class="date-picker form-control" type="date" required />
+                                          @*   <span asp-validation-for="BirthDate" class="text-danger"></span> *@
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <div class="col-6 d-flex justify-content-end px-2">
+                                            <button type="reset" class="custom-button clear">清除</button>
+                                        </div>
+                                        <div class="col-6 d-flex justify-content-start px-2">
+                                            <button type="submit" class="custom-button submit">確認送出</button>
+                                            @*  <input type="submit" value="確認送出" class="custom-button submit" /> *@
+                                        </div>
+                                    </div>
+
+                                    <button type="button" id="fillDemoData">Demo</button>
+
+
                                 </div>
+
                             </form>
-
-
-
                         </div>
                     </div>
                 </div>
@@ -101,5 +227,142 @@
 
 
 
-<script></script>
- 
+@if (ViewBag.SuccessMessage != null)
+{
+    <script>
+        swal("註冊成功！", "@ViewBag.SuccessMessage", "success");
+    </script>
+}
+    @if (TempData["Error"] != null)
+    {
+
+        <script>
+            swal.fire({
+                position: "center",
+                icon: "error",
+                title: "@TempData["Error"]",
+                showConfirmButton: false,
+                confirmButtonText: "確定",
+                timer: 10000000
+            });
+        </script>
+    }
+
+
+@section Scripts
+{
+     @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    @*   <script>
+        $(document).ready(function () {
+            var successMessage = '@TempData["SuccessMessage"]';
+            if (successMessage) {
+                swal({
+                    title: "註冊成功！",
+                    text: successMessage,
+                    icon: "success",
+                    button: "確定",
+                });
+            }
+        });
+    </script> *@
+      <script>
+           document.getElementById("fillDemoData").addEventListener("click", function () {
+
+            document.querySelector('input[name="Name"]').value = "蔡文綺";
+            document.querySelector('input[name="NationalId"]').value = "A123456789";
+            document.querySelector('input[name="MemEmail"]').value = "vcie2210@gmail.com";
+            document.querySelector('input[name="Phone"]').value = "0912345678";
+            // 性别
+            document.getElementById("female").checked = true;
+            // 血型
+            document.querySelector('select[name="BloodType"]').value = "B";
+
+            document.querySelector('input[name="Address"]').value = "台北市南港區";
+            document.querySelector('input[name="ContactAddress"]').value = "台北市南港區";
+            document.querySelector('input[name="IceName"]').value = "李四";
+            document.querySelector('input[name="IceNumber"]').value = "0987654321";
+            document.querySelector('input[name="MemPassword"]').value = "password123";
+            // 生日
+            document.querySelector('input[name="BirthDate"]').value = "2000-10-22";
+        });
+
+
+
+        document.getElementById("form_MemberRegister").addEventListener("submit", async function (event) {
+            event.preventDefault(); // 先阻止表單的正常提交
+
+            Swal.fire({
+                title: '註冊中',
+                allowOutsideClick: false,
+                timer: 6000,
+                timerProgressBar: true,
+                didOpen: () => {
+                    Swal.showLoading()
+                }
+            });
+
+            // 使用FormData收集表單數據
+            var formData = new FormData(this);
+            var jsonObject = {};
+            formData.forEach((value, key) => { jsonObject[key] = value; });
+            // 使用fetch發送數據到後端
+          
+            try {
+                const response = await fetch(`@Url.Content("~/Register/RegisterMem")`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(jsonObject)
+                });
+
+                // 檢查狀態
+                if (!response.ok) {
+                    throw new Error('response不OK');
+                }
+
+                const data = await response.json();
+
+                if (data.success) {
+                    Swal.fire({
+                        title: '成功!',
+                        html: data.message.replace(/\n/g, '<br>'),
+                        confirmButtonText: "確定",
+                        icon: 'success'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = '/ClientPage/Login'; // 導到登入畫面
+                        }
+                    }); // 顯示成功提示
+                } else {
+                    // 處理後端返回的錯誤
+                    Swal.fire('錯誤!', data.message, 'error');
+                }
+            } catch (error) {
+                console.error('註冊過程中出錯', error);
+                Swal.fire('錯誤!', '註冊過程中出現未知錯誤。', 'error'); // 處理fetch請求失敗的情況
+            }
+        });
+
+
+
+
+
+
+       
+
+
+      
+    </script>
+
+
+}
+
+
+
+
+
+
