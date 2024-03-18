@@ -52,11 +52,8 @@ namespace ClinicWeb.Controllers.ScheduleAPI
         //[Route("{controller}/{action}/{id}")]
         public JsonResult GS(string id) //GET
         {
-            //int Daverage = 0;
-            //int Caverage = 0;
-
-            double Daverage = 0;
-            double Caverage = 0;
+            int Daverage = 0;
+            int Caverage = 0;
 
             var a = _context.CasesMedicalRecords
                 .Include(x => x.ClinicList.Clinic.Doctor)
@@ -83,11 +80,9 @@ namespace ClinicWeb.Controllers.ScheduleAPI
 
 
             }
-            Daverage = Math.Round(Daverage / dc,1);
-            Caverage = Math.Round(Caverage / cc,1);
-            return Json(new { DocSatisfaction = Daverage.ToString("0.0"),
-                PatientSatisfaction = Caverage.ToString("0.0")
-            });
+            Daverage = Daverage / dc;
+            Caverage = Caverage / cc;
+            return Json(new { DocSatisfaction = Daverage, PatientSatisfaction = Caverage });
         }
     }
 }
