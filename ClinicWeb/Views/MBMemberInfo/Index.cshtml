@@ -55,6 +55,25 @@
                             <i class="bi bi-trash"></i> *@
                             <a href="#" class="btn btn-danger btn-sm ms-2" title="Remove my profile image">刪除照片</a>
                         </div>
+
+                        <!--測試綁定按鈕顯示-->
+                     @*    @if (Model.GoogleSub==null)
+                        {
+                            
+                            <li class="nav-item">
+                                <button asp-controller="ClientPage" asp-action="Logout">綁定</button>
+                            </li>
+                        }
+                        else
+                        {
+
+                            <li class="nav-item">
+                                <button asp-controller="ClientPage" asp-action="Login">取消綁定</button>
+                            </li>
+                        } *@
+
+
+
                         <h5 class="card-title">會員姓名：</h5>
                     </div>
                 </div>

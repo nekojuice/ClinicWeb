@@ -2,7 +2,7 @@
 @model ClinicWeb.Areas.Member.Models.MemberMemberList
 
 
-@section Styles{
+@section Styles {
     <link href="~/msit155e/css/MemberLogin/MemberLogin.css" rel="stylesheet">
     <script src="https://accounts.google.com/gsi/client" async defer></script>
 
@@ -10,7 +10,6 @@
 
 
 <!------ Include the above in your HEAD tag ---------->
-
 <!--輪播區-->
 <div class="container">
     <partial name="_SweetAlertPartial" />
@@ -41,16 +40,16 @@
             </div>
         </div>
 
- <!-- 右側表單區域 -->
+        <!-- 右側表單區域 -->
         <div class="col-md-6">
 
             <div class="panel panel-login" style="margin:10px;block; background-color:white">
-                <div class="panel-heading" >
+                <div class="panel-heading">
                     <div class="row">
                         <div class="col-xs-6 " style="margin:10px">
                             <a href="#" class="active" id="login-form-link">登入</a>
                         </div>
-                  
+
                     </div>
                     <hr>
                 </div>
@@ -85,14 +84,14 @@
                                 }
 
 
-                              @*   <a asp-controller="LoginGoogletest" asp-action="Logingoogle">
-                                    <img src="~/msit155e/images/MemLogin/Fa-Team-Fontawesome-Brands-FontAwesome-Brands-Google-Plus.512.png" alt="Google 登入" style="width: 24px; height: 24px;" />
+                                @*   <a asp-controller="LoginGoogletest" asp-action="Logingoogle">
+                                <img src="~/msit155e/images/MemLogin/Fa-Team-Fontawesome-Brands-FontAwesome-Brands-Google-Plus.512.png" alt="Google 登入" style="width: 24px; height: 24px;" />
                                 </a> *@
-                                <div id="g_id_onload"
+                               @*  <div id="g_id_onload"
                                      data-client_id="526974450781-r15eef63hrf196gkhsn0tjuqkvk49vjm.apps.googleusercontent.com"
                                      data-context="signin"
                                      data-ux_mode="popup"
-                                     data-login_uri="https://localhost:7071/LoginGoogletest/Logingoogle"
+                                     data-login_uri="https://localhost:7071/LoginGoogletest/GoogleResponse"
                                      data-auto_prompt="false">
                                 </div>
 
@@ -110,7 +109,6 @@
                                      data-context="signin"
                                      data-ux_mode="popup"
                                      data-login_uri="https://localhost:7071/LoginGoogletest/LoginGoogle2"
-                                     
                                      data-auto_prompt="false">
                                 </div>
 
@@ -120,15 +118,50 @@
                                      data-theme="outline"
                                      data-text="signin_with"
                                      data-size="large">
-                                </div>
-                               
+                                </div> *@
+                                <a asp-controller="LoginGoogletest" asp-action="Logingoogle">
+                                    <button type="button" style="border: none;background-color: transparent;">
+                                        <div style="
+                                            display: flex;
+                                            transition: background-color .218s, border-color .218s;
+                                            -webkit-user-select: none;
+                                            -webkit-appearance: none;
+                                            background-color: #fff;
+                                            background-image: none;
+                                            border: 1px solid #dadce0;
+                                            color: #3c4043;
+                                            cursor: pointer;
+                                            font-family: 'Google Sans', arial, sans-serif;
+                                            font-size: 14px;
+                                            height: 40px;
+                                            letter-spacing: 0.25px;
+                                            outline: none;
+                                            overflow: hidden;
+                                            padding: 0 12px;
+                                            position: relative;
+                                            text-align: center;
+                                            vertical-align: middle;
+                                            white-space: nowrap;
+                                            width: auto;
+                                            align-items: center;
+                                            border-radius: 4px;">
+                                            <div style="height:18px;margin-right:8px;min-width:18px;width:18px;">
+                                                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" class="LgbsSe-Bz112c"><g><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"></path><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"></path><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"></path><path fill="none" d="M0 0h48v48H0z"></path></g></svg>
+                                            </div>
+                                            <span style="font-weight: 500;font-family: 'Google Sans', arial, sans-serif;letter-spacing: 0.25px;">
+                                                使用 Google 帳戶登入
+                                            </span>
+                                        </div>
+                                    </button>
+                                </a>
+
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="text-center">
                                                 <button type="submit" class="login-content_submit">登入</button>
                                             </div>
-                                          
+
                                             <div class="text-center">
                                                 <a asp-controller="ForgotPassword" asp-action="ForgotPasswordIndex" class="forgot-password">忘記密碼?</a>
                                             </div>
@@ -139,7 +172,7 @@
                                     </div>
                                 </div>
                             </form>
-                          
+
 
 
                         </div>
@@ -155,8 +188,8 @@
 { *@
 
 
-   @*  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script> *@
-   @*  @if (TempData["Error"] != null)
+@*  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script> *@
+@*  @if (TempData["Error"] != null)
     {
         <script>
             swal.fire({
@@ -164,15 +197,15 @@
                 icon: "error",
                 title: "@TempData["Error"]",
                 showComfirmButton: true,
-               
+
             });
         </script>
     } *@
 
-   @*  @if (TempData["Msg"] != null)
+@*  @if (TempData["Msg"] != null)
     {
         <script type="text/javascript">
-            
+
             alert("@Html.Raw(TempData["Msg"])");
         </script>
     }
