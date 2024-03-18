@@ -12,6 +12,7 @@ let connection = new signalR.HubConnectionBuilder()
 
 //新醫生登入事件
 let isCallintArray = [];
+let lastCallingIndex = -1;
 connection.on("Listener_ClinicInfo", function (jsonstring) {
     const jsondata = JSON.parse(jsonstring)
     console.log(jsondata)
@@ -37,9 +38,10 @@ connection.on("Listener_ClinicInfo", function (jsonstring) {
     //尋找最大值(正在叫號的index)
     let callingIndex = isCallintArray.indexOf(Math.max(...isCallintArray));
     console.log(callingIndex)
-    if (callingIndex < 0) { return; }
+    if (callingIndex < 0 && lastCallingIndex == callingIndex) { return; }
     callingSound.play()
-    $(`#cp-${callingIndex}`).find('.cp-num').fadeOut(500).fadeIn(500).fadeOut(500).fadeIn(500).fadeOut(500).fadeIn(500).fadeOut(500).fadeIn(500);
+    lastCallingIndex = callingIndex
+    $(`#cp-${callingIndex}`).find('.cp-num').fadeOut(500).fadeIn(500).fadeOut(500).fadeIn(500);
 });
 
 
