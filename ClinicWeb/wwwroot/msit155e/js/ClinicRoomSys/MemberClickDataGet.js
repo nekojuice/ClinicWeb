@@ -47,6 +47,21 @@ $('#prescriptionDataTable').DataTable({
         url: "https://cdn.datatables.net/plug-ins/1.13.7/i18n/zh-HANT.json"
     }
 });
+
+$('#prescriptionListDataTable').DataTable({
+    columns: [
+        { title: "處方ID", data: "prescriptionID", visible: false },
+        { title: "藥品", data: "DrugID" },
+        { title: "開立天數", data: "days" },
+        { title: "總量", data: "Total" },
+    ],
+    fixedHeader: {
+        header: true
+    },
+    language: {
+        url: "https://cdn.datatables.net/plug-ins/1.13.7/i18n/zh-HANT.json"
+    }
+});
 //獲得主要病歷表資料
 async function getCase(id) {
     const response = await fetch(`/ClinicRoomSys/Cases/GM/${id}`, { method: "POST" })
@@ -174,7 +189,50 @@ async function AddNMR() {
     }
 }
 
+//新增處方籤
 async function AddNPre() {
+    const addrecord = {
+        CaseId: CASE_ID,
+        ClinicListId: CLINICLIST_ID,
+        Bp: $('#addbp').val(),
+        Pulse: $('#addpulse').val(),
+        Bt: $('#addbt').val(),
+        Cc: $('#addcc').val(),
+        Disposal: $('#adddisposal').val(),
+        Prescribe: $('#addprescribe').val(),
+    };
+
+    try {
+        const response = await fetch(`/ClinicRoomSys/Cases/AddMedicalRecord`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(addrecord),
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log('Success:', data);
+        // 這裡可以添加一些成功後的操作，比如更新UI或者是頁面導覽
+        new PNotify({
+            title: '成功',
+            text: '新增成功',
+            type: 'info',
+            styling: 'bootstrap3',
+            setTimeout: 500
+        })
+    } catch (error) {
+        console.error('Error:', error);
+        // 這裡可以處理錯誤，比如提示用户操作失敗
+    }
+}
+
+//新增藥品
+async function AddNPreL() {
     const addrecord = {
         CaseId: CASE_ID,
         ClinicListId: CLINICLIST_ID,
