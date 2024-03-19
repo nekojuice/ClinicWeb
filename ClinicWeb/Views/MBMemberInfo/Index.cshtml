@@ -24,9 +24,9 @@
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="uploadModalLabel">更新大頭照 </h5>
-                                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                           @*  <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
-                                            </button>
+                                            </button> *@
                                         </div>
                                         <div class="modal-body">
                                             <!-- 上傳圖片modal區域 -->
@@ -114,6 +114,7 @@
                             <input type="hidden" asp-for="GoogleSub" />
                             <input type="hidden" asp-for="ActivateToken" />
                             <input type="hidden" asp-for="MemPhoto" />
+                            <input type="hidden" asp-for="MemPassword" />
                             <div class="row mb-3">
                                 @*   <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
                                 <div class="col-md-8 col-lg-9"> *@
@@ -218,12 +219,12 @@
                                 </div>
                             </div>
                             <!--會員密碼-->
-                            <div class="row mb-3">
+                          @*   <div class="row mb-3">
                                 <label asp-for="MemPassword" class="col-md-4 col-lg-3 col-form-label"></label>
                                 <div class="col-md-8 col-lg-9">
                                     <input asp-for="MemPassword" type="text" class="form-control">
                                 </div>
-                            </div>
+                            </div> *@
 
                             <div class="text-center">
                                 <button type="submit" class="btn btn-primary">保存變更</button>
@@ -334,6 +335,7 @@
         });
 
 
+   
 
 
 
@@ -342,6 +344,16 @@
         document.getElementById('uploadButton').addEventListener('click', async function () {
             var formElement = document.getElementById('uploadForm');
             var formData = new FormData(formElement);
+            // if (draggedFiles.length > 0) {
+            //     [...draggedFiles].forEach((file, index) => {
+            //         formData.append('file' + index, file);
+            //     });
+            // } else if (fileInput.files.length > 0) {
+            //     [...uploadForm.files].forEach((file, index) => {
+            //         formData.append('file' + index, file);
+            //     });
+            // }
+
             try {
                 const response = await fetch(`@Url.Content("~/MBMemberInfo/UploadImage?MemberId=${MemberId}")`, {
                     method: 'POST',
