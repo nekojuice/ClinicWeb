@@ -444,7 +444,7 @@
                 table.column(6).search(selectedDep).draw();
             }
         }
-        ˊ 
+        
         //星期搜尋
         selWeek.addEventListener('change', () => { searchWeek(); });
         function searchWeek() {
@@ -463,6 +463,7 @@
             const url = '@Url.Content("~/Schedule/api/SelectedDoctorName")';
             const response = await fetch(url);
             const datas = await response.json();
+            console.log(datas);
 
             const optDoctornames = datas.map(name => `<option value=${name.empId}>${name.name}</option>`);
             optDoctornames.unshift('<option value="none">請選擇</option>');
