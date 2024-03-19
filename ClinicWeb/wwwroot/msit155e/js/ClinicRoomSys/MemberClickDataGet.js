@@ -207,13 +207,58 @@ async function AddNMR() {
             styling: 'bootstrap3',
             setTimeout: 500
         })
-            (#recordModal).modal(hide);
+            $('#recordModal').modal('hide');
 
     } catch (error) {
         console.error('Error:', error);
         // 這裡可以處理錯誤，比如提示用户操作失敗
     }
 }
+
+//新增檢查報告
+async function AddNTR() {
+    const addrecord = {
+        CaseId: CASE_ID,
+        ClinicListId: CLINICLIST_ID,
+        Bp: $('#addbp').val(),
+        Pulse: $('#addpulse').val(),
+        Bt: $('#addbt').val(),
+        Cc: $('#addcc').val(),
+        Disposal: $('#adddisposal').val(),
+        Prescribe: $('#addprescribe').val(),
+    };
+
+    try {
+        const response = await fetch(`/ClinicRoomSys/Cases/AddMedicalRecord`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(addrecord),
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        //const data = await response.json();
+        //console.log('Success:', data);
+        // 這裡可以添加一些成功後的操作，比如更新UI或者是頁面導覽
+        new PNotify({
+            title: '成功',
+            text: '新增成功',
+            type: 'info',
+            styling: 'bootstrap3',
+            setTimeout: 500
+        })
+        $('#recordModal').modal('hide');
+
+    } catch (error) {
+        console.error('Error:', error);
+        // 這裡可以處理錯誤，比如提示用户操作失敗
+    }
+}
+
 
 //新增處方籤
 async function AddNPre() {
@@ -316,4 +361,8 @@ document.getElementById("submitrd").addEventListener("click", function (event) {
 document.getElementById("submit").addEventListener("click", function (event) {
     event.preventDefault(); // 防止表單提交
     uploadFormData(CASE_ID);
+});
+
+document.getElementById("addrecord").addEventListener("click", function (event) {
+    $('#recordModal').modal('show');
 });
