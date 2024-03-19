@@ -8,7 +8,18 @@
                 { "data": "科別" },
                 { "data": "醫師名稱" },
                 { "data": "診號" },
-                { "data": "報到狀態" }
+                {
+                    "data": "報到狀態",
+                    "render":
+                        function (data, type, row) {
+                            if (data == '未報到') {
+                                return `<button type="button" class="btn btn-danger indexSelector" onclick="goCheckIn('${row.clinicAppt_id}')">進行報到</button>`
+                            }
+                            else {
+                                return data;
+                            }
+                        }
+                }
             ],
             fixedHeader: {
                 header: false
@@ -31,6 +42,19 @@
     }
 }
 init_ApptTable()
+
+let _index_DataTable = -1
+$("#apptDataTable tbody").on('click', '.indexSelector', function () {
+    const selectTr = $(this).closest('tr')
+    _index_DataTable = $('#apptDataTable').DataTable().row(selectTr).index();   
+});
+
+
+async function goCheckIn(clinicAppt_id) {
+    const result = await fetch(`${Url_goCheckIn}/${clinicAppt_id}`)
+    const data = await result.json()
+    $('#apptDataTable').DataTable().row(_index_DataTable).data(data);
+}
 
 let connection = new signalR.HubConnectionBuilder()
     .withUrl("/ArrivalHub")

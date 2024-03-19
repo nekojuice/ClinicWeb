@@ -16,10 +16,13 @@ namespace CardReader
         static string Arrivaldate = "2023/12/01";
         string ip = GetLocalIPAddress();
 
-        
+
         //string apiUrl = $"https://localhost:7071/Appointment/Arrival/GET_Arrival/{Arrivaldate}";//舊報到路由
         //string apiUrl = $"https://localhost:7071/FArrival/Remote_CardInsert";
-        string serverUrl = "https://192.168.0.20:7071";
+
+        //string serverUrl = "https://192.168.0.20:7071"; //nkj家裡測試
+        string serverUrl = "https://192.168.21.14:7071"; //classroom 201 nkj位置 14號
+        
         string insertCardUrl = "FArrival/Remote_CardInsert";
         string pullCardUrl = "FArrival/Remote_PullCard";
 
