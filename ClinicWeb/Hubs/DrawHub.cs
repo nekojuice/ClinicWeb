@@ -1,4 +1,4 @@
-﻿using ClinicWeb.Models;
+﻿using ClinicWeb.Areas.Member.Models;
 using Microsoft.AspNetCore.SignalR;
 
 namespace ClinicWeb.Hubs

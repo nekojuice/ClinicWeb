@@ -51,4 +51,25 @@
     .rightbox .card-body.text-end{
         background-color: #C3F69D;
     }
+
+.signnamebtn {
+    border-radius: 20px;
+    padding: 8px 16px;
+    background-color: #84C1FF;
+    color: white;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    cursor: pointer;
+    transition-duration: 0.4s;
+}
+
+#bigname {
+    font-size: 24px; /* 設置字體大小 */
+    color: #2C3E50; /* 設置文字顏色 */
+    font-weight: bold; /* 設置字體粗細 */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* 添加文字陰影 */
+}
 /*#C3F69D*/

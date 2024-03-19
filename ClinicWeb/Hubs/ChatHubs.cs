@@ -1,4 +1,4 @@
-﻿using ClinicWeb.Models;
+﻿using ClinicWeb.Areas.Member.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
@@ -109,7 +109,7 @@ namespace ClinicWeb.Hubs
                 await Clients.Client(Context.ConnectionId).SendAsync("UpdContentSend", messageContent);
             }
         }
-
+//畫圖即時連線
         public async Task SendDraw(DrawModel drawData)
         {
             await Clients.All.SendAsync("ReceiveDraw", drawData);
@@ -134,6 +134,16 @@ namespace ClinicWeb.Hubs
 
             await Clients.Client(sendToID).SendAsync("SendImage", imgContent);
             await Clients.Client(Context.ConnectionId).SendAsync("ReceiveImage", imgContent);
+        }
+        //點擊事件
+        public async Task SendButtonClick()
+        {
+            await Clients.All.SendAsync("ButtonClickReceived");
+        }
+
+        public async Task CloseModal()
+        {
+            await Clients.All.SendAsync("ModalClosed");
         }
     }
 }

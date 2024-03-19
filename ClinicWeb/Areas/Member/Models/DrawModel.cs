@@ -1,4 +1,4 @@
-﻿namespace ClinicWeb.Models
+﻿namespace ClinicWeb.Areas.Member.Models
 {
     public class DrawModel
     {

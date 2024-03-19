@@ -3,8 +3,8 @@
 }
 @model MemberMemberList;
 
-@section Styles{
-	<link href="~/msit155e/css/fchattingroom/chatroom.css" rel="stylesheet" asp-append-version="true" />
+@section Styles {
+    <link href="~/msit155e/css/fchattingroom/chatroom.css" rel="stylesheet" asp-append-version="true" />
 }
 
 <section style="background-color: white">
@@ -13,7 +13,7 @@
 
         <div class="row">
             <h3>線上諮詢   歡迎~ <span id="SelfID">@User.Identity.Name</span></h3>
-                <div class="col-md-6 col-lg-5 col-xl-4 mb-4 mb-md-0 leftbox" id="2">
+            <div class="col-md-6 col-lg-5 col-xl-4 mb-4 mb-md-0 leftbox" id="2">
 
                 <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
@@ -31,7 +31,7 @@
 
             </div>
             <div class="col-md-6 col-lg-5 col-xl-4 mb-4 mb-md-0 leftbox" id="1">
-                
+
                 <h5 class="font-weight-bold mb-3 text-center text-lg-start">線上清單</h5>
                 <hr />
                 <div class="card">
@@ -39,22 +39,22 @@
 
                         <ul class="list-unstyled mb-0" id="IDList">
                             @* <li class="p-2 border-bottom" style="background-color: white;">
-                                <a href="#!" class="d-flex justify-content-between">
-                                    <div class="d-flex flex-row">
-                                        <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-8.webp" alt="avatar"
-                                             class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60">
-                                        <div class="pt-1">
-                                            <p class="fw-bold mb-0" id="name">沉沉沉</p>
-                                            <p class="small text-muted" >Hello, Are you there?</p>
-                                        </div>
-                                    </div>
-                                    <div class="pt-1">
-                                        <p class="small text-muted mb-1"  id="time">12.30</p> 
-                                        <span class="badge bg-danger float-end">1</span>
-                                    </div>
-                                </a>
+                            <a href="#!" class="d-flex justify-content-between">
+                            <div class="d-flex flex-row">
+                            <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-8.webp" alt="avatar"
+                            class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60">
+                            <div class="pt-1">
+                            <p class="fw-bold mb-0" id="name">沉沉沉</p>
+                            <p class="small text-muted" >Hello, Are you there?</p>
+                            </div>
+                            </div>
+                            <div class="pt-1">
+                            <p class="small text-muted mb-1"  id="time">12.30</p>
+                            <span class="badge bg-danger float-end">1</span>
+                            </div>
+                            </a>
                             </li> *@
-                            
+
                         </ul>
 
                     </div>
@@ -63,30 +63,28 @@
             </div>
             <div class="col-md-6 col-lg-7 col-xl-8 rightbox" style=" height: 700px;">
                 <div style="height: 400px;">
-                <ul class="list-unstyled" id="messageList" style="max-height: 400px; overflow-y: auto;padding-top:5px; ">
-                </ul>
+                    <ul class="list-unstyled" id="messageList" style="max-height: 400px; overflow-y: auto;padding-top:5px; ">
+                    </ul>
                 </div>
                 <div class="bg-white mb-3">
                     <div class="mb-3">
                         @* <label for="sendToID" class="form-label">指定 ID</label> *@
                         <input type="text" class="form-control" id="sendToID">
                     </div>
-                    <div class="form-outline" >
+                    <div class="form-outline">
                         <label class="form-label" for="textAreaExample2">輸入訊息</label>
                         <textarea class="form-control" id="message" style="height: 200px; font-size: 18px;"></textarea>
                     </div>
                 </div>
-                <label for="fileInput">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                        <path d="M0 0h24v24H0z" fill="none" />
-                        <path d="M21 15v4a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-4H0l8-8 8 8h-3zm-2-7a8.963 8.963 0 0 1-.5 2.998L10 4.414 4.5 10A8.963 8.963 0 0 1 4 8a9 9 0 0 1 18 0c0 1.964-1.79 4.525-3.998 7.998L18 18v1h4a1 1 0 0 1 1 1v2h2v-2a3 3 0 0 0-3-3H2a3 3 0 0 0-3 3v2h2v-2a1 1 0 0 1 1-1h2v-1a7.963 7.963 0 0 1 2-5.002V7h2zm-8 1a6 6 0 0 0-6 6h2a4 4 0 0 1 8 0h2a6 6 0 0 0-6-6zm-1 8h2v-2h-2v2zm0-4h2V9h-2v2z" />
-                    </svg>
+                <label for="fileInput" class="btn btn-primary btn-rounded float-between">
                     上傳圖片
                 </label>
-                <input type="file" id="fileInput" style="display: none;" />
-                <button type="button">&#x1F604;</button>
-                <button type="button" id="openModalBtn">電子簽章</button>
-                <button type="button" class="btn btn-info btn-rounded float-end" id="sendButton">送出</button>
+
+                    <input type="file" name="file" id="fileInput" style="display: none;" />
+
+                @* <button type="button" class="btn btn-info btn-rounded float-end">&#x1F604;</button> *@
+                <button type="button" class="btn btn-info btn-primary float-between" id="openModalBtn" style="display:none ;">電子簽章</button>
+                <button type="button" class="btn btn-info btn-primary float-end" id="sendButton">送出</button>
             </div>
 
         </div>
@@ -95,8 +93,8 @@
     <!-- 懸浮視窗 -->
     <div id="myModal" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
-            <div>
+            <span class="close" id="close">&times;</span>
+            <div style="display: flex; align-items: center;">
                 顏色：<input id="color" type="color">
                 粗細：
                 <select id="lineWidth">
@@ -108,8 +106,10 @@
                     <option>6</option>
                     <option>7</option>
                 </select>
-                <button id="clearBtn">清除</button>
+                <button id="clearBtn" class="signnamebtn">清除</button>
+                <button id="savesign" class="signnamebtn" style="display: none;">入檔</button>
             </div>
+            <label id="bigname">請簽下您的大名</label>
             <canvas id="modalCanvas" width="600" height="400" style="border:2px solid gray"></canvas>
         </div>
     </div>
@@ -131,16 +131,14 @@
         </div>
     </div>
 </body> *@
-<script src="~/lib/emojione/lib/js/emojione.min.js"></script>
-<link rel="stylesheet" href="~/lib/emojione/emojione.min.css">
-<script src="~/lib/emojione/emojione.min.js"></script>
+
 <link href="~/css/openmodal.css" rel="stylesheet" />
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-                @section Scripts{
+@section Scripts {
     @*     <link href="~/css/chatroom.css" rel="stylesheet" /> *@
-   @*  <link href="~/css/chatstyle.css" rel="stylesheet" /> *@
+    @*  <link href="~/css/chatstyle.css" rel="stylesheet" /> *@
     <script>
         //表情
 
@@ -152,20 +150,24 @@
             .withHubProtocol(new signalR.JsonHubProtocol())
             .build();
 
-            
+
         //與Server建立連線
         connection.start().then(function () {
             console.log("Hub 連線完成");
         }).catch(function (err) {
             alert('連線錯誤: ' + err.toString());
         });
-      
+
         //登入會員的清單
         connection.on("UpdList", function (jsonList) {
             list = JSON.parse(jsonList);
             $("#IDList li").remove();
             $('#sendToID').hide();
-
+            //簽章按鈕顯示
+            var btnuserName = document.getElementById("SelfID").textContent.trim();
+            if (btnuserName === "管理員") {
+                $("#openModalBtn").css("display", "initial");
+            }
             var hasAdmin = false; // 增加一個變數來追蹤是否有管理員
 
             for (i = 0; i < list.length; i++) {
@@ -176,13 +178,7 @@
                     hasAdmin = true;
                 }
             }
-
-            // 如果IDList中不包含管理員，顯示提示訊息
-            // if (!hasAdmin) {
-            //     alert("目前沒有客服人員請稍待片刻");
-            // } else {
-            //     alert("請輸入想諮詢的問題，專人會幫您服務");
-            // }
+            //管理員是否在線
             var selfIDText = $("#SelfID").text().trim();
             if (selfIDText !== "管理員") {
                 if (!hasAdmin) {
@@ -191,9 +187,9 @@
 
                 } else {
                     Swal.fire("請輸入想諮詢的問題，專人會幫您服務");
- 
+
                 }
-            } 
+            }
 
 
             var selfIDText = $("#SelfID").text().trim();
@@ -206,7 +202,7 @@
             }
         });
 
-        
+
 
         function ccon(element) {
             var selfIDText = $("#SelfID").text().trim();
@@ -217,22 +213,22 @@
             // $("#messageList").empty();
         }
 
- 
+
 
         //控制登入使用者看到的畫面
-        
+
         var userName = document.getElementById("SelfID").innerText;
         var leftbox1 = document.getElementById("1");
         var leftbox2 = document.getElementById("2");
         console.log(userName);
 
-       
+
         if (userName === "管理員") {
-            leftbox1.style.display = "block"; 
+            leftbox1.style.display = "block";
             leftbox2.style.display = "none";
         } else {
-            leftbox1.style.display = "none"; 
-            leftbox2.style.display = "block";  
+            leftbox1.style.display = "none";
+            leftbox2.style.display = "block";
         }
 
 
@@ -247,7 +243,7 @@
 
             // 將列表項目添加到 #messageList
             $("#messageList").append(listItem);
-
+            
             // 滾動到列表底部
             var messageList = document.getElementById("messageList");
             messageList.scrollTop = messageList.scrollHeight;
@@ -343,7 +339,7 @@
 
 
         //送出訊息事件
-       $('#sendButton').on('click', function () {
+        $('#sendButton').on('click', function () {
             console.log(list);
             let selfname = $('#SelfID').html();
             let message = $('#message').val();
@@ -376,7 +372,7 @@
         //上傳圖片檔案
         $("#fileInput").change(function (event) {
             var file = event.target.files[0]; // 獲取所選的檔案
-            var maxSize = 51200; // 50KB 的大小限制，1KB = 1024 bytes
+            var maxSize = 30000; // 50KB 的大小限制，1KB = 1024 bytes
 
             if (file) {
                 if (file.size > maxSize) {
@@ -395,7 +391,7 @@
                 reader.readAsDataURL(file); // 讀取檔案並轉換為URL
             }
         });
-//接收圖片
+        //接收圖片
         function createCardWithImageRec(data) {
             var name = data.senderName;
             var imageSrc = data.image;
@@ -404,7 +400,7 @@
             var listItem = $("<li></li>").addClass("d-flex justify-content-between mb-4");
             var card = $("<div></div>").addClass("card");
             var nameParagraph = $("<p></p>").addClass("fw-bold mb-0").attr("id", "name").text(name).css("margin-right", "20px");
-             // 時間（time）
+            // 時間（time）
             var timeParagraph = $("<p></p>").addClass("text-muted small mb-0").attr("id", "time")
                 .html("<i class='far fa-clock'></i> " + currentTime);
             var image = $("<img>").addClass("card-img-top").attr("src", imageSrc).attr("alt", "Selected Image").css({ "width": "200px" });
@@ -428,7 +424,7 @@
             // 時間（time）
             var timeParagraph = $("<p></p>").addClass("text-muted small mb-0").attr("id", "time")
                 .html("<i class='far fa-clock'></i> " + currentTime);
-            var image = $("<img >").addClass("card-img-top").attr("src", imageSrc).attr("alt", "Selected Image").css({"width":"200px" });
+            var image = $("<img >").addClass("card-img-top").attr("src", imageSrc).attr("alt", "Selected Image").css({ "width": "200px" });
             card.append($("<div></div>").addClass("card-header d-flex justify-content-end p-3")
                 .append(nameParagraph).append(timeParagraph));
             card.append($("<div></div>").addClass("card-body text-end").append(image));
@@ -451,7 +447,7 @@
         }
         //接收連線圖片
         connection.on("ReceiveImage", function (data) {
-              createCardWithImageRec(data);
+            createCardWithImageRec(data);
         });
         //發送連線圖片
         connection.on("SendImage", function (data) {
@@ -460,6 +456,78 @@
 
 
         //電子簽章
+        
+        
+        
+        let buttonClicked = false;
+
+        document.getElementById("openModalBtn").addEventListener("click", function () {
+            if (!buttonClicked) {
+                connection.invoke("SendButtonClick").catch(function (err) {
+                    return console.error(err.toString());
+                });
+                buttonClicked = true; // 設置按鈕點擊標記為 true
+            }
+        });
+
+        connection.on("ButtonClickReceived", function () {
+            // 檢查按鈕點擊標記，避免重複觸發按鈕點擊事件
+            if (!buttonClicked) {
+                // 觸發按鈕點擊事件
+                document.getElementById("openModalBtn").click();
+                buttonClicked = true; // 設置按鈕點擊標記為 true
+            }
+        });
+
+        document.getElementById("close").addEventListener("click", function () {
+            if (buttonClicked) {
+                connection.invoke("CloseModal").catch(function (err) {
+                    return console.error(err.toString());
+                });
+                buttonClicked = false;
+            }
+        });
+
+        connection.on("ModalClosed", function () {
+            if (buttonClicked) {
+                document.getElementById("close").click();
+                buttonClicked = false;
+            }
+        });
+
+        // document.getElementById("savesign").addEventListener("click", function () {
+        //     var canvas = document.getElementById("modalCanvas");
+        //     var imgData = canvas.toDataURL("image/png");
+
+        //     // 發送 POST 請求到後端
+        //     fetch('/Home/SaveImage', {
+        //         method: 'POST',
+        //         body: JSON.stringify({ image: imgData }),
+        //         headers: {
+        //             'Content-Type': 'application/json'
+        //         }
+        //     })
+        //         .then(response => {
+        //             if (!response.ok) {
+        //                 throw new Error('Network response was not ok');
+        //             }
+        //             return response.blob();
+        //         })
+        //         .then(blob => {
+        //             // 顯示保存成功信息或者其他處理
+        //             console.log('Image saved successfully.');
+        //         })
+        //         .catch(error => {
+        //             console.error('There was a problem with the fetch operation:', error);
+        //         });
+        // });
+        //管理員按鈕
+        document.getElementById("openModalBtn").addEventListener("click", function () {
+            var userName = document.getElementById("SelfID").textContent.trim();
+            if (userName === "管理員") {
+                document.getElementById("savesign").style.display = "block";
+            }
+        });
         //顯示懸浮視窗
         document.getElementById('openModalBtn').addEventListener('click', function () {
             document.getElementById('myModal').style.display = 'block'; // 顯示
@@ -546,4 +614,5 @@
             ctx.closePath();
             ctx.stroke();
         });
-    </script> }    
+    </script>
+}    
