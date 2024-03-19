@@ -199,5 +199,17 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
             await _context.SaveChangesAsync();
             return Ok(new { success = true, message = "Record updated successfully" });
         }
+
+        public async Task<IActionResult> GetDrugList()
+        {
+            var drugList = await _context.PharmacyTMedicinesList
+                .Select(x => new
+                {
+                    DrugId = x.FIdDrug,
+                    Name = x.FDrugName,
+                })
+                .ToListAsync();
+            return Json(drugList);
+        }
     }
  }

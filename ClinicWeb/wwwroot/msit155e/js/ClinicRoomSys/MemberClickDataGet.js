@@ -66,6 +66,9 @@ $('#prescriptionDataTable').DataTable({
 });
 
 $('#prescriptionListDataTable').DataTable({
+    searching: false,
+    paging: false,
+    info: false,
     columns: [
         { title: "處方ID", data: "prescriptionID", visible: false },
         { title: "藥品", data: "DrugID" },
@@ -344,6 +347,37 @@ async function AddNPreL() {
     }
 }
 
+//藥品清單增加
+async function AddDL() {
+    try {
+        // 使用fetch API调用后端方法
+        const response = await fetch(`/ClinicRoomSys/Cases/GetDrugList`);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const drugs = await response.json();
+        console.log(drugs);
+
+        // 获取<select>元素
+        const selectElement = document.getElementById('medicine');
+
+        // 清空<select>以防有预先填充的<option>
+        selectElement.innerHTML = '';
+
+        // 为每个药品创建<option>元素并添加到<select>
+        drugs.forEach(drug => {
+            const option = new Option(drug.name, drug.drugId);
+            selectElement.add(option);
+        });
+    } catch (error) {
+        console.error('Failed to fetch drugs:', error);
+    }
+}
+
+// 在页面加载完成后调用AddDL()函数
+document.addEventListener('DOMContentLoaded', AddDL);
+
+
 
 //修改主病例資料-事件
 document.getElementById("submit").addEventListener("click", function (event) {
@@ -358,11 +392,36 @@ document.getElementById("submitrd").addEventListener("click", function (event) {
 });
 
 //新增處方籤-主要
-document.getElementById("submit").addEventListener("click", function (event) {
-    event.preventDefault(); // 防止表單提交
-    uploadFormData(CASE_ID);
-});
+//document.getElementById("submit").addEventListener("click", function (event) {
+//    event.preventDefault(); // 防止表單提交
+//    uploadFormData(CASE_ID);
+//});
 
+//初始化紀錄表單
 document.getElementById("addrecord").addEventListener("click", function (event) {
-    $('#recordModal').modal('show');
+    $('#addbp').val('');
+    $('#addpulse').val('');
+    $('#addbt').val('');
+    $('#addcc').val('');
+    $('#adddisposal').val('');
+    $('#addprescribe').val('');
+    //$('#recordModal').modal('show');
+   
+});
+//初始化報告表單
+const date = new Date().toISOString().split('T')[0];
+document.getElementById("addreport").addEventListener("click", function (event) {
+    $('#addTestName').val('');
+    $('#addTestDate').val(date);
+    //$('#recordModal').modal('show');
+
+});
+//初始化處方表單
+document.getElementById("addpre").addEventListener("click", function (event) {
+    $('#addPrescriptionDate').val(date);
+    $('#addDispensing').val('');
+    AddDL();
+    //$('#recordModal').modal('show');
+
+
 });

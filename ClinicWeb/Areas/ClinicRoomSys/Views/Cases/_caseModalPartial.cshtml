@@ -15,10 +15,10 @@
                         <input type="text" class="form-control" id="addbp" name="bp" required>
 
                         <label for="pulse">脈搏:</label>
-                        <input type="number" class="form-control" id="addpulse" name="pulse">
+                        <input id="addpulse" type="number" class="form-control" name="pulse">
 
                         <label for="bt">體溫:</label>
-                        <input type="number" class="form-control" id="addbt" name="bt" step="0.1" required>
+                        <input id="addbt" type="number" class="form-control" name="bt" step="0.1" required>
 
                         <label for="cc">主述:</label>
                         <textarea id="addcc" class="form-control" name="cc" required></textarea>
@@ -55,7 +55,7 @@
                         <input type="text" class="form-control" id="addTestName" name="TestName" required>
 
                         <label for="TestDate">檢查日期:</label>
-                        <input type="number" class="form-control" id="addTestDate" name="TestDate">
+                        <input type="date" class="form-control" id="addTestDate" name="TestDate">
 
                   @*       <label for="bt">體溫:</label>
                         <input type="number" class="form-control" id="addbt" name="bt" step="0.1" required>
@@ -95,8 +95,25 @@
                     </form>
                     <div class="container" style="margin-top:6px;margin-bottom:6px">
                         <h3>藥品清單</h3>
+                        <select id="medicine" class="custom-select"></select>
                         <div class="container">
-                            <select id="medicine" class="custom-select"></select>
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="days">開立天數:</label>
+                                    </div>
+                                    <div class="col">
+                                        <input type="number" class="form-control" id="adddays" name="days">
+                                    </div>
+                                    <div class="col">
+                                            <label for="total">總量:</label>
+                                    </div>
+                                    <div class="col">
+                                            <input type="number" class="form-control" id="addtotal" name="total">
+                                    </div>        
+                                    <div class="col">
+                                            <button id="addPL" class="btn btn-Secondary">增加</button>
+                                </div>
+                            </div>
                         </div>
                         <div class="container"></div>
                     <form id=""></form>
