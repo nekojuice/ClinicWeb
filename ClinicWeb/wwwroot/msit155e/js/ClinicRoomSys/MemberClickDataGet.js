@@ -197,8 +197,8 @@ async function AddNMR() {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        const data = await response.json();
-        console.log('Success:', data);
+        //const data = await response.json();
+        //console.log('Success:', data);
         // 這裡可以添加一些成功後的操作，比如更新UI或者是頁面導覽
         new PNotify({
             title: '成功',
@@ -207,6 +207,8 @@ async function AddNMR() {
             styling: 'bootstrap3',
             setTimeout: 500
         })
+            (#recordModal).modal(hide);
+
     } catch (error) {
         console.error('Error:', error);
         // 這裡可以處理錯誤，比如提示用户操作失敗
@@ -308,4 +310,10 @@ document.getElementById("submit").addEventListener("click", function (event) {
 document.getElementById("submitrd").addEventListener("click", function (event) {
     event.preventDefault(); // 防止表單提交
     AddNMR();
+});
+
+//新增處方籤-主要
+document.getElementById("submit").addEventListener("click", function (event) {
+    event.preventDefault(); // 防止表單提交
+    uploadFormData(CASE_ID);
 });
