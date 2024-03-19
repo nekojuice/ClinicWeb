@@ -9,6 +9,9 @@ $('#recordDataTable').DataTable({
         { title: "主述", data: "chiefComplaint" },
         { title: "醫囑", data: "disposal" },
         { title: "處方", data: "prescribe" },
+        {
+            title: "功能", data: null, render: function (data, type, row) { return '<button id="Regist" type="button" class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i></button> ' + '<button id="Delete" type="button" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></button>' },
+        }
     ],
     fixedHeader: {
         header: true
@@ -25,6 +28,13 @@ $('#reportDataTable').DataTable({
         { title: "檢查日期", data: "testDate" },
         { title: "報告日期", data: "reportDate" },
         { title: "結果", data: "result" },
+        {
+            data: null, title: "功能",  // 這邊是欄位
+            render: function (data, type, row) {
+                return '<button id="Regist" type="button" class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i></button> ' +
+                    '<button id="Delete" type="button" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></button>'
+            }
+        },
     ],
     fixedHeader: {
         header: true
@@ -39,6 +49,13 @@ $('#prescriptionDataTable').DataTable({
         { title: "處方ID", data: "prescriptionID", visible: false },
         { title: "處方日期", data: "prescriptionDate" },
         { title: "調劑方式", data: "dispensing" },
+        {
+            data: null, title: "功能",  // 這邊是欄位
+            render: function (data, type, row) {
+                return '<button id="Regist" type="button" class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i></button> ' +
+                    '<button id="Delete" type="button" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></button>'
+                }
+            },
     ],
     fixedHeader: {
         header: true
@@ -54,6 +71,13 @@ $('#prescriptionListDataTable').DataTable({
         { title: "藥品", data: "DrugID" },
         { title: "開立天數", data: "days" },
         { title: "總量", data: "Total" },
+        {
+            data: null, title: "功能",  // 這邊是欄位
+            render: function (data, type, row) {
+                return '<button id="Regist" type="button" class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i></button> ' +
+                    '<button id="Delete" type="button" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></button>'
+            }
+        },
     ],
     fixedHeader: {
         header: true
