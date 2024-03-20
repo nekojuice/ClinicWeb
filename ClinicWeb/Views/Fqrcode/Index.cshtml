@@ -34,10 +34,10 @@
         </div>
 
         <div class="col-6">
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#getOnModal">上班</button>
+            <button id="startbutton" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#getOnModal">上班</button>
         </div>
         <div class="col-6">
-            <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#getOffModal">下班</button>
+            <button id="endbutton" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#getOffModal">下班</button>
         </div>
 
     </div>
@@ -53,7 +53,7 @@
                 <div class="modal-body">
                     <h2>Scan QR Code</h2>
 
-                    <div id="cameraPreview"></div>
+                    <div id="cameraPreviewon" style="height:300px;width:300px;"></div>
 
                     <div id="qrCodeResult">
                         <p id="qrCodeContent">Waiting for QR code...</p>
@@ -78,7 +78,7 @@
                 <div class="modal-body">
                     <h2>Scan QR Code</h2>
 
-                    <div id="cameraPreview"></div>
+                    <div id="cameraPreviewoff" style="height:300px;width:300px;"></div>
 
                     <div id="qrCodeResult">
                         <p id="qrCodeContent">Waiting for QR code...</p>

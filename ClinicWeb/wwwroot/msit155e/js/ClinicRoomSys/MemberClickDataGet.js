@@ -220,24 +220,19 @@ async function AddNMR() {
 
 //新增檢查報告
 async function AddNTR() {
-    const addrecord = {
+    const addreport = {
         CaseId: CASE_ID,
-        ClinicListId: CLINICLIST_ID,
-        Bp: $('#addbp').val(),
-        Pulse: $('#addpulse').val(),
-        Bt: $('#addbt').val(),
-        Cc: $('#addcc').val(),
-        Disposal: $('#adddisposal').val(),
-        Prescribe: $('#addprescribe').val(),
+        TestName: $('#addTestName').val(),
+        TestDate: $('#addTestDate').val()
     };
 
     try {
-        const response = await fetch(`/ClinicRoomSys/Cases/AddMedicalRecord`, {
+        const response = await fetch(`/ClinicRoomSys/Cases/AddTestReport`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(addrecord),
+            body: JSON.stringify(addreport),
         });
 
         if (!response.ok) {
@@ -249,12 +244,12 @@ async function AddNTR() {
         // 這裡可以添加一些成功後的操作，比如更新UI或者是頁面導覽
         new PNotify({
             title: '成功',
-            text: '新增成功',
+            text: '新增檢查報告成功',
             type: 'info',
             styling: 'bootstrap3',
             setTimeout: 500
         })
-        $('#recordModal').modal('hide');
+        $('#reportModal').modal('hide');
 
     } catch (error) {
         console.error('Error:', error);
@@ -375,7 +370,7 @@ async function AddDL() {
 }
 
 // 在页面加载完成后调用AddDL()函数
-document.addEventListener('DOMContentLoaded', AddDL);
+/*document.addEventListener('DOMContentLoaded', AddDL);*/
 
 
 
@@ -383,12 +378,21 @@ document.addEventListener('DOMContentLoaded', AddDL);
 document.getElementById("submit").addEventListener("click", function (event) {
     event.preventDefault(); // 防止表單提交
     uploadFormData(CASE_ID);
+
 });
 
 //新增看診紀錄-事件
 document.getElementById("submitrd").addEventListener("click", function (event) {
     event.preventDefault(); // 防止表單提交
     AddNMR();
+    getRecord(CASE_ID);
+});
+
+//新增檢查報告-事件
+document.getElementById("submitrt").addEventListener("click", function (event) {
+    event.preventDefault(); // 防止表單提交
+    AddNTR();
+    getReport(CASE_ID);
 });
 
 //新增處方籤-主要

@@ -2,11 +2,14 @@
 using System.Net.Mail;
 using System.Net;
 using QRCoder;
+using ClinicWeb.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace ClinicWeb.Controllers
 {
     public class FqrcodeController : Controller
     {
+        private readonly ClinicSysContext _context;
         public IActionResult Index()
         {
             return View();
@@ -29,7 +32,7 @@ namespace ClinicWeb.Controllers
         public IActionResult SendQRCodeEmail()
         {
             // 生成QR碼
-            string qrText = "https://www.google.com";
+            string qrText = "https://www.google.com";//QRCode內容改成員工ID
             byte[] qrCodeImage = GetQRCodeByteArray(qrText);
 
             // 設定SMTP郵件相關資訊
@@ -72,6 +75,77 @@ namespace ClinicWeb.Controllers
                 return fileContentResult.FileContents;
             }
             else return null;
+        }
+
+        //打卡系統
+        //[Route("{area}/{controller}/{action}")]
+        [HttpPost]
+        public IActionResult CheckIn([FromBody] AttendanceTAttendance data)
+        {
+
+            if (data == null)
+            {
+                return BadRequest("Invalid data");
+            }
+
+
+            var attendanceRecord = _context.AttendanceTAttendance
+                .FirstOrDefault(x => x.FEmployeeId == data.FEmployeeId && x.FWorkDate == data.FWorkDate);
+            if (attendanceRecord != null)
+            {
+                return BadRequest("已打上班卡");
+            }
+
+
+            try
+            {
+                _context.AttendanceTAttendance.Add(data);
+                _context.SaveChanges();
+                return Ok("上班打卡成功");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+        //[Route("{area}/{controller}/{action}")]
+        [HttpPost]
+        public IActionResult CheckOut([FromBody] AttendanceTAttendance data)
+        {
+            if (data == null)
+            {
+                return BadRequest("Invalid data");
+            }
+            var attendanceRecord = _context.AttendanceTAttendance
+                .FirstOrDefault(x => x.FEmployeeId == data.FEmployeeId && x.FWorkDate == data.FWorkDate);
+
+            if (attendanceRecord == null)
+            {
+                return BadRequest("未打上班卡");
+            }
+
+            if (attendanceRecord.FAttendanceCos != null)
+            {
+                return BadRequest("已打下班卡");
+            }
+
+            try
+            {
+                attendanceRecord.FCheckOutTime = data.FCheckOutTime;
+                attendanceRecord.FAttendanceCos = data.FAttendanceCos;
+
+
+                _context.AttendanceTAttendance.Update(attendanceRecord);
+                _context.SaveChanges();
+                return Ok("下班打卡成功");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+
+
         }
     }
 }

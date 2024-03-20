@@ -71,7 +71,7 @@
 
                     </form>
                     <br>
-                    <button id="submitrd" class="btn btn-primary">確認</button>
+                    <button id="submitrt" class="btn btn-primary">確認</button>
                 </div>
             </div>
         </div>
@@ -90,29 +90,18 @@
             <div class="modal-body">
                 <div class="col-sm-12">
                     <form id="preadd">
-                        <label for="dispensing">醫囑:</label>
+                        <label for="dispensing" style="font-size:24px">醫囑:</label>
                         <input type="text" class="form-control" id="adddispensing" name="dispensing">
                     </form>
                     <div class="container" style="margin-top:6px;margin-bottom:6px">
-                        <h3>藥品清單</h3>
-                        <select id="medicine" class="custom-select"></select>
-                        <div class="container">
-                                <div class="row">
-                                    <div class="col">
-                                        <label for="days">開立天數:</label>
-                                    </div>
-                                    <div class="col">
+                        <label for="meidcine" style="font-size:24px">藥品清單</label>
+                        <select id="medicine" class="custom-select" name="medicine"></select>
+                        <div class="container" style="margin-top:6px;margin-bottom:6px">
+                                        <label for="days" style="font-size:24px">開立天數:</label>
                                         <input type="number" class="form-control" id="adddays" name="days">
-                                    </div>
-                                    <div class="col">
-                                            <label for="total">總量:</label>
-                                    </div>
-                                    <div class="col">
-                                            <input type="number" class="form-control" id="addtotal" name="total">
-                                    </div>        
-                                    <div class="col">
-                                            <button id="addPL" class="btn btn-Secondary">增加</button>
-                                </div>
+                                        <label for="total" style="font-size:24px">總量:</label>
+                                         <input type="number" class="form-control" id="addtotal" name="total">
+                                         <button id="addPL" class="btn btn-Secondary">增加</button>
                             </div>
                         </div>
                         <div class="container"></div>
@@ -132,7 +121,7 @@
                         </thead>
                     </table>
                     <br>
-                    <button id="submitrd" class="btn btn-primary">送出</button>
+                    <button id="submitpre" class="btn btn-primary">送出</button>
                 </div>
             </div>
         </div>
