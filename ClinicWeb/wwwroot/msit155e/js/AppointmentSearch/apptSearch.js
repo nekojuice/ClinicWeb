@@ -47,7 +47,7 @@ get_LoginInfo()
 
 //撈取登入者掛號資料 (今天以後)
 async function get_ApptList() {
-    const jsonData = { today: new Date(2023, 12, 1) }
+    const jsonData = { today: new Date('2023-12-01') }
 
     const response = await fetch(__getApptListURL,
         {
