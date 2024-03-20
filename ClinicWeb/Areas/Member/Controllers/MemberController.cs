@@ -87,17 +87,17 @@ namespace ClinicWeb.Areas.Member.Controllers
             //可以指定不是這個名稱的view來顯示 return View("~Areas/Member/");
             return View();
         }
-		//新增會員資料
-		//修改會員資料的畫面顯示
-		public IActionResult MemberCreate()
-		{
-			return PartialView("~/Areas/Member/Views/Partial/_MemberCreatePartial.cshtml");
-		}
+        //新增會員資料
+        //修改會員資料的畫面顯示
+        public IActionResult MemberCreate()
+        {
+            return PartialView("~/Areas/Member/Views/Partial/_MemberCreatePartial.cshtml");
+        }
 
-		[HttpPost]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-		//[Bind("Name,Gender,BloodType,NationalId,Address,ContactAddress,Phone,BirthDate,IceName,IceNumber,MemPassword,MemEmail,Verification")]
-		public IActionResult Create([Bind("Name,BloodType,NationalId,Address,ContactAddress,Phone,BirthDate,IceName,IceNumber,MemPassword,MemEmail,Verification")] [FromBody] MemberMemberList member)
+        //[Bind("Name,Gender,BloodType,NationalId,Address,ContactAddress,Phone,BirthDate,IceName,IceNumber,MemPassword,MemEmail,Verification")]
+        public IActionResult Create([Bind("Name,BloodType,NationalId,Address,ContactAddress,Phone,BirthDate,IceName,IceNumber,MemPassword,MemEmail,Verification")][FromBody] MemberMemberList member)
         {
 
             if (member == null)
@@ -123,22 +123,31 @@ namespace ClinicWeb.Areas.Member.Controllers
             //檢查驗證
             if (!ModelState.IsValid)
             {
-				// 如果模型驗證失敗，重新顯示包含錯誤信息的表單
-				Console.WriteLine("驗證失敗");
-				return PartialView("~/Areas/Member/Views/Partial/_MemberCreatePartial.cshtml", member); // 返回相同的視圖，這將會顯示錯誤信息
+                // 如果模型驗證失敗，重新顯示包含錯誤信息的表單
+                Console.WriteLine("驗證失敗");
+                return PartialView("~/Areas/Member/Views/Partial/_MemberCreatePartial.cshtml", member); // 返回相同的視圖，這將會顯示錯誤信息
                 //return Json(member);
             }
             else
             {
-                //加入資料庫
-   
-                var maxMemberNumber = _context.MemberMemberList.Max(m => m.MemberNumber);
-                var nextMemberNumber = maxMemberNumber + 1;
-                member.MemberNumber = nextMemberNumber;
+                try
+                {
+                    //加入資料庫
 
-                _context.MemberMemberList.Add(member);
-                _context.SaveChanges();
-                return Content("success"); 
+                    var maxMemberNumber = _context.MemberMemberList.Max(m => m.MemberNumber);
+                    var nextMemberNumber = maxMemberNumber + 1;
+                    member.MemberNumber = nextMemberNumber;
+
+                    _context.MemberMemberList.Add(member);
+                    _context.SaveChanges();
+                    return Content("success");
+                }
+                catch (Exception ex)
+                {
+
+                    return StatusCode(500, $"Internal server error: {ex.Message}");
+                }
+
             }
 
         }
@@ -208,7 +217,7 @@ namespace ClinicWeb.Areas.Member.Controllers
             {
                 try
                 {
-           
+
                     _context.Update(member);
                     await _context.SaveChangesAsync();
                 }
@@ -223,7 +232,7 @@ namespace ClinicWeb.Areas.Member.Controllers
                         throw;
                     }
                 }
-             
+
             }
             else
             {

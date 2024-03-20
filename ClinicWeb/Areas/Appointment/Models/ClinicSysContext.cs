@@ -15,6 +15,8 @@ public partial class ClinicSysContext : DbContext
 
     public virtual DbSet<ApptClinicList> ApptClinicList { get; set; }
 
+    public virtual DbSet<ApptEcpay> ApptEcpay { get; set; }
+
     public virtual DbSet<ApptPatientStateRef> ApptPatientStateRef { get; set; }
 
     public virtual DbSet<MemberEmployeeList> MemberEmployeeList { get; set; }
@@ -46,6 +48,16 @@ public partial class ClinicSysContext : DbContext
             entity.HasOne(d => d.PatientState).WithMany(p => p.ApptClinicList)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_掛號叫號_當日門診名單_掛號叫號_看診狀態總表");
+        });
+
+        modelBuilder.Entity<ApptEcpay>(entity =>
+        {
+            entity.Property(e => e.FPayable).HasDefaultValueSql("((150))");
+            entity.Property(e => e.FisNhi).HasDefaultValueSql("((1))");
+
+            entity.HasOne(d => d.FClinicList).WithMany(p => p.ApptEcpay)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Appt_ECPay_Appt_ClinicList");
         });
 
         modelBuilder.Entity<ApptPatientStateRef>(entity =>

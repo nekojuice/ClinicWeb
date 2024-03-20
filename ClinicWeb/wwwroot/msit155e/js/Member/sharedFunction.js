@@ -1,4 +1,18 @@
 ﻿//宣告重新綁定switchery方法, _selector = input, checkbox
+//function rebind_switchery(_selector) {
+//    let switcheryOptions = {
+//        color: '#64bd63', // 當checked時的背景顏色
+//        secondaryColor: '#dfdfdf', // unchecked時的背景顏色
+//        jackColor: '#fff', // checked時的按鈕顏色
+//        jackSecondaryColor: null, // uncheck時的按鈕顏色
+//        className: 'switchery', // class名稱
+//        disabled: false, // 是否設為disabled
+//        disabledOpacity: 0.5, // 當設為disabled時的透明度
+//        speed: '0.1s', // 開關切換的速度
+//        size: 'default' // 開關大小(small, default, large)
+//    };
+//    new Switchery(_selector, switcheryOptions);
+//}
 function rebind_switchery(_selector) {
     let switcheryOptions = {
         color: '#64bd63', // 當checked時的背景顏色
@@ -11,8 +25,26 @@ function rebind_switchery(_selector) {
         speed: '0.1s', // 開關切換的速度
         size: 'default' // 開關大小(small, default, large)
     };
-    new Switchery(_selector, switcheryOptions);
+
+    // 初始化 Switchery
+    let switchery = new Switchery(_selector, switcheryOptions);
+
+    // 監聽開關的變化
+
 }
+
+//function attachAlertToSwitchery(switcheryElement) {
+//    switcheryElement.onchange = function () {
+//        if (this.checked) {
+//            // 當開關為 true (啟用狀態)
+//            Swal.fire("帳號啟用", "使用者現在是帳號啟用狀態。", "success");
+//        } else {
+//            // 當開關為 false (禁用狀態)
+//            Swal.fire("帳號禁用", "使用者將無法登入。", "warning");
+//        }
+//    };
+//}
+
 
 
 //重新綁定create表單的驗證, $selector = Form

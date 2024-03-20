@@ -162,5 +162,67 @@ namespace ClinicWeb.Controllers
                 );
         }
 
+
+        [HttpPost]
+        public async Task<IActionResult> UploadImage(IFormFile? ImageUpload, int MemberId)
+        {
+            if (ImageUpload == null || ImageUpload.Length == 0)
+            {
+                return BadRequest("未接收到文件");
+            }
+
+            // 從資料庫中找對應的會員
+            var member =  _context.MemberMemberList.Where(m => m.MemberId == MemberId).FirstOrDefault();
+            if (member == null)
+            {
+                return NotFound("找不到指定的會員");
+            }
+
+            try
+            {
+                // 直接將圖片轉成二進位
+                byte[]? imgByte = null;
+                if (ImageUpload != null)
+                {
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        await ImageUpload.CopyToAsync(memoryStream);
+                        imgByte = memoryStream.ToArray();
+                    }
+                }
+                member.MemPhoto = imgByte;
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception)
+            {              
+                    throw;    
+            }
+            return Json(new { message = "圖片上傳成功" });
+
+        }
+
+
+        [AllowAnonymous]
+        public IActionResult MemProfileForPicture()
+        {
+            var user = HttpContext.User;
+            var MemberIdCookie = user.Claims.FirstOrDefault(c => c.Type == "MemberID")?.Value;
+
+            // 從資料庫中查詢員工信息
+            var member = _context.MemberMemberList.FirstOrDefault(m => (m.MemberId).ToString() == MemberIdCookie);
+
+            // 如果找到了對應的員工且員工有大頭照數據
+            if (member != null && member.MemPhoto != null && member.MemPhoto.Length > 0)
+            {
+                return File(member.MemPhoto, "image/jpeg");
+            }
+            else
+            {
+
+                //return NotFound(); 
+                return Content("沒圖片");
+            }
+        }
+
     }
 }

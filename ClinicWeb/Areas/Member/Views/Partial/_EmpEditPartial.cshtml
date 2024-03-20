@@ -14,6 +14,7 @@
         <form asp-action="Edit" id="form_EmpEdit" class="form-label-left input_mask" enctype="multipart/form-data" method="POST">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="EmpId" />
+            <input type="hidden" asp-for="EmpPhoto" />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="StaffNumber" class="form-control" />
 

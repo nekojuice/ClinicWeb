@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
+using System.Security.Cryptography;
+using System.Text;
+using System.Web;
 
 namespace ClinicWeb.Controllers
 {
@@ -16,16 +19,71 @@ namespace ClinicWeb.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string? id)
         {
-            return View();
-        }
+            if (!string.IsNullOrEmpty(id))
+            {
+                ViewBag.isSuccessString = id;
+            }
+			var orderId = Guid.NewGuid().ToString().Replace("-", "").Substring(0, 20);
+			var website = $"https://localhost:7071"; //記得確認一下數字有沒有一樣
+			var order = new Dictionary<string, string>
+				{
+					{ "MerchantTradeNo",  orderId},
+					{ "MerchantTradeDate",  DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")},
+					{ "TotalAmount",  "150"},
+					{ "TradeDesc",  "無"},
+					{ "ItemName",  "寶育診所掛號費"},
+					{ "ExpireDate",  "3"},
+					{ "CustomField1",  ""},
+					{ "CustomField2",  ""},
+					{ "CustomField3",  ""},
+					{ "CustomField4",  ""},
+					{ "ReturnURL",  $"{website}/ECPay/AddPayInfo"}, //付款完成通知回傳的網址(無用)
+                    { "OrderResultURL", $"{website}/ECPay/PayInfo/{orderId}"},//瀏覽器端回傳付款結果網址
+                    { "PaymentInfoURL",  $"{website}/ECPay/AddAccountInfo"},//伺服器端回傳付款相關資訊(無用)
+                    { "ClientRedirectURL",  $"{website}/ECPay/AccountInfo/{orderId}"},//Client 端回傳付款相關資訊
+                    { "MerchantID",  "2000132"},
+					{ "IgnorePayment",  "GooglePay#WebATM#CVS#BARCODE"},
+					{ "PaymentType",  "aio"},
+					{ "ChoosePayment",  "ALL"},
+					{ "EncryptType",  "1"},
+				};
+			order["CheckMacValue"] = GetCheckMacValue(order);
+			return View(order);
+		}
 
-        /// <summary>
-        /// 撈取使用者登入資訊
-        /// </summary>
-        /// <returns>jsonobject</returns>
-        public IActionResult Get_MemberStatus()
+		private string GetCheckMacValue(Dictionary<string, string> order)
+		{
+			var param = order.Keys.OrderBy(x => x).Select(key => key + "=" + order[key]).ToList();
+			var checkValue = string.Join("&", param);
+			//測試用的 HashKey
+			var hashKey = "5294y06JbISpM5x9";
+			//測試用的 HashIV
+			var HashIV = "v77hoKGq4kWxNNIS";
+			checkValue = $"HashKey={hashKey}" + "&" + checkValue + $"&HashIV={HashIV}";
+			checkValue = HttpUtility.UrlEncode(checkValue).ToLower();
+			checkValue = GetSHA256(checkValue);
+			return checkValue.ToUpper();
+		}
+		private string GetSHA256(string value)
+		{
+			var result = new StringBuilder();
+			var sha256 = SHA256.Create();
+			var bts = Encoding.UTF8.GetBytes(value);
+			var hash = sha256.ComputeHash(bts);
+			for (int i = 0; i < hash.Length; i++)
+			{
+				result.Append(hash[i].ToString("X2"));
+			}
+			return result.ToString();
+		}
+
+		/// <summary>
+		/// 撈取使用者登入資訊
+		/// </summary>
+		/// <returns>jsonobject</returns>
+		public IActionResult Get_MemberStatus()
         {
             var user = HttpContext.User;
             var resultObject = new
@@ -50,7 +108,7 @@ namespace ClinicWeb.Controllers
             var memberID = user.Claims.FirstOrDefault(c => c.Type == "MemberID")?.Value;
 
             return Json(_context.ApptClinicList
-                .Where(x => x.MemberId == Convert.ToInt32(memberID) 
+                .Where(x => x.MemberId == Convert.ToInt32(memberID)
                 && x.Clinic.Date.CompareTo(vm.today.ToString("yyyy/MM/dd")) >= 0
                 && x.IsCancelled == false)
                 .Select(x => new
@@ -92,6 +150,26 @@ namespace ClinicWeb.Controllers
             }
             Console.WriteLine("[偵錯] else error!!!!");
             return Ok();
+        }
+
+
+        [HttpGet]
+        public IActionResult Get_PaitientPayment() 
+        {
+			var user = HttpContext.User;
+			var memberID = user.Claims.FirstOrDefault(c => c.Type == "MemberID")?.Value;
+
+			return Json(_context.ApptEcpay.Where(x=>x.FClinicList.MemberId == Convert.ToInt32(memberID))
+                .Select(x => new {
+					apptlistid = x.FClinicListId,
+					日期 = x.FClinicList.Clinic.Date,
+					時段 = x.FClinicList.Clinic.ClinicTime.ClinicShifts,
+					科別 = x.FClinicList.Clinic.Doctor.Department,
+					醫師名稱 = x.FClinicList.Clinic.Doctor.Name,
+					看診狀態 = x.FClinicList.PatientState.PatientStateName,
+					繳費狀態 = x.RtnMsg == "已付款"? "已付款":"未付款"
+				})
+                );
         }
     }
 

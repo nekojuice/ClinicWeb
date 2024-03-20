@@ -41,6 +41,7 @@ namespace ClinicWeb.Controllers
 
         public async Task<IActionResult> GoogleResponse(MemberMemberList e)
         {
+           
             var result = await HttpContext.AuthenticateAsync("Google");
 
             if (result == null || result.Principal == null)
@@ -98,9 +99,10 @@ namespace ClinicWeb.Controllers
                         TempData["RegisterPrompt"] = "沒有找到匹配會員，請點選下方註冊";
                         //沒有匹配會員要倒到註冊頁面並且填上信箱
                         TempData["ForRegister"] = emailClaim.Value;
-                        HttpContext.SignOutAsync("Google");
+                        await HttpContext.SignOutAsync();
+                        TempData["Error"] = "沒有找到匹配會員，請先註冊帳戶";
                         return RedirectToAction("Register", "ClientPage");
-                        //return View("~/Views/ClientPage/Login/ClientLogin.cshtml");
+                        //return View("~/Views/ClientPage/Login/Register.cshtml");
                     }
 
 
@@ -115,7 +117,39 @@ namespace ClinicWeb.Controllers
             }
         }
 
+        //測試從Google帳戶取出圖片 
+        public async Task<IActionResult> GetGoogleUserImage(string imageUrl)
+        {
+            await HttpContext.ChallengeAsync("Google", new AuthenticationProperties()
+            {
+                RedirectUri = Url.Action("GoogleResponse")
+            });
+            var result = await HttpContext.AuthenticateAsync("Google");
 
+            if (result == null || result.Principal == null)
+            {
+                // 驗證失敗 之後希望返回原本畫面加上viewdata
+                TempData["Msg"] = "驗證 Google 授權失敗";
+                //return RedirectToAction("Login", "ClientPage");
+                return View("~/Views/ClientPage/Login/ClientLogin.cshtml");
+            }
+            else
+            {
+
+                var claims = result.Principal.Identities.FirstOrDefault()?.Claims.Select(claim => new
+                {
+
+                    claim.Issuer,
+                    claim.OriginalIssuer,
+                    claim.Type,
+                    claim.Value,
+
+
+                });
+                return Json(claims);
+            }
+        }
+        
 
 
         //public IActionResult LoginGoogle2(string state, string code)
@@ -245,16 +279,24 @@ namespace ClinicWeb.Controllers
 
                     
                     GoogleLoginToken tokenObj = JsonConvert.DeserializeObject<GoogleLoginToken>(responseStr);
-                    string id_token = tokenObj.id_token;
+                    string ?id_token = tokenObj?.id_token;
                     var jst = new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(id_token);
                     var userId = jst.Payload.Sub;
-
-
+                    var payload = jst.Payload;
+                    if (payload.TryGetValue("picture", out var picture))
+                    {
+                        var userPictureUrl = picture.ToString();
+                        GetUserImage(userPictureUrl);
+                    }
+                    else
+                    {
+                        // 如果没有找到 "picture"
+                    }
                     var dbMember = _context.MemberMemberList.SingleOrDefault(m => m.GoogleSub == userId);
 
                   
                     int currentMemberId = GetCurrentMemberId();
-                    //沒有綁定的人要登入
+                
                     if (dbMember == null && currentMemberId == 0) { return Content("尚未綁定Google帳號"); }
                     //已登入，在帳號設定頁面請求綁定
                     else if (dbMember == null && currentMemberId != 0)
@@ -287,7 +329,7 @@ namespace ClinicWeb.Controllers
                     };
 
                     var claimsIdentity = new ClaimsIdentity(claims, "frontendForCustomer");
-                    HttpContext.SignInAsync("frontend", new ClaimsPrincipal(claimsIdentity));
+                    await HttpContext.SignInAsync("frontend", new ClaimsPrincipal(claimsIdentity));
                     return RedirectToAction("Index", "ClientPage");
                 }
                 else
@@ -298,6 +340,16 @@ namespace ClinicWeb.Controllers
 
                     return StatusCode((int)statusCode);
                 }
+            }
+        }
+        [AllowAnonymous]
+        //把抓到的URL轉成檔案
+        public async Task<IActionResult> GetUserImage(string imageUrl)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                var imageBytes = await httpClient.GetByteArrayAsync(imageUrl);
+                return File(imageBytes, "image/jpeg"); //
             }
         }
 
@@ -331,12 +383,12 @@ namespace ClinicWeb.Controllers
 
         public class GoogleLoginToken
         {
-            public string access_token { get; set; }
-            public int expires_in { get; set; }
-            public string id_token { get; set; }
-            public string refresh_token { get; set; }
-            public string scope { get; set; }
-            public string token_type { get; set; }
+            public string ?access_token { get; set; }
+            public int ?expires_in { get; set; }
+            public string ?id_token { get; set; }
+            public string ?refresh_token { get; set; }
+            public string ?scope { get; set; }
+            public string ?token_type { get; set; }
         }
     }
 }

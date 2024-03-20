@@ -1,10 +1,12 @@
 ﻿using ClinicWeb.Models;
 using ClinicWeb.Models.MBSatisfactionViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace ClinicWeb.Controllers
 {
+    [Authorize(Policy = "frontendpolicy")]
     public class MBSatisfactionController : Controller
     { 
         private readonly ClinicSysContext _context;
@@ -43,10 +45,10 @@ namespace ClinicWeb.Controllers
                 .Where(m => m.MemberId == Convert.ToInt32(memberID))
                 .Select(m => m.CaseId)
                 .FirstOrDefault();
-
+            
             var MedicalRecords = _context.CasesMedicalRecords
                 .Include(m => m.ClinicList.Clinic)
-                .Where(m => m.CaseId == 1 /*Case_ID*/)
+                .Where(m => m.CaseId == Case_ID /*1*/)
                 .Select(x => new
                 {
                     mRid = x.MrId,

@@ -1,192 +1,201 @@
 ﻿    @model ClinicWeb.Areas.Member.Models.MemberMemberList
-    <div class="x_panel">
-        <div class="x_title">
-            <h4>修改會員資料</h4>
-            <div class="clearfix"></div>
-        </div>
+<div class="x_panel">
+    <div class="x_title">
+        <h4>修改會員資料</h4>
+        <div class="clearfix"></div>
+    </div>
 
-        <div class="x_content">
-            <br>
-            <form asp-action="Edit" id="form_MemberEdit" class="form-label-left input_mask">
+    <div class="x_content">
+        <br>
+        <form asp-action="Edit" id="form_MemberEdit" class="form-label-left input_mask">
 
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" asp-for="MemberId" />
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" asp-for="MemberNumber" class="form-control" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="MemberId" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="MemberNumber" class="form-control" />
 
-                @*   <label  asp-for="MemberNumber"  class="control-label" style="display: block; position: absolute; top: -20px;">@Model.MemberNumber</label> *@
+    
 
-                <!--姓名-->
-                <div class="col-md-6 col-sm-6" style="margin-top: 20px;">
-                    <div class="form-group has-feedback">
-                        <label asp-for="Name" class="control-label" style="display: block; position: absolute; top: -20px;"></label>
-                        <input asp-for="Name" class="form-control has-feedback-left" placeholder="姓名" style="display: block; padding-left: 30px;" />
+            <input type="hidden" asp-for="GoogleSub" />
+            <input type="hidden" asp-for="ActivateToken" />
+            <input type="hidden" asp-for="MemPhoto" />
+        @*     <input type="hidden" asp-for="MemPassword" /> *@
 
-                        <span class="fa fa-user form-control-feedback left" aria-hidden="true" style="position: absolute; left: 5px; top: 5px;"></span>
+            @*   <label  asp-for="MemberNumber"  class="control-label" style="display: block; position: absolute; top: -20px;">@Model.MemberNumber</label> *@
 
-                    </div>
-                    <span asp-validation-for="Name" class="text-danger"></span>
+            <!--姓名-->
+            <div class="col-md-6 col-sm-6" style="margin-top: 20px;">
+                <div class="form-group has-feedback">
+                    <label asp-for="Name" class="control-label" style="display: block; position: absolute; top: -20px;"></label>
+                    <input asp-for="Name" class="form-control has-feedback-left" placeholder="姓名" style="display: block; padding-left: 30px;" />
+
+                    <span class="fa fa-user form-control-feedback left" aria-hidden="true" style="position: absolute; left: 5px; top: 5px;"></span>
+
                 </div>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
 
 
 
-                <!-- 身分證字號 -->
-                <div class="col-md-6 col-sm-6" style="margin-top: 20px;">
-                    <div class="form-group has-feedback">
-                        <label asp-for="NationalId" class="control-label" style="display: block; position: absolute; top: -20px;"></label>
-                        <input asp-for="NationalId" class="form-control" style="display: block; padding-right: 30px;" />
-                        <span class="fa fa-user form-control-feedback right" aria-hidden="true" style="position: absolute; right: 5px; top: 5px;"></span>
-                        <span asp-validation-for="NationalId" class="text-danger"></span>
-                    </div>
+            <!-- 身分證字號 -->
+            <div class="col-md-6 col-sm-6" style="margin-top: 20px;">
+                <div class="form-group has-feedback">
+                    <label asp-for="NationalId" class="control-label" style="display: block; position: absolute; top: -20px;"></label>
+                    <input asp-for="NationalId" class="form-control" style="display: block; padding-right: 30px;" />
+                    <span class="fa fa-user form-control-feedback right" aria-hidden="true" style="position: absolute; right: 5px; top: 5px;"></span>
+                    <span asp-validation-for="NationalId" class="text-danger"></span>
                 </div>
+            </div>
 
-                <!-- 信箱 -->
-                <div class="col-md-6 col-sm-6" style="margin-top: 20px;">
-                    <div class="form-group has-feedback">
-                        <label asp-for="MemEmail" class="control-label" style="display: block; position: absolute; top: -20px;"></label>
-                        <input asp-for="MemEmail" class="form-control has-feedback-left" style="display: block; padding-left: 30px;" />
-                        <span class="fa fa-envelope form-control-feedback left" aria-hidden="true" style="position: absolute; left: 5px; top: 5px;"></span>
-                        <span asp-validation-for="MemEmail" class="text-danger"></span>
-                    </div>
+            <!-- 信箱 -->
+            <div class="col-md-6 col-sm-6" style="margin-top: 20px;">
+                <div class="form-group has-feedback">
+                    <label asp-for="MemEmail" class="control-label" style="display: block; position: absolute; top: -20px;"></label>
+                    <input asp-for="MemEmail" class="form-control has-feedback-left" style="display: block; padding-left: 30px;" />
+                    <span class="fa fa-envelope form-control-feedback left" aria-hidden="true" style="position: absolute; left: 5px; top: 5px;"></span>
+                    <span asp-validation-for="MemEmail" class="text-danger"></span>
                 </div>
+            </div>
 
-                <!-- 聯絡電話 -->
-                <div class="col-md-6 col-sm-6" style="margin-top: 20px;">
-                    <div class="form-group has-feedback">
-                        <label asp-for="Phone" class="control-label" style="display: block; position: absolute; top: -20px;"></label>
-                        <input asp-for="Phone" class="form-control" style="display: block; padding-right: 30px;" />
-                        <span class="fa fa-phone form-control-feedback right" aria-hidden="true" style="position: absolute; right: 5px; top: 5px;"></span>
-                        <span asp-validation-for="Phone" class="text-danger"></span>
-                    </div>
+            <!-- 聯絡電話 -->
+            <div class="col-md-6 col-sm-6" style="margin-top: 20px;">
+                <div class="form-group has-feedback">
+                    <label asp-for="Phone" class="control-label" style="display: block; position: absolute; top: -20px;"></label>
+                    <input asp-for="Phone" class="form-control" style="display: block; padding-right: 30px;" />
+                    <span class="fa fa-phone form-control-feedback right" aria-hidden="true" style="position: absolute; right: 5px; top: 5px;"></span>
+                    <span asp-validation-for="Phone" class="text-danger"></span>
                 </div>
-                <div class="col-md-12 col-sm-12">
-                    <!--排版用空白 避免錯誤欄推擠亂版-->
+            </div>
+            <div class="col-md-12 col-sm-12">
+                <!--排版用空白 避免錯誤欄推擠亂版-->
+            </div>
+
+
+
+
+            <!--性別-->
+            <div class="form-group row">
+                <label class="control-label col-md-3 col-sm-3 " asp-for="Gender"></label>
+                <div class="col-md-9 col-sm-9 ">
+                    <select asp-for="Gender" class="form-control">
+
+                        <!option value='true'@if (Model.Gender == true)
+                            @("selected")
+
+
+
+
+
+
+
+                        > 男 </!option >
+                        <!option value='false'@if (Model.Gender == false)
+                            @("selected")
+
+
+
+
+
+
+
+                        > 女 </!option >
+                    </select>
                 </div>
+            </div>
 
+            <!-- 血型 -->
+            <div class="form-group row">
+                <label class="control-label col-md-3 col-sm-3" asp-for="BloodType"></label>
+                <div class="col-md-9 col-sm-9">
+                    <select class="form-control" asp-for="BloodType">
 
-
-
-                <!--性別-->
-                <div class="form-group row">
-                    <label class="control-label col-md-3 col-sm-3 " asp-for="Gender"></label>
-                    <div class="col-md-9 col-sm-9 ">
-                        <select asp-for="Gender" class="form-control">
-
-                            <!option value='true'@if (Model.Gender == true)
-                                @("selected")
-
-
-
-
-
-
-                            > 男 </!option >
-                            <!option value='false'@if (Model.Gender == false)
-                                @("selected")
-
-
-
-
-
-
-                            > 女 </!option >
-                        </select>
-                    </div>
+                        <option>A</option>
+                        <option>B</option>
+                        <option>O</option>
+                        <option>AB</option>
+                    </select>
+                    <span asp-validation-for="BloodType" class="text-danger"></span>
                 </div>
+            </div>
 
-                <!-- 血型 -->
-                <div class="form-group row">
-                    <label class="control-label col-md-3 col-sm-3" asp-for="BloodType"></label>
+            <!--戶籍地址-->
+            <div class="form-group row">
+                <label class="control-label col-md-3 col-sm-3" asp-for="Address"></label>
+                <div class="col-md-9 col-sm-9">
+                    <input asp-for="Address" class="form-control" />
+                    <span asp-validation-for="Address" class="text-danger"></span>
+                </div>
+            </div>
+            <!--聯絡地址-->
+            <div class="form-group row">
+                <label class="control-label col-md-3 col-sm-3" asp-for="ContactAddress"></label>
+                <div class="col-md-9 col-sm-9">
+                    <input asp-for="ContactAddress" class="form-control" />
+                    <span asp-validation-for="ContactAddress" class="text-danger"></span>
+                </div>
+            </div>
+
+            <!--生日-->
+            <div class="form-group row">
+                <label class="control-label col-md-3 col-sm-3" asp-for="BirthDate"></label>
+                <div class="col-md-9 col-sm-9">
+                    <input name="BirthDate" class="date-picker form-control" type="date" value="@Model.BirthDate?.ToString("yyyy-MM-dd")" required="required" />
+
+                    <span asp-validation-for="BirthDate" class="text-danger"></span>
+                </div>
+            </div>
+            <!--緊急聯絡人-->
+            <div class="form-group row">
+                <label class="control-label col-md-3 col-sm-3" asp-for="IceName"></label>
+                <div class="col-md-9 col-sm-9">
+                    <input asp-for="IceName" class="form-control" />
+                    <span asp-validation-for="IceName" class="text-danger"></span>
+                </div>
+            </div>
+            <!--緊急聯絡人電話-->
+            <div class="form-group row">
+                <label class="control-label col-md-3 col-sm-3" asp-for="IceNumber"></label>
+                <div class="col-md-9 col-sm-9">
+                    <input asp-for="IceNumber" class="form-control" />
+                    <span asp-validation-for="IceNumber" class="text-danger"></span>
+                </div>
+            </div>
+            <!--會員密碼-->
+            <div class="form-group row">
+                <label class="control-label col-md-3 col-sm-3" asp-for="MemPassword"></label>
+                <div class="col-md-9 col-sm-9">
+                    <input asp-for="MemPassword" class="form-control" />
+                    <span asp-validation-for="MemPassword" class="text-danger"></span>
+                </div>
+            </div>
+
+            <!--啟用權限-->
+            <div class="form-group row">
+                <label class="control-label col-md-3 col-sm-3">啟用</label>
+                <div class="col-md-9 col-sm-9">
                     <div class="col-md-9 col-sm-9">
-                        <select class="form-control" asp-for="BloodType">
+                        <div class="">
+                            <label>
+                                @*  <input asp-for="Verification"  type="checkbox" class="js-switch"
+                                checked=@Model.Verification
+                                data-switchery="true" style="display: none;"> *@
 
-                            <option>A</option>
-                            <option>B</option>
-                            <option>O</option>
-                            <option>AB</option>
-                        </select>
-                        <span asp-validation-for="BloodType" class="text-danger"></span>
-                    </div>
-                </div>
+                                <input name="Verification" id="Verification" type="checkbox" class="js-switch" @if (Model.Verification == true)
+                                    @("checked")
 
-                <!--戶籍地址-->
-                <div class="form-group row">
-                    <label class="control-label col-md-3 col-sm-3" asp-for="Address"></label>
-                    <div class="col-md-9 col-sm-9">
-                        <input asp-for="Address" class="form-control" />
-                        <span asp-validation-for="Address" class="text-danger"></span>
-                    </div>
-                </div>
-                <!--聯絡地址-->
-                <div class="form-group row">
-                    <label class="control-label col-md-3 col-sm-3" asp-for="ContactAddress"></label>
-                    <div class="col-md-9 col-sm-9">
-                        <input asp-for="ContactAddress" class="form-control" />
-                        <span asp-validation-for="ContactAddress" class="text-danger"></span>
-                    </div>
-                </div>
-
-                <!--生日-->
-                <div class="form-group row">
-                    <label class="control-label col-md-3 col-sm-3" asp-for="BirthDate"></label>
-                    <div class="col-md-9 col-sm-9">
-                       <input name="BirthDate" class="date-picker form-control" type="date" value="@Model.BirthDate?.ToString("yyyy-MM-dd")" required="required" />
-
-                        <span asp-validation-for="BirthDate" class="text-danger"></span>
-                    </div>
-                </div>
-                <!--緊急聯絡人-->
-                <div class="form-group row">
-                    <label class="control-label col-md-3 col-sm-3" asp-for="IceName"></label>
-                    <div class="col-md-9 col-sm-9">
-                        <input asp-for="IceName" class="form-control" />
-                        <span asp-validation-for="IceName" class="text-danger"></span>
-                    </div>
-                </div>
-                <!--緊急聯絡人電話-->
-                <div class="form-group row">
-                    <label class="control-label col-md-3 col-sm-3" asp-for="IceNumber"></label>
-                    <div class="col-md-9 col-sm-9">
-                        <input asp-for="IceNumber" class="form-control" />
-                        <span asp-validation-for="IceNumber" class="text-danger"></span>
-                    </div>
-                </div>
-                <!--會員密碼-->
-                <div class="form-group row">
-                    <label class="control-label col-md-3 col-sm-3" asp-for="MemPassword"></label>
-                    <div class="col-md-9 col-sm-9">
-                        <input asp-for="MemPassword" class="form-control" />
-                        <span asp-validation-for="MemPassword" class="text-danger"></span>
-                    </div>
-                </div>
-
-                <!--啟用權限-->
-                <div class="form-group row">
-                    <label class="control-label col-md-3 col-sm-3">啟用</label>
-                    <div class="col-md-9 col-sm-9">
-                        <div class="col-md-9 col-sm-9">
-                            <div class="">
-                                <label>
-                                    @*  <input asp-for="Verification"  type="checkbox" class="js-switch"
-                                    checked=@Model.Verification
-                                    data-switchery="true" style="display: none;"> *@
-
-                                    <input name="Verification" id="Verification" type="checkbox" class="js-switch" @if (Model.Verification == true)
-                                        @("checked")
-
-                                           data-switchery="true" style="display: none;">
-                                </label>
-                            </div>
+                                       data-switchery="true" style="display: none;">
+                            </label>
                         </div>
                     </div>
                 </div>
-                <div class="form-group row">
-                    <div class="col-md-9 col-sm-9  offset-md-9">
-                        <input type="submit" value="保存" class="btn btn-primary" />
-                        <button id="editCloseButton" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-9 col-sm-9  offset-md-9">
+                    <input type="submit" value="保存" class="btn btn-primary" />
+                    <button id="editCloseButton" type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
                 </div>
+            </div>
 
-            </form>
-        </div>
+        </form>
     </div>
+</div>

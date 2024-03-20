@@ -17,7 +17,7 @@ namespace ClinicWeb.Areas.Employee.Controllers
     public class MainController : Controller
     {
         private ClinicSysContext _context;
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        //private readonly IHttpContextAccessor _httpContextAccessor;
         public MainController(ClinicSysContext context)
         {
             _context = context;
@@ -145,13 +145,75 @@ namespace ClinicWeb.Areas.Employee.Controllers
             // 如果找到了對應的員工且員工有大頭照數據
             if (employee != null && employee.EmpPhoto != null && employee.EmpPhoto.Length > 0)
             {
-                                return File(employee.EmpPhoto, "image/jpeg"); 
+                return File(employee.EmpPhoto, "image/jpeg");
             }
             else
             {
-              
-                return NotFound(); 
+
+                //return NotFound(); 
+                return Content("沒圖片");
             }
+        }
+
+
+        [HttpPost]
+        public JsonResult Show_Satisfaction()
+        {
+            //int Paverage = 0;
+            //int Daverage = 0;
+            //int Caverage = 0;
+            //int Saverage = 0;
+            double Paverage = 0.0;
+            double Daverage = 0.0;
+            double Caverage = 0.0;
+            double Saverage = 0.0;
+
+            var a = _context.CasesMedicalRecords
+                .Select(s => new
+                {
+                   pat= s.PatientSatisfaction,
+                   doc= s.DocSatisfaction,
+                   cli= s.ClinicSatisfaction,
+                   sys = s.SysSatisfaction
+                });
+
+            int pc = a.Count();
+            int dc = a.Count();
+            int cc = a.Count();
+            int sc = a.Count();
+
+            foreach(var item in a)
+            {
+                if (item.pat.HasValue)
+                { Paverage += item.pat.Value; }
+                else
+                { pc--; }
+
+                if (item.doc.HasValue)
+                { Daverage += item.doc.Value; }
+                else
+                { dc--; }
+
+                if (item.cli.HasValue) {  Caverage += item.cli.Value; }
+                else { cc--; }
+
+                if (item.sys.HasValue) {  Saverage += item.sys.Value; }
+                else {  sc--; }
+
+
+            }
+            Paverage = Math.Round(Paverage / pc, 1);
+            Daverage = Math.Round(Daverage / dc, 1);
+            Caverage = Math.Round(Caverage / cc, 1);
+            Saverage = Math.Round(Saverage / sc, 1);
+
+            return Json(new {
+                PatientSatisfaction = Paverage,
+                DocSatisfaction = Daverage,
+                ClinicSatisfaction = Caverage,
+                SysSatisfaction = Saverage
+
+            });
         }
 
 

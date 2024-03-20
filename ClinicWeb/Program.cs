@@ -190,6 +190,12 @@ builder.Services.AddAuthorization(o =>
     });
 });
 
+
+//var google = WebApplication.CreateBuilder(args);
+//var GoogleClientId = builder.Configuration["Authentication:Google:ClientId"];
+//var GoogleClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+
+
 ////預設全部api都套用驗證 (不要的話在該 action加上[AllowAnonymous] 好比login
 //builder.Services.AddMvc(options =>
 //{
@@ -249,6 +255,8 @@ app.UseAuthorization();
 app.MapHub<ApptStateHub>("/ApptStateHub");
 app.MapHub<CallingHub>("/CallingHub");
 app.MapHub<DrawHub>("/drawHub");
+app.MapHub<ArrivalHub>("/ArrivalHub");
+
 app.MapControllerRoute(
       name: "areas",
       pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"

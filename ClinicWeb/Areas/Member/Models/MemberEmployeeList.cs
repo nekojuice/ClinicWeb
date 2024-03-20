@@ -18,7 +18,7 @@ public partial class MemberEmployeeList
     [Column("Staff_Number")]
     public int StaffNumber { get; set; }
 
-    [Required]
+   
     [StringLength(50)]
     public string Name { get; set; }
 
@@ -28,21 +28,21 @@ public partial class MemberEmployeeList
     [StringLength(50)]
     public string BloodType { get; set; }
 
-    [Required]
+ 
     [Column("National_ID")]
     [StringLength(50)]
     public string NationalId { get; set; }
 
-    [Required]
+  
     [StringLength(50)]
     public string Address { get; set; }
 
-    [Required]
+   
     [Column("Contact_Address")]
     [StringLength(50)]
     public string ContactAddress { get; set; }
 
-    [Required]
+  
     [StringLength(50)]
     public string Phone { get; set; }
 
