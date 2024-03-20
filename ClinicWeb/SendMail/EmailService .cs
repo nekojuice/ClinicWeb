@@ -30,6 +30,8 @@ public class EmailService : IEmailService
 
             using (var client = new SmtpClient())
             {
+                //await client.ConnectAsync("invalid.mailserver.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
+
                 await client.ConnectAsync(_configuration["EmailSettings:MailServer"], int.Parse(_configuration["EmailSettings:MailPort"]), MailKit.Security.SecureSocketOptions.StartTls);
                 await client.AuthenticateAsync(_configuration["EmailSettings:SenderEmail"], _configuration["EmailSettings:SenderPassword"]);
                 await client.SendAsync(emailMessage);
