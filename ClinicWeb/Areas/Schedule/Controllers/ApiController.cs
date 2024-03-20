@@ -54,6 +54,7 @@ namespace ClinicWeb.Areas.Schedule.Controllers
                 .Select(x => new
                 {
                     //id = x.ClinicInfoId,
+                    timeid = x.ClinicTimeId,
                     日期 = x.Date,
                     醫師 = x.Doctor.Name,
                     時段 = x.ClinicTime.ClinicShifts,
