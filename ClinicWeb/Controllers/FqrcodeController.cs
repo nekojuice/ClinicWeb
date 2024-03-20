@@ -10,6 +10,10 @@ namespace ClinicWeb.Controllers
     public class FqrcodeController : Controller
     {
         private readonly ClinicSysContext _context;
+        public FqrcodeController(ClinicSysContext context)
+        {
+            _context = context;
+        }
         public IActionResult Index()
         {
             return View();
