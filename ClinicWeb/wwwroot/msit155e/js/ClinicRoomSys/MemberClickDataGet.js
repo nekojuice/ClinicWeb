@@ -396,10 +396,10 @@ document.getElementById("submitrt").addEventListener("click", function (event) {
 });
 
 //新增處方籤-主要
-//document.getElementById("submit").addEventListener("click", function (event) {
-//    event.preventDefault(); // 防止表單提交
-//    uploadFormData(CASE_ID);
-//});
+document.getElementById("submit").addEventListener("click", function (event) {
+    event.preventDefault(); // 防止表單提交
+    AddNPre();
+});
 
 //初始化紀錄表單
 document.getElementById("addrecord").addEventListener("click", function (event) {

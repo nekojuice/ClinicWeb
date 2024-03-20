@@ -2,6 +2,7 @@
 using ClinicWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using System.Globalization;
 using System.Runtime.ExceptionServices;
 
@@ -163,9 +164,16 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
             // 在這裡處理表單提交的資料，例如將資料儲存到資料庫中
             _context.CasesPrescription.Add(record);
             _context.SaveChanges();
-
-            // 返回適當的回應
-            return Ok();
+            int id = _context.CasesPrescription.LastOrDefault().PrescriptionId;
+            if (!id.ToString().IsNullOrEmpty())
+            {
+                return Ok(id);
+            }
+            else
+            {
+                // 返回適當的回應
+                return BadRequest();
+            }
         }
         [HttpPost]
         public IActionResult AddPrescriptionL([FromBody] CasesPrescriptionlist record)
