@@ -28,11 +28,99 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[Appt_ClinicList]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Appt_ECPay]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Appt_PatientState_Ref]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Attendance_tAttendance]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Attendance_tExpenseRequests]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Attendance_tExpenseTypes]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Attendance_tLeave]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Attendance_tLeaveTypes]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Cases_MainCase]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Cases_Medical_Records]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Cases_NewBornList]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Cases_Prescription]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Cases_Prescriptionlist]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Cases_TestReport]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Member_Care]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[Member_EmployeeList]",
          "ObjectType": 0
       },
       {
          "Name": "[dbo].[Member_MemberList]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Pharmacy_tClinicalUseDetails]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Pharmacy_tClinicalUseList]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Pharmacy_tMedicinesList]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Pharmacy_tSideEffectDetails]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Pharmacy_tSideEffectList]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Pharmacy_tTypeDetails]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Pharmacy_tTypeList]",
          "ObjectType": 0
       },
       {
