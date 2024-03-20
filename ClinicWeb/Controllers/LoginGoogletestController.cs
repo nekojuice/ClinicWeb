@@ -282,8 +282,16 @@ namespace ClinicWeb.Controllers
                     string ?id_token = tokenObj?.id_token;
                     var jst = new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(id_token);
                     var userId = jst.Payload.Sub;
-
-
+                    var payload = jst.Payload;
+                    if (payload.TryGetValue("picture", out var picture))
+                    {
+                        var userPictureUrl = picture.ToString();
+                        GetUserImage(userPictureUrl);
+                    }
+                    else
+                    {
+                        // 如果没有找到 "picture"
+                    }
                     var dbMember = _context.MemberMemberList.SingleOrDefault(m => m.GoogleSub == userId);
 
                   
@@ -332,6 +340,16 @@ namespace ClinicWeb.Controllers
 
                     return StatusCode((int)statusCode);
                 }
+            }
+        }
+        [AllowAnonymous]
+        //把抓到的URL轉成檔案
+        public async Task<IActionResult> GetUserImage(string imageUrl)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                var imageBytes = await httpClient.GetByteArrayAsync(imageUrl);
+                return File(imageBytes, "image/jpeg"); //
             }
         }
 

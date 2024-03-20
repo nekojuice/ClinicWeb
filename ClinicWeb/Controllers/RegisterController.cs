@@ -28,6 +28,7 @@ namespace ClinicWeb.Controllers
             }
             catch (Exception)
             {
+                Response.StatusCode = 500;
                 return Json(new { Error = false, message = "註冊時發生錯誤，請聯繫服務人員。" });
             }
         }

@@ -37,7 +37,7 @@ function QueryEmpInfo() {
             language: {
                 url: "https://cdn.datatables.net/plug-ins/1.13.7/i18n/zh-HANT.json"
             },
-            order: [[1, 'asc']]
+            order: [[0, 'dsc']]
         });
     } catch (error) {
         console.error('在初始化員工資料表時發生錯誤:', error);
@@ -217,6 +217,10 @@ function event_AddMemBtn() {
                 });
                 QueryEmpInfo();
                 deleteCreateForm();
+                //var table = new DataTable('#empdatatable');
+                //table.page('last').draw('page');
+               
+
             }
             else {
                 //把剛剛所有formdata包含錯誤訊息塞給divCreateInfo 也就是createpartial的id
@@ -295,6 +299,18 @@ function attachAlertToSwitchery(switcheryElement) {
         } else {
             // 當開關為 false (離職狀態)
             Swal.fire("設定為離職員工，使用者將無法登入系統。", "warning");
+        }
+    };
+}
+
+function attachAlertToSwitchery(switcheryElement) {
+    switcheryElement.onchange = function () {
+        if (this.checked) {
+            // 當開關為 true (啟用狀態)
+            Swal.fire("設定為在職員工", "", "success");
+        } else {
+            // 當開關為 false (禁用狀態)
+            Swal.fire("設定為離職員工", "使用者將無法登入系統。", "warning");
         }
     };
 }

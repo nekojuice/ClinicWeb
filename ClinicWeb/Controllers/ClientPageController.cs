@@ -201,6 +201,7 @@ namespace ClinicWeb.Controllers
             if (user == null)
             {
                 ViewData["ErrorMessage"] = "找不到會員";
+                TempData["Error"] = "找不到會員，請先點選下方連結註冊";
                 return View("~/Views/ClientPage/Login/ClientLogin.cshtml");
             }
 
