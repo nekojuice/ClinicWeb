@@ -279,10 +279,24 @@ function rebindAll_Edit() {
     buttonEventFunc();
     //switchery綁定
     rebind_switchery(document.getElementById('Quit'))
+    attachAlertToSwitchery(document.getElementById('Quit'));
+
     //事件綁定 關閉新增會員時
     document.getElementById('editCloseButton').addEventListener('click', function () {
         deleteFormEdit();
     });
+}
+
+function attachAlertToSwitchery(switcheryElement) {
+    switcheryElement.onchange = function () {
+        if (this.checked) {
+            // 當開關為 true (在職狀態)
+            Swal.fire("將設定為在職員工。", "success");
+        } else {
+            // 當開關為 false (離職狀態)
+            Swal.fire("設定為離職員工，使用者將無法登入系統。", "warning");
+        }
+    };
 }
 function deleteFormEdit() {
     $EmpEdit.modal('hide') //關掉小窗
