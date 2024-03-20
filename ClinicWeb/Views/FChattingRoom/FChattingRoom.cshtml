@@ -141,7 +141,7 @@
     @*  <link href="~/css/chatstyle.css" rel="stylesheet" /> *@
     <script>
         //表情
-
+        let adminin = false;
 
 
         let list;
@@ -171,7 +171,9 @@
             var hasAdmin = false; // 增加一個變數來追蹤是否有管理員
 
             for (i = 0; i < list.length; i++) {
-                $("#IDList").append($("<li></li>").attr("class", "list-group-item").attr("onclick", "ccon(this)").text(list[i].Name));
+                // $("#IDList").append($("<li></li>").attr("class", "list-group-item").attr("onclick", "ccon(this)").text(list[i].Name));
+                var listItem = $("<li></li>").attr("class", "list-group-item").attr("onclick", "ccon(this)").text(list[i].Name).attr("id", list[i].Name);
+                $("#IDList").append(listItem);
 
                 // 檢查是否有管理員
                 if (list[i].Name === "管理員") {
@@ -183,11 +185,14 @@
             if (selfIDText !== "管理員") {
                 if (!hasAdmin) {
                     Swal.fire("目前沒有客服人員請稍待片刻");
-                    // alert("目前沒有客服人員請稍待片刻");
-
+                    revMessageToList("機器人", "目前是機器人為您服務請輸入您的需求。");
+                    console.log(adminin);
                 } else {
                     Swal.fire("請輸入想諮詢的問題，專人會幫您服務");
-
+                     adminin = true;
+                    $("#messageList").empty();
+                    revMessageToList("管理員", "管理員目前已登入，提出您的問題");
+                    console.log(adminin);
                 }
             }
 
@@ -209,6 +214,8 @@
             if (selfIDText !== "管理員") {
                 $("#messageList").empty();
             }
+            $("#IDList li.selected").removeClass("selected");
+            $(element).addClass("selected");
             $('#sendToID').val($(element).text());
             // $("#messageList").empty();
         }
@@ -293,7 +300,6 @@
         //接收訊息
         connection.on("UpdContentCatch", function (data) {
             console.log(data);
-            var youtubeRegex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
             var name = data.senderName;
             var msg = data.message;
             // 取得現在的時間
@@ -614,5 +620,143 @@
             ctx.closePath();
             ctx.stroke();
         });
+
+        //入檔按鈕
+        document.getElementById("savesign").addEventListener("click", function () {
+            var canvas = document.getElementById("modalCanvas");
+            var imgData = canvas.toDataURL("image/png");
+
+            // 發送 POST 請求到後端
+            fetch('/FChattingRoom/SaveCanvasImage', {
+                method: 'POST',
+                body: JSON.stringify({ image: imgData }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.text();
+                })
+                .then(message => {
+                    Swal.fire("入檔成功");
+                    var context = canvas.getContext('2d');
+                    context.clearRect(0, 0, canvas.width, canvas.height);
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                });
+        });
+
+
+
+
+
+
+        //Chatgpt  使用
+        //收訊息
+        function revMessageToList(name, msg) {
+            // 取得現在的時間
+            var currentTime = new Date().toLocaleTimeString();
+
+            // 生成新的列表項目
+            var listItem = $("<li></li>").addClass("d-flex justify-content-end mb-4");
+
+            // 生成卡片元素
+            var card = $("<div></div>").addClass("card");
+
+            // 卡片標題（name）
+            var nameParagraph = $("<p></p>").addClass("fw-bold mb-0").attr("id", "name").text(name).css("margin-right", "20px");
+
+            // 時間（time）
+            var timeParagraph = $("<p></p>").addClass("text-muted small mb-0").attr("id", "time")
+                .html("<i class='far fa-clock'></i> " + currentTime);
+
+            // 卡片主體內容（msgshow）
+            var msgParagraph = $("<p></p>").addClass("mb-0").attr("id", "msgshow").text(msg);
+
+            // 調整元素位置
+            card.append($("<div></div>").addClass("card-header d-flex justify-content-end p-3")
+                .append(nameParagraph).append(timeParagraph));
+            card.append($("<div></div>").addClass("card-body text-end").append(msgParagraph));
+            listItem.append(card);
+
+            // 將新的列表項目添加到 messageList 中
+            $("#messageList").append(listItem);
+
+            // 滾動到底部
+            var messageList = document.getElementById("messageList");
+            messageList.scrollTop = messageList.scrollHeight;
+        }
+        //發訊息
+        function senMessageToList(name, msg) {
+            // 取得現在的時間
+            var currentTime = new Date().toLocaleTimeString();
+
+            // 生成新的列表項目
+            var listItem = $("<li></li>").addClass("d-flex justify-content-between mb-4");
+
+            // 生成卡片元素
+            var card = $("<div></div>").addClass("card");
+
+            // 卡片標題（name）
+            var nameParagraph = $("<p></p>").addClass("fw-bold mb-0").attr("id", "name").text(name).css("margin-right", "20px");
+
+            // 時間（time）
+            var timeParagraph = $("<p></p>").addClass("text-muted small mb-0").attr("id", "time")
+                .html("<i class='far fa-clock'></i> " + currentTime);
+
+            // 卡片主體內容（msgshow）
+            var msgParagraph = $("<p></p>").addClass("mb-0").attr("id", "msgshow").text(msg);
+
+            // 將元素組裝起來
+            card.append($("<div></div>").addClass("card-header d-flex justify-content-between p-3")
+                .append(nameParagraph).append(timeParagraph));
+            card.append($("<div></div>").addClass("card-body").append(msgParagraph));
+            listItem.append(card);
+
+            // 將新的列表項目添加到 messageList 中
+            $("#messageList").append(listItem);
+
+            // 滾動到底部
+            var messageList = document.getElementById("messageList");
+            messageList.scrollTop = messageList.scrollHeight;
+        }
+        //訊息事件
+        $('#sendButton').on('click', async function () {
+            let name = $('#SelfID').html();
+            let msg = $('#message').val();
+
+            // 檢查訊息是否為空
+            if (msg.trim() !== '') {
+                console.log(adminin);
+                if (!adminin) {
+                    senMessageToList(name, msg);
+                    console.log(msg);
+                    const query = msg + "字數不要超過50字";
+                    const response = await fetch('/api/OpenAI/UseChatGPT?query=' + encodeURIComponent(query));
+                    if (response.ok) {
+                        var result = await response.text();
+                        revMessageToList("管理員", result);
+                        console.log("我有病");
+                    } else {
+                        revMessageToList("管理員", "忙線中請稍等");
+                    }
+                    
+                }
+            }
+        });
+        // async function LoadDetail() {
+        //     const a = document.querySelector("#Book").textContent;
+        //     console.log(a);
+        //     const query = `書名:《${a}》 作者:霍華．馬克斯 出版社:北京聯合出版公司 繁體中文簡介`;
+        //     const response = await fetch('/api/OpenAI/UseChatGPT?query=' + encodeURIComponent(query));
+        //     var result = await response.text();
+        //     result = `《${a}》` + result;
+        //     document.querySelector("#result").textContent = result;
+        // }
+        // LoadDetail();
     </script>
 }    

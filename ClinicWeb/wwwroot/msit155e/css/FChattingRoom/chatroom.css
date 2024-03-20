@@ -73,3 +73,7 @@
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* 添加文字陰影 */
 }
 /*#C3F69D*/
+
+.list-group-item.selected {
+    background-color: #C3F69D; /* 设置选中的背景色 */
+}
