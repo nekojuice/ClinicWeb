@@ -1,0 +1,11 @@
+﻿@model ClinicWeb.Areas.Drugs.Models.PharmacyTMedicinesList
+
+@if (Model.FApperance != null)
+{
+    <img src=`@Url.Action("ShowPicture","DrugsApi",new{id=Model.FApperance})` title="@Model.FDrugName"/>
+
+}
+else
+{
+    
+}

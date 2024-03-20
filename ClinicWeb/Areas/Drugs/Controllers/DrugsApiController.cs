@@ -71,13 +71,23 @@ namespace ClinicWeb.Areas.Drugs.Controllers
             return Json(drugDatas);
         }
 
+        //讀取藥品圖片 (顯示資料庫二進位圖片)
+        //GET::Drugs/DrugsApi/ShowPicture/id
+        [HttpGet]
+        public async Task<FileResult> ShowPicture(int id)
+        {
+            PharmacyTMedicinesList? pic = await _context.PharmacyTMedicinesList.FindAsync(id);
+            byte[]? Content = pic?.FApperance;
+            return File(Content, "image/jpeg");
 
-        //新增藥品
+        }
+        //新增藥品，一次性新增Medicine、TypeDetial、CliniaclUseDetail、SideEffectDetail共4張表
 
-        //新增Modal上 傳入劑型清單 使用  TypeInfo()--->select option
-        //新增Modal上 傳入適應症與副作用清單 使用 ClinicalUseInfo()、SideEffectInfo --->checkbox
+        //新增的Modal上 傳入劑型清單 使用  TypeInfo()--->select option
+        //新增的Modal上 傳入適應症與副作用清單 使用 ClinicalUseInfo()、SideEffectInfo() --->checkbox
 
-        #region       
+        #region  
+        //測試只新增單一藥品主表
         //[HttpPost]
         //public IActionResult DrugCreate(PharmacyTMedicinesList medicine)
         //{
@@ -103,7 +113,6 @@ namespace ClinicWeb.Areas.Drugs.Controllers
                     {
                         typeDetails.FIdDrug = medicine.FIdDrug;
                         _context.PharmacyTTypeDetails.Add(typeDetails);
-
                     }
 
                     //存此藥品適應症明細表
@@ -124,12 +133,11 @@ namespace ClinicWeb.Areas.Drugs.Controllers
                             var sideEffectDetails = new PharmacyTSideEffectDetails { FIdDrug = medicine.FIdDrug, FIdSideEffect = id };
                             _context.PharmacyTSideEffectDetails.Add(sideEffectDetails);
                         }
-                    }                    
+                    }
 
                     _context.SaveChanges();
                     transaction.Commit();
                     return View("~/Areas/Drugs/Views/Home/index.cshtml");
-
                 }
                 catch (Exception ex)
                 {
@@ -141,7 +149,157 @@ namespace ClinicWeb.Areas.Drugs.Controllers
             }
         }
 
+        //修改藥品資料--->給modal讀取單一一筆資料 ViewModel
+        [HttpGet]
+        public async Task<IActionResult> EditDrug(int? id)
+        {
+            //id = 1; 測試DrugId=1，安寶錠帶入資料是否正確
+            if (id == null || _context.PharmacyTMedicinesList == null)
+            {
+                return NotFound();
+            }
+            //先找到主表 MedicineList的資料-->拿 FIdDrug
+            var MedicineList = await _context.PharmacyTMedicinesList.FindAsync(id);
+            if (MedicineList == null)
+            {
+                return NotFound();
+            }
 
+            // 查其他資料表的內容
+
+            //藥品劑型只有是一對一 DrugId-->IdType 記錄在TypeDetail
+            var TypeDetails = await _context.PharmacyTTypeDetails.FirstOrDefaultAsync(x => x.FIdDrug == MedicineList.FIdDrug);
+
+            var TypeList = await _context.PharmacyTTypeList.ToListAsync();
+
+            //-------------藥品適應症----------------------
+
+            //step1:藥品適應症是一對多 一筆DrugId-->多筆IdClinicalUse 記錄在ClinicalUseDetails
+            var ClinicalUseDetails = await _context.PharmacyTClinicalUseDetails.Where(x => x.FIdDrug == MedicineList.FIdDrug).ToListAsync();
+
+            //step2:藥品適應症清單，開啟畫面時，使用for迴圈生成所有的適應症清單 --> 之前直接使用Detials
+            var ClinicalUseList = await _context.PharmacyTClinicalUseList.ToListAsync();
+
+            //step3:確認DB是有適應症清單(有內容)，避免生成畫面出現參考錯誤(NullReferenceException)--> Index 就會直接壞掉
+            Console.WriteLine("PharmacyTClinicalUseList Count: " + ClinicalUseList.Count);
+
+            //----------------------------------------------
+
+            //-------------藥品副作用----------------------
+
+            //step1:藥品副作用是一對多 一筆DrugId-->多筆IdSideEffect 記錄在SideEffectDetails
+            var SideEffectDetails = await _context.PharmacyTSideEffectDetails.Where(x => x.FIdDrug == MedicineList.FIdDrug).ToListAsync();
+
+            //step2:藥品副作用清單，開啟畫面時，使用for迴圈生成所有的副作用清單
+            var SideEffectList = await _context.PharmacyTSideEffectList.ToListAsync();
+
+            //step3:確認DB是有副作用清單(有內容)，避免生成畫面出現參考錯誤(NullReferenceException)--> Index 就會直接壞掉
+            Console.WriteLine("PharmaceTSideEffectList Count: " + SideEffectList.Count);
+
+            EditDrugViewModel viewModel;
+
+            viewModel = new EditDrugViewModel
+            {
+                PharmacyTMedicinesList = MedicineList,
+                PharmacyTTypeDetails = TypeDetails,
+                PharmacyTTypeList = TypeList,
+                PharmacyTClinicalUseList = ClinicalUseList,
+                PharmacyTClinicalUseDetails = ClinicalUseDetails,
+                PharmacyTSideEffectDetails = SideEffectDetails,
+                PharmacyTSideEffectLists = SideEffectList
+            };
+
+            return PartialView("~/Areas/Drugs/Views/Partial/_DrugEditPartial.cshtml", viewModel);
+        }
+        //修改主表可以動了 還有部分未完成
+        [HttpPost]
+        public async Task<IActionResult> EditDrug(int id, [FromForm] EditDrugViewModel viewModel)
+        {
+            try { 
+            var updateData = _context.PharmacyTMedicinesList.Find(id);
+            if (updateData != null)
+            {
+                updateData.FIdDrug = id;
+                updateData.FDrugCode = viewModel.PharmacyTMedicinesList.FDrugCode;
+                updateData.FGenericName = viewModel.PharmacyTMedicinesList.FGenericName;
+                updateData.FTradeName = viewModel.PharmacyTMedicinesList.FTradeName;
+                updateData.FDrugName = viewModel.PharmacyTMedicinesList.FDrugName;
+                updateData.FPregnancyCategory = viewModel.PharmacyTMedicinesList.FPregnancyCategory;
+                updateData.FDrugDose = viewModel.PharmacyTMedicinesList.FDrugDose;
+                updateData.FMaxDose = viewModel.PharmacyTMedicinesList.FMaxDose;
+                updateData.FDosage = viewModel.PharmacyTMedicinesList.FDosage;
+                updateData.FPrecautions = viewModel.PharmacyTMedicinesList.FPrecautions;
+                updateData.FWarnings = viewModel.PharmacyTMedicinesList.FWarnings;
+                updateData.FStorage = viewModel.PharmacyTMedicinesList.FStorage;
+                updateData.FSupplier = viewModel.PharmacyTMedicinesList.FSupplier;
+                updateData.FBrand = viewModel.PharmacyTMedicinesList.FBrand;
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                Console.WriteLine("NotFound");
+                return NotFound();
+            }
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                Console.WriteLine($"{ex.Message}");
+            }
+            return View("~/Areas/Drugs/Views/Home/Index.cshtml");
+        }
+
+        //////Update回DB
+        ////[HttpPost]
+        ////public async Task<IActionResult> EditDrug(int id,  EditDrugViewModel viewModel)
+        ////{
+        ////    if (id != viewModel.PharmacyTMedicinesList.FIdDrug)
+        ////    {
+        ////        return NotFound();
+        ////    }
+        ////    //if (ModelState.IsValid)
+        ////    //{
+        ////    try
+        ////    {
+        ////        //更新資料庫內容
+        ////        _context.Update(viewModel.PharmacyTMedicinesList);
+        ////        _context.Update(viewModel.PharmacyTTypeDetails);
+
+        ////        //var updateViewModel = await _context.PharmacyTMedicinesList.FindAsync(viewModel.PharmacyTMedicinesList.FIdDrug);
+        ////        //if(updateViewModel == null)
+        ////        //{
+        ////        //    return NotFound();
+        ////        //}
+        ////        //updateViewModel.FDrugCode = viewModel.PharmacyTMedicinesList.FDrugCode;
+        ////        ////viewModel.PharmacyTMedicinesList.FDrugCode=updateViewModel.FDrugCode;
+
+        ////        //_context.Update(updateViewModel);
+        ////        await _context.SaveChangesAsync();
+        ////    }
+        ////    catch (DbUpdateConcurrencyException ex)
+        ////    {
+        ////        if (!PharmacyTMedicinesListExists(viewModel.PharmacyTMedicinesList.FIdDrug))
+        ////        {
+        ////            return NotFound();
+        ////        }
+        ////        else
+        ////        {
+        ////            Console.WriteLine($"Update failed: {ex.Message}");
+        ////        }
+
+        ////    }
+        ////    catch (Exception ex)
+        ////    {
+        ////        Console.WriteLine($"Update failed: {ex.Message}");
+
+        ////    }
+        ////    // }
+        ////    return View("~/Areas/Drugs/Views/Home/Index.cshtml");
+        ////}
+        private bool PharmacyTMedicinesListExists(int id)
+        {
+            return (_context.PharmacyTMedicinesList?.Any(e => e.FIdDrug == id)).GetValueOrDefault();
+        }
+        
         //public async Task<IActionResult> DrugDetails()
         //{
         //    var List=await _context.PharmacyTClinicalUseList.ToListAsync();
@@ -267,6 +425,20 @@ namespace ClinicWeb.Areas.Drugs.Controllers
         private bool PharmacyTClinicalUseListExists(int id)
         {
             return (_context.PharmacyTClinicalUseList?.Any(e => e.FIdClinicalUse == id)).GetValueOrDefault();
+        }
+
+        //刪除選中的適應症清單
+
+        public async Task<IActionResult> DeleteClinicalUse(int id)
+        {
+            var pharmacyTClinicalUseList=await _context.PharmacyTClinicalUseList.FindAsync(id);
+            if(pharmacyTClinicalUseList == null)
+            {
+                return NotFound();
+            }
+            _context.PharmacyTClinicalUseList.Remove(pharmacyTClinicalUseList);
+            await _context.SaveChangesAsync();
+            return View("~/Areas/Drugs/Views/Home/ClinicalUse.cshtml");
         }
 
     }
