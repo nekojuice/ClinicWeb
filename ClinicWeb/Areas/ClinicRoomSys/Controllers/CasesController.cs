@@ -48,14 +48,14 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
                 );
         }
         [HttpPost]
-        public JsonResult GRD(string id) //GETRECORD
+        public async Task<JsonResult> GRD(string id) //GETRECORD
         {
             if (!int.TryParse(id, out int caseId))
             {
                 return Json(new { error = "Invalid id parameter" });
             }
 
-            return Json(_context.CasesMedicalRecords
+            return Json( _context.CasesMedicalRecords
                 .Include(x=>x.ClinicList.Clinic)
                 .Where(x => x.CaseId == caseId)
                 .Select(x => new
@@ -72,7 +72,7 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
             );
         }
         [HttpPost]
-        public JsonResult GRT(string id) //GETREPORT
+        public async Task<JsonResult> GRT(string id) //GETREPORT
         {
             return Json(_context.CasesTestReport
                 .Where(x => x.CaseId == Convert.ToInt32(id))
@@ -87,7 +87,7 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
                 );
         }
         [HttpPost]
-        public JsonResult GP(string id) //GETPRESCRIPTION
+        public async Task<JsonResult> GP(string id) //GETPRESCRIPTION
         {
             return Json(_context.CasesPrescription
                 .Where(x => x.CaseId == Convert.ToInt32(id))
@@ -100,7 +100,7 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
                 );
         }
         [HttpPost]
-        public JsonResult GPL(string id) //GETPRESCRIPTIONLIST
+        public async Task<JsonResult> GPL(string id) //GETPRESCRIPTIONLIST
         {
             return Json(_context.CasesPrescriptionlist
                 .Include(x => x.Drug)
@@ -138,7 +138,7 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddMedicalRecord([FromBody] CasesMedicalRecords record)
+        public async Task<IActionResult> AddMedicalRecord([FromBody] CasesMedicalRecords record)
         {
             // 在這裡處理表單提交的資料，例如將資料儲存到資料庫中
             _context.CasesMedicalRecords.Add(record);
@@ -149,7 +149,7 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddTestReport([FromBody] CasesTestReport record)
+        public async Task<IActionResult> AddTestReport([FromBody] CasesTestReport record)
         {
             // 在這裡處理表單提交的資料，例如將資料儲存到資料庫中
             _context.CasesTestReport.Add(record);
@@ -159,7 +159,7 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
             return Ok();
         }
         [HttpPost]
-        public IActionResult AddPrescription([FromBody] CasesPrescription record)
+        public async Task<IActionResult> AddPrescription([FromBody] CasesPrescription record)
         {
             // 在這裡處理表單提交的資料，例如將資料儲存到資料庫中
             _context.CasesPrescription.Add(record);
@@ -178,7 +178,7 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
             }
         }
         [HttpPost]
-        public IActionResult AddPrescriptionL([FromBody] CasesPrescriptionlist record)
+        public async Task<IActionResult> AddPrescriptionL([FromBody] CasesPrescriptionlist record)
         {
             // 在這裡處理表單提交的資料，例如將資料儲存到資料庫中
             _context.CasesPrescriptionlist.Add(record);
@@ -223,7 +223,7 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
         }
 
         [HttpPost]
-        public IActionResult DMedicalRecord(string id)
+        public async Task<IActionResult> DMedicalRecord(string id)
         {
             if (!ModelState.IsValid)
             {
@@ -237,10 +237,10 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
                 _context.SaveChanges();
             }
 
-            return Ok();
+            return Ok("ok");
         }
         [HttpPost]
-        public IActionResult DTestReport(string id)
+        public async Task<IActionResult> DTestReport(string id)
         {
             if (!ModelState.IsValid)
             {
