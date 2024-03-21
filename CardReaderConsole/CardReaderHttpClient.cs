@@ -21,7 +21,8 @@ namespace CardReader
         //string apiUrl = $"https://localhost:7071/FArrival/Remote_CardInsert";
 
         //string serverUrl = "https://192.168.0.20:7071"; //nkj家裡測試
-        string serverUrl = "https://192.168.21.14:7071"; //classroom 201 nkj位置 14號
+        //string serverUrl = "https://192.168.21.14:7071"; //classroom 201 nkj位置 14號
+        string serverUrl = "https://192.168.71.174:7071"; //classroom 201 wifi
         
         string insertCardUrl = "FArrival/Remote_CardInsert";
         string pullCardUrl = "FArrival/Remote_PullCard";
