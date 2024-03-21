@@ -1,0 +1,101 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>報到機</title>
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Datatables -->
+    <link href="~/lib/datatables/css/datatables.bootstrap.min.css" rel="stylesheet" />
+    <link href="~/lib/datatables/css/jquery.datatables.min.css" rel="stylesheet" />
+    <link href="~/lib/datatables.fontawesome.min.css" rel="stylesheet" />
+
+    <!-- nkj made -->
+    <link href="~/msit155e/css/farrival/farrival.css" rel="stylesheet" />
+    <style>
+        .box1 {
+            border: 5px solid lightgray;
+            border-radius: 10px;
+            margin: 10px 10%;
+            padding: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="row box1">
+
+        <div class="col-12">
+            <h1>打卡ㄐ</h1>
+        </div>
+
+        <div class="col-6">
+            <button id="startbutton" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#getOnModal">上班</button>
+        </div>
+        <div class="col-6">
+            <button id="endbutton" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#getOffModal">下班</button>
+        </div>
+
+    </div>
+
+    <!-- 上班 -->
+    <div class="modal fade" id="getOnModal" tabindex="-1" aria-labelledby="getOnModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="getOnModalLabel">上班</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h2>QR Code 掃描</h2>
+
+                    <div id="cameraPreviewon" style="height:300px;width:300px;"></div>
+
+                   @*  <div id="qrCodeResult">
+                        <p id="qrCodeContent">Waiting for QR code...</p>
+                    </div> *@
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+                    @* <button type="button" class="btn btn-primary">Save changes</button> *@
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 下班 -->
+    <div class="modal fade" id="getOffModal" tabindex="-1" aria-labelledby="getOffModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="getOffModalLabel">下班</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h2>Scan QR Code</h2>
+
+                    <div id="cameraPreviewoff" style="height:300px;width:300px;"></div>
+
+                @*     <div id="qrCodeResult">
+                        <p id="qrCodeContent">Waiting for QR code...</p>
+                    </div> *@
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+                    @* <button type="button" class="btn btn-primary">Save changes</button> *@
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="~/js/memback/mbrecordinfo/qrcodescript.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.2.0/html5-qrcode.min.js" integrity="sha512-7+zo/Y7lhdOlyPedqTjnh8Zw/9C1Ks/aXoFQkEE6p8Ym1SUhIRRY5drksSma6HtzwQ0otkzTjlRp8p59/nmXYw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.10.6/sweetalert2.all.min.js" integrity="sha512-wxqGjAncUDpYXzOA/WDPKAAbmSCJhJ0BqHJs/4h6L2y9xiXboIfNIelPtshy0IWjWott9TRy2pQfdPY+grMRWw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</body>
+</html>

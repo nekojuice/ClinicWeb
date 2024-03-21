@@ -22,20 +22,18 @@
                 <br><br>
                 <div class="x_content">
                     <div class="col-sm-12">
-                        <label>姓名</label>
+                        <label style="margin-top:6px">姓名</label>
                         <input type="text" class="form-control" id="inputName" disabled>
 
-                        <label>性別</label>
+                        <label style="margin-top:6px">性別</label>
                         <input type="text" class="form-control" id="inputGender" disabled>
 
-                        <label>出生日期</label>
+                        <label style="margin-top:6px">出生日期</label>
                         <input type="text" class="form-control" id="inputBirthDate" disabled>
-                    <div class="form-group">
-                        <label>血型</label>
+                        <label style="margin-top:6px">血型</label>
                         <input type="text" class="form-control" id="inputBloodType" disabled>
-                    </div>
                     <form id="MainForm" >
-                    <div class="form-group">
+                            <div class="form-group" style="margin-top:6px">
                         <label for="inputHeight">身高</label>
                         <input type="number" class="form-control" id="inputHeight" placeholder="請輸入身高">
                     </div>
@@ -51,8 +49,8 @@
                         <label for="inputAllergyRecord">過敏紀錄</label>
                         <textarea class="form-control" id="inputAllergyRecord" rows="3"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary">修改</button>
-                </form>
+                 </form>
+                    <button id="submit" class="btn btn-primary">修改</button>
                 </div>
              </div>
          </div>
@@ -82,11 +80,12 @@
                     </li>
                 </ul>
                 <div class="clearfix"></div>
+                <button type="button" id="addrecord" class="btn" style="margin-left:11px;background-color:deepskyblue" data-toggle="modal" data-target="#recordModal"><i class="bi bi-plus"></i></button>
             </div>
 
             <div class="x_content">
                 <div class="col-sm-12">
-                    <table id="recordDataTable" class="table table-striped table-bordered nowrap" style="width:100%">
+                    <table id="recordDataTable" class="table table-striped table-bordered nowrap" style="width:100%;">
                         <thead>
                             <tr>
                                  <th style="display:none">
@@ -105,13 +104,24 @@
                                     體溫
                                 </th>
                                 <th>
+                                    <div style="word-wrap:break-word">
                                     主述
+                                    </div>
                                 </th>
                                 <th>
+                                    <div style="word-wrap:break-word">
                                     醫囑
+                                    </div>
                                 </th>
                                 <th>
+                                    <div style="word-wrap:break-word">
                                     處方
+                                    </div>
+                                </th>
+                                <th>
+                                    <div style="word-wrap:break-word">
+                                    功能
+                                    </div>
                                 </th>
                             </tr>
                         </thead>
@@ -138,6 +148,7 @@
                     </li>
                 </ul>
                 <div class="clearfix"></div>
+                <button type="button" id="addreport" class="btn" style="margin-left:11px;background-color:deepskyblue" data-toggle="modal" data-target="#reportModal"><i class="bi bi-plus"></i></button>
             </div>
 
             <div class="x_content">
@@ -159,6 +170,9 @@
                                 </th>
                                 <th>
                                     結果
+                                </th>
+                                <th>
+                                    功能
                                 </th>
                             </tr>
                         </thead>
@@ -185,6 +199,7 @@
                     </li>
                 </ul>
                 <div class="clearfix"></div>
+                <button type="button" id="addpre" class="btn" style="margin-left:11px;background-color:deepskyblue" data-toggle="modal" data-target="#preModal"><i class="bi bi-plus"></i></button>
             </div>
 
             <div class="x_content">
@@ -201,6 +216,9 @@
                                 <th>
                                     調劑方式
                                 </th>
+                                <th>
+                                    功能
+                                </th>
                             </tr>
                         </thead>
                     </table>
@@ -209,3 +227,4 @@
         </div>
     </div>
 </div>
+<partial name="/Areas/ClinicRoomSys/Views/Cases/_caseModalPartial.cshtml" />

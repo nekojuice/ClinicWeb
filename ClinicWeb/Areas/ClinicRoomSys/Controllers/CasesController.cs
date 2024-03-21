@@ -2,6 +2,7 @@
 using ClinicWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using System.Globalization;
 using System.Runtime.ExceptionServices;
 
@@ -98,29 +99,162 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
                 })
                 );
         }
-        [HttpPut]
-        [ValidateAntiForgeryToken]
-        public IActionResult UpdateCase(int id, [FromBody] MainCaseViewModel caseUpdateModel)
+        [HttpPost]
+        public JsonResult GPL(string id) //GETPRESCRIPTIONLIST
         {
-            // 根据 id 获取要更新的病例
-            var caseToUpdate = _context.CasesMainCase.FirstOrDefault(x => x.CaseId == id);
-
-            if (caseToUpdate == null)
+            return Json(_context.CasesPrescriptionlist
+                .Include(x => x.Drug)
+                .Where(x => x.PrescriptionId == Convert.ToInt32(id))
+                .Select(x => new
+                {
+                    DrugId = x.DrugId,
+                    Name = x.Drug.FDrugName,
+                    Days = x.Days,
+                    total = x.TotalAmount,
+                })
+                );
+        }
+        [HttpPost]
+        public async Task<IActionResult> UpdateCase(int id, [FromBody] CasesMainCase caseUpdateModel)
+        {
+            if (!ModelState.IsValid)
             {
-                return NotFound(); // 如果找不到對應的病例，返回 404 Not Found
+                return BadRequest(new { success = false, message = "Invalid data" });
             }
 
-            // 更新病例信息
+            var caseToUpdate = await _context.CasesMainCase.FirstOrDefaultAsync(x => x.CaseId == id);
+            if (caseToUpdate == null)
+            {
+                return NotFound(new { success = false, message = "Case not found" });
+            }
+
             caseToUpdate.Height = caseUpdateModel.Height;
             caseToUpdate.Weight = caseUpdateModel.Weight;
             caseToUpdate.PastHistory = caseUpdateModel.PastHistory;
             caseToUpdate.AllergyRecord = caseUpdateModel.AllergyRecord;
 
-            // 保存更改到数据库
-            _context.SaveChanges();
-
-            return Ok(); // 返回 200 OK 表示更新成功
+            await _context.SaveChangesAsync();
+            return Ok(new { success = true, message = "Record updated successfully" });
         }
 
+        [HttpPost]
+        public IActionResult AddMedicalRecord([FromBody] CasesMedicalRecords record)
+        {
+            // 在這裡處理表單提交的資料，例如將資料儲存到資料庫中
+            _context.CasesMedicalRecords.Add(record);
+            _context.SaveChanges();
+
+            // 返回適當的回應
+            return Ok();
+        }
+
+        [HttpPost]
+        public IActionResult AddTestReport([FromBody] CasesTestReport record)
+        {
+            // 在這裡處理表單提交的資料，例如將資料儲存到資料庫中
+            _context.CasesTestReport.Add(record);
+            _context.SaveChanges();
+
+            // 返回適當的回應
+            return Ok();
+        }
+        [HttpPost]
+        public IActionResult AddPrescription([FromBody] CasesPrescription record)
+        {
+            // 在這裡處理表單提交的資料，例如將資料儲存到資料庫中
+            _context.CasesPrescription.Add(record);
+            _context.SaveChanges();
+            int? id = _context.CasesPrescription
+                  .OrderBy(p => p.PrescriptionId)
+                  .LastOrDefault()?.PrescriptionId;
+            if (!id.ToString().IsNullOrEmpty())
+            {
+                return Ok(id);
+            }
+            else
+            {
+                // 返回適當的回應
+                return BadRequest();
+            }
+        }
+        [HttpPost]
+        public IActionResult AddPrescriptionL([FromBody] CasesPrescriptionlist record)
+        {
+            // 在這裡處理表單提交的資料，例如將資料儲存到資料庫中
+            _context.CasesPrescriptionlist.Add(record);
+            _context.SaveChanges();
+
+            // 返回適當的回應
+            return Ok();
+        }
+
+        public async Task<IActionResult> UpdateMR(int id, [FromBody] CasesMedicalRecords UpdateModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new { success = false, message = "Invalid data" });
+            }
+
+            var recordToUpdate = await _context.CasesMedicalRecords.FirstOrDefaultAsync(x => x.MrId == id);
+            if (recordToUpdate == null)
+            {
+                return NotFound(new { success = false, message = "Case not found" });
+            }
+
+            //recordToUpdate.Height = UpdateModel.Height;
+            //recordToUpdate.Weight = UpdateModel.Weight;
+            //recordToUpdate.PastHistory = UpdateModel.PastHistory;
+            //recordToUpdate.AllergyRecord = UpdateModel.AllergyRecord;
+
+            await _context.SaveChangesAsync();
+            return Ok(new { success = true, message = "Record updated successfully" });
+        }
+
+        public async Task<IActionResult> GetDrugList()
+        {
+            var drugList = await _context.PharmacyTMedicinesList
+                .Select(x => new
+                {
+                    DrugId = x.FIdDrug,
+                    Name = x.FDrugName,
+                })
+                .ToListAsync();
+            return Json(drugList);
+        }
+
+        [HttpPost]
+        public IActionResult DMedicalRecord(string id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new { success = false, message = "Invalid data" });
+            }
+            var idInt = Convert.ToInt32(id);
+            var entity = _context.CasesMedicalRecords.FirstOrDefault(e => e.MrId == idInt);
+            if (entity != null)
+            {
+                _context.CasesMedicalRecords.Remove(entity);
+                _context.SaveChanges();
+            }
+
+            return Ok();
+        }
+        [HttpPost]
+        public IActionResult DTestReport(string id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new { success = false, message = "Invalid data" });
+            }
+            var idInt = Convert.ToInt32(id);
+            var entity = _context.CasesTestReport.FirstOrDefault(e => e.ReportId == idInt);
+            if (entity != null)
+            {
+                _context.CasesTestReport.Remove(entity);
+                _context.SaveChanges();
+            }
+
+            return Ok();
+        }
     }
-}
+ }

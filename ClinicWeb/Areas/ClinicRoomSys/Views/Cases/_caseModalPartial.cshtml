@@ -1,0 +1,129 @@
+﻿<div class="modal fade" id="recordModal" tabindex="-1" role="dialog" aria-labelledby="recordModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="recordModalLabel">看診紀錄</h5>
+                <button id="close" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                    <div class="col-sm-12">
+                    <form id="recordaddf">
+                        @* action="/ClinicWeb/SaveMedicalRecord" method="post" *@
+                        <label for="bp">血壓:</label>
+                        <input type="text" class="form-control" id="addbp" name="bp" required>
+
+                        <label for="pulse">脈搏:</label>
+                        <input id="addpulse" type="number" class="form-control" name="pulse">
+
+                        <label for="bt">體溫:</label>
+                        <input id="addbt" type="number" class="form-control" name="bt" step="0.1" required>
+
+                        <label for="cc">主述:</label>
+                        <textarea id="addcc" class="form-control" name="cc" required></textarea>
+
+                        <label for="disposal">醫囑:</label>
+                        <textarea id="adddisposal" class="form-control" name="disposal" required></textarea>
+
+                        <label for="prescribe">處方:</label>
+                        <textarea id="addprescribe" class="form-control" name="prescribe"></textarea>
+
+                    </form>
+                    <br>
+                        <button id="submitrd" class="btn btn-primary">新增</button>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="reportModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="reportModalLabel">檢查報告</h5>
+                <button id="close" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="col-sm-12">
+                    <form id="reportaddf">
+                        @* action="/ClinicWeb/SaveMedicalRecord" method="post" *@
+                        <label for="TestName">檢查名稱:</label>
+                        <input type="text" class="form-control" id="addTestName" name="TestName" required>
+
+                        <label for="TestDate">檢查日期:</label>
+                        <input type="date" class="form-control" id="addTestDate" name="TestDate">
+
+                  @*       <label for="bt">體溫:</label>
+                        <input type="number" class="form-control" id="addbt" name="bt" step="0.1" required>
+
+                        <label for="cc">主述:</label>
+                        <textarea id="addcc" class="form-control" name="cc" required></textarea>
+
+                        <label for="disposal">醫囑:</label>
+                        <textarea id="adddisposal" class="form-control" name="disposal" required></textarea>
+
+                        <label for="prescribe">處方:</label>
+                        <textarea id="addprescribe" class="form-control" name="prescribe"></textarea> *@
+
+                    </form>
+                    <br>
+                    <button id="submitrt" class="btn btn-primary">確認</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="preModal" tabindex="-1" role="dialog" aria-labelledby="preModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">處方籤</h5>
+                <button id="close" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="col-sm-12">
+                    <form id="preadd">
+                        <label for="dispensing" style="font-size:24px">醫囑:</label>
+                        <input type="text" class="form-control" id="adddispensing" name="dispensing">
+                    </form>
+                    <div class="container" style="margin-top:6px;margin-bottom:6px">
+                        <label for="meidcine" style="font-size:24px">藥品清單</label>
+                        <select id="medicine" class="custom-select" name="medicine"></select>
+                        <div class="container" style="margin-top:6px;margin-bottom:6px">
+                                        <label for="days" style="font-size:24px">開立天數:</label>
+                                        <input type="number" class="form-control" id="adddays" name="days">
+                                        <label for="total" style="font-size:24px">總量:</label>
+                                         <input type="number" class="form-control" id="addtotal" name="total">
+                                         <button id="addPL" class="btn btn-primary">增加</button>
+                            </div>
+                        </div>
+                        <div class="container"></div>
+                    <form id=""></form>
+                    </div>
+                    <table id="prescriptionListDataTable" class="table table-striped table-bordered hover-container" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th style="display:none">藥品ID</th>
+                                <th>藥品名稱</th>
+                                <th>開立天數</th>
+                                <th>總量</th>
+                                <th>
+                                    功能
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+@*                     <br>
+                    <button id="submitpre" class="btn btn-primary">送出</button> *@
+                </div>
+            </div>
+        </div>
+    </div>
+
