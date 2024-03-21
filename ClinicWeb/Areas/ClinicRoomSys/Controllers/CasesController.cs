@@ -221,5 +221,40 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
                 .ToListAsync();
             return Json(drugList);
         }
+
+        [HttpPost]
+        public IActionResult DMedicalRecord(string id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new { success = false, message = "Invalid data" });
+            }
+            var idInt = Convert.ToInt32(id);
+            var entity = _context.CasesMedicalRecords.FirstOrDefault(e => e.MrId == idInt);
+            if (entity != null)
+            {
+                _context.CasesMedicalRecords.Remove(entity);
+                _context.SaveChanges();
+            }
+
+            return Ok();
+        }
+        [HttpPost]
+        public IActionResult DTestReport(string id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new { success = false, message = "Invalid data" });
+            }
+            var idInt = Convert.ToInt32(id);
+            var entity = _context.CasesTestReport.FirstOrDefault(e => e.ReportId == idInt);
+            if (entity != null)
+            {
+                _context.CasesTestReport.Remove(entity);
+                _context.SaveChanges();
+            }
+
+            return Ok();
+        }
     }
  }
