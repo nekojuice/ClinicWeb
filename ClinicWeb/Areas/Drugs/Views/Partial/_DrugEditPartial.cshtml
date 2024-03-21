@@ -1,0 +1,176 @@
+﻿@model ClinicWeb.Areas.Drugs.ViewModels.EditDrugViewModel
+
+<div class="x_panel">
+    <div class="x_title">
+        <h2>修改藥品資料</h2>
+
+        <div class="clearfix"></div>
+    </div>
+    <div class="x_content">
+        <br>
+        <form id="form_DrugEdit" class="form-label-left input_mask">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="@Model.PharmacyTMedicinesList.FIdDrug" />
+
+            <!--藥品代碼-->
+            <div class="form-group row">
+                <label asp-for="@Model.PharmacyTMedicinesList.FDrugCode" class="col-form-label col-md-3 col-sm-3 ">藥品代碼</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <input asp-for="@Model.PharmacyTMedicinesList.FDrugCode" class="form-control" placeholder="藥品代碼" name="PharmacyTMedicinesList.FDrugCode">
+                </div>
+            </div>
+            <!--學名-->
+            <div class="form-group row">
+                <label asp-for="@Model.PharmacyTMedicinesList.FGenericName" class="col-form-label col-md-3 col-sm-3 ">學名</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <input asp-for="@Model.PharmacyTMedicinesList.FGenericName" class="form-control" placeholder="學名" name="PharmacyTMedicinesList.FGenericName">
+                </div>
+            </div>
+            <!--商品名-->
+            <div class="form-group row">
+                <label asp-for="@Model.PharmacyTMedicinesList.FTradeName" class="col-form-label col-md-3 col-sm-3 ">商品名</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <input asp-for="@Model.PharmacyTMedicinesList.FTradeName" class="form-control" placeholder="商品名" name="PharmacyTMedicinesList.FTradeName">
+                </div>
+            </div>
+            <!--中文名-->
+            <div class="form-group row">
+                <label asp-for="@Model.PharmacyTMedicinesList.FDrugName" class="col-form-label col-md-3 col-sm-3 ">中文名</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <input asp-for="@Model.PharmacyTMedicinesList.FDrugName" class="form-control" placeholder="中文名" name="PharmacyTMedicinesList.FDrugName">
+                </div>
+            </div>
+            <!--藥品圖片-->
+            <!--劑型-->
+            <div class="form-group row">
+                <label asp-for="@Model.PharmacyTTypeDetails.FIdTpyeNavigation.FType" class="col-form-label col-md-3 col-sm-3 ">劑型</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <!--會出現輸入框但傳不瞭其他List中的所有劑型總類-->
+                    <input asp-for="@Model.PharmacyTTypeDetails.FIdTpyeNavigation.FType" class="form-control" placeholder="請選擇劑型" name="FIdTpye" id="test">
+
+                    <select id="selTypes1" name="FIdTpye" class="form-control">
+                        <option value="-1">請選擇劑型</option>
+                    </select>
+                    @* <select id="selTypes" name="FIdTpye" class="form-control">
+                    <option value="-1">請選擇劑型</option>
+                    @foreach (var type in Model.PharmacyTTypeList)
+                    {
+                    <option value="@type.FIdType" @(type.FType == Model.PharmacyTTypeDetails.FIdTpyeNavigation.FType ? "selected" : "")>@type.FType</option>
+                    }
+                    </select> *@
+
+                </div>
+            </div>
+            <!--懷孕藥品分級-->
+            <div class="form-group row">
+                <label asp-for="@Model.PharmacyTMedicinesList.FPregnancyCategory" class="col-form-label col-md-3 col-sm-3 ">懷孕藥品分級</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <input asp-for="@Model.PharmacyTMedicinesList.FPregnancyCategory" class="form-control" placeholder="懷孕藥品分級" name="PharmacyTMedicinesList.FPregnancyCategory">
+                </div>
+            </div>
+            <!--常用劑量-->
+            <div class="form-group row">
+                <label asp-for="@Model.PharmacyTMedicinesList.FDrugDose" class="col-form-label col-md-3 col-sm-3 ">常用劑量</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <input asp-for="@Model.PharmacyTMedicinesList.FDrugDose" class="form-control" placeholder="常用劑量" name="PharmacyTMedicinesList.FDrugDose">
+                </div>
+            </div>
+            <!--最大劑量-->
+            <div class="form-group row">
+                <label asp-for="@Model.PharmacyTMedicinesList.FMaxDose" class="col-form-label col-md-3 col-sm-3 ">最大劑量</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <input asp-for="@Model.PharmacyTMedicinesList.FMaxDose" class="form-control" placeholder="最大劑量" name="PharmacyTMedicinesList.FMaxDose">
+                </div>
+            </div>
+            <!--用法-->
+            <div class="form-group row">
+                <label asp-for="@Model.PharmacyTMedicinesList.FDosage" class="col-form-label col-md-3 col-sm-3 ">用法</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <input asp-for="@Model.PharmacyTMedicinesList.FDosage" class="form-control" placeholder="用法" name="PharmacyTMedicinesList.FDosage">
+                </div>
+            </div>
+            <!--禁忌-->
+            <div class="form-group row">
+                <label asp-for="@Model.PharmacyTMedicinesList.FPrecautions" class="col-form-label col-md-3 col-sm-3 ">禁忌</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <input asp-for="@Model.PharmacyTMedicinesList.FPrecautions" class="form-control" placeholder="禁忌" name="PharmacyTMedicinesList.FPrecautions">
+                </div>
+            </div>
+            <!--注意事項-->
+            <div class="form-group row">
+                <label asp-for="@Model.PharmacyTMedicinesList.FWarnings" class="col-form-label col-md-3 col-sm-3 ">注意事項</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <input asp-for="@Model.PharmacyTMedicinesList.FWarnings" class="form-control" placeholder="注意事項" name="PharmacyTMedicinesList.FWarnings">
+                </div>
+            </div>
+            <!--儲存方法-->
+            <div class="form-group row">
+                <label asp-for="@Model.PharmacyTMedicinesList.FStorage" class="col-form-label col-md-3 col-sm-3 ">儲存方法</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <input asp-for="@Model.PharmacyTMedicinesList.FStorage" class="form-control" placeholder="儲存方法" name="PharmacyTMedicinesList.FStorage">
+                </div>
+            </div>
+            <!--藥商-->
+            <div class="form-group row">
+                <label asp-for="@Model.PharmacyTMedicinesList.FSupplier" class="col-form-label col-md-3 col-sm-3 ">藥商</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <input asp-for="@Model.PharmacyTMedicinesList.FSupplier" class="form-control" placeholder="藥商" name="PharmacyTMedicinesList.FSupplier">
+                </div>
+            </div>
+            <!--廠牌-->
+            <div class="form-group row">
+                <label asp-for="@Model.PharmacyTMedicinesList.FBrand" class="col-form-label col-md-3 col-sm-3 ">廠牌</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <input asp-for="@Model.PharmacyTMedicinesList.FBrand" class="form-control" placeholder="廠牌" name="PharmacyTMedicinesList.FBrand">
+                </div>
+            </div>
+            <!--適應症-->
+            <div class="form-group row">
+                @if (Model != null)
+                {
+                    <!--載入適應症清單，並判斷此DrugId是否有勾選此項適應症-->
+                    for (var i = 0; i < Model.PharmacyTClinicalUseList.Count; i++)
+                    {                        
+                        var clinicalUse = Model.PharmacyTClinicalUseList[i];
+                        bool isChecked = Model.PharmacyTClinicalUseDetails.Any(d => d.FIdClicicalUse == clinicalUse.FIdClinicalUse);
+
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="clinicalUse_@clinicalUse.FIdClinicalUse" name="clinicalUse"
+                                   value="@clinicalUse.FIdClinicalUse" @(isChecked ? "checked" : "") />
+                            <label class="form-check-label" for="clinicalUse_@clinicalUse.FIdClinicalUse">@clinicalUse.FClinicalUse</label>
+                        </div>
+                    }
+                }
+            </div>
+            <!--副作用-->
+            <div class="form-group row">
+                @if (Model != null)
+                {
+                    <!--載入副作用清單，並判斷此DrugId是否有勾選此項副作用-->
+                    for (var i = 0; i < Model.PharmacyTSideEffectLists.Count; i++)
+                    {
+                        var sideEffect = Model.PharmacyTSideEffectLists[i];
+                        bool isChecked = Model.PharmacyTSideEffectDetails.Any(d => d.FIdSideEffect == sideEffect.FIdSideEffect);
+
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="sideEffect_@sideEffect.FIdSideEffect" name="SideEffect"
+                                   value="@sideEffect.FIdSideEffect" @(isChecked ? "checked" : "") />
+                            <label class="form-check-label" for="sideEffect_@sideEffect.FIdSideEffect">@sideEffect.FSideEffect</label>
+                        </div>
+                    }
+                }
+            </div>
+
+           
+            <!--按鈕-->
+            <div class="form-group row" style="margin-top:30px;margin-bottom:5px">
+                <div class="col-md-9 col-sm-9  offset-md-8">
+
+                    <button id="editCloseButton" type="button" class="btn btn-secondary" data-dismiss="modal"> 關閉 </button>
+                    @* <button class="btn btn-primary" type="reset"> 清除 </button> *@
+                    <button id="editSaveButton" type="button" class="btn btn-primary"> 保存 </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

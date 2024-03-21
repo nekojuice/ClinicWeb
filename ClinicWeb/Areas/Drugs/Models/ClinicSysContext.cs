@@ -13,6 +13,8 @@ public partial class ClinicSysContext : DbContext
     {
     }
 
+    public virtual DbSet<PharmacyHealthInformation> PharmacyHealthInformation { get; set; }
+
     public virtual DbSet<PharmacyTClinicalUseDetails> PharmacyTClinicalUseDetails { get; set; }
 
     public virtual DbSet<PharmacyTClinicalUseList> PharmacyTClinicalUseList { get; set; }
@@ -29,6 +31,13 @@ public partial class ClinicSysContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<PharmacyHealthInformation>(entity =>
+        {
+            entity.HasOne(d => d.FIdDrugNavigation).WithMany(p => p.PharmacyHealthInformation)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Pharmacy_HealthInformation_Pharmacy_tMedicinesList");
+        });
+
         modelBuilder.Entity<PharmacyTClinicalUseDetails>(entity =>
         {
             entity.HasOne(d => d.FIdClicicalUseNavigation).WithMany(p => p.PharmacyTClinicalUseDetails)
