@@ -12,8 +12,8 @@ export class FapptRowComponent {
   memid = this.activatdeRoute.snapshot.queryParamMap.get('id');
   @Input() dataInput: any;
 
-  todayDate: Date = new Date();
-  //todayDate: Date = new Date('2023/12/01'); //暫時寫死
+  //todayDate: Date = new Date();
+  todayDate: Date = new Date('2023/12/01'); //暫時寫死
 
   weekPage: number = 0;
 
@@ -46,7 +46,11 @@ export class FapptRowComponent {
   }
 
   ajaxData() {
-    this.Client.get(`https://localhost:7071/FAppointment/Get_ClinicApptInfo/${this.dataInput.empId}/${this.todayDate.getFullYear()}/${(this.todayDate.getMonth() + 1).toString().padStart(2, '0')}/${(this.todayDate.getDate()).toString().padStart(2, '0')}/${this.memid}`)
+    let url = `https://localhost:7071/FAppointment/Get_ClinicApptInfo/${this.dataInput.empId}/${this.todayDate.getFullYear()}/${(this.todayDate.getMonth() + 1).toString().padStart(2, '0')}/${(this.todayDate.getDate()).toString().padStart(2, '0')}`;
+    if (this.memid) {
+      url += `/${this.memid}`;
+    }
+    this.Client.get(url)
       .subscribe(data => {
         //console.log(data);
         //this.clinicDataObject = data; //舊的物件集
@@ -112,7 +116,7 @@ export class FapptRowComponent {
   goAppt(clinicdata: clinicDataObject) {
     //console.log(clinicdata.clinicInfoId)
     if (!this.memid) {
-      alert('請先登入')
+      alert('未登入時僅供查詢!\n若欲掛號，請先登入會員')
       return
     }
     let body = {

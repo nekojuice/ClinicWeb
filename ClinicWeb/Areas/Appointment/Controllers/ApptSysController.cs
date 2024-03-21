@@ -33,7 +33,8 @@ namespace ClinicWeb.Areas.Appointment.Controllers
 
             ViewBag.Date = new SelectList(_context.ScheduleClinicInfo
                 .Select(tSchedule => tSchedule.Date.Substring(0, 7))
-                .Distinct());
+                .Distinct()
+                .OrderBy(x=>x));
 
             ViewBag.Department = new SelectList(_context.MemberEmployeeList
                 .Where(x => x.Department != "門診" && !string.IsNullOrEmpty(x.Department))
@@ -106,8 +107,8 @@ namespace ClinicWeb.Areas.Appointment.Controllers
                     member_id = x.MemberId,
                     診號 = x.ClinicNumber,
                     姓名 = x.Member.Name,
-                    生日 = x.Member.BirthDate.ToString("yyyy/MM/dd"),
-                    性別 = x.Member.Gender ? "男" : "女",
+                    生日 = ((DateTime)x.Member.BirthDate).ToString("yyyy/MM/dd"),
+                    性別 = (bool)x.Member.Gender ? "男" : "女",
                     身分證字號 = x.Member.NationalId,
                     退掛 = x.IsCancelled ? "是" : "否",
                     看診狀態 = x.PatientState.PatientStateName
@@ -130,8 +131,8 @@ namespace ClinicWeb.Areas.Appointment.Controllers
                     id = x.MemberId,
                     身分證字號 = x.NationalId,
                     姓名 = x.Name,
-                    性別 = x.Gender ? "男" : "女",
-                    生日 = x.BirthDate.ToString("yyyy-MM-dd")
+                    性別 = (bool)x.Gender ? "男" : "女",
+                    生日 = ((DateTime)x.BirthDate).ToString("yyyy-MM-dd")
                 })
                 .Take(5)
                 );
@@ -154,8 +155,8 @@ namespace ClinicWeb.Areas.Appointment.Controllers
                     MemberNumber = x.MemberNumber,
                     NationalId = x.NationalId,
                     Name = x.Name,
-                    Gender = x.Gender ? "男" : "女",
-                    BirthDate = x.BirthDate.ToString("yyyy-MM-dd"),
+                    Gender = (bool)x.Gender ? "男" : "女",
+                    BirthDate = ((DateTime)x.BirthDate).ToString("yyyy-MM-dd"),
                     BloodType = x.BloodType,
                     ContactAddress = x.ContactAddress,
                     Phone = x.Phone,
@@ -239,8 +240,8 @@ namespace ClinicWeb.Areas.Appointment.Controllers
                     會員號碼 = x.Member.MemberNumber,
                     診號 = x.ClinicNumber,
                     姓名 = x.Member.Name,
-                    生日 = x.Member.BirthDate.ToString("yyyy/MM/dd"),
-                    性別 = x.Member.Gender ? "男" : "女",
+                    生日 = ((DateTime)x.Member.BirthDate).ToString("yyyy/MM/dd"),
+                    性別 = (bool)x.Member.Gender ? "男" : "女",
                     血型 = x.Member.BloodType,
                     身分證字號 = x.Member.NationalId,
                     退掛 = x.IsCancelled ? "是" : "否",
@@ -285,7 +286,7 @@ namespace ClinicWeb.Areas.Appointment.Controllers
                     status_id = x.PatientStateId,
                     診號 = x.ClinicNumber,
                     姓名 = x.Member.Name,
-                    性別 = x.Member.Gender ? "男" : "女",
+                    性別 = (bool)x.Member.Gender ? "男" : "女",
                     狀態 = x.PatientState.PatientStateName
                 }).FirstOrDefault();
                 await _hub.Clients.All.Set_State(selMessage.ToJson());

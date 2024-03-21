@@ -5,7 +5,7 @@ const table = document.querySelector('#datatable');
 
 
 
-
+//秀出就診紀錄表單
 function QueryMedicalRecords() {
     $('#MedicalRecordsTable').DataTable({
         ajax: {
@@ -58,4 +58,6 @@ function QueryMedicalRecords() {
 }
 
 QueryMedicalRecords();
+
+
 

@@ -1,50 +1,69 @@
-﻿<div class="">
-	<h1>看診繳費</h1>
-	<table id="paymentDataTable" class="table table-striped table-bordered" style="width:100%">
-		<thead>
-			<tr>
-				<th style="display:none">
-					id
-				</th>
-				<th>
-					日期
-				</th>
-				<th>
-					時段
-				</th>
-				<th>
-					科別
-				</th>
-				<th>
-					醫師名稱
-				</th>
-				<th>
-					繳費狀態
-				</th>
-				<th>
-					繳費
-				</th>
-			</tr>
-		</thead>
-		<tbody>
-		</tbody>
-	</table>
+﻿@model System.Collections.Generic.Dictionary<string, string>
+<div class="">
+    <h1>看診繳費</h1>
+    <table id="paymentDataTable" class="table table-striped table-bordered" style="width:100%">
+        <thead>
+            <tr>
+                <th style="display:none">
+                    apptlistid
+                </th>
+                <th>
+                    日期
+                </th>
+                <th>
+                    時段
+                </th>
+                <th>
+                    科別
+                </th>
+                <th>
+                    醫師名稱
+                </th>
+                <th>
+                    看診狀態
+                </th>
+                <th>
+                    繳費狀態
+                </th>
+                <th>
+                    繳費
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
 </div>
 
-<div class="modal fade" id="cancelApptModal" tabindex="-1" aria-labelledby="cancelApptModallLabel" aria-hidden="true" data-backdrop="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h3 class="modal-title" id="cancelApptModallLabel">確認取消掛號?</h3>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			</div>
-			<div class="modal-body">
-				<p>取消掛號將放棄原本看診順位。<br />如需看診，請重新掛號。</p>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">返回</button>
-				<button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="confirmCancelBtnOnclick()">退掛</button>
-			</div>
-		</div>
-	</div>
+<div class="modal fade" id="goPayModal" tabindex="-1" aria-labelledby="goPayModalLabel" aria-hidden="true" data-backdrop="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="goPayModalLabel">前往繳費</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    前往第三方金流平台線上繳費
+                    <br /><br />
+                    <span id="span-paymag"></span>
+                    <br />
+                    <span id="span-state"></span>
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">返回</button>
+                
+                <form id="form" name="form" method="POST" action="https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5">
+                    <!--step2 : 收到後端的值印出來-->
+                    @foreach (var key in @Model.Keys.ToList())
+                    {
+                        <input type="text" name="@key" value="@Model[key]" style="display:none"/>
+                    }
+                    <button id="btn_goPay" type="submit" class="btn btn-danger" onclick="">前往繳費</button>
+                </form>
+                
+            </div>
+        </div>
+    </div>
 </div>

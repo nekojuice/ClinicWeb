@@ -1,7 +1,7 @@
 ﻿@if (User.Identity.IsAuthenticated)
 {
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-controller="ClientPage" asp-action="Login">歡迎 @User.Identity.Name</a>
+        <a class="nav-link text-dark" asp-controller="MBMemberInfo" asp-action="Index">歡迎 @User.Identity.Name</a>
     </li>
     <li class="nav-item">
         <a class="nav-link" asp-controller="ClientPage" asp-action="Logout">登出</a>

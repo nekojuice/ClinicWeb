@@ -3,8 +3,8 @@
 }
 @model MemberMemberList;
 
-@section Styles{
-	<link href="~/msit155e/css/fchattingroom/chatroom.css" rel="stylesheet" asp-append-version="true" />
+@section Styles {
+    <link href="~/msit155e/css/fchattingroom/chatroom.css" rel="stylesheet" asp-append-version="true" />
 }
 
 <section style="background-color: white">
@@ -13,7 +13,7 @@
 
         <div class="row">
             <h3>線上諮詢   歡迎~ <span id="SelfID">@User.Identity.Name</span></h3>
-                <div class="col-md-6 col-lg-5 col-xl-4 mb-4 mb-md-0 leftbox" id="2">
+            <div class="col-md-6 col-lg-5 col-xl-4 mb-4 mb-md-0 leftbox" id="2">
 
                 <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
@@ -31,7 +31,7 @@
 
             </div>
             <div class="col-md-6 col-lg-5 col-xl-4 mb-4 mb-md-0 leftbox" id="1">
-                
+
                 <h5 class="font-weight-bold mb-3 text-center text-lg-start">線上清單</h5>
                 <hr />
                 <div class="card">
@@ -39,22 +39,22 @@
 
                         <ul class="list-unstyled mb-0" id="IDList">
                             @* <li class="p-2 border-bottom" style="background-color: white;">
-                                <a href="#!" class="d-flex justify-content-between">
-                                    <div class="d-flex flex-row">
-                                        <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-8.webp" alt="avatar"
-                                             class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60">
-                                        <div class="pt-1">
-                                            <p class="fw-bold mb-0" id="name">沉沉沉</p>
-                                            <p class="small text-muted" >Hello, Are you there?</p>
-                                        </div>
-                                    </div>
-                                    <div class="pt-1">
-                                        <p class="small text-muted mb-1"  id="time">12.30</p> 
-                                        <span class="badge bg-danger float-end">1</span>
-                                    </div>
-                                </a>
+                            <a href="#!" class="d-flex justify-content-between">
+                            <div class="d-flex flex-row">
+                            <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-8.webp" alt="avatar"
+                            class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60">
+                            <div class="pt-1">
+                            <p class="fw-bold mb-0" id="name">沉沉沉</p>
+                            <p class="small text-muted" >Hello, Are you there?</p>
+                            </div>
+                            </div>
+                            <div class="pt-1">
+                            <p class="small text-muted mb-1"  id="time">12.30</p>
+                            <span class="badge bg-danger float-end">1</span>
+                            </div>
+                            </a>
                             </li> *@
-                            
+
                         </ul>
 
                     </div>
@@ -63,33 +63,55 @@
             </div>
             <div class="col-md-6 col-lg-7 col-xl-8 rightbox" style=" height: 700px;">
                 <div style="height: 400px;">
-                <ul class="list-unstyled" id="messageList" style="max-height: 400px; overflow-y: auto;padding-top:5px; ">
-                </ul>
+                    <ul class="list-unstyled" id="messageList" style="max-height: 400px; overflow-y: auto;padding-top:5px; ">
+                    </ul>
                 </div>
                 <div class="bg-white mb-3">
                     <div class="mb-3">
                         @* <label for="sendToID" class="form-label">指定 ID</label> *@
                         <input type="text" class="form-control" id="sendToID">
                     </div>
-                    <div class="form-outline" >
+                    <div class="form-outline">
                         <label class="form-label" for="textAreaExample2">輸入訊息</label>
-                        <input type="text" class="form-control" id="message" rows="4" style="height: 100px; font-size: 18px;">
+                        <textarea class="form-control" id="message" style="height: 200px; font-size: 18px;"></textarea>
                     </div>
                 </div>
-                <label for="fileInput">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                        <path d="M0 0h24v24H0z" fill="none" />
-                        <path d="M21 15v4a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-4H0l8-8 8 8h-3zm-2-7a8.963 8.963 0 0 1-.5 2.998L10 4.414 4.5 10A8.963 8.963 0 0 1 4 8a9 9 0 0 1 18 0c0 1.964-1.79 4.525-3.998 7.998L18 18v1h4a1 1 0 0 1 1 1v2h2v-2a3 3 0 0 0-3-3H2a3 3 0 0 0-3 3v2h2v-2a1 1 0 0 1 1-1h2v-1a7.963 7.963 0 0 1 2-5.002V7h2zm-8 1a6 6 0 0 0-6 6h2a4 4 0 0 1 8 0h2a6 6 0 0 0-6-6zm-1 8h2v-2h-2v2zm0-4h2V9h-2v2z" />
-                    </svg>
-                    選擇檔案
+                <label for="fileInput" class="btn btn-primary btn-rounded float-between">
+                    上傳圖片
                 </label>
-                <input type="file" id="fileInput" style="display: none;" />
-                <button type="button">&#x1F604;</button>
-                <button type="button" class="btn btn-info btn-rounded float-end" id="sendButton">送出</button>
+
+                    <input type="file" name="file" id="fileInput" style="display: none;" />
+
+                @* <button type="button" class="btn btn-info btn-rounded float-end">&#x1F604;</button> *@
+                <button type="button" class="btn btn-info btn-primary float-between" id="openModalBtn" style="display:none ;">電子簽章</button>
+                <button type="button" class="btn btn-info btn-primary float-end" id="sendButton">送出</button>
             </div>
 
         </div>
 
+    </div>
+    <!-- 懸浮視窗 -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="close">&times;</span>
+            <div style="display: flex; align-items: center;">
+                顏色：<input id="color" type="color">
+                粗細：
+                <select id="lineWidth">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                    <option>7</option>
+                </select>
+                <button id="clearBtn" class="signnamebtn">清除</button>
+                <button id="savesign" class="signnamebtn" style="display: none;">入檔</button>
+            </div>
+            <label id="bigname">請簽下您的大名</label>
+            <canvas id="modalCanvas" width="600" height="400" style="border:2px solid gray"></canvas>
+        </div>
     </div>
 </section>
 
@@ -110,19 +132,16 @@
     </div>
 </body> *@
 
-
-
+<link href="~/css/openmodal.css" rel="stylesheet" />
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
-
-                @section Scripts{
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@section Scripts {
     @*     <link href="~/css/chatroom.css" rel="stylesheet" /> *@
-   @*  <link href="~/css/chatstyle.css" rel="stylesheet" /> *@
+    @*  <link href="~/css/chatstyle.css" rel="stylesheet" /> *@
     <script>
-        //美化alert
-
-
-
+        //表情
+        let adminin = false;
 
 
         let list;
@@ -131,47 +150,51 @@
             .withHubProtocol(new signalR.JsonHubProtocol())
             .build();
 
-            
+
         //與Server建立連線
         connection.start().then(function () {
             console.log("Hub 連線完成");
         }).catch(function (err) {
             alert('連線錯誤: ' + err.toString());
         });
-      
+
         //登入會員的清單
         connection.on("UpdList", function (jsonList) {
             list = JSON.parse(jsonList);
             $("#IDList li").remove();
             $('#sendToID').hide();
-
+            //簽章按鈕顯示
+            var btnuserName = document.getElementById("SelfID").textContent.trim();
+            if (btnuserName === "管理員") {
+                $("#openModalBtn").css("display", "initial");
+            }
             var hasAdmin = false; // 增加一個變數來追蹤是否有管理員
 
             for (i = 0; i < list.length; i++) {
-                $("#IDList").append($("<li></li>").attr("class", "list-group-item").attr("onclick", "ccon(this)").text(list[i].Name));
+                // $("#IDList").append($("<li></li>").attr("class", "list-group-item").attr("onclick", "ccon(this)").text(list[i].Name));
+                var listItem = $("<li></li>").attr("class", "list-group-item").attr("onclick", "ccon(this)").text(list[i].Name).attr("id", list[i].Name);
+                $("#IDList").append(listItem);
 
                 // 檢查是否有管理員
                 if (list[i].Name === "管理員") {
                     hasAdmin = true;
                 }
             }
-
-            // 如果IDList中不包含管理員，顯示提示訊息
-            // if (!hasAdmin) {
-            //     alert("目前沒有客服人員請稍待片刻");
-            // } else {
-            //     alert("請輸入想諮詢的問題，專人會幫您服務");
-            // }
+            //管理員是否在線
             var selfIDText = $("#SelfID").text().trim();
             if (selfIDText !== "管理員") {
                 if (!hasAdmin) {
-                    alert("目前沒有客服人員請稍待片刻");
-
+                    Swal.fire("目前沒有客服人員請稍待片刻");
+                    revMessageToList("機器人", "目前是機器人為您服務請輸入您的需求。");
+                    console.log(adminin);
                 } else {
-                    alert("請輸入想諮詢的問題，專人會幫您服務");
- 
+                    Swal.fire("請輸入想諮詢的問題，專人會幫您服務");
+                     adminin = true;
+                    $("#messageList").empty();
+                    revMessageToList("管理員", "管理員目前已登入，提出您的問題");
+                    console.log(adminin);
                 }
-            } 
+            }
 
 
             var selfIDText = $("#SelfID").text().trim();
@@ -184,33 +207,35 @@
             }
         });
 
-        
+
 
         function ccon(element) {
             var selfIDText = $("#SelfID").text().trim();
             if (selfIDText !== "管理員") {
                 $("#messageList").empty();
             }
+            $("#IDList li.selected").removeClass("selected");
+            $(element).addClass("selected");
             $('#sendToID').val($(element).text());
             // $("#messageList").empty();
         }
 
- 
+
 
         //控制登入使用者看到的畫面
-        
+
         var userName = document.getElementById("SelfID").innerText;
         var leftbox1 = document.getElementById("1");
         var leftbox2 = document.getElementById("2");
         console.log(userName);
 
-       
+
         if (userName === "管理員") {
-            leftbox1.style.display = "block"; 
+            leftbox1.style.display = "block";
             leftbox2.style.display = "none";
         } else {
-            leftbox1.style.display = "none"; 
-            leftbox2.style.display = "block";  
+            leftbox1.style.display = "none";
+            leftbox2.style.display = "block";
         }
 
 
@@ -225,7 +250,7 @@
 
             // 將列表項目添加到 #messageList
             $("#messageList").append(listItem);
-
+            
             // 滾動到列表底部
             var messageList = document.getElementById("messageList");
             messageList.scrollTop = messageList.scrollHeight;
@@ -252,7 +277,6 @@
             // 時間（time）
             var timeParagraph = $("<p></p>").addClass("text-muted small mb-0").attr("id", "time")
                 .html("<i class='far fa-clock'></i> " + currentTime);
-
             // 卡片主體內容（msgshow）
             var msgParagraph = $("<p></p>").addClass("mb-0").attr("id", "msgshow").text(msg);
 
@@ -313,11 +337,15 @@
             // 可選：在此處調用其他需要的函式（例如 syncToBottomChat）
         });
 
-
+        $('#message').on('keypress', function (event) {
+            if (event.which === 13) {
+                $('#sendButton').click();
+            }
+        });
 
 
         //送出訊息事件
-       $('#sendButton').on('click', function () {
+        $('#sendButton').on('click', function () {
             console.log(list);
             let selfname = $('#SelfID').html();
             let message = $('#message').val();
@@ -325,7 +353,10 @@
 
             // 檢查 SENDID 是否為空
             if (sendToID.trim() === '') {
-                alert('請選擇一位會員！');
+                Swal.fire({
+                    text: "請選擇一位會員！",
+                    icon: "info"
+                });
                 return;
             }
 
@@ -344,80 +375,388 @@
                 alert('訊息不能為空！');
             }
         });
+        //上傳圖片檔案
+        $("#fileInput").change(function (event) {
+            var file = event.target.files[0]; // 獲取所選的檔案
+            var maxSize = 30000; // 50KB 的大小限制，1KB = 1024 bytes
 
-        
-
-        //右下聊天室
-        $(function () {
-            var arrow = $('.chat-head');
-            var textarea = $('.chat-text textarea');
-            var chatBody = $('.chat-body'); // 聊天區塊元素
-
-            // 初始化時隱藏聊天區塊
-             chatBody.fadeOut('fast');
-            arrow.on('click', function () {
-                var src = arrow.attr('src');
-
-                chatBody.slideToggle('fast');
-                if (src == 'https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_down-16.png') {
-                    arrow.attr('src', 'https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_up-16.png');
+            if (file) {
+                if (file.size > maxSize) {
+                    Swal.fire("檔案大小超過限制");
+                    // 清空檔案輸入欄位
+                    $("#fileInput").val('');
+                    return;
                 }
-                else {
-                    arrow.attr('src', 'https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_down-16.png');
-                }
-            });
 
-            // 點擊文檔其他地方時隱藏聊天區塊
-            $(document).on('click', function (event) {
-                // 檢查點擊事件的目標是否是 .chat-head 或 .chat-body 的子元素
-                if (!$(event.target).closest('.chat-head, .chat-body').length) {
-                    // 隱藏聊天區塊
-                     chatBody.fadeOut('fast');
-
-                    // 將箭頭設置為向下的圖片
-                    arrow.attr('src', 'https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_down-16.png');
-                }
-            });
-
-
-            var textarea = document.getElementById('text'); // 將 'yourTextareaId' 替換成實際的 textarea 元素的 id
-
-            textarea.addEventListener('keypress', function (event) {
-                if (event.keyCode === 13) { // 檢查按下的按鍵是否是 Enter（keyCode 13）
-                    var msg = textarea.value.trim();
-                    var currentTime = new Date();
-                    var hours = currentTime.getHours();
-                    var minutes = currentTime.getMinutes();
-                    var amOrPm = hours >= 12 ? '下午' : '上午';
-                    hours = hours % 12;
-                    hours = hours ? hours : 12; // 將 0 轉換為 12
-                    var formattedTime = amOrPm + '  ' + hours + ':' + (minutes < 10 ? '0' : '') + minutes;
-                    
-                    if (msg !== '') {
-                        // 清空 textarea
-                        textarea.value = '';
-
-                        // 在 .msg-insert 的最前面插入一個包含輸入內容的 div 元素
-                        var msgDiv = document.createElement('div');
-                        msgDiv.className = 'msg-send';
-                        msgDiv.textContent = msg;
-
-                        // 建立包含時間的 div 元素
-                        var timeDiv = document.createElement('div');
-                        timeDiv.className = 'msg-time';
-                        timeDiv.textContent = formattedTime;
-
-                        var msgInsert = document.querySelector('.msg-insert');
-                        msgInsert.appendChild(timeDiv, msgInsert.lastChild);
-                        msgInsert.appendChild(msgDiv, msgInsert.lastChild);
-
-                        msgInsert.scrollTop = msgInsert.scrollHeight;
-                    }
-
-                    // 防止換行
-                    event.preventDefault();
-                }
-            });
-
+                var reader = new FileReader(); // 創建FileReader物件來讀取檔案
+                reader.onload = function (e) {
+                    var imageSrc = e.target.result; // 獲取圖片的URL
+                    // createCardWithImage(imageSrc);
+                    sendImageToHub(imageSrc); // 創建包含圖片的卡片並添加到消息列表中
+                };
+                reader.readAsDataURL(file); // 讀取檔案並轉換為URL
+            }
         });
-    </script> }    
+        //接收圖片
+        function createCardWithImageRec(data) {
+            var name = data.senderName;
+            var imageSrc = data.image;
+            // 取得現在的時間
+            var currentTime = new Date().toLocaleTimeString();
+            var listItem = $("<li></li>").addClass("d-flex justify-content-between mb-4");
+            var card = $("<div></div>").addClass("card");
+            var nameParagraph = $("<p></p>").addClass("fw-bold mb-0").attr("id", "name").text(name).css("margin-right", "20px");
+            // 時間（time）
+            var timeParagraph = $("<p></p>").addClass("text-muted small mb-0").attr("id", "time")
+                .html("<i class='far fa-clock'></i> " + currentTime);
+            var image = $("<img>").addClass("card-img-top").attr("src", imageSrc).attr("alt", "Selected Image").css({ "width": "200px" });
+            card.append($("<div></div>").addClass("card-header d-flex justify-content-end p-3")
+                .append(nameParagraph).append(timeParagraph));
+            card.append($("<div></div>").addClass("card-body").append(image));
+            listItem.append(card);
+            $("#messageList").append(listItem);
+            var messageList = document.getElementById("messageList");
+            messageList.scrollTop = messageList.scrollHeight;
+        }
+        //發送圖片
+        function createCardWithImageSen(data) {
+            var name = data.senderName;
+            var imageSrc = data.image;
+            // 取得現在的時間
+            var currentTime = new Date().toLocaleTimeString();
+            var listItem = $("<li></li>").addClass("d-flex justify-content-end mb-4");
+            var card = $("<div></div>").addClass("card");
+            var nameParagraph = $("<p></p>").addClass("fw-bold mb-0").attr("id", "name").text(name).css("margin-right", "20px");
+            // 時間（time）
+            var timeParagraph = $("<p></p>").addClass("text-muted small mb-0").attr("id", "time")
+                .html("<i class='far fa-clock'></i> " + currentTime);
+            var image = $("<img >").addClass("card-img-top").attr("src", imageSrc).attr("alt", "Selected Image").css({ "width": "200px" });
+            card.append($("<div></div>").addClass("card-header d-flex justify-content-end p-3")
+                .append(nameParagraph).append(timeParagraph));
+            card.append($("<div></div>").addClass("card-body text-end").append(image));
+            listItem.append(card);
+            $("#messageList").append(listItem);
+            var messageList = document.getElementById("messageList");
+            messageList.scrollTop = messageList.scrollHeight;
+        }
+        //圖片要求事件
+        function sendImageToHub(imageSrc) {
+            // console.log(imageSrc);
+            // Send the image data to the hub
+            let selfname = $('#SelfID').html();
+            let sendToID = $('#sendToID').val();
+            sendToID = list.find(user => user.Name === sendToID)?.connectionID;
+            connection.invoke("SendImage", selfname, imageSrc, sendToID).catch(function (err) {
+                // $('#fileInput').val('');
+                return console.error(err.toString());
+            });
+        }
+        //接收連線圖片
+        connection.on("ReceiveImage", function (data) {
+            createCardWithImageRec(data);
+        });
+        //發送連線圖片
+        connection.on("SendImage", function (data) {
+            createCardWithImageSen(data);
+        });
+
+
+        //電子簽章
+        
+        
+        
+        let buttonClicked = false;
+
+        document.getElementById("openModalBtn").addEventListener("click", function () {
+            if (!buttonClicked) {
+                connection.invoke("SendButtonClick").catch(function (err) {
+                    return console.error(err.toString());
+                });
+                buttonClicked = true; // 設置按鈕點擊標記為 true
+            }
+        });
+
+        connection.on("ButtonClickReceived", function () {
+            // 檢查按鈕點擊標記，避免重複觸發按鈕點擊事件
+            if (!buttonClicked) {
+                // 觸發按鈕點擊事件
+                document.getElementById("openModalBtn").click();
+                buttonClicked = true; // 設置按鈕點擊標記為 true
+            }
+        });
+
+        document.getElementById("close").addEventListener("click", function () {
+            if (buttonClicked) {
+                connection.invoke("CloseModal").catch(function (err) {
+                    return console.error(err.toString());
+                });
+                buttonClicked = false;
+            }
+        });
+
+        connection.on("ModalClosed", function () {
+            if (buttonClicked) {
+                document.getElementById("close").click();
+                buttonClicked = false;
+            }
+        });
+
+        // document.getElementById("savesign").addEventListener("click", function () {
+        //     var canvas = document.getElementById("modalCanvas");
+        //     var imgData = canvas.toDataURL("image/png");
+
+        //     // 發送 POST 請求到後端
+        //     fetch('/Home/SaveImage', {
+        //         method: 'POST',
+        //         body: JSON.stringify({ image: imgData }),
+        //         headers: {
+        //             'Content-Type': 'application/json'
+        //         }
+        //     })
+        //         .then(response => {
+        //             if (!response.ok) {
+        //                 throw new Error('Network response was not ok');
+        //             }
+        //             return response.blob();
+        //         })
+        //         .then(blob => {
+        //             // 顯示保存成功信息或者其他處理
+        //             console.log('Image saved successfully.');
+        //         })
+        //         .catch(error => {
+        //             console.error('There was a problem with the fetch operation:', error);
+        //         });
+        // });
+        //管理員按鈕
+        document.getElementById("openModalBtn").addEventListener("click", function () {
+            var userName = document.getElementById("SelfID").textContent.trim();
+            if (userName === "管理員") {
+                document.getElementById("savesign").style.display = "block";
+            }
+        });
+        //顯示懸浮視窗
+        document.getElementById('openModalBtn').addEventListener('click', function () {
+            document.getElementById('myModal').style.display = 'block'; // 顯示
+        });
+
+        document.getElementsByClassName('close')[0].addEventListener('click', function () {
+            document.getElementById('myModal').style.display = 'none'; // 隐藏
+        });
+        //畫圖功能
+        var canvas = document.getElementById("modalCanvas"); // 取得畫布元素
+        var ctx = canvas.getContext('2d'); // 使用2D繪圖
+        var draw = false; // 是否要繪圖
+        var tempPos = [0, 0]; // 繪圖起始位置
+        var color = document.getElementById('color');
+        var lineWidth = document.getElementById('lineWidth');
+        // 畫筆設定
+        ctx.strokeStyle = color.value;
+        ctx.lineWidth = lineWidth.value;
+        // 清除功能
+        clearBtn.addEventListener('click', function () {
+            console.log(canvas);
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // 清除整個畫布
+            connection.invoke("ClearCanvas").catch(function (err) {
+                return console.error(err.toString());
+            });
+        });
+        // 畫圖事件
+        canvas.addEventListener('mousedown', function (e) {
+            draw = true;
+            tempPos = [e.pageX - canvas.offsetLeft, e.pageY - canvas.offsetTop];
+        });
+
+        canvas.addEventListener('mousemove', function (e) {
+            // 偵測畫筆是否為畫圖狀態
+            if (draw) {
+                var newPos = [e.pageX - canvas.offsetLeft, e.pageY - canvas.offsetTop]; // 取得結束的位置
+                ctx.beginPath(); // 開始繪畫取得路徑
+                ctx.moveTo(tempPos[0], tempPos[1]); // 移動到起始位置
+                ctx.lineTo(newPos[0], newPos[1]); // 畫線到結束的位置
+                ctx.closePath(); // 關閉繪畫的路徑
+                ctx.stroke(); // 畫線
+                connection.invoke("SendDraw", {
+                    "startPos": tempPos,
+                    "endPos": newPos,
+                    "color": ctx.strokeStyle,
+                    "lineWidth": ctx.lineWidth
+                }).catch(function (err) {
+                    return console.error(err.toString());
+                });
+
+                tempPos = newPos; // 記錄下最後的位置為目前的位置
+            }
+        });
+
+        canvas.addEventListener('mouseup', function () {
+            draw = false;
+        });
+
+        // 畫筆設定事件
+        color.addEventListener('input', function () {
+            ctx.strokeStyle = color.value;
+        })
+
+        lineWidth.addEventListener('input', function () {
+            ctx.lineWidth = lineWidth.value;
+        })
+
+        // var connection = new signalR.HubConnectionBuilder().withUrl("/drawHub").build();
+        // // 連接事件
+        // connection.start().catch(function (err) {
+        //     return console.error(err.toString());
+        // });
+        connection.on("ClearCanvas", function () {
+            console.log(canvas);
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // 清除整個畫布
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // 清除整個畫布
+        });
+        connection.on("ReceiveDraw", function (json) {
+            ctx.strokeStyle = json.color;
+            ctx.lineWidth = json.lineWidth;
+            ctx.beginPath();
+            ctx.moveTo(json.startPos[0], json.startPos[1]);
+            ctx.lineTo(json.endPos[0], json.endPos[1])
+            ctx.closePath();
+            ctx.stroke();
+        });
+
+        //入檔按鈕
+        document.getElementById("savesign").addEventListener("click", function () {
+            var canvas = document.getElementById("modalCanvas");
+            var imgData = canvas.toDataURL("image/png");
+
+            // 發送 POST 請求到後端
+            fetch('/FChattingRoom/SaveCanvasImage', {
+                method: 'POST',
+                body: JSON.stringify({ image: imgData }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.text();
+                })
+                .then(message => {
+                    Swal.fire("入檔成功");
+                    var context = canvas.getContext('2d');
+                    context.clearRect(0, 0, canvas.width, canvas.height);
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                });
+        });
+
+
+
+
+
+
+        //Chatgpt  使用
+        //收訊息
+        function revMessageToList(name, msg) {
+            // 取得現在的時間
+            var currentTime = new Date().toLocaleTimeString();
+
+            // 生成新的列表項目
+            var listItem = $("<li></li>").addClass("d-flex justify-content-end mb-4");
+
+            // 生成卡片元素
+            var card = $("<div></div>").addClass("card");
+
+            // 卡片標題（name）
+            var nameParagraph = $("<p></p>").addClass("fw-bold mb-0").attr("id", "name").text(name).css("margin-right", "20px");
+
+            // 時間（time）
+            var timeParagraph = $("<p></p>").addClass("text-muted small mb-0").attr("id", "time")
+                .html("<i class='far fa-clock'></i> " + currentTime);
+
+            // 卡片主體內容（msgshow）
+            var msgParagraph = $("<p></p>").addClass("mb-0").attr("id", "msgshow").text(msg);
+
+            // 調整元素位置
+            card.append($("<div></div>").addClass("card-header d-flex justify-content-end p-3")
+                .append(nameParagraph).append(timeParagraph));
+            card.append($("<div></div>").addClass("card-body text-end").append(msgParagraph));
+            listItem.append(card);
+
+            // 將新的列表項目添加到 messageList 中
+            $("#messageList").append(listItem);
+
+            // 滾動到底部
+            var messageList = document.getElementById("messageList");
+            messageList.scrollTop = messageList.scrollHeight;
+        }
+        //發訊息
+        function senMessageToList(name, msg) {
+            // 取得現在的時間
+            var currentTime = new Date().toLocaleTimeString();
+
+            // 生成新的列表項目
+            var listItem = $("<li></li>").addClass("d-flex justify-content-between mb-4");
+
+            // 生成卡片元素
+            var card = $("<div></div>").addClass("card");
+
+            // 卡片標題（name）
+            var nameParagraph = $("<p></p>").addClass("fw-bold mb-0").attr("id", "name").text(name).css("margin-right", "20px");
+
+            // 時間（time）
+            var timeParagraph = $("<p></p>").addClass("text-muted small mb-0").attr("id", "time")
+                .html("<i class='far fa-clock'></i> " + currentTime);
+
+            // 卡片主體內容（msgshow）
+            var msgParagraph = $("<p></p>").addClass("mb-0").attr("id", "msgshow").text(msg);
+
+            // 將元素組裝起來
+            card.append($("<div></div>").addClass("card-header d-flex justify-content-between p-3")
+                .append(nameParagraph).append(timeParagraph));
+            card.append($("<div></div>").addClass("card-body").append(msgParagraph));
+            listItem.append(card);
+
+            // 將新的列表項目添加到 messageList 中
+            $("#messageList").append(listItem);
+
+            // 滾動到底部
+            var messageList = document.getElementById("messageList");
+            messageList.scrollTop = messageList.scrollHeight;
+        }
+        //訊息事件
+        $('#sendButton').on('click', async function () {
+            let name = $('#SelfID').html();
+            let msg = $('#message').val();
+
+            // 檢查訊息是否為空
+            if (msg.trim() !== '') {
+                console.log(adminin);
+                if (!adminin) {
+                    senMessageToList(name, msg);
+                    console.log(msg);
+                    const query = msg + "字數不要超過50字";
+                    const response = await fetch('/api/OpenAI/UseChatGPT?query=' + encodeURIComponent(query));
+                    if (response.ok) {
+                        var result = await response.text();
+                        revMessageToList("管理員", result);
+                        console.log("我有病");
+                    } else {
+                        revMessageToList("管理員", "忙線中請稍等");
+                    }
+                    
+                }
+            }
+        });
+        // async function LoadDetail() {
+        //     const a = document.querySelector("#Book").textContent;
+        //     console.log(a);
+        //     const query = `書名:《${a}》 作者:霍華．馬克斯 出版社:北京聯合出版公司 繁體中文簡介`;
+        //     const response = await fetch('/api/OpenAI/UseChatGPT?query=' + encodeURIComponent(query));
+        //     var result = await response.text();
+        //     result = `《${a}》` + result;
+        //     document.querySelector("#result").textContent = result;
+        // }
+        // LoadDetail();
+    </script>
+}    

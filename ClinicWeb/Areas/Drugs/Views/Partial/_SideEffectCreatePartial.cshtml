@@ -6,20 +6,29 @@
     </div>
     <div class="x_content">
         <br>
-        <form id="ClinicalUseForm" class="form-label-left input_mask">
+        <form id="SideEffectForm" class="form-label-left input_mask">
 
             <!--副作用編號-->
             <div class="form-group row">
                 <label class="col-form-label col-md-3 col-sm-3 ">副作用編號</label>
                 <div class="col-md-9 col-sm-9 ">
-                    <input type="text" class="form-control" placeholder="副作用編號" name="SideEffectCode">
+                    <input type="text" class="form-control" placeholder="副作用編號" name="fSideEffectCode">
                 </div>
             </div>
             <!--副作用名稱-->
             <div class="form-group row">
                 <label class="col-form-label col-md-3 col-sm-3 ">副作用名稱</label>
                 <div class="col-md-9 col-sm-9 ">
-                    <input type="text" class="form-control" placeholder="副作用名稱" name="SideEffectName">
+                    <input type="text" class="form-control" placeholder="副作用名稱" name="fSideEffect">
+                </div>
+            </div>
+            <!--按鈕-->
+            <div class="form-group row" style="margin:30px">
+                <div class="col-md-9 col-sm-9  offset-md-8">
+
+                    <button id="closeButton" type="button" class="btn btn-secondary" data-dismiss="modal"> 關閉 </button>
+                    <button class="btn btn-primary" type="reset"> 清除 </button>
+                    <button id="saveButton" type="submit" class="btn btn-primary"> 新增 </button>
                 </div>
             </div>
         </form>
