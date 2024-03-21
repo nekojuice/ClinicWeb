@@ -1,5 +1,5 @@
 ﻿@{
-	ViewData["Title"] = "藥師管理系統";
+    ViewData["Title"] = "藥師管理系統";
 }
 
 @section ModulesStyles
@@ -18,11 +18,11 @@
 
 
 
-@section Styles {
+@section Styles {  
 
 }
 @* 要改div大小 col-md-9 6改9 *@
-<div class="col-md-9 col-sm-9 ">
+<div class="col-md-12 col-sm-12 ">
     <div class="x_panel">
         <div class="x_title">
             <h2>藥品資訊</h2>
@@ -30,24 +30,42 @@
                 <li>
                     <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                 </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">Settings 1</a>
-                        <a class="dropdown-item" href="#">Settings 2</a>
-                    </div>
-                </li>
                 <li>
                     <a class="close-link"><i class="fa fa-close"></i></a>
                 </li>
             </ul>
             <div class="clearfix"></div>
         </div>
+        <!--新增按鈕的排版-->
+        <div class="mb-8" style="overflow: auto">
+            <div class="col-md-8">
+                <label class="form-label"> </label>
+                <button id="newDrugbtn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#DrugCreate">新增藥品</button>
+            </div>
+        </div>
+        <!--新增畫面的內容-->
+        <div class="modal fade" id="DrugCreate" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <partial name="~/Areas/Drugs/Views/Partial/_DrugCreatePartial.cshtml" />
+                </div>
+            </div>
+        </div>
         @* 如果要加搜尋選項放這裡 *@
         <div class="x_content">
             <div class="row">
                 <div class="col-sm-12">
                     <div class="card-box table-responsive">
+
+                        <!--編輯畫面的內容-->
+                        <div class="modal fade" id="DrugEdit" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content" id="divEditInfo">
+                                    <partial name="~/Areas/Drugs/Views/Partial/_DrugEditPartial.cshtml" />
+                                </div>
+                            </div>
+                        </div>
+
                         <table id="dtDrugs" class="table table-striped table-bordered" style="width:100%">
                             <thead>
                                 <tr>
@@ -56,8 +74,19 @@
                                     <th>學名</th>
                                     <th>商品名</th>
                                     <th>中文名</th>
+                                    <th>適應症</th>
+                                    <th>副作用</th>
+                                    <th>劑型</th>
                                     <th>懷孕藥品分級</th>
+                                    <th>常用劑量</th>
+                                    <th>最大劑量</th>
+                                    <th>用法</th>
+                                    <th>禁忌</th>
+                                    <th>注意事項</th>
                                     <th>儲存方法</th>
+                                    <th>藥商</th>
+                                    <th>廠牌</th>
+                                    <th>操作功能</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -69,16 +98,6 @@
         </div>
     </div>
 </div>
-<div class="card" style="width: 18rem;">
-    <img src="~/images/anp4lg11-b.jpg" class="card-img-top" alt="...">
-    <div class="card-body">
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    </div>
-</div>
-<div id="test">
-    
-</div>
-
 
 @section Modules
 {
@@ -100,40 +119,282 @@
     <script src="~/vendors/jszip/dist/jszip.min.js"></script>
     <script src="~/vendors/pdfmake/build/pdfmake.min.js"></script>
     <script src="~/vendors/pdfmake/build/vfs_fonts.js"></script>
+    <!-- Collapse折疊 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
 }
 
-@section Scripts{
-	<script>
-        $(document).ready(function () {
+@section Scripts {
+    
+
+    <script>
+        function QueryDrugDatas() {
             $('#dtDrugs').dataTable({
                 ajax: {
                     type: 'GET',
-                    url: "Drugs/DrugsApi/DrugsInfo",
+                    url: "Drugs/DrugsApi/DrugDatas",
                     dataSrc: function (json) { return json; }
                 },
                 destroy: true,
                 columns: [
-                    { "data": "id", "visible": false},
-                    { "data": "藥品代碼", "width": "13%" },
-                    { "data": "學名", "width": "18%" },
-                    { "data": "商品名", "width": "18%" },
-                    { "data": "中文名", "width": "15%" },
-                    { "data": "懷孕藥品分級", "width": "12%" }, //12%剛好欄位名稱不會換行
-                    { "data": "儲存方法", "width": "24%" },
+                    { "data": "id", "visible": false },
+                    { "data": "藥品代碼", "width": "5%" },
+                    { "data": "學名", "width": "6%" },
+                    { "data": "商品名", "width": "6%" },
+                    { "data": "中文名", "width": "6%" },
+                    { "data": "適應症", "width": "6%" },
+                    { "data": "副作用", "width": "6%" },
+                    { "data": "劑型", "width": "6%" },
+                    { "data": "懷孕藥品分級", "width": "6%" }, 
+                    { "data": "常用劑量", "width": "8%" },
+                    { "data": "最大劑量", "width": "8%" },
+                    { "data": "用法", "width": "2%" },
+                    { "data": "禁忌", "width": "8%" },
+                    { "data": "注意事項", "width": "8%" },
+                    { "data": "儲存方法", "width": "8%" },
+                    { "data": "藥商", "width": "6%" },
+                    { "data": "廠牌", "width": "6%" },
+                    {
+                        "data": null, title: "操作功能", "width": "20%",
+                        render: function (data, type, row) {
+                            return '<button type="button" name="Editor" data-id="' + row.id + '" class="btn btn-warning btn-sm"> 編輯 </button>' +
+                                '<button type="button"  name="Delete" class="btn btn-danger btn-sm"> 刪除 </button>'
+                        }
+                    }
                 ],
                 fixedHeader: {
                     header: true
                 },
-                language: { 
-                    url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/zh-HANT.json' 
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/zh-HANT.json'
                 }
             });
+
+            // $(document).on('keydown', function (event) {
+            //     // 获取当前可见的模态框
+            //     console.log
+            //     var visibleModal = $('.modal:visible').last();
+            //     // 如果按下的是 Esc 键并且有可见的模态框
+            //     if (event.key === 'Escape' && visibleModal.length > 0) {
+            //         // 关闭最顶层的模态框
+            //         visibleModal.modal('hide');
+            //     }
+            // });
+        }
+        QueryDrugDatas();
+
+        // $("#dtDrugs tbody").on('mousedown', 'tr', function () {
+        //     console.log('catch');
+        // })
+
+        //綁定
+        // 将选中的下拉选项值赋给输入框
+        const bindSelectToInput = () => {
+            const selTypes_Edit = document.getElementById('selTypes1');
+            const inputFType = document.getElementById('test'); // 输入框元素
+
+            // 监听下拉选项的 change 事件
+            selTypes_Edit.addEventListener('change', function () {
+                // 将选中的值赋给输入框
+
+                const selectedOption = this.options[this.selectedIndex];
+                const selectedOptionText = selectedOption.textContent;
+
+                inputFType.value = selectedOptionText;
+            });
+        }
+
+
+
+        //修改藥品按鈕-->彈出 modal
+        $(document).on('click', 'button[name=Editor]', function () {
+            var id = $(this).data('id');
+            console.log(id);
+            //AJAX讀選取到的DB
+            $.ajax({
+                type: 'GET',
+                url: '/Drugs/DrugsApi/EditDrug/' + id,
+                success: function (data) {
+                    //成功拿到的話將資料代入modal中
+                    $('#DrugEdit .modal-content').html(data);
+                    //帶入可以選擇的劑型種類
+                    loadTypeList();
+                    bindSelectToInput();
+                    //顯示modal視窗
+                    $('#DrugEdit').modal('show');
+                },
+                error: function (error) {
+                    console.log('Error fetching data:', error)
+                }
+            });
+        });     
+
+        //保存按鈕
+        const btnEdit = document.querySelector('#editSaveButton');
+        $(document).on('click', '#editSaveButton', async (event) => {
+            event.preventDefault();
+            const id = $('#PharmacyTMedicinesList_FIdDrug').val();
+            console.log(id);
+            const formData = new FormData($('#form_DrugEdit')[0]);
+           // const jsonData = JSON.stringify(Object.fromEntries(formData));
+           // const fDrugCode = $('#PharmacyTMedicinesList_FDrugCode').val();
+
+          //  formData.append('PharmacyTMedicinesList.FDrugCode', fDrugCode);
+            for (const pair of formData.entries()) {
+                console.log(pair[0]);
+                console.log(pair[1]);
+            }
+            const url = `@Url.Content("~/Drugs/DrugsApi/EditDrug/${id}")`;
+            try {
+                const response = await fetch(url, {
+                    method: "POST",
+                    body: formData,
+                   
+                });
+                if (response.ok) {
+                    alert('修改成功');
+                    QueryDrugDatas();
+                    $('#form_DrugEdit').modal('hide');
+                } else {
+                    console.error('Update failed, status code:', response.status);
+                    const errorData = await response.json();
+                    console.error('修改失敗，狀態碼：', response.status);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+
+
         })
-        $("#dtDrugs tbody").on('mousedown', 'tr', function () {
-            console.log('catch');
+
+        //新增藥品
+        const newDrugbtn = document.getElementById('newDrugbtn');
+        newDrugbtn.addEventListener('click', function () {
+            loadTypeList();
+            loadList();
         })
 
         
-	</script>
+       
+        const loadTypeList = async () => {
+            //新增的下拉選單
+            const selTypes_Create = document.getElementById('selTypes');
+            //編輯的下拉選單
+            const selTypes_Edit = document.getElementById('selTypes1');
+            //const typeList = document.getElementById('typeList');
+            const url = `@Url.Content("~/Drugs/DrugsApi/TypeInfo")`
+            const response = await fetch(url);
+            const datas = await response.json();
+
+            const optType = datas.map(list => `<option value="${list.id}">${list.劑型代碼}  - ${list.劑型名稱}</option>`).join('');
+            selTypes_Create.innerHTML += optType;
+            selTypes_Edit.innerHTML += optType;
+            //typeList.innerHTML = optType;
+
+            // $('#detailsModal').on('shown.bs.modal', function () {
+            //     console.log('click');
+            //     $(document).on('keydown', function (event) {
+            //         if (event.key === 'Escape') {
+            //             document.getElementById('detailsModal').style.display = 'none';
+            //             $('#detailsModal').modal('hide');
+            //         }
+            //     });
+            // })
+          
+        }
+        const loadList = async () => {
+            const CUList = document.getElementById('checkbox_CU');
+            const url_CU = `@Url.Content("~/Drugs/DrugsApi/ClinicalUseInfo")`
+            const response = await fetch(url_CU);
+            const datas = await response.json();
+            console.log(datas);
+
+            const display = datas.map(list => `
+                <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="FIdClicicalUse" value="${list.id}" id="flexCheck${list.id}"/>
+                <label class="form-check-label" for="flexCheck${list.id}">
+                ${list.適應症代碼} - ${list.適應症名稱}
+                </label>
+                </div>`).join('');
+            CUList.innerHTML =display;
+            
+            const SEList=document.getElementById('checkbox_SE')
+            const url_SE = `@Url.Content("~/Drugs/DrugsApi/SideEffectInfo")`
+            const response1 = await fetch(url_SE);
+            const datas1 = await response1.json();
+            console.log(datas1);
+            const dispaly1 = datas1.map(list => `
+                     <div class="form-check">
+                       <input class="form-check-input" type="checkbox" name="FIdSideEffect" value="${list.id}" id="flexCheck1${list.id}"/>
+                        <label class="form-check-label" for="flexCheck1${list.id}">
+                        ${list.副作用代碼} - ${list.副作用名稱}
+                        </label>
+                        </div>`).join('');
+            SEList.innerHTML = dispaly1;
+        }
+
+        // $('#detailsModal').on('shown.bs.modal', function () {
+        //     console.log('click');
+        //     $(this).on('keydown', function (event) {
+        //         if (event.key === 'Escape') {
+        //             $('#detailsModal').modal('hide');
+        //         }
+        //     });
+        // })
+        // $(document).on('keydown', function (event) {
+        //     // 获取当前可见的模态框
+        //     console.log
+        //     var visibleModal = $('.modal:visible').last();
+        //     // 如果按下的是 Esc 键并且有可见的模态框
+        //     if (event.key === 'Escape' && visibleModal.length > 0) {
+        //         // 关闭最顶层的模态框
+        //         visibleModal.modal('hide');
+        //     }
+        // });
+
+        const btnSubmit = document.querySelector('#saveMedicineButton');
+        btnSubmit.addEventListener('click', async (event) => {
+            // alert('儲存');
+            event.preventDefault(); //停止預設行為
+
+            //FormData
+            const formData = new FormData(document.querySelector('#DrugForm'));
+            
+            //檢查FormData中的值
+            for (const pair of formData.entries()) {
+                console.log(pair[0]+':'+pair[1]);                
+            }
+            const url = `@Url.Content("~/Drugs/DrugsApi/MedicineCreate")`;
+            const response = await fetch(url, {
+                "method": "POST",
+                "body": formData
+            });
+            const data = await response.text();
+            //console.log(data);
+            clearForm();
+            // $(document).getElementById('closeButton').on('click');
+            addModalClose();
+            alert('新增成功');
+            QueryDrugDatas();
+        })
+
+        //新增按鈕按下後會清空modal內容
+        function clearForm() {
+            document.getElementById('DrugForm').reset();
+        }
+
+        //新增按鈕按下後關閉modal視窗 -->不知道為什麼沒有效果
+        function addModalClose() {
+            console.log('close');
+            $('#DrugCreate').modal('hide');
+            //document.getElementById('DrugForm').close();
+            
+            // $('#DrugCreate').modal('hide').on('hidden.bs.modal', function () {
+            //     alert('新增成功');
+            // });
+        }
+        
+        
+
+    </script>
 }

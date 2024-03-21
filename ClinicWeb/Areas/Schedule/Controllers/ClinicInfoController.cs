@@ -22,6 +22,7 @@ namespace ClinicWeb.Areas.Schedule.Controllers
                 {
                     id = x.ScheduleId,
                     Week = x.Week,
+                    timeid = x.TimeId,
                     醫師 = x.Doctor.Name,
                     星期 = GetDayOfWeek(x.Week),
                     時段 = x.Time.ClinicShifts,

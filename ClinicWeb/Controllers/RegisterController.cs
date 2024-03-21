@@ -26,8 +26,9 @@ namespace ClinicWeb.Controllers
                 return Json(new { success = true, message = "註冊成功!" });
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
+                Response.StatusCode = 500;
                 return Json(new { Error = false, message = "註冊時發生錯誤，請聯繫服務人員。" });
             }
         }
@@ -84,6 +85,13 @@ namespace ClinicWeb.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    // 檢查電子郵件是否已被使用
+                    bool emailExists = _context.MemberMemberList.Any(m => m.MemEmail == member.MemEmail);
+                    if (emailExists)
+                    {
+                        // 如果電子郵件已存在，返回錯誤訊息
+                        return Json(new { success = false, message = "註冊失敗，該電子郵件已被使用。" });
+                    }
                     // 會員編號
                     var maxMemNumber = _context.MemberMemberList.Any() ? _context.MemberMemberList.Max(m => m.MemberNumber) : 0;
                     var nextMemNumber = maxMemNumber + 1;
@@ -121,7 +129,7 @@ namespace ClinicWeb.Controllers
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception )
             {
              // 其他未知異常
                     return Json(new { success = false, message = "註冊失敗，未知錯誤，請聯繫系統管理員 。" });

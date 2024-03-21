@@ -118,29 +118,29 @@ namespace ClinicWeb.Areas.Member.Controllers
             else
             {
 
-                //處理圖片
-                //if (imageUpload != null && imageUpload.Length > 0)
-                //{
-                //    using (var memoryStream = new MemoryStream())
-                //    {
-                //        await imageUpload.CopyToAsync(memoryStream);
-                //        emp.EmpPhoto = memoryStream.ToArray();
-                //    }
-                //}
+                try
+                {
+                    //處理員工編號的部分
+                    var maxEmpNumber = _context.MemberEmployeeList.Max(m => m.StaffNumber);
+                    var nextEmpNumber = maxEmpNumber + 1;
+                    emp.StaffNumber = nextEmpNumber;
 
-                //處理員工編號的部分
-                var maxEmpNumber = _context.MemberEmployeeList.Max(m => m.StaffNumber);
-                var nextEmpNumber = maxEmpNumber + 1;
-                emp.StaffNumber = nextEmpNumber;
+                    //處理密碼加鹽
+                    emp.EmpPassword = PasswordHasher.HashPassword(emp.EmpPassword);
 
-                //處理密碼加鹽
-                emp.EmpPassword = PasswordHasher.HashPassword(emp.EmpPassword);
-               
 
-                //加入資料庫
-                _context.MemberEmployeeList.Add(emp);
-                _context.SaveChanges();
-                return Content("success");
+                    //加入資料庫
+                    await _context.MemberEmployeeList.AddAsync(emp);
+                    await _context.SaveChangesAsync();
+                    return Content("success");
+                }
+                catch (Exception ex)
+                {
+
+                    return StatusCode(500, $"Internal server error: {ex.Message}");
+                }
+
+
             }
 
         }
@@ -159,7 +159,7 @@ namespace ClinicWeb.Areas.Member.Controllers
             }
 
             var empList = await _context.MemberEmployeeList.FindAsync(empId);
-           
+
             if (empList == null)
             {
                 return NotFound();
@@ -192,7 +192,7 @@ namespace ClinicWeb.Areas.Member.Controllers
             {
                 try
                 {
-                 
+
                     // 直接將圖片轉成二進位
                     byte[]? imgByte = null;
                     if (EmpPhotoEdit != null)

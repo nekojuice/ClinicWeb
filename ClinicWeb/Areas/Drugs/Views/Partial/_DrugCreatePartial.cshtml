@@ -1,0 +1,180 @@
+﻿
+<div class="x_panel">
+    <div class="x_title">
+        <h2>新增藥品</h2>
+
+        <div class="clearfix"></div>
+    </div>
+    <div class="x_content">
+        <br>
+        <form  id="DrugForm" class="form-label-left input_mask" enctype="multipart/form-data">
+
+            <!--藥品代碼-->
+            <div class="form-group row">
+                <label class="col-form-label col-md-3 col-sm-3 ">藥品代碼</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <input type="text" class="form-control" placeholder="藥品代碼" name="fDrugCode">
+                </div>
+            </div>
+            <!--學名-->
+            <div class="form-group row">
+                <label class="col-form-label col-md-3 col-sm-3 ">學名</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <input type="text" class="form-control" placeholder="學名" name="fGenericName">
+                </div>
+            </div>
+            <!--商品名-->
+            <div class="form-group row">
+                <label class="col-form-label col-md-3 col-sm-3 ">商品名</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <input type="text" class="form-control" placeholder="商品名" name="fTradeName">
+                </div>
+            </div>
+            <!--中文名-->
+            <div class="form-group row">
+                <label class="col-form-label col-md-3 col-sm-3 ">中文名</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <input type="text" class="form-control" placeholder="中文名" name="fDrugName">
+                </div>
+            </div>
+            <!--藥品圖片-->
+            <div class="form-group row mb-3">
+                <label class="col-form-label col-md-3 col-sm-3 " for="inputGroupFile01">藥品圖片</label>
+                <div class="col-md-9 col-sm-9 ">
+                <input type="file" class="form-control" id="inputGroupFile01" name="Avatar">
+                </div>
+            </div>
+            @*
+            <div class="form-group row">
+            <label class="col-form-label col-md-3 col-sm-3 ">適應症</label>
+            <div class="col-md-9 col-sm-9 ">
+            </div>
+            </div>
+
+            <button id="btnDetailsOpen" type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#detailsModal">選取適應症</button>
+            <div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="detaulsModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+            <partial name="~/Areas/Drugs/Views/Partial/_DrugDetailsPartial.cshtml" />
+            </div>
+            </div>
+            </div>
+            *@
+
+            <!--劑型-->
+            <div class="form-group row">
+                <label class="col-form-label col-md-3 col-sm-3 ">劑型</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <select id="selTypes" name="FIdTpye" class=" form-control">
+                        <option value="-1">請選擇劑型</option>
+                    </select>
+                </div>
+            </div>
+            <!--劑型，版型會跑掉-->
+            @*  <div class="form-group row">
+            <label class="col-form-label col-md-3 col-sm-3 ">選擇劑型</label>
+            <div class="col-md-9 col-sm-9 ">
+            <input  type="text" id="typeInput" list="typeList" placeholder="請輸入劑型" />
+            <datalist id="typeList" >
+            </datalist>
+            </div>
+            </div> *@
+
+            <!--懷孕藥品分級-->
+            <div class="form-group row">
+                <label class="col-form-label col-md-3 col-sm-3 ">懷孕藥品分級</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <input type="text" class="form-control" placeholder="懷孕藥品分級" name="fPregnancyCategory">
+                </div>
+            </div>
+            <!--常用劑量-->
+            <div class="form-group row">
+                <label class="col-form-label col-md-3 col-sm-3 ">常用劑量</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <input type="text" class="form-control" placeholder="常用劑量" name="fDrugDose">
+                </div>
+            </div>
+            <!--最大劑量-->
+            <div class="form-group row">
+                <label class="col-form-label col-md-3 col-sm-3 ">最大劑量</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <input type="text" class="form-control" placeholder="最大劑量" name="fMaxDose">
+                </div>
+            </div>
+            <!--用法-->
+            <div class="form-group row">
+                <label class="col-form-label col-md-3 col-sm-3 ">用法</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <input type="text" class="form-control" placeholder="用法" name="fDosage">
+                </div>
+            </div>
+            <!--禁忌-->
+            <div class="form-group row">
+                <label class="col-form-label col-md-3 col-sm-3 ">禁忌</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <input type="text" class="form-control" placeholder="禁忌" name="fPrecautions">
+                </div>
+            </div>
+            <!--注意事項-->
+            <div class="form-group row">
+                <label class="col-form-label col-md-3 col-sm-3 ">注意事項</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <input type="text" class="form-control" placeholder="注意事項" name="fWarnings">
+                </div>
+            </div>
+            <!--儲存方法-->
+            <div class="form-group row">
+                <label class="col-form-label col-md-3 col-sm-3 ">儲存方法</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <input type="text" class="form-control" placeholder="儲存方法" name="fStorage">
+                </div>
+            </div>
+            <!--藥商-->
+            <div class="form-group row">
+                <label class="col-form-label col-md-3 col-sm-3 ">藥商</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <input type="text" class="form-control" placeholder="藥商" name="fSupplier">
+                </div>
+            </div>
+            <!--廠牌-->
+            <div class="form-group row">
+                <label class="col-form-label col-md-3 col-sm-3 ">廠牌</label>
+                <div class="col-md-9 col-sm-9 ">
+                    <input type="text" class="form-control" placeholder="廠牌" name="fBrand">
+                </div>
+            </div>
+            <!--適應症-->
+            <div class="form-group row">
+                <p>
+                    <button class="btn btn-outline-success" type="button" data-bs-toggle="collapse" data-bs-target="#clinicalUseList" aria-expanded="false" aria-controls="clinicalUseList">選取適應症</button>
+                    <button class="btn btn-outline-success" type="button" data-bs-toggle="collapse" data-bs-target="#sideEffectList" aria-expanded="false" aria-controls="sideEffectList">切換</button>
+                </p>
+            </div>
+            <div class="col">
+                <div class="collapse multi-collapse" id="clinicalUseList">
+                    <h4>適應症清單</h4>
+                    <div class="card card-body" id="checkbox_CU">
+                        適應症清單載入失敗，請聯絡系統維護員。
+                    </div>
+                </div>
+                <div class="collapse multi-collapse" id="sideEffectList">
+                    <h4>副作用清單</h4>
+                    <div class="card card-body" id="checkbox_SE">
+                        副作用清單載入失敗，請聯絡系統維護員。
+                    </div>
+                </div>
+            </div>
+
+            <!--按鈕-->
+            <div class="form-group row" style="margin:30px">
+                <div class="col-md-9 col-sm-9  offset-md-8">
+
+                    <button id="closeButton" type="button" class="btn btn-secondary" data-dismiss="modal"> 關閉 </button>
+                    <button class="btn btn-primary" type="reset"> 清除 </button>
+                    <button id="saveMedicineButton" type="submit" class="btn btn-primary"> 新增 </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+

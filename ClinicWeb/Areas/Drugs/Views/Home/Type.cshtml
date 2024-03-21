@@ -31,21 +31,14 @@
             <ul class="nav navbar-right panel_toolbox">
                 <li>
                     <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">Settings 1</a>
-                        <a class="dropdown-item" href="#">Settings 2</a>
-                    </div>
-                </li>
+                </li>               
                 <li>
                     <a class="close-link"><i class="fa fa-close"></i></a>
                 </li>
             </ul>
             <div class="clearfix"></div>
         </div>
-        @* 新增按鈕的排版 *@
+        <!--新增按鈕的排版-->
         <div class="mb-6" style="overflow: auto">
             <div class="col-md-2">
                 <label class="form-label"> </label>
@@ -84,35 +77,13 @@
         </div>
     </div>
 </div> 
-@* 沒有用到model暫時保留 *@
-<div class="row">
-    @*  <dl class="row"> *@
-    <div class="col-md-10">
-        <form>
-            <div class="form-group">
-                <label class="control-label"> 劑型代碼 </label>
-                <input class="form-control" id="fTypeCode" />
-                <label class="control-label"> 劑型名稱 </label>
-                <input class="form-control" id="fType" />                
-            </div>
-            <div class="form-group">
-                <button type="button" id="btnEdit">修改</button>
-            </div>
-        </form>
-    </div>
-    @*  <dt class="col-sm-2">
-    @Html.DisplayNameFor(model=>model.FTypeCode)123
-    </dt>
-    <dd class="col-sm-8" style="background-color:antiquewhite">
-    @Html.DisplayFor(model=>model.FTypeCode)
-    </dd>
-    </dl> *@
-</div>
+
 
 @section Scripts {
     <script>
-        //dataTable 讀取資料，要加try catch防止讀不到資料 
-        $(document).ready(function () {
+        //dataTable 讀取資料，要加try catch防止讀不到資料
+        //進入畫面時或新增刪除修改完畢後，載入DB副作用的資料
+        function QueryTypeInfo() {
             //alert("ready");
             $('#dtType').dataTable({
 
@@ -129,7 +100,8 @@
                     {
                         "data": null, title: "操作功能", "width": "20%",
                         render: function (data, type, row) {
-                            return '<button type="button" name="Editor" class="btn btn-warning btn-sm"> 編輯 </button>'
+                            return '<button type="button" name="Editor" class="btn btn-warning btn-sm"> 編輯 </button>' + 
+                                   '<button type="button" name="Delete" data-id="'+row.id+'" class="btn btn-danger btn-sm"> 刪除 </button>'
                         },
                     }
                 ],
@@ -140,26 +112,8 @@
                     url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/zh-HANT.json'
                 }
             });
-        })
-        const TypeCode = document.getElementById('fTypeCode');
-        const Type = document.getElementById('fType');
-        //TypeCode.innerText = "123";
-        $(document).on('click', 'button[name=Editor]', function () {
-            var table = $('#dtType').DataTable();
-            var tr = $(this).closest('tr');
-            var data = table.row(tr).data();
-            console.log(data);
-            console.log(data.劑型代碼);
-            console.log(data.劑型名稱);
-            console.log(typeof (data));
-            console.log(JSON.stringify(data.劑型代碼));
-            TypeCode.value = data.劑型代碼;
-            Type.value = data.劑型名稱;
-            //TypeCode.innerHTML = data.劑型代碼;
-            // (JSON.stringify(data.劑型代碼)) = TypeCode.textContent;
-            //TypeCode.textContent = JSON.stringify(data.劑型代碼)
-            
-        })
+        }
+        QueryTypeInfo();
         
     </script>
 }

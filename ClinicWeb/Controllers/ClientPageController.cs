@@ -145,53 +145,99 @@ namespace ClinicWeb.Controllers
         //    //登入後進入網頁主畫面 之後會想直接顯示前台會員中心
         //    return RedirectToAction("Index");
         //}
+        //[AllowAnonymous]
+        //[HttpPost]
+        //public IActionResult LoginForClient(MemberMemberList m)
+        //{
+        //    var user = (from a in _context.MemberMemberList
+        //                where a.MemEmail == m.MemEmail
+        //                && a.MemPassword == m.MemPassword
+        //                select a).SingleOrDefault();
+
+        //    if (user == null)
+        //    {
+        //        ViewData["ErrorMessage"] = "帳號密碼輸入有誤";
+        //        return View("~/Views/ClientPage/Login/ClientLogin.cshtml");
+        //    }
+
+        //    else
+        //    {
+        //        if ((bool)!user.Verification)
+        //        {
+        //            // 帳號啟用
+        //            TempData["Error"] = "您的帳號尚未啟用，請至信箱點選啟用連結。";
+        //            return View("~/Views/ClientPage/Login/ClientLogin.cshtml");
+        //            //return RedirectToAction("Login", "ClientPage");
+        //        }
+        //        //這邊等等寫驗證加角色
+        //        var claims = new List<Claim>
+        // {
+        //     new Claim(ClaimTypes.Email, user.MemEmail.ToString()),
+        //     new Claim(ClaimTypes.Name, user.Name),
+        //     new Claim("MemberNumber", user.MemberNumber.ToString()),
+        //     new Claim("MemberName", user.Name),
+        //     new Claim("MemberID", user.MemberId.ToString()),
+        // };
+        //        var claimsIdentity = new ClaimsIdentity(claims, "frontendForCustomer");   //注意!!!
+        //        HttpContext.SignInAsync("frontend", new ClaimsPrincipal(claimsIdentity));    //注意!!!
+
+        //        //JWT擴充區塊 20240305-1532
+        //        //SymmetricSecurityKey securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
+        //    }
+
+        //    //return Content("你是會員 登入成功了 喔喔");
+        //    //登入後進入網頁主畫面 之後會想直接顯示前台會員中心
+        //    return RedirectToAction("Index");
+        //}
+
         [AllowAnonymous]
         [HttpPost]
         public IActionResult LoginForClient(MemberMemberList m)
         {
-            var user = (from a in _context.MemberMemberList
-                        where a.MemEmail == m.MemEmail
-                        && a.MemPassword == m.MemPassword
-                        select a).SingleOrDefault();
-            //var MemberMemberList? dbmember = _context.MemberMemberList
-            //    .Where(MemberMemberList member => member.MemEmail == m.MemEmail)
-            //    .SingleOrDefault();
+            // Step 1: 檢查是否存在用戶
+            var user = _context.MemberMemberList
+                       .FirstOrDefault(a => a.MemEmail == m.MemEmail);
 
             if (user == null)
             {
-                ViewData["ErrorMessage"] = "帳號密碼輸入有誤";
+                ViewData["ErrorMessage"] = "找不到會員";
+                TempData["Error"] = "找不到會員，請先點選下方連結註冊";
                 return View("~/Views/ClientPage/Login/ClientLogin.cshtml");
             }
 
-            else
+            // Step 2: 檢查密碼是否正確
+            if (user.MemPassword != m.MemPassword)
             {
-                if ((bool)!user.Verification)
-                {
-                    // 帳號啟用
-                    TempData["Error"] = "您的帳號尚未啟用，請至信箱點選啟用連結。";
-                    return View("~/Views/ClientPage/Login/ClientLogin.cshtml");
-                    //return RedirectToAction("Login", "ClientPage");
-                }
-                //這邊等等寫驗證加角色
-                var claims = new List<Claim>
-         {
-             new Claim(ClaimTypes.Email, user.MemEmail.ToString()),
-             new Claim(ClaimTypes.Name, user.Name),
-             new Claim("MemberNumber", user.MemberNumber.ToString()),
-             new Claim("MemberName", user.Name),
-             new Claim("MemberID", user.MemberId.ToString()),
-         };
-                var claimsIdentity = new ClaimsIdentity(claims, "frontendForCustomer");   //注意!!!
-                HttpContext.SignInAsync("frontend", new ClaimsPrincipal(claimsIdentity));    //注意!!!
-
-                //JWT擴充區塊 20240305-1532
-                //SymmetricSecurityKey securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
+                ViewData["ErrorMessage"] = "密碼輸入有誤";
+                return View("~/Views/ClientPage/Login/ClientLogin.cshtml");
             }
 
-            //return Content("你是會員 登入成功了 喔喔");
-            //登入後進入網頁主畫面 之後會想直接顯示前台會員中心
+            // Step 3: 檢查是否已啟用
+            if (!(bool)user.Verification)
+            {
+                TempData["Error"] = "您的帳號尚未啟用，請至信箱點選啟用連結。";
+                return View("~/Views/ClientPage/Login/ClientLogin.cshtml");
+            }
+
+    
+
+            // 創建claims並進行用戶登錄
+            var claims = new List<Claim>
+    {
+        new Claim(ClaimTypes.Email, user.MemEmail),
+        new Claim(ClaimTypes.Name, user.Name),
+        new Claim("MemberNumber", user.MemberNumber.ToString()),
+        new Claim("MemberName", user.Name),
+        new Claim("MemberID", user.MemberId.ToString()),
+    };
+
+            var claimsIdentity = new ClaimsIdentity(claims, "frontendForCustomer");
+            HttpContext.SignInAsync("frontend", new ClaimsPrincipal(claimsIdentity));
+
+            // 登入成功，重定向到首頁
             return RedirectToAction("Index");
         }
+
 
 
 
