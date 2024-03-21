@@ -29,21 +29,14 @@
             <ul class="nav navbar-right panel_toolbox">
                 <li>
                     <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">Settings 1</a>
-                        <a class="dropdown-item" href="#">Settings 2</a>
-                    </div>
-                </li>
+                </li>               
                 <li>
                     <a class="close-link"><i class="fa fa-close"></i></a>
                 </li>
             </ul>
             <div class="clearfix"></div>
         </div>
-        @* 新增按鈕的排版 *@
+        <!--新增按鈕的排版-->
         <div class="mb-6" style="overflow: auto">
             <div class="col-md-2">
                 <label class="form-label"> </label>
@@ -81,40 +74,17 @@
         </div>
     </div>
 </div>
-@* 沒有用到model暫時保留 *@
-<div class="row">
 
-    <div class="col-md-10">
-        <form asp-area="Drugs" asp-controller="DrugsApi" asp-action="Details">
-            @* <div class="form-group">
-            <label asp-for="FTypeCode" class="control-label"> 劑型代碼 </label>
-            <input asp-for="FTypeCode" class="form-control" id="fTypeCode" />
-            <label asp-for="FType" class="control-label"> 劑型名稱 </label>
-            <input asp-for="FType" class="form-control" id="fType" />
-            </div> *@
-            <div class="form-group">
-                <label class="control-label"> 副作用代碼 </label>
-                <input class="form-control" id="fSideEffectCode" />
-                <label class="control-label"> 副作用名稱 </label>
-                <input class="form-control" id="fSideEffect" />
-            </div>
-            <div class="form-group">
-                <button  id="btnEdit">修改</button>
-            </div>
-        </form>
-    </div>
-
-</div>
 
 
 @section Scripts {
 
 
     <script>
-        $(document).ready(function () {
+        //進入畫面時或新增刪除修改完畢後，載入DB副作用的資料
+        function QuerySideEffectInfo() {
             //alert("SEList");
             $('#dtSE').dataTable({
-
                 ajax: {
                     type: 'GET',
                     url: (`/Drugs/DrugsApi/SideEffectInfo`),
@@ -128,7 +98,8 @@
                     {
                         "data": null, title: "操作功能", "width": "20%",
                         render: function (data, type, row) {
-                            return '<button type="button" name="Editor" class="btn btn-warning btn-sm"> 編輯 </button>'
+                            return '<button type="button" name="Editor" data-id="'+row.id+'" class="btn btn-warning btn-sm"> 編輯 </button>' +
+                                '<button type="button" name="Delete" data-id="'+row.id+'" class="btn btn-danger btn-sm"> 刪除 </button>'
                         },
                     }
                 ],
@@ -139,16 +110,21 @@
                     url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/zh-HANT.json'
                 }
             });
+        }
+        QuerySideEffectInfo();
+
+        //新增副作用按鈕
+
+        const btnSumbit = document.querySelector('#saveButton');
+        btnSumbit.addEventListener('click', async (event) => {
+            console.log(btnSumbit); //測試有無抓到按鈕
+            event.preventDefault(); //停止預設行為
+
+            //FormData
+            const formData = new FormData(document.querySelector('#SideEffectForm'));
+
         })
-        const SECode = document.getElementById('fSideEffectCode');
-        const SE = document.getElementById('fSideEffect');
-        $(document).on('click', 'button[name=Editor]', function () {
-            var table = $('#dtSE').DataTable();
-            var tr = $(this).closest('tr');
-            var data = table.row(tr).data();
-            SECode.value = data.副作用代碼;
-            SE.value = data.副作用名稱;
-        })
+        
     </script>
 }
 
