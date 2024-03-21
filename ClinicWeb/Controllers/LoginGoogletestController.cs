@@ -41,7 +41,7 @@ namespace ClinicWeb.Controllers
 
         public async Task<IActionResult> GoogleResponse(MemberMemberList e)
         {
-           
+
             var result = await HttpContext.AuthenticateAsync("Google");
 
             if (result == null || result.Principal == null)
@@ -149,123 +149,48 @@ namespace ClinicWeb.Controllers
                 return Json(claims);
             }
         }
-        
 
 
-        //public IActionResult LoginGoogle2(string state, string code)
-        //{
-        //    //if (TempData["state"] == null)
-        //    //{//可能使用者停留Line登入頁面太久
-        //    //    return Content("頁面逾期");
-        //    //}
 
-        //    //if (Convert.ToString(TempData["state"]) != state)
-        //    //{//使用者原先Request QueryString的TempData["state"]和Line導頁回來夾帶的state Querystring不一樣，可能是parameter tampering或CSRF攻擊
-        //    //    return Content("state驗證失敗");
-        //    //}
-        //    //if (Convert.ToString(TempData["state"]) == state)
-        //        if (true)
-        //    {//state字串驗證通過
 
-        //        //取得id_token和access_token:GET https://www.googleapis.com/drive/v2/files?access_token=access_token 目前只有access
-        //        string issue_token_url = "https://oauth2.googleapis.com/token";
-        //        var request = new HttpRequestMessage(HttpMethod.Post, issue_token_url);
+       
+        //生成URL
+        public IActionResult GenerateGoogleLoginUrl()
+        {
+            string clientId = client_id;
+            string redirectUri = Url.Action("LoginGoogle2", "LoginGoogletest", null, protocol: Request.Scheme);
+            string state = Guid.NewGuid().ToString(); // 生成一個唯一的state值
+            TempData["oauth-state"] = state; // state存在TempData中
 
-        //        var postParams = new Dictionary<string, string>
-        //            {
-        //                {"grant_type", "authorization_code"},
-        //                {"code", code},
-        //                {"redirect_uri", this.redirect_uri},
-        //                {"client_id", this.client_id},
-        //                {"client_secret", this.client_secret}
-        //            };
+            string scope = Uri.EscapeDataString("openid email");
+            string authorizationEndpoint = $"https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id={clientId}&scope={scope}&redirect_uri={Uri.EscapeDataString(redirectUri)}&state={state}";
 
-        //        request.Content = new FormUrlEncodedContent(postParams);
-        //        using (var client = new HttpClient())
-        //        {
-        //            var response = client.SendAsync(request).Result;
-
-        //            if (response.IsSuccessStatusCode)
-        //            {
-        //                var responseStr = response.Content.ReadAsStringAsync().Result;
-
-        //                // 在這裡處理 API 回傳的字串 (responseStr)
-        //                GoogleLoginToken tokenObj = JsonConvert.DeserializeObject<GoogleLoginToken>(responseStr);
-        //                string id_token = tokenObj.id_token;
-        //                var jst = new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(id_token);
-        //                var userId = jst.Payload.Sub;
-        //                return Content(userId);
-        //            }
-        //        }
-        //    }
-        //    //            var dbMember = _context.MemberMemberList.
-        //    //                SingleOrDefault(m => m.IceNumber == userId);
-        //    //            //int currentMemberId = GetCurrentMemberId();
-        //    //            //沒有綁定的人要登入
-        //    //            if (dbMember == null && currentMemberId == 0) { return Content("尚未綁定Google帳號"); }
-        //    //            //已登入，在帳號設定頁面請求綁定
-        //    //            else if (dbMember == null && currentMemberId != 0)
-        //    //            {
-        //    //                var toAddGoogleMember = _context.MemberMemberList.SingleOrDefault(m => m.MemberId == currentMemberId);
-        //    //                if (toAddGoogleMember == null) { return Content("資料庫系統異常，找不到已登入會員"); }
-        //    //                toAddGoogleMember.IceNumber = userId;
-        //    //                try
-        //    //                {
-        //    //                    _context.MemberMemberList.Update(toAddGoogleMember);
-        //    //                    _context.SaveChanges();
-        //    //                    TempData["Success"] = "Google帳號綁定成功！";
-        //    //                    return RedirectToAction("Setting", "Member");
-        //    //                }
-        //    //                catch (Exception e)
-        //    //                {
-        //    //                    return Content("資料庫系統異常，無法綁定" + e);
-        //    //                }
-        //    //            }
-        //    //            else if (dbMember != null && currentMemberId != 0)
-        //    //            {
-        //    //                TempData["Error"] = "此Google帳號已其他帳號綁定！";
-        //    //                return RedirectToAction("Setting", "Member");
-        //    //            }
-        //    //            var claims = new List<Claim>{
-        //    //                  new Claim("MemberId", dbMember.MemberId.ToString()),
-        //    //                new Claim(ClaimTypes.Name, dbMember.Name),
-        //    //                new Claim(ClaimTypes.Email, dbMember.MemEmail)
-        //    //                };
-        //    //            if (dbMember.Verification)
-        //    //            {
-        //    //                claims.Add(new Claim(ClaimTypes.Role, "Teacher"));
-        //    //            }
-        //    //            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-        //    //            HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
-        //    //            return RedirectToAction("Index");
-        //    //        }
-        //    //        else
-        //    //        {
-        //    //            // 處理錯誤狀態碼
-        //    //            var statusCode = response.StatusCode;
-        //    //            // ...
-
-        //    //            return StatusCode((int)statusCode);
-        //    //        }
-        //    //    } 
-        //    //}
-        //    return View();
-        //}
-
+            return Redirect(authorizationEndpoint);
+        }
+        string fa="123";
         public async Task<IActionResult> LoginGoogle2(string state, string code)
         {
+            // 
+            var expectedState = TempData["oauth-state"] as string;
+
+            // 驗證STATE
+            if (state != expectedState)
+            {
+                return BadRequest("State不同 ,可能有CSRF攻擊 ");
+            }
+
             // Google token endpoint
             string issue_token_url = "https://oauth2.googleapis.com/token";
             var request = new HttpRequestMessage(HttpMethod.Post, issue_token_url);
 
             var postParams = new Dictionary<string, string>
-                  {
-                    {"grant_type", "authorization_code"},
-                    {"code", code},
-                    {"redirect_uri", this.redirect_uri},
-                    {"client_id", this.client_id},
-                    {"client_secret", this.client_secret}
-                  };
+            {
+            {"grant_type", "authorization_code"},
+            {"code", code},
+            {"redirect_uri", "https://localhost:7071/LoginGoogletest/LoginGoogle2"},
+            {"client_id", this.client_id},
+            {"client_secret", this.client_secret}
+            };
 
             request.Content = new FormUrlEncodedContent(postParams);
 
@@ -276,74 +201,68 @@ namespace ClinicWeb.Controllers
                 if (response.IsSuccessStatusCode)
                 {
                     var responseStr = await response.Content.ReadAsStringAsync();
-
-                    
                     GoogleLoginToken tokenObj = JsonConvert.DeserializeObject<GoogleLoginToken>(responseStr);
-                    string ?id_token = tokenObj?.id_token;
+                    string? id_token = tokenObj?.id_token;
                     var jst = new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(id_token);
-                    var userId = jst.Payload.Sub;
-                    var payload = jst.Payload;
-                    if (payload.TryGetValue("picture", out var picture))
+                    var email = jst.Payload.Claims.FirstOrDefault(c => c.Type == "email")?.Value;
+
+                    if (email == null)
                     {
-                        var userPictureUrl = picture.ToString();
-                        GetUserImage(userPictureUrl);
+                        // 如果無法從token中獲取email，可能需要處理錯誤或重定向
+                        return BadRequest("無法從ID token取得email");
+                    }
+
+                    var dbMember = _context.MemberMemberList.SingleOrDefault(m => m.MemEmail == email);
+
+                    if (dbMember == null)
+                    {
+                        // 如果找不到用戶，導向註冊畫面
+
+                        //沒有匹配會員要倒到註冊頁面並且填上信箱
+                        TempData["ForRegister"] = email;
+                        await HttpContext.SignOutAsync();
+                        TempData["Error"] = "沒有找到匹配會員，請先註冊帳戶";
+                        return RedirectToAction("Register", "ClientPage");
                     }
                     else
                     {
-                        // 如果没有找到 "picture"
-                    }
-                    var dbMember = _context.MemberMemberList.SingleOrDefault(m => m.GoogleSub == userId);
-
-                  
-                    int currentMemberId = GetCurrentMemberId();
-                
-                    if (dbMember == null && currentMemberId == 0) { return Content("尚未綁定Google帳號"); }
-                    //已登入，在帳號設定頁面請求綁定
-                    else if (dbMember == null && currentMemberId != 0)
-                    {
-                        var toAddGoogleMember = _context.MemberMemberList.SingleOrDefault(m => m.MemberId == currentMemberId);
-                        if (toAddGoogleMember == null) { return Content("資料庫系統異常，找不到已登入會員"); }
-                       //先用icenumber測試
-                        toAddGoogleMember.GoogleSub = userId;
-                        try
-                        {
-                            _context.MemberMemberList.Update(toAddGoogleMember);
-                            _context.SaveChanges();
-                            TempData["Success"] = "Google帳號綁定成功！";
-                            return RedirectToAction("Index", "ClientPage");
-                        }
-                        catch (Exception e)
-                        {
-                            return Content("資料庫系統異常，無法綁定" + e);
-                        }
-                    }
-                    else if (dbMember != null && currentMemberId != 0)
-                    {
-                        TempData["Error"] = "此Google帳號已其他帳號綁定！";
-                        return RedirectToAction("Index", "ClientPage");
-                    }
-                    var claims = new List<Claim>{
-                    new Claim("MemberId", dbMember.MemberId.ToString()),
-                    new Claim(ClaimTypes.Name, dbMember.Name),
-                    new Claim(ClaimTypes.Email, dbMember.MemEmail)
+                        // 用戶存在
+                        var claims = new List<Claim>{
+                        new Claim("MemberID", dbMember.MemberId.ToString()),
+                        new Claim(ClaimTypes.Name, dbMember.Name),
+                        new Claim(ClaimTypes.Email, dbMember.MemEmail)
                     };
 
-                    var claimsIdentity = new ClaimsIdentity(claims, "frontendForCustomer");
-                    await HttpContext.SignInAsync("frontend", new ClaimsPrincipal(claimsIdentity));
-                    return RedirectToAction("Index", "ClientPage");
+
+                        var claimsIdentity = new ClaimsIdentity(claims, "frontendForCustomer");
+                        await HttpContext.SignInAsync("frontend", new ClaimsPrincipal(claimsIdentity));
+                        return RedirectToAction("Index", "ClientPage");
+                    }
                 }
                 else
                 {
                     // 處理錯誤狀態碼
                     var statusCode = response.StatusCode;
-                    // ...
-
                     return StatusCode((int)statusCode);
                 }
             }
         }
+        //用來處理回傳的使用者資訊 
+        public class GoogleLoginToken
+        {
+            public string? access_token { get; set; }
+            public int? expires_in { get; set; }
+            public string? id_token { get; set; }
+            public string? refresh_token { get; set; }
+            public string? scope { get; set; }
+            public string? token_type { get; set; }
+        }
+
+
+
+
         [AllowAnonymous]
-        //把抓到的URL轉成檔案
+        //把抓到的Google大頭照 URL轉成檔案
         public async Task<IActionResult> GetUserImage(string imageUrl)
         {
             using (var httpClient = new HttpClient())
@@ -353,42 +272,129 @@ namespace ClinicWeb.Controllers
             }
         }
 
-        [AllowAnonymous]
-        public int GetCurrentMemberId()
-        {
-            // 檢查是否有登入的用戶
-            if (HttpContext.User.Identity.IsAuthenticated)
-            {
-                // 從Claims中尋找MemberId
-                var memberIdClaim = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "MemberID");
-                if (memberIdClaim != null)
-                {
-                    // 嘗試將MemberId轉換成int型別
-                    if (int.TryParse(memberIdClaim.Value, out int memberId))
-                    {
-                        return memberId;
-                    }
-                }
-            }
+        /// <summary>
+        /// 紀念區2024/03/21 
+        /// </summary>
+       
+        //[AllowAnonymous]
+        //public int GetCurrentMemberId()
+        //{
+        //    // 檢查是否有登入的用戶
+        //    if (HttpContext.User.Identity.IsAuthenticated)
+        //    {
+        //        // 從Claims中尋找MemberId
+        //        var memberIdClaim = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "MemberID");
+        //        if (memberIdClaim != null)
+        //        {
+        //            // 嘗試將MemberId轉換成int型別
+        //            if (int.TryParse(memberIdClaim.Value, out int memberId))
+        //            {
+        //                return memberId;
+        //            }
+        //        }
+        //    }
 
-            // 如果沒有找到MemberId，或用戶未登入，則返回0或適當的錯誤值
-            return 0;
-        }
+        //    // 如果沒有找到MemberId，或用戶未登入，則返回0或適當的錯誤值
+        //    return 0;
+        //}
+        ////可以做綁定功能
+        //public async Task<IActionResult> LoginGoogle2(string state, string code)
+        //{
+        //    // Google token endpoint
+        //    string issue_token_url = "https://oauth2.googleapis.com/token";
+        //    var request = new HttpRequestMessage(HttpMethod.Post, issue_token_url);
+
+        //    var postParams = new Dictionary<string, string>
+        //          {
+        //            {"grant_type", "authorization_code"},
+        //            {"code", code},
+        //            {"redirect_uri", this.redirect_uri},
+        //            {"client_id", this.client_id},
+        //            {"client_secret", this.client_secret}
+        //          };
+
+        //    request.Content = new FormUrlEncodedContent(postParams);
+
+        //    using (var client = new HttpClient())
+        //    {
+        //        var response = await client.SendAsync(request);
+
+        //        if (response.IsSuccessStatusCode)
+        //        {
+        //            var responseStr = await response.Content.ReadAsStringAsync();
+
+
+        //            GoogleLoginToken tokenObj = JsonConvert.DeserializeObject<GoogleLoginToken>(responseStr);
+        //            string ?id_token = tokenObj?.id_token;
+        //            var jst = new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(id_token);
+        //            var userId = jst.Payload.Sub;
+
+        //            //var payload = jst.Payload;
+        //            //if (payload.TryGetValue("picture", out var picture))
+        //            //{
+        //            //    var userPictureUrl = picture.ToString();
+        //            //    GetUserImage(userPictureUrl);
+        //            //}
+        //            //else
+        //            //{
+        //            //    // 如果没有找到 "picture"
+        //            //}
+        //            var dbMember = _context.MemberMemberList.SingleOrDefault(m => m.GoogleSub == userId);
+
+
+        //            int currentMemberId = GetCurrentMemberId();
+
+        //            if (dbMember == null && currentMemberId == 0) { return Content("尚未綁定Google帳號"); }
+        //            //已登入，在帳號設定頁面請求綁定
+        //            else if (dbMember == null && currentMemberId != 0)
+        //            {
+        //                var toAddGoogleMember = _context.MemberMemberList.SingleOrDefault(m => m.MemberId == currentMemberId);
+        //                if (toAddGoogleMember == null) { return Content("資料庫系統異常，找不到已登入會員"); }
+        //               //先用icenumber測試
+        //                toAddGoogleMember.GoogleSub = userId;
+        //                try
+        //                {
+        //                    _context.MemberMemberList.Update(toAddGoogleMember);
+        //                    _context.SaveChanges();
+        //                    TempData["Success"] = "Google帳號綁定成功！";
+        //                    return RedirectToAction("Index", "ClientPage");
+        //                }
+        //                catch (Exception e)
+        //                {
+        //                    return Content("資料庫系統異常，無法綁定" + e);
+        //                }
+        //            }
+        //            else if (dbMember != null && currentMemberId != 0)
+        //            {
+        //                TempData["Error"] = "此Google帳號已其他帳號綁定！";
+        //                return RedirectToAction("Index", "ClientPage");
+        //            }
+        //            var claims = new List<Claim>{
+        //            new Claim("MemberId", dbMember.MemberId.ToString()),
+        //            new Claim(ClaimTypes.Name, dbMember.Name),
+        //            new Claim(ClaimTypes.Email, dbMember.MemEmail)
+        //            };
+
+        //            var claimsIdentity = new ClaimsIdentity(claims, "frontendForCustomer");
+        //            await HttpContext.SignInAsync("frontend", new ClaimsPrincipal(claimsIdentity));
+        //            return RedirectToAction("Index", "ClientPage");
+        //        }
+        //        else
+        //        {
+        //            // 處理錯誤狀態碼
+        //            var statusCode = response.StatusCode;
+        //            // ...
+
+        //            return StatusCode((int)statusCode);
+        //        }
+        //    }
+        //}
 
 
 
 
 
 
-
-        public class GoogleLoginToken
-        {
-            public string ?access_token { get; set; }
-            public int ?expires_in { get; set; }
-            public string ?id_token { get; set; }
-            public string ?refresh_token { get; set; }
-            public string ?scope { get; set; }
-            public string ?token_type { get; set; }
-        }
+       
     }
 }
