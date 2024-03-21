@@ -174,6 +174,10 @@ async function uploadFormData(id) {
     }
 }
 
+//日期設定
+const datenow = new Date().toISOString().split('T')[0];
+const PID = 0;
+
 //新增看診紀錄
 async function AddNMR() {
     const addrecord = {
@@ -262,17 +266,11 @@ async function AddNTR() {
 async function AddNPre() {
     const addrecord = {
         CaseId: CASE_ID,
-        ClinicListId: CLINICLIST_ID,
-        Bp: $('#addbp').val(),
-        Pulse: $('#addpulse').val(),
-        Bt: $('#addbt').val(),
-        Cc: $('#addcc').val(),
-        Disposal: $('#adddisposal').val(),
-        Prescribe: $('#addprescribe').val(),
+        PrescriptionDate: datenow,
     };
 
     try {
-        const response = await fetch(`/ClinicRoomSys/Cases/AddMedicalRecord`, {
+        const response = await fetch(`/ClinicRoomSys/Cases/AddPrescription`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -413,18 +411,17 @@ document.getElementById("addrecord").addEventListener("click", function (event) 
    
 });
 //初始化報告表單
-const date = new Date().toISOString().split('T')[0];
 document.getElementById("addreport").addEventListener("click", function (event) {
     $('#addTestName').val('');
-    $('#addTestDate').val(date);
+    $('#addTestDate').val(datenow);
     //$('#recordModal').modal('show');
 
 });
 //初始化處方表單
 document.getElementById("addpre").addEventListener("click", function (event) {
-    $('#addPrescriptionDate').val(date);
     $('#addDispensing').val('');
     AddDL();
+    AddNPre();
     //$('#recordModal').modal('show');
 
 

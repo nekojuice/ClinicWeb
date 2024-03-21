@@ -164,7 +164,9 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
             // 在這裡處理表單提交的資料，例如將資料儲存到資料庫中
             _context.CasesPrescription.Add(record);
             _context.SaveChanges();
-            int id = _context.CasesPrescription.LastOrDefault().PrescriptionId;
+            int? id = _context.CasesPrescription
+                  .OrderBy(p => p.PrescriptionId)
+                  .LastOrDefault()?.PrescriptionId;
             if (!id.ToString().IsNullOrEmpty())
             {
                 return Ok(id);
