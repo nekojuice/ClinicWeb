@@ -22,6 +22,7 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
         //{
         //    return View();
         //}
+        //查詢大隊長
         [HttpPost]
         public JsonResult GM(string id) //GETMainCase
         {
@@ -55,8 +56,8 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
                 return Json(new { error = "Invalid id parameter" });
             }
 
-            return Json( _context.CasesMedicalRecords
-                .Include(x=>x.ClinicList.Clinic)
+            return Json(await _context.CasesMedicalRecords
+                .Include(x => x.ClinicList.Clinic)
                 .Where(x => x.CaseId == caseId)
                 .Select(x => new
                 {
@@ -69,51 +70,65 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
                     Disposal = x.Disposal,
                     Prescribe = x.Prescribe,
                 })
+                .ToListAsync()
             );
         }
         [HttpPost]
         public async Task<JsonResult> GRT(string id) //GETREPORT
         {
-            return Json(_context.CasesTestReport
-                .Where(x => x.CaseId == Convert.ToInt32(id))
-                .Select(x => new
-                {
-                    ReportID = x.ReportId,
-                    TestName = x.TestName,
-                    TestDate = x.TestDate.ToString("yyyy-MM-dd"),
-                    ReportDate = x.ReportDate.HasValue ? x.ReportDate.Value.ToString("yyyy-MM-dd") : null,
-                    Result = x.Result,
-                })
+            return await Task.Run(() =>
+            {
+                return Json(_context.CasesTestReport
+                    .Where(x => x.CaseId == Convert.ToInt32(id))
+                    .Select(x => new
+                    {
+                        ReportID = x.ReportId,
+                        TestName = x.TestName,
+                        TestDate = x.TestDate.ToString("yyyy-MM-dd"),
+                        ReportDate = x.ReportDate.HasValue ? x.ReportDate.Value.ToString("yyyy-MM-dd") : null,
+                        Result = x.Result,
+                    })
+                    .ToList()
                 );
+            });
         }
         [HttpPost]
         public async Task<JsonResult> GP(string id) //GETPRESCRIPTION
         {
-            return Json(_context.CasesPrescription
-                .Where(x => x.CaseId == Convert.ToInt32(id))
-                .Select(x => new
-                {
-                    PrescriptionID= x.PrescriptionId,
-                    PrescriptionDate = x.PrescriptionDate.ToString("yyyy-MM-dd"),
-                    Dispensing = x.Dispensing,
-                })
+            return await Task.Run(() =>
+            {
+                return Json(_context.CasesPrescription
+                    .Where(x => x.CaseId == Convert.ToInt32(id))
+                    .Select(x => new
+                    {
+                        PrescriptionID = x.PrescriptionId,
+                        PrescriptionDate = x.PrescriptionDate.ToString("yyyy-MM-dd"),
+                        Dispensing = x.Dispensing,
+                    })
+                    .ToList()
                 );
+            });
         }
         [HttpPost]
         public async Task<JsonResult> GPL(string id) //GETPRESCRIPTIONLIST
         {
-            return Json(_context.CasesPrescriptionlist
-                .Include(x => x.Drug)
-                .Where(x => x.PrescriptionId == Convert.ToInt32(id))
-                .Select(x => new
-                {
-                    DrugId = x.DrugId,
-                    Name = x.Drug.FDrugName,
-                    Days = x.Days,
-                    total = x.TotalAmount,
-                })
+            return await Task.Run(() =>
+            {
+                return Json(_context.CasesPrescriptionlist
+                    .Include(x => x.Drug)
+                    .Where(x => x.PrescriptionId == Convert.ToInt32(id))
+                    .Select(x => new
+                    {
+                        DrugId = x.DrugId,
+                        Name = x.Drug.FDrugName,
+                        Days = x.Days,
+                        TotalAmount = x.TotalAmount,
+                    })
+                    .ToList()
                 );
+            });
         }
+        //更新大隊長
         [HttpPost]
         public async Task<IActionResult> UpdateCase(int id, [FromBody] CasesMainCase caseUpdateModel)
         {
@@ -136,13 +151,13 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
             await _context.SaveChangesAsync();
             return Ok(new { success = true, message = "Record updated successfully" });
         }
-
+        //新增大隊長
         [HttpPost]
         public async Task<IActionResult> AddMedicalRecord([FromBody] CasesMedicalRecords record)
         {
             // 在這裡處理表單提交的資料，例如將資料儲存到資料庫中
             _context.CasesMedicalRecords.Add(record);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             // 返回適當的回應
             return Ok();
@@ -153,7 +168,7 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
         {
             // 在這裡處理表單提交的資料，例如將資料儲存到資料庫中
             _context.CasesTestReport.Add(record);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             // 返回適當的回應
             return Ok();
@@ -163,7 +178,7 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
         {
             // 在這裡處理表單提交的資料，例如將資料儲存到資料庫中
             _context.CasesPrescription.Add(record);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             int? id = _context.CasesPrescription
                   .OrderBy(p => p.PrescriptionId)
                   .LastOrDefault()?.PrescriptionId;
@@ -182,7 +197,7 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
         {
             // 在這裡處理表單提交的資料，例如將資料儲存到資料庫中
             _context.CasesPrescriptionlist.Add(record);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             // 返回適當的回應
             return Ok();
@@ -222,6 +237,8 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
             return Json(drugList);
         }
 
+        //刪除大隊長
+
         [HttpPost]
         public async Task<IActionResult> DMedicalRecord(string id)
         {
@@ -234,7 +251,7 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
             if (entity != null)
             {
                 _context.CasesMedicalRecords.Remove(entity);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
 
             return Ok("ok");
@@ -251,7 +268,42 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
             if (entity != null)
             {
                 _context.CasesTestReport.Remove(entity);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
+            }
+
+            return Ok();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DPrescription(string id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new { success = false, message = "Invalid data" });
+            }
+            var idInt = Convert.ToInt32(id);
+            var entity = _context.CasesPrescription.FirstOrDefault(e => e.PrescriptionId == idInt);
+            if (entity != null)
+            {
+                _context.CasesPrescription.Remove(entity);
+                await _context.SaveChangesAsync();
+            }
+
+            return Ok();
+        }
+        [HttpPost]
+        public async Task<IActionResult> DPrescriptionL(string id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new { success = false, message = "Invalid data" });
+            }
+            var idInt = Convert.ToInt32(id);
+            var entities = _context.CasesPrescriptionlist.Where(e => e.PrescriptionId == idInt).ToList();
+            if (entities != null && entities.Count > 0)
+            {
+                _context.CasesPrescriptionlist.RemoveRange(entities);
+                await _context.SaveChangesAsync();
             }
 
             return Ok();
