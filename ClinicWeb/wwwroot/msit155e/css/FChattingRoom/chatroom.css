@@ -1,0 +1,79 @@
+﻿.leftbox {
+    border: 1px solid #cbcbcb;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: rgba(0,0,0,0.4) -5px 5px 15px;
+}
+
+    .leftbox h5 {
+        margin: 10px
+    }
+    .leftbox div.card {
+        height: 85%;
+        border: 1px solid #cbcbcb;
+    }
+
+    .leftbox ul {
+        border: 1px solid #828282;
+    }
+
+.rightbox {
+    border: 1px solid #cbcbcb;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: rgba(0,0,0,0.4) 5px 5px 15px;
+}
+
+    .rightbox > div {
+        width: 95%;
+        margin: auto;
+    }
+
+    .rightbox li {
+        width: 95%;
+        margin: auto;
+    }
+
+    .rightbox button {
+        margin: 10px;
+    }
+
+    .rightbox .list-group-item {
+        background-color: lightgray;
+        border-radius: 10px 10px;
+    }
+
+    .rightbox .card-header {
+        height: 20px;
+        line-height: 5px;
+    }
+
+    .rightbox .card-body.text-end{
+        background-color: #C3F69D;
+    }
+
+.signnamebtn {
+    border-radius: 20px;
+    padding: 8px 16px;
+    background-color: #84C1FF;
+    color: white;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    cursor: pointer;
+    transition-duration: 0.4s;
+}
+
+#bigname {
+    font-size: 24px; /* 設置字體大小 */
+    color: #2C3E50; /* 設置文字顏色 */
+    font-weight: bold; /* 設置字體粗細 */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* 添加文字陰影 */
+}
+/*#C3F69D*/
+
+.list-group-item.selected {
+    background-color: #C3F69D; /* 设置选中的背景色 */
+}

@@ -5,9 +5,18 @@ namespace ClinicWeb.Areas.Schedule.Controllers
 	[Area("Schedule")]
 	public class HomeController : Controller
 	{
-		public IActionResult Index()
+		public IActionResult DoctorSchedule()
 		{
 			return View();
 		}
-	}
+
+        public IActionResult NurseSchedule()
+        {
+            return View();
+        }
+        public IActionResult ClinicInfo()
+        {
+            return View();
+        }
+    }
 }

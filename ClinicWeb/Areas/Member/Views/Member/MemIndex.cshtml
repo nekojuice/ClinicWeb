@@ -1,0 +1,199 @@
+﻿@model IEnumerable<ClinicWeb.Areas.Member.ViewModels.Membermetadata>
+@* @model ClinicWeb.Areas.Member.ViewModels.MemberViewModel *@
+
+
+@section ModulesStyles
+{
+
+
+	<!-- iCheck -->
+	<link href="~/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+	<!-- Datatables -->
+
+	<link href="~/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+	<link href="~/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+	<link href="~/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+	<link href="~/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+	<link href="~/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+
+							@* <!-- bootstrap-wysiwyg -->
+    <link href="~/vendors/google-code-prettify/bin/prettify.min.css" rel="stylesheet"> *@
+	<!-- Select2 -->
+	<link href="~/vendors/select2/dist/css/select2.min.css" rel="stylesheet">
+	<!-- Switchery -->
+	<link href="~/vendors/switchery/dist/switchery.min.css" rel="stylesheet">
+	<!-- starrr -->
+	<link href="~/vendors/starrr/dist/starrr.css" rel="stylesheet">
+	<!-- bootstrap-daterangepicker -->
+	<link href="~/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+	<!-- PNotify -->
+	<link href="~/vendors/pnotify/dist/pnotify.css" rel="stylesheet">
+	<link href="~/vendors/pnotify/dist/pnotify.buttons.css" rel="stylesheet">
+	<link href="~/vendors/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">
+}
+
+<div class="row" style="display: block;">
+	<div class="col-md-12">
+		<div class="x_panel">
+			<!--文字會員資料表處那排-->
+			<div class="x_title">
+				<h2>會員資料表</h2>
+				<ul class="nav navbar-right panel_toolbox">
+					<li>
+						<a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+					</li>
+					<li>
+						<a class="close-link"><i class="fa fa-close"></i></a>
+					</li>
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+
+			<!--新增按鈕的排版-->
+			<div class="mb-6" style="overflow: auto">
+				<div class="col-md-2">
+					<label class="form-label"> </label>
+					<button id="newMembtn" type="button" class="btn btn-info" data-toggle="modal" data-target="#MemCreate">新增會員</button>
+				</div>
+			</div>
+
+			<!-- 新增畫面的內容 -->
+			<div class="modal fade" id="MemCreate" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+				<div class="modal-dialog modal-lg">
+					<!-- 放置 AntiForgeryToken -->
+					<div class="modal-content" id="divCreateInfo">
+						@* <partial name="~/Areas/Member/Views/Partial/_MemberCreatePartial.cshtml" /> *@
+					</div>
+				</div>
+			</div>
+
+
+			<!--搜尋那塊-->
+			<div class="x_content">
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="card-box table-responsive">
+
+							<!--修改畫面打開-->
+							<div class="modal fade" id="MemEdit" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+								<div class="modal-dialog modal-lg">
+									<div class="modal-content" id="divEditInfo">
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<!--表格處-->
+								<div class="col-sm-12">
+									<table id="memdatatable" class="table table-striped table-bordered dataTable no-footer" style="width: 100%;" role="grid" aria-describedby="datatable_info">
+										<thead>
+											<tr>
+												<th style="display:none">
+													會員id
+												</th>
+												<th>
+													會員編號
+													@*  @Html.DisplayNameFor(model => model.MemberNumber) *@
+												</th>
+												<th>
+													姓名
+													@*  @Html.DisplayNameFor(model => model.Name) *@
+												</th>
+												<th>
+													性別
+													@* @Html.DisplayNameFor(model => model.Gender) *@
+												</th>
+												<th>
+													血型
+													@* @Html.DisplayNameFor(model => model.BloodType) *@
+												</th>
+												<th>
+													身分證字號
+												</th>
+												<th>
+													聯絡電話
+													@*  @Html.DisplayNameFor(model => model.NationalId) *@
+												</th>
+												<th>
+													地址
+													@*  @Html.DisplayNameFor(model => model.Address) *@
+												</th>
+												<th>
+													緊急聯絡人
+													@* @Html.DisplayNameFor(model => model.Phone) *@
+												</th>
+												<th>
+													信箱
+													@* @Html.DisplayNameFor(model => model.BirthDate) *@
+												</th>
+												<th>
+													啟用
+													@*  @Html.DisplayNameFor(model => model.MemberNumber) *@
+												</th>
+												<th>
+													操作
+													<div id="partialContainer"></div>
+
+												</th>
+											</tr>
+										</thead>
+									</table>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+@section Modules
+{
+	<!-- iCheck -->
+	<script src="~/vendors/iCheck/icheck.min.js"></script>
+	<!-- Datatables -->
+	<script src="~/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+	@* <script src="~/lib/datatables/js/jquery.datatables.min.js"></script> *@
+	<script src="~/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+	<script src="~/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+	<script src="~/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+	<script src="~/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+	<script src="~/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+	<script src="~/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+	<script src="~/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+	<script src="~/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+	<script src="~/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+	<script src="~/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+	<script src="~/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+	<script src="~/vendors/jszip/dist/jszip.min.js"></script>
+	<script src="~/vendors/pdfmake/build/pdfmake.min.js"></script>
+	<script src="~/vendors/pdfmake/build/vfs_fonts.js"></script>
+	<!-- Switchery -->
+	<script src="~/vendors/switchery/dist/switchery.min.js"></script>
+	<!-- PNotify -->
+	<script src="~/vendors/pnotify/dist/pnotify.js"></script>
+	<script src="~/vendors/pnotify/dist/pnotify.buttons.js"></script>
+	<script src="~/vendors/pnotify/dist/pnotify.nonblock.js"></script>
+	<!--sweetalert-->
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+}
+@section Scripts {
+
+	@{
+		await Html.RenderPartialAsync("~/Views/Shared/_ValidationScriptsPartial.cshtml");
+	}
+	<script>
+		const url_Member_GetData = '@Url.Content("~/Member/Member/MemberGetdata")';
+		const url_MemberCreate_Form = '@Url.Content("~/Member/Member/MemberCreate")';
+		const url_MemberCreate_save = '@Url.Content("~/Member/Member/Create")';
+		const url_MemberEdit_Form = '@Url.Content("~/Member/Member/MemberEdit")';
+		const url_MemberEdit_save = '@Url.Content("~/Member/Member/Edit")';
+	</script>
+	<script src="~/msit155e/js/member/sharedfunction.js"></script>
+	<script src="~/msit155e/js/member/memindex.js"></script>
+
+}

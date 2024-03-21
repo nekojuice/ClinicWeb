@@ -1,0 +1,348 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ClinicWeb</title>
+    @await RenderSectionAsync("Styles", required: false)
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/memback/style.css" rel="stylesheet" />
+    <link href="~/css/memback/memback_nkj_extend.css" rel="stylesheet" />
+    <link href="~/vendors/bootstrap-icons/bootstrap-icons.min.css" rel="stylesheet" />
+    @*     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/ClinicWeb.styles.css" asp-append-version="true" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="~/css/tiny-slider.css" rel="stylesheet">
+    <link href="~/css/style.css" rel="stylesheet"> *@
+    @await RenderSectionAsync("ModulesStyles", required: false)
+
+</head>
+<body>
+    <div class="header fixed-top d-flex sticky-top align-items-center" style="background-color:#b0e0e6">
+        <a class="navbar-brand" asp-controller="ClientPage" asp-action="Index"><img src="~/msit155e/images/logo-simply.png" style="height:40px;weight:20px" />寶育婦幼診所</a>
+    </div>
+    <header id="header" class="header fixed-top d-flex sticky-top align-items-center">
+
+        <div class="d-flex align-items-center justify-content-between">
+            <a asp-controller="MBMemberInfo" asp-action="Index" class="logo d-flex align-items-center">
+                <img src="~/images/logo.png" alt="logo" />
+                <span class="d-none d-lg-block">會員專區</span>
+            </a>
+        </div><!-- End Logo -->
+
+@*         <div class="search-bar">
+            <form class="search-form d-flex align-items-center" method="POST" action="#">
+                <input type="text" name="query" placeholder="Search" title="Enter search keyword">
+                <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+            </form>
+        </div><!-- End Search Bar --> *@
+
+        <nav class="header-nav ms-auto">
+            <ul class="d-flex align-items-center">
+
+@*                 <li class="nav-item d-block d-lg-none">
+                    <a class="nav-link nav-icon search-bar-toggle " href="#">
+                        <i class="bi bi-search"></i>
+                    </a>
+                </li><!-- End Search Icon--> *@
+                @*               <li class="nav-item dropdown">
+
+                <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+                <i class="bi bi-bell"></i>
+                <span class="badge bg-primary badge-number">4</span>
+                </a><!-- End Notification Icon -->
+
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
+                <li class="dropdown-header">
+                You have 4 new notifications
+                <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+                </li>
+                <li>
+                <hr class="dropdown-divider">
+                </li>
+
+                <li class="notification-item">
+                <i class="bi bi-exclamation-circle text-warning"></i>
+                <div>
+                <h4>Lorem Ipsum</h4>
+                <p>Quae dolorem earum veritatis oditseno</p>
+                <p>30 min. ago</p>
+                </div>
+                </li>
+
+                <li>
+                <hr class="dropdown-divider">
+                </li>
+
+                <li class="notification-item">
+                <i class="bi bi-x-circle text-danger"></i>
+                <div>
+                <h4>Atque rerum nesciunt</h4>
+                <p>Quae dolorem earum veritatis oditseno</p>
+                <p>1 hr. ago</p>
+                </div>
+                </li>
+
+                <li>
+                <hr class="dropdown-divider">
+                </li>
+
+                <li class="notification-item">
+                <i class="bi bi-check-circle text-success"></i>
+                <div>
+                <h4>Sit rerum fuga</h4>
+                <p>Quae dolorem earum veritatis oditseno</p>
+                <p>2 hrs. ago</p>
+                </div>
+                </li>
+
+                <li>
+                <hr class="dropdown-divider">
+                </li>
+
+                <li class="notification-item">
+                <i class="bi bi-info-circle text-primary"></i>
+                <div>
+                <h4>Dicta reprehenderit</h4>
+                <p>Quae dolorem earum veritatis oditseno</p>
+                <p>4 hrs. ago</p>
+                </div>
+                </li>
+
+                <li>
+                <hr class="dropdown-divider">
+                </li>
+                <li class="dropdown-footer">
+                <a href="#">Show all notifications</a>
+                </li>
+
+                </ul><!-- End Notification Dropdown Items -->
+
+                </li><!-- End Notification Nav -->
+
+                <li class="nav-item dropdown">
+
+                <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+                <i class="bi bi-chat-left-text"></i>
+                <span class="badge bg-success badge-number">3</span>
+                </a><!-- End Messages Icon -->
+
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
+                <li class="dropdown-header">
+                You have 3 new messages
+                <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+                </li>
+                <li>
+                <hr class="dropdown-divider">
+                </li>
+
+                <li class="message-item">
+                <a href="#">
+                <img src="assets/img/messages-1.jpg" alt="" class="rounded-circle">
+                <div>
+                <h4>Maria Hudson</h4>
+                <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                <p>4 hrs. ago</p>
+                </div>
+                </a>
+                </li>
+                <li>
+                <hr class="dropdown-divider">
+                </li>
+
+                <li class="message-item">
+                <a href="#">
+                <img src="assets/img/messages-2.jpg" alt="" class="rounded-circle">
+                <div>
+                <h4>Anna Nelson</h4>
+                <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                <p>6 hrs. ago</p>
+                </div>
+                </a>
+                </li>
+                <li>
+                <hr class="dropdown-divider">
+                </li>
+
+                <li class="message-item">
+                <a href="#">
+                <img src="assets/img/messages-3.jpg" alt="" class="rounded-circle">
+                <div>
+                <h4>David Muldon</h4>
+                <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                <p>8 hrs. ago</p>
+                </div>
+                </a>
+                </li>
+                <li>
+                <hr class="dropdown-divider">
+                </li>
+
+                <li class="dropdown-footer">
+                <a href="#">Show all messages</a>
+                </li>
+
+                </ul><!-- End Messages Dropdown Items -->
+
+                </li><!-- End Messages Nav --> *@
+                <li class="nav-item dropdown pe-3">
+
+                    <a class="nav-link nav-profile d-flex align-items-center pe-0" asp-controller="MBMemberInfo" asp-action="Index">@*  data-bs-toggle="dropdown" *@
+                        <span class="d-none d-md-block ps-2">會員資訊</span>
+                    </a><!-- End Profile Iamge Icon -->
+
+@*                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+
+                        <li>
+                            <a asp-controller="MBMemberInfo" asp-action="Index" class="dropdown-item d-flex align-items-center">
+                                <span>基本資訊</span>
+                            </a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                                <span>編輯</span>
+                            </a>
+                        </li>
+                    </ul><!-- End Profile Dropdown Items --> *@
+                </li><!-- End mem Nav -->
+
+                <li class="nav-item dropdown pe-3">
+                    <a asp-controller="MBRecordInfo" asp-action="Index" class="nav-link nav-profile d-flex align-items-center pe-0">
+                        <span class="d-none d-md-block ps-2">看診紀錄</span>
+                    </a><!-- End Profile Iamge Icon -->
+                </li><!-- End rec Nav -->
+                <li class="nav-item pe-3">
+                    <a asp-controller="MBRoomInfo" asp-action="Index" class="nav-link nav-profile d-flex align-items-center pe-0">
+                        <span class="d-none d-md-block ps-2">預約月子中心</span>
+                    </a><!-- End Profile Iamge Icon -->
+                </li><!-- End rec Nav -->
+                <li class="nav-item dropdown pe-3">
+
+                    <a class="nav-link nav-profile d-flex align-items-center pe-0" asp-controller="MBAppointmentInfo" asp-action="Index">
+                        @* data-bs-toggle="dropdown" *@
+                        <span class="d-none d-md-block ps-2">掛號繳費查詢</span>
+                    </a><!-- End Profile Iamge Icon -->
+@* 
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+
+                        <li>
+                            <a asp-controller="MBAppointmentInfo" asp-action="Index" class="dropdown-item d-flex align-items-center">
+                                <span>基本資訊</span>
+                            </a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                                <span>編輯</span>
+                            </a>
+                        </li>
+                    </ul><!-- End Profile Dropdown Items --> *@
+                </li><!-- End appt Nav -->
+
+                <li class="nav-item dropdown pe-3">
+                    <a asp-controller="MBSatisfaction" asp-action="Index" class="nav-link nav-profile d-flex align-items-center pe-0">
+                        <span class="d-none d-md-block ps-2">評價系統</span>
+                    </a><!-- End Profile Iamge Icon -->
+                </li><!-- End rec Nav -->
+
+               @*  <li class="nav-item dropdown pe-3">
+
+                    <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                        <span class="d-none d-md-block ps-2">評價系統</span>
+                    </a><!-- End Profile Iamge Icon -->
+
+                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+
+                        <li>
+                            <a asp-controller="MBSatisfaction" asp-action="Index" class="dropdown-item d-flex align-items-center">
+                                <span>我的評價</span>
+                            </a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                    </ul><!-- End Profile Dropdown Items --> 
+                </li><!-- End satn Nav --> *@
+
+                <li class="nav-item dropdown pe-3">
+
+                    <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                        <img src="~/images/user.png" alt="Profile" class="rounded-circle" id="ClientPicLogout">
+                        <span class="d-none d-md-block dropdown-toggle ps-2">@User.Identity.Name</span>
+                    </a><!-- End Profile Iamge Icon -->
+
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                        <li class="dropdown-header">
+                            <h6>@User.Identity.Name</h6>
+                            <span>Web Designer</span>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                                <i class="bi bi-person"></i>
+                                <span>My Profile</span>
+                            </a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                                <i class="bi bi-gear"></i>
+                                <span>Account Settings</span>
+                            </a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="pages-faq.html">
+                                <i class="bi bi-question-circle"></i>
+                                <span>Need Help?</span>
+                            </a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" asp-controller="ClientPage" asp-action="Logout">
+                                <i class="bi bi-box-arrow-right"></i><span>登出</span>
+                            </a>
+                        </li>
+
+                    </ul><!-- End Profile Dropdown Items -->
+                </li><!-- End Profile Nav -->
+
+            </ul>
+        </nav><!-- End Icons Navigation -->
+
+    </header><!-- End Header -->
+    <main role="main" class="pb-3 nkj-main">
+        @RenderBody()
+    </main>
+
+    <footer>
+        <p>© 2024 寶育婦幼診所</p>
+    </footer>
+    <script src="~/js/memback/main.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/msit155e/js/MemberInfoPic/MemberInfoPic.js"></script>
+    @*     <script src="~/js/site.js" asp-append-version="true"></script> *@
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

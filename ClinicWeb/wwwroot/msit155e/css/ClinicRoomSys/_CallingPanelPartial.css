@@ -1,0 +1,51 @@
+﻿.callingTablePanel {
+    position: fixed;
+    margin-left: -10px;
+    /*max-width: 28%;*/
+    width: 28%;
+}
+#callingTable_wrapper {
+    height:600px;
+}
+.callingControlPanel {
+    position: fixed;
+    bottom: 0;
+    margin-left: -20px;
+    /*max-width: 22.8%;*/
+    width: 29%;
+}
+
+
+.nkj-label-large {
+    font-size: 1.5em;
+    margin-right: 0.3em;
+    margin-bottom: 1.4em;
+}
+
+.nkj-btn-xxl {
+    width: 100%;
+    height: 60px;
+}
+
+/*無法反白選擇文字*/
+#callingTable tbody {
+    user-select: none;
+}
+    /*選擇時row底色*/
+    #callingTable tbody .selected {
+        background-color: #cce5ff;
+    }
+
+#callingTable td {
+    text-wrap: nowrap;
+}
+
+.spanshow {
+    font-size:1.2em;
+    margin-top:10px;
+    font-weight:bold;
+}
+
+.patient-called {
+    background-color: #FFCCCC !important;
+}

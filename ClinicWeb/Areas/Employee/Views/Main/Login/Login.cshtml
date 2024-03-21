@@ -1,7 +1,9 @@
-﻿@{
+﻿@model MemberEmployeeList
+
+@{
     ViewData["Title"] = "登入";
 }
-<!DOCTYPE html>
+@* <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -11,7 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>登入</title>
-
+@*
     <!-- Bootstrap -->
     <link href="~/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -22,9 +24,15 @@
     <link href="~/vendors/animate.css/animate.min.css" rel="stylesheet">
 
     <!-- Custom Theme Style -->
-    <link href="~/build/css/custom.min.css" rel="stylesheet">
-</head>
+    <link href="~/build/css/custom.min.css" rel="stylesheet"> *@
 
+@*
+
+</head> *@
+
+
+
+@*
 <body class="login">
     <div>
         <a class="hiddenanchor" id="signup"></a>
@@ -33,16 +41,26 @@
         <div class="login_wrapper">
             <div class="animate form login_form">
                 <section class="login_content">
-                    <form>
+                    <form asp-area="Employee" asp-controller="Main" asp-action="LoginForStaff" method="post">
                         <h1>Login Form</h1>
                         <div>
-                            <input type="text" class="form-control" placeholder="Username" required="" />
+                            <input asp-for="StaffNumber" class="form-control" placeholder="Username" required="" />
                         </div>
+
                         <div>
-                            <input type="password" class="form-control" placeholder="Password" required="" />
+
                         </div>
+
                         <div>
-                            <a class="btn btn-default submit" asp-action="Index">Log in</a>
+                            <!--密碼要加type 不然會顯示出來-->
+                            <input asp-for="EmpPassword" type="password" class="form-control" placeholder="Password" required="" />
+                        </div>
+                        @if (ViewData["ErrorMessage"] != null)
+                        {
+                            <div class="text-danger">@ViewData["ErrorMessage"]</div>
+                        }
+                        <div>
+                            <button class="btn btn-default submit" type="submit">Log in</button>
                             <a class="reset_pass" href="#">Lost your password?</a>
                         </div>
 
@@ -94,15 +112,70 @@
                             <div class="clearfix"></div>
                             <br />
 
-                            <div>
-                                <h1><i class="fa fa-paw"></i> Gentelella Alela!</h1>
-                                <p>©2016 All Rights Reserved. Gentelella Alela! is a Bootstrap 4 template. Privacy and Terms</p>
-                            </div>
+
                         </div>
                     </form>
                 </section>
             </div>
         </div>
     </div>
+</body>
+</html>
+ *@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+
+
+    <link href="~/msit155e/css/StaffLogin/StaffLogin.css" rel="stylesheet">
+
+</head>
+<body>
+
+    <div class="login-container">
+        <div class="logo">
+            <img src="~/msit155e/images/LOGO.png" alt=" Logo">
+        </div>
+        <form asp-area="Employee" asp-controller="Main" asp-action="LoginForStaff" method="post">
+            <div class="form-control">
+                <label for="username">員工編號</label>
+                <input type="text" asp-for="StaffNumber">
+            </div>
+            <div class="form-control">
+                <label for="password">員工密碼</label>
+                <input type="password" asp-for="EmpPassword">
+            </div>
+
+            @if (ViewData["ErrorMessage"] != null)
+            {
+                <div class="text-danger" style="color:red">@ViewData["ErrorMessage"]</div>
+            }
+
+
+            <div class="buttons">
+                <button type="reset" class="button reset">清除</button>
+                <button type="submit" class="button login">登入</button>
+            </div>
+        </form>
+
+    </div>
+
+    <div>
+        <button type="button" onclick="fillDemo('1001', 'aeew234')">1001 護士 陳小華 </button>
+        <button type="button" onclick="fillDemo('1004', 'aeew234')">1004 行政 黃小勇</button>
+        <button type="button" onclick="fillDemo('1010', 'aeew234')">1010 管理員 張秀娟</button>
+    </div>
+
+    <script>
+        function fillDemo(staffNumber, password) {
+            document.getElementById('StaffNumber').value = staffNumber;
+            document.getElementById('EmpPassword').value = password;
+        }
+    </script>
 </body>
 </html>

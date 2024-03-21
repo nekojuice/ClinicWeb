@@ -22,7 +22,7 @@ public partial class MemberEmployeeList
     [StringLength(50)]
     public string Name { get; set; }
 
-    public bool Gender { get; set; }
+    public bool? Gender { get; set; }
 
     [Required]
     [Column("Blood_Type")]
@@ -48,7 +48,7 @@ public partial class MemberEmployeeList
     public string Phone { get; set; }
 
     [Column("Birth_Date", TypeName = "datetime")]
-    public DateTime BirthDate { get; set; }
+    public DateTime? BirthDate { get; set; }
 
     [Required]
     [Column("Emp_Type")]
@@ -59,10 +59,14 @@ public partial class MemberEmployeeList
     public string Department { get; set; }
 
     [Column("Emp_Password")]
-    [StringLength(50)]
     public string EmpPassword { get; set; }
 
     public byte[] EmpPhoto { get; set; }
+
+    public bool? Quit { get; set; }
+
+    [StringLength(50)]
+    public string EmpMail { get; set; }
 
     [InverseProperty("Doctor")]
     public virtual ICollection<AppointmentRoomSchedule> AppointmentRoomScheduleDoctor { get; set; } = new List<AppointmentRoomSchedule>();

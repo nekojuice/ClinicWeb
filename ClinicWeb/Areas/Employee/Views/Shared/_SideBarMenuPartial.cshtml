@@ -4,29 +4,31 @@
 <li>
 	<a asp-area="Employee" asp-controller="Main" asp-action="Index"><i class="fa fa-home"></i> 後台首頁 </a>
 </li>
-<li @if (ViewBag.AREA == "Member")
+<li class="Membersec" @if (ViewBag.AREA == "Member")
 	@("class=active")
 >
 	<a><i class="fa fa-users"></i> 會員管理 <span class="fa fa-chevron-down"></span></a>
 	<ul class="nav child_menu" @if (ViewBag.AREA == "Member")
 		@("style=display:block;")
 >
-		<li><a asp-area="Member" asp-controller="Home" asp-action="Index">功能首頁</a></li>
-		<li><a asp-area="Member" asp-controller="Home" asp-action="Index2">連結模板</a></li>
+		<li><a asp-area="Member" asp-controller="Member" asp-action="MemIndex">會員資料</a></li>
+		<li><a asp-area="Member" asp-controller="Emp" asp-action="EmpIndex">員工資料</a></li>
 	</ul>
 </li>
-<li @if (ViewBag.AREA == "Attend")
+<li class="Attendsec" @if (ViewBag.AREA == "Attend")
 	@("class=active")
 >
 	<a><i class="fa fa-suitcase"></i> 差勤管理 <span class="fa fa-chevron-down"></span></a>
 	<ul class="nav child_menu" @if (ViewBag.AREA == "Attend")
 		@("style=display:block;")
 >
-		<li><a asp-area="Attend" asp-controller="Home" asp-action="Index">功能首頁</a></li>
-		<li><a asp-area="Attend" asp-controller="Home" asp-action="Index2">連結模板</a></li>
+		<li><a asp-area="Attend" asp-controller="Att" asp-action="Index">上下班及差勤資訊</a></li>
+		<li><a asp-area="Attend" asp-controller="Att" asp-action="Leave">請假查詢</a></li>
+		<li><a asp-area="Attend" asp-controller="Att" asp-action="ExpenseRequests">費用查詢</a></li>
+		<li><a asp-area="Attend" asp-controller="Att" asp-action="Check">審核批准</a></li>
 	</ul>
 </li>
-<li @if (ViewBag.AREA == "Appointment")
+<li class="Appointmentsec" @if (ViewBag.AREA == "Appointment")
 	@("class=active")
 >
 	<a><i class="fa fa-desktop"></i> 掛號系統 <span class="fa fa-chevron-down"></span></a>
@@ -34,21 +36,23 @@
 		@("style=display:block;")
 >
 		<li><a asp-area="Appointment" asp-controller="ApptSys" asp-action="Index">掛號管理系統</a></li>
-		<li><a asp-area="Appointment" asp-controller="ApptSys" asp-action="ClinicInfoPartial">查詢病患掛號</a></li>
+		<li><a asp-area="Appointment" asp-controller="PatientSearch" asp-action="Index">查詢病患掛號</a></li>
+		<li><a asp-area="Appointment" asp-controller="Arrival" asp-action="Index">病患報到</a></li>
 	</ul>
 </li>
-<li @if (ViewBag.AREA == "Schedule")
+<li class="Schedulesec" @if (ViewBag.AREA == "Schedule")
 	@("class=active")
 >
 	<a><i class="fa fa-calendar"></i> 排班系統 <span class="fa fa-chevron-down"></span></a>
 	<ul class="nav child_menu" @if (ViewBag.AREA == "Schedule")
 		@("style=display:block;")
 >
-		<li><a asp-area="Schedule" asp-controller="Home" asp-action="Index">功能首頁</a></li>
-		<li><a asp-area="Schedule" asp-controller="Home" asp-action="Index2">連結模板</a></li>
+		<li><a asp-area="Schedule" asp-controller="Home" asp-action="ClinicInfo">門診維護</a></li>
+		<li><a asp-area="Schedule" asp-controller="Home" asp-action="DoctorSchedule">醫師班表</a></li>
+		<li><a asp-area="Schedule" asp-controller="Home" asp-action="NurseSchedule">護士班表</a></li>
 	</ul>
 </li>
-<li @if (ViewBag.AREA == "Cases")
+<li class="Casessec" @if (ViewBag.AREA == "Cases")
 	@("class=active")
 >
 	<a><i class="fa fa-edit"></i> 病例系統 <span class="fa fa-chevron-down"></span></a>
@@ -59,7 +63,7 @@
 		<li><a asp-area="Cases" asp-controller="Home" asp-action="Index2">連結模板</a></li>
 	</ul>
 </li>
-<li @if (ViewBag.AREA == "Drugs")
+<li class="Drugssec" @if (ViewBag.AREA == "Drugs")
 	@("class=active")
 >
 	<a><i class="fa fa-flask"></i> 藥師系統 <span class="fa fa-chevron-down"></span></a>
@@ -67,13 +71,14 @@
 		@("style=display:block;")
 >
 		<li><a asp-area="Drugs" asp-controller="Home" asp-action="Index">藥品資訊一覽表</a></li>
+		<li><a asp-area="Drugs" asp-controller="Home" asp-action="Index2">藥品仿單管理</a></li>
 		<li><a asp-area="Drugs" asp-controller="Home" asp-action="Type">劑型管理</a></li>
 		<li><a asp-area="Drugs" asp-controller="Home" asp-action="ClinicalUse">適應症管理</a></li>
 		<li><a asp-area="Drugs" asp-controller="Home" asp-action="SideEffect">副作用管理</a></li>
-		<li><a asp-area="Drugs" asp-controller="Home" asp-action="Index2">連結模板</a></li>
+		
 	</ul>
 </li>
-<li @if (ViewBag.AREA == "Shop")
+@* <li @if (ViewBag.AREA == "Shop")
 	@("class=active")
 >
 	<a><i class="fa fa-shopping-cart"></i> 商城管理 <span class="fa fa-chevron-down"></span></a>
@@ -83,7 +88,7 @@
 		<li><a asp-area="Shop" asp-controller="Home" asp-action="Index">功能首頁</a></li>
 		<li><a asp-area="Shop" asp-controller="Home" asp-action="Index2">連結模板</a></li>
 	</ul>
-</li>
+</li>*@
 <li @if (ViewBag.AREA == "Room")
 	@("class=active")
 >
@@ -91,7 +96,31 @@
 	<ul class="nav child_menu" @if (ViewBag.AREA == "Room")
 		@("style=display:block;")
 >
-		<li><a asp-area="Room" asp-controller="Home" asp-action="Index">功能首頁</a></li>
-		<li><a asp-area="Room" asp-controller="Home" asp-action="Index2">連結模板</a></li>
+		<li><a asp-area="Room" asp-controller="Room" asp-action="Index">功能首頁</a></li>
+		<li><a asp-area="Room" asp-controller="Order" asp-action="Index">預約平台</a></li>
+	</ul>
+</li>
+ 
+<li @if (ViewBag.AREA == "ClinicRoomSys")
+	@("class=active")
+>
+	<a><i class="fa fa-stethoscope"></i> 診間系統 <span class="fa fa-chevron-down"></span></a>
+	<ul class="nav child_menu" @if (ViewBag.AREA == "ClinicRoomSys")
+		@("style=display:block;")
+>
+		<li><a asp-area="ClinicRoomSys" asp-controller="Home" asp-action="Index">叫號看診系統</a></li>
+		<li><a asp-area="ClinicRoomSys" asp-controller="CallingSys" asp-action="View_CallingPage">叫號前台 <i class="fa fa-share-square-o"></i></a></li>
+	</ul>
+</li>
+
+
+<li @if (ViewBag.AREA == "Chatroom")
+	@("class=active")
+>
+	<a><i class="fa fa-cubes"></i> 線上諮詢 <span class="fa fa-chevron-down"></span></a>
+	<ul class="nav child_menu" @if (ViewBag.AREA == "Chatroom")
+		@("style=display:block;")
+>
+		<li><a asp-area="Chatroom" asp-controller="Chat" asp-action="Index">聊天室</a></li>
 	</ul>
 </li>
