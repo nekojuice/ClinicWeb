@@ -3,12 +3,12 @@
 {
 
     <link href="~/msit155e/css/MemberRegister/MemberRegister.css" rel="stylesheet">
-
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 }
 @{
     ViewData["Title"] = "RegisterMem";
 }
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
 
 <div class="register-container">
@@ -233,6 +233,20 @@
         swal("註冊成功！", "@ViewBag.SuccessMessage", "success");
     </script>
 }
+    @if (TempData["Error"] != null)
+    {
+
+        <script>
+            swal.fire({
+                position: "center",
+                icon: "error",
+                title: "@TempData["Error"]",
+                showConfirmButton: false,
+                confirmButtonText: "確定",
+                timer: 10000000
+            });
+        </script>
+    }
 
 
 @section Scripts
@@ -335,20 +349,6 @@
 
 
 
-        @if (TempData["Error"] != null)
-        {
-               
-        <script>
-            swal.fire({
-                position: "center",
-                icon: "error",
-                title: "@TempData["Error"]",
-                showConfirmButton: false,
-                confirmButtonText: "確定",
-                timer: 10000000
-            });
-        </script>
-        }
 
 
 

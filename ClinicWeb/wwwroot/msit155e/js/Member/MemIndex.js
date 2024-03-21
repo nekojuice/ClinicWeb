@@ -232,10 +232,24 @@ function rebindAll_Edit() {
     buttonEventFunc();
     //switchery綁定
     rebind_switchery(document.getElementById('Verification'))
+    // 綁定啟用未啟用提醒功能
+    attachAlertToSwitchery(document.getElementById('Verification'));
     //事件綁定 關閉新增會員時
     document.getElementById('editCloseButton').addEventListener('click', function () {
         deleteFormEdit();
     });
+}
+
+function attachAlertToSwitchery(switcheryElement) {
+    switcheryElement.onchange = function () {
+        if (this.checked) {
+            // 當開關為 true (啟用狀態)
+            Swal.fire("帳號啟用", "使用者現在是帳號啟用狀態。", "success");
+        } else {
+            // 當開關為 false (禁用狀態)
+            Swal.fire("帳號未啟用", "使用者將無法登入。", "warning");
+        }
+    };
 }
 function deleteFormEdit() {
     $MemEdit.modal('hide') //關掉小窗

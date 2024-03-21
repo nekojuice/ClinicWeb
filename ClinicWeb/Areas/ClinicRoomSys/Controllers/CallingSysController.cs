@@ -39,7 +39,7 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
                     status_id = x.PatientStateId,
                     診號 = x.ClinicNumber,
                     姓名 = x.Member.Name,
-                    性別 = x.Member.Gender ? "男" : "女",
+                    性別 = (bool)x.Member.Gender ? "男" : "女",
                     狀態 = x.PatientState.PatientStateName
                 })
                 );
@@ -106,7 +106,7 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
                 status_id = x.PatientStateId,
                 診號 = x.ClinicNumber,
                 姓名 = x.Member.Name,
-                性別 = x.Member.Gender ? "男" : "女",
+                性別 = (bool)x.Member.Gender ? "男" : "女",
                 狀態 = x.PatientState.PatientStateName
             }
             ).FirstOrDefault());

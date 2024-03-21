@@ -29,20 +29,19 @@
     <div class="col-xl-3">
         <div class="card">
             <div class="card">
-                <img src="~/images/person_4.jpg" class="card-img-top" alt="..." style="width: 60%;border-radius: 50%;margin: 0 auto;margin-top:2em;box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);">
+                <img src="~/images/user.png" id="ClientPic" class="card-img-top" alt="..." style="width: 60%;border-radius: 50%;margin: 0 auto;margin-top:2em;box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);">
                 <div class="card-body">
-                    <h5 class="card-title">Coding Yaar</h5>
+                   @*  <h5 class="card-title">Coding Yaar</h5> *@
+                    <h5 class="card-title">會員姓名：@User.Identity.Name</h5>
                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                 </div>
             </div>
-            <div class="card-body profile-card pt-4 d-flex flex-column">
+            @* <div class="card-body profile-card pt-4 d-flex flex-column">
                 <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                     <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">我的評價</button>
-                    @* <button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">檢查報告</button>
-                    <button class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">處方籤</button>
-                    <button class="nav-link" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings" type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">Chart</button> *@
+                 
                 </div>
-            </div>
+            </div> *@
         </div>
     </div>
 
@@ -250,24 +249,6 @@
             QueryMedicalRecords();
         }
 
-        // //demo按鈕
-        // $('#buttonDemo').on('click', function () {
-        //     // 修改就診滿意度星级评分
-        //     $('#PatientSatisfaction .fa-star-o').slice(0, 5).removeClass('fa-star-o').addClass('fa-star');
-            
-        //     // 修改醫師積極度星级评分
-        //     $('#DocSatisfaction .fa-star-o').slice(0, 3).removeClass('fa-star-o').addClass('fa-star');
-        
-        //     // 修改診間整潔度星级评分
-        //     $('#ClinicSatisfaction .fa-star-o').slice(0, 4).removeClass('fa-star-o').addClass('fa-star');
-           
-        //     // 修改系統滿意度星级评分
-        //     $('#SysSatisfaction .fa-star-o').slice(0, 4).removeClass('fa-star-o').addClass('fa-star');
-            
-        // });
-
-
-
         $('#buttonAdd').on('click', function () {
             let valid = true;
           
@@ -296,24 +277,6 @@
 
 
 
-
-
-        // var SetRatingStar = function () {
-        //     return $star_rating.each(function () {
-        //         if (parseInt($star_rating.siblings('input.rating-value').val()) >= parseInt($(this).data('rating'))) {
-        //             return $(this).removeClass('fa-star-o').addClass('fa-star');
-        //         } else {
-        //             return $(this).removeClass('fa-star').addClass('fa-star-o');
-        //         }c
-        //     });
-        // };
-
-        // $star_rating.on('click', function () {
-        //     $star_rating.siblings('input.rating-value').val($(this).data('rating'));
-        //     return SetRatingStar();
-        // });
-
-       // SetRatingStar();
         $(document).ready(function () {
 
         });

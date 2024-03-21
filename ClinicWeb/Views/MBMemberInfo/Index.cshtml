@@ -1,55 +1,32 @@
 ﻿    @model ClinicWeb.Areas.Member.Models.MemberMemberList
-@* @model ClinicWeb.Models.MemberMemberList *@
+
 
 @section styles
 {
-    <link href="~/msit155e/css/cases/responsivetable.css" rel="stylesheet" />
-    <!-- Favicons -->
-    <link href="assets/img/favicon.png" rel="icon">
-    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-    <!-- Google Fonts -->
-    <link href="https://fonts.gstatic.com" rel="preconnect">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-
-    <!-- Vendor CSS Files -->
-    <link href="~/msit155e/css/MemberProfile/bootstrap.min.css" rel="stylesheet">
-    <link href="~/msit155e/css/MemberProfile/bootstrap-icons.css" rel="stylesheet">
-    <link href="~/msit155e/css/MemberProfile/boxicons.min.css" rel="stylesheet">
-    <link href="~/msit155e/css/MemberProfile/quill.snow.css" rel="stylesheet">
-    <link href="~/msit155e/css/MemberProfile/quill.bubble.css" rel="stylesheet">
-    <link href="~/msit155e/css/MemberProfile/remixicon.css" rel="stylesheet">
-    <link href="~/msit155e/css/MemberProfile/style.css" rel="stylesheet">
-
-    <!--會員資料表的位置以及樣式微調-->
-    <link href="~/msit155e/css/MemberProfile/MemberProfile.css" rel="stylesheet">
-
-    <!-- Template Main CSS File -->
-    <link href="~/msit155e/css/MemberProfile/style.css" rel="stylesheet">
-    <!--sweetalert-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.min.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 }
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <div class="row d-flex align-items-start">
 
     <div class="col-xl-3">
-       
+
         <div class="card">
-             <form id="uploadForm" enctype="multipart/form-data">
-            <div class="card text-center">
-                <img src="~/images/person_4.jpg" class="card-img-top" alt="..." style="width: 60%; border-radius: 50%; margin: 0 auto; margin-top: 2em; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);">
-                <div class="card-body">
-                    <div class="btn-group" role="group" style="margin: 1rem;">
-                            <button type="button" id="uploadButton" class="btn btn-primary btn-sm me-2" data-toggle="modal" data-target="#uploadModal" title="Upload new profile image">更新照片</button>
+            <form id="uploadForm" enctype="multipart/form-data" method="post">
+                <!--上傳圖片時傳入id找人-->
+                <input type="hidden" asp-for="MemberId" />
+                <div class="card text-center">
+                    <img src="~/images/user.png" id="ClientPic" class="card-img-top" alt="..." style="width: 60%; border-radius: 50%; margin: 0 auto; margin-top: 2em; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);">
+                    <div class="card-body">
+                        <div class="btn-group" role="group" style="margin: 1rem;">
+                            <button type="button" class="btn btn-primary btn-sm me-2" data-bs-toggle="modal" data-bs-target="#uploadModal" title="Upload new profile image">更新照片</button>
                             <!-- Modal -->
-                            <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel" aria-hidden="true">
+                            <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel" aria-hidden="true" data-bs-backdrop="static">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="uploadModalLabel">更新大頭照 </h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                           @*  <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
-                                            </button>
+                                            </button> *@
                                         </div>
                                         <div class="modal-body">
                                             <!-- 上傳圖片modal區域 -->
@@ -58,36 +35,55 @@
                                                     <i style="color: #6c757d;"></i>
                                                     <h5 class="card-title mt-2">上傳圖片</h5>
                                                     <p class="card-text">點擊此處上傳</p>
-                                                    <input type="file" id="ImageUpload" name="PhotoEdit" accept="image/*" style="display: none;" />
+                                                    <input type="file" id="ImageUpload" name="ImageUpload" accept="image/*" style="display: none;" />
                                                     <!--固定預覽圖片顯示比例-->
                                                     <img id="PreviewImage" src="#" alt="Image preview" style="display:none; width: 100%; height: 180px; object-fit: contain;">
                                                 </div>
                                             </div>
-                                        </div>  
-                                      
+                                        </div>
+
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉 </button>
-                                            <button type="button" class="btn btn-primary" onclick="uploadImage()">上傳 </button>
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉 </button>
+                                            <button type="button" class="btn btn-primary" id="uploadButton">上傳 </button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
 
-                    @*     <i class="bi bi-upload"></i>
+                            @*     <i class="bi bi-upload"></i>
                             <i class="bi bi-trash"></i> *@
-                        <a href="#" class="btn btn-danger btn-sm ms-2" title="Remove my profile image">刪除照片</a>
+                            <a href="#" class="btn btn-danger btn-sm ms-2" title="Remove my profile image">刪除照片</a>
+                        </div>
+
+                        <!--測試綁定按鈕顯示-->
+                     @*    @if (Model.GoogleSub==null)
+                        {
+                            
+                            <li class="nav-item">
+                                <button asp-controller="ClientPage" asp-action="Logout">綁定</button>
+                            </li>
+                        }
+                        else
+                        {
+
+                            <li class="nav-item">
+                                <button asp-controller="ClientPage" asp-action="Login">取消綁定</button>
+                            </li>
+                        } *@
+
+
+
+                        <h5 class="card-title">會員姓名：@User.Identity.Name</h5>
                     </div>
-                    <h5 class="card-title">會員姓名：</h5>
                 </div>
-            </div>
             </form>
 
 
             <div class="card-body profile-card pt-4 d-flex flex-column">
                 <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                     <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">會員資料檢視</button> 
-                   @*  <button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">修改資料</button> *@
+                    <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">會員資料檢視</button>
+                    @*  <button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">修改資料</button> *@
                 </div>
             </div>
         </div>
@@ -98,149 +94,151 @@
             <div class="card-body pt-3">
             </div>
             <div class="card-body pt-3">
-               @*  <div class="tab-content" id="v-pills-tabContent"> *@
-                   @*  <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-                        <!--會員資料檢視-->
-                        <partial name="_MemberProfilePartial">
-                    </div> *@
-                   @*  <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab"> *@
+                @*  <div class="tab-content" id="v-pills-tabContent"> *@
+                @*  <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                <!--會員資料檢視-->
+                <partial name="_MemberProfilePartial">
+                </div> *@
+                @*  <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab"> *@
                 <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-                        <!--會員資料修改-->
+                    <!--會員資料修改-->
 
-                        <div class="container">
-                            <h1>修改資料</h1>
-                   
-                            <form id="memberInfo">
+                    <div class="container">
+                        <h1>修改資料</h1>
+
+                        <form id="memberInfo">
+                            <!--避免資料被洗掉 一開始就要傳入-->
                             <input type="hidden" asp-for="MemberId" />
                             <input type="hidden" asp-for="Verification" />
                             <input type="hidden" asp-for="MemberNumber" />
                             <input type="hidden" asp-for="GoogleSub" />
                             <input type="hidden" asp-for="ActivateToken" />
                             <input type="hidden" asp-for="MemPhoto" />
-                                <div class="row mb-3">
-                                  @*   <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
-                                    <div class="col-md-8 col-lg-9"> *@
-                                      @*   <img src="~/images/person_4.jpg" class="card-img-top" alt="Profile" style="width: 60%;border-radius: 50%;margin: 0 auto;margin-top:2em;box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);"> *@
-                                      @*   <div class="pt-2">
-                                            <a href="#" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></a>
-                                            <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
-                                        </div>
-                                    </div>*@
-                                </div> 
+                            <input type="hidden" asp-for="MemPassword" />
+                            <div class="row mb-3">
+                                @*   <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
+                                <div class="col-md-8 col-lg-9"> *@
+                                @*   <img src="~/images/person_4.jpg" class="card-img-top" alt="Profile" style="width: 60%;border-radius: 50%;margin: 0 auto;margin-top:2em;box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);"> *@
+                                @*   <div class="pt-2">
+                                <a href="#" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></a>
+                                <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
+                                </div>
+                                </div>*@
+                            </div>
 
-                                <div class="row mb-3">
-                                    <label asp-for="Name" class="col-md-4 col-lg-3 col-form-label"></label>
-                                    <div class="col-md-8 col-lg-9">
-                                        <input asp-for="Name" type="text" class="form-control">
-                                    </div>
+                            <div class="row mb-3">
+                                <label asp-for="Name" class="col-md-4 col-lg-3 col-form-label"></label>
+                                <div class="col-md-8 col-lg-9">
+                                    <input asp-for="Name" type="text" class="form-control">
                                 </div>
+                            </div>
 
-                                <div class="row mb-3">
-                                    <label asp-for="NationalId" class="col-md-4 col-lg-3 col-form-label"></label>
-                                    <div class="col-md-8 col-lg-9">
-                                        <input asp-for="NationalId" type="text" class="form-control">
-                                    </div>
+                            <div class="row mb-3">
+                                <label asp-for="NationalId" class="col-md-4 col-lg-3 col-form-label"></label>
+                                <div class="col-md-8 col-lg-9">
+                                    <input asp-for="NationalId" type="text" class="form-control">
                                 </div>
+                            </div>
 
-                                <div class="row mb-3">
-                                    <label asp-for="MemEmail" class="col-md-4 col-lg-3 col-form-label"></label>
-                                    <div class="col-md-8 col-lg-9">
-                                        <input asp-for="MemEmail" type="text" class="form-control">
-                                    </div>
+                            <div class="row mb-3">
+                                <label asp-for="MemEmail" class="col-md-4 col-lg-3 col-form-label"></label>
+                                <div class="col-md-8 col-lg-9">
+                                    <input asp-for="MemEmail" type="text" class="form-control">
                                 </div>
-                                <!-- 聯絡電話 -->
-                                <div class="row mb-3">
-                                    <label asp-for="Phone" class="col-md-4 col-lg-3 col-form-label"></label>
-                                    <div class="col-md-8 col-lg-9">
-                                        <input asp-for="Phone" type="text" class="form-control">
-                                    </div>
+                            </div>
+                            <!-- 聯絡電話 -->
+                            <div class="row mb-3">
+                                <label asp-for="Phone" class="col-md-4 col-lg-3 col-form-label"></label>
+                                <div class="col-md-8 col-lg-9">
+                                    <input asp-for="Phone" type="text" class="form-control">
                                 </div>
-                                <!--性別-->
-                                <div class="row mb-3">
-                                    <label asp-for="Gender" class="col-md-4 col-lg-3 col-form-label"></label>
-                                    <div class="col-md-8 col-lg-9">
-                                        <select asp-for="Gender" class="form-control">
-                                            <!option value='true' @if ((bool)Model.Gender)
-                                            {
-                                                @("selected")
-                                            }> 男 </!option >
-                                            <!option value='false'  @if (!(bool)Model.Gender)
-                                            {
-                                                @("selected")
-                                            }> 女 </!option >
-                                        </select>
-                                    </div>
+                            </div>
+                            <!--性別-->
+                            <div class="row mb-3">
+                                <label asp-for="Gender" class="col-md-4 col-lg-3 col-form-label"></label>
+                                <div class="col-md-8 col-lg-9">
+                                    <select asp-for="Gender" class="form-control">
+                                        <!option value='true' @if ((bool)Model.Gender)
+                                        {
+                                            @("selected")
+                                        }> 男 </!option >
+                                        <!option value='false'  @if (!(bool)Model.Gender)
+                                        {
+                                            @("selected")
+                                        }> 女 </!option >
+                                    </select>
                                 </div>
-                                <!-- 血型 -->
-                                <div class="row mb-3">
-                                    <label asp-for="BloodType" class="col-md-4 col-lg-3 col-form-label"></label>
-                                    <div class="col-md-8 col-lg-9">
-                                        <select class="form-control" asp-for="BloodType">
+                            </div>
+                            <!-- 血型 -->
+                            <div class="row mb-3">
+                                <label asp-for="BloodType" class="col-md-4 col-lg-3 col-form-label"></label>
+                                <div class="col-md-8 col-lg-9">
+                                    <select class="form-control" asp-for="BloodType">
 
-                                            <option>A</option>
-                                            <option>B</option>
-                                            <option>O</option>
-                                            <option>AB</option>
-                                        </select>
-                                    </div>
+                                        <option>A</option>
+                                        <option>B</option>
+                                        <option>O</option>
+                                        <option>AB</option>
+                                    </select>
                                 </div>
-                                <!--戶籍地址-->
-                                <div class="row mb-3">
-                                    <label asp-for="Address" class="col-md-4 col-lg-3 col-form-label"></label>
-                                    <div class="col-md-8 col-lg-9">
-                                        <input asp-for="Address" type="text" class="form-control">
-                                    </div>
+                            </div>
+                            <!--戶籍地址-->
+                            <div class="row mb-3">
+                                <label asp-for="Address" class="col-md-4 col-lg-3 col-form-label"></label>
+                                <div class="col-md-8 col-lg-9">
+                                    <input asp-for="Address" type="text" class="form-control">
                                 </div>
-                                <!--聯絡地址-->
-                                <div class="row mb-3">
-                                    <label asp-for="ContactAddress" class="col-md-4 col-lg-3 col-form-label"></label>
-                                    <div class="col-md-8 col-lg-9">
-                                        <input asp-for="ContactAddress" type="text" class="form-control">
-                                    </div>
+                            </div>
+                            <!--聯絡地址-->
+                            <div class="row mb-3">
+                                <label asp-for="ContactAddress" class="col-md-4 col-lg-3 col-form-label"></label>
+                                <div class="col-md-8 col-lg-9">
+                                    <input asp-for="ContactAddress" type="text" class="form-control">
                                 </div>
-                                <!--生日-->
-                                <div class="row mb-3">
-                                    <label asp-for="BirthDate" class="col-md-4 col-lg-3 col-form-label"></label>
-                                    <div class="col-md-8 col-lg-9">
+                            </div>
+                            <!--生日-->
+                            <div class="row mb-3">
+                                <label asp-for="BirthDate" class="col-md-4 col-lg-3 col-form-label"></label>
+                                <div class="col-md-8 col-lg-9">
 
-                                        <input asp-for="BirthDate" class="date-picker form-control" type="date">
-                                    </div>
+                                    <input asp-for="BirthDate" class="date-picker form-control" type="date">
                                 </div>
-                                <!--緊急聯絡人-->
-                                <div class="row mb-3">
-                                    <label asp-for="IceName" class="col-md-4 col-lg-3 col-form-label"></label>
-                                    <div class="col-md-8 col-lg-9">
-                                        <input asp-for="IceName" type="text" class="form-control">
-                                    </div>
+                            </div>
+                            <!--緊急聯絡人-->
+                            <div class="row mb-3">
+                                <label asp-for="IceName" class="col-md-4 col-lg-3 col-form-label"></label>
+                                <div class="col-md-8 col-lg-9">
+                                    <input asp-for="IceName" type="text" class="form-control">
                                 </div>
-                                <!--緊急聯絡人電話-->
-                                <div class="row mb-3">
-                                    <label asp-for="IceNumber" class="col-md-4 col-lg-3 col-form-label"></label>
-                                    <div class="col-md-8 col-lg-9">
-                                        <input asp-for="IceNumber" type="text" class="form-control">
-                                    </div>
+                            </div>
+                            <!--緊急聯絡人電話-->
+                            <div class="row mb-3">
+                                <label asp-for="IceNumber" class="col-md-4 col-lg-3 col-form-label"></label>
+                                <div class="col-md-8 col-lg-9">
+                                    <input asp-for="IceNumber" type="text" class="form-control">
                                 </div>
-                                <!--會員密碼-->
-                                <div class="row mb-3">
-                                    <label asp-for="MemPassword" class="col-md-4 col-lg-3 col-form-label"></label>
-                                    <div class="col-md-8 col-lg-9">
-                                        <input asp-for="MemPassword" type="text" class="form-control">
-                                    </div>
+                            </div>
+                            <!--會員密碼-->
+                          @*   <div class="row mb-3">
+                                <label asp-for="MemPassword" class="col-md-4 col-lg-3 col-form-label"></label>
+                                <div class="col-md-8 col-lg-9">
+                                    <input asp-for="MemPassword" type="text" class="form-control">
                                 </div>
+                            </div> *@
 
-                                <div class="text-center">
-                                    <button type="submit" class="btn btn-primary">保存變更</button>
-                                </div>
-                            </form><!-- End Profile Edit Form -->
-                        </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary">保存變更</button>
+                            </div>
+                        </form><!-- End Profile Edit Form -->
                     </div>
-
                 </div>
 
-                <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
             </div>
+
+            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
         </div>
     </div>
+</div>
 </div>
 
 
@@ -248,25 +246,40 @@
 @section Scripts
 {
 
-    <!-- Vendor JS Files -->
-    <script src="~/msit155e/js/MemberProfile/apexcharts.min.js"></script>
-    @* <script src="~/msit155e/js/MemberProfile/bootstrap.bundle.min.js"></script> *@
-    <script src="~/msit155e/js/MemberProfile/chart.umd.js"></script>
-    <script src="~/msit155e/js/MemberProfile/echarts.min.js"></script>
-    <script src="~/msit155e/js/MemberProfile/quill.min.js"></script>
-    <script src="~/msit155e/js/MemberProfile/simple-datatables.js"></script>
-    <script src="~/msit155e/js/MemberProfile/tinymce.min.js"></script>
-    <script src="~/msit155e/js/MemberProfile/validate.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <!-- Template Main JS File -->
-    <script src="~/msit155e/js/MemberProfile/main.js"></script>
+    @*     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.min.js"></script> *@
+
+
     <script>
+        //顯示會員大頭照
+        (async () => {
+
+            try {
+                const response = await fetch(`/MBMemberInfo/MemProfileForPicture`);
+                if (!response.ok) {
+                    throw new Error(`${response.status}`);
+                    return;
+                }
+
+                const blob = await response.blob();
+                if (blob.type != "image/jpeg") {
+                    return;
+                }
+
+                const imgUrl = URL.createObjectURL(blob);
+                document.getElementById('ClientPicLogout').src = imgUrl;
+                document.getElementById('ClientPic').src = imgUrl;
+            }
+            catch (error) {
+                console.log(error);
+            }
+
+        })();
+
+
         let $memberInfoForm
         let _memberInfoForm
-       
+
         $(document).ready(function () {
             // 檢查 TempData 中的 SuccessMessage
             var successMessage = '@TempData["SuccessMessage"]';
@@ -296,7 +309,7 @@
 
                 const result = await response.json();
                 console.log(result)
-                // 假設 result 是你從後端獲得的更新後的會員資料 JSON 對象
+
                 for (const key in result) {
                     if (result.hasOwnProperty(key)) {
                         const element = document.getElementsByName(key)[0]; // 根據名稱獲取對應的表單元素
@@ -306,7 +319,7 @@
                     }
                 }
 
-              
+
                 Swal.fire({
                     title: '成功',
                     text: '修改資料成功',
@@ -322,37 +335,76 @@
         });
 
 
+   
 
-      
-        
 
-        // 上傳
-        document.getElementById('uploadButton').addEventListener('click', function () {
-            var fileInput = document.getElementById('ImageUpload');
-            var formData = new FormData();
-            formData.append('file', fileInput.files[0]);
 
-            fetch('@Url.Action("UploadImage", "YourControllerName")', { // 
-                method: 'POST',
-                body: formData
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.imageUrl) {
-                        //  URL 
-                        document.getElementById('imagePreview').innerHTML = `<img src="${data.imageUrl}" alt="Uploaded Image" style="max-width: 100%; height: auto;">`;
-                    } else {
-                        // 处理错误
-                        console.error('Error:', data);
-                    }
-                })
-                .catch((error) => {
-                    console.error('Error:', error);
+
+        // 上傳按鈕事件
+        document.getElementById('uploadButton').addEventListener('click', async function () {
+            var formElement = document.getElementById('uploadForm');
+            var formData = new FormData(formElement);
+            // if (draggedFiles.length > 0) {
+            //     [...draggedFiles].forEach((file, index) => {
+            //         formData.append('file' + index, file);
+            //     });
+            // } else if (fileInput.files.length > 0) {
+            //     [...uploadForm.files].forEach((file, index) => {
+            //         formData.append('file' + index, file);
+            //     });
+            // }
+
+            try {
+                const response = await fetch(`@Url.Content("~/MBMemberInfo/UploadImage?MemberId=${MemberId}")`, {
+                    method: 'POST',
+                    body: formData
                 });
+
+                if (!response.ok) {
+                    throw new Error('網路請求失敗');
+                }
+
+                await response.json();
+                Swal.fire({
+                    title: '上傳成功',
+                    // text: '會員大頭照已更新',
+                    icon: 'success',
+                    confirmButtonText: '好的'
+                }).then((result) => {
+
+
+                    document.getElementById('PreviewImage').style.display = 'none';
+                    updateImagePreview('ImageUpload');
+                    $("#uploadModal").modal('toggle')
+
+
+                });
+
+
+
+
+            } catch (error) {
+                console.error('上傳錯誤:', error);
+                Swal.fire('上傳失敗', error.toString(), 'error');
+
+
+            }
         });
 
+        function updateImagePreview(selector) {
+            const inputElement = document.getElementById(selector);
+            if (inputElement.files && inputElement.files[0]) {
+                const file = inputElement.files[0];
+                const previewUrl = URL.createObjectURL(file);
 
-        //圖片預覽 
+                //
+                document.getElementById('ClientPicLogout').src = previewUrl;
+                document.getElementById('ClientPic').src = previewUrl;
+                document.getElementById('PreviewImage').style.display = 'block';
+            }
+        }
+
+        //圖片預覽
         document.querySelector('.cardSelector').addEventListener('click', function () {
             document.getElementById('ImageUpload').click();
         });
@@ -362,12 +414,10 @@
             reader.onload = function (e) {
                 var previewImage = document.getElementById('PreviewImage');
                 previewImage.src = e.target.result;
-                previewImage.style.display = 'block'; // 顯示預覽圖 
-
-   
-                // document.querySelector('.fa-upload').style.display = 'none'; // 未來可能會放一個上船的圖示 
-                document.querySelector('.card-title').style.display = 'none'; // 用來隱藏標題 
-                document.querySelector('.card-text').style.display = 'none'; // 藏文字提示 
+                previewImage.style.display = 'block'; // 顯示預覽圖
+                // document.querySelector('.fa-upload').style.display = 'none'; // 未來可能會放一個上船的圖示
+                document.querySelector('.card-title').style.display = 'none'; // 用來隱藏標題
+                document.querySelector('.card-text').style.display = 'none'; // 藏文字提示
             };
             reader.readAsDataURL(this.files[0]);
         });
