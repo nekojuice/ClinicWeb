@@ -211,95 +211,104 @@ namespace ClinicWeb.Areas.Drugs.Controllers
 
             return PartialView("~/Areas/Drugs/Views/Partial/_DrugEditPartial.cshtml", viewModel);
         }
-        //修改主表可以動了 還有部分未完成
+        //修改主表可以動了 還有部分未完成-->已完成
         [HttpPost]
-        public async Task<IActionResult> EditDrug(int id, [FromForm] EditDrugViewModel viewModel)
+        public async Task<IActionResult> EditDrug(int id, [FromForm] EditDrugViewModel viewModel,List<int> FIdClicicalUse, List<int> FIdSideEffect)
         {
-            try { 
-            var updateData = _context.PharmacyTMedicinesList.Find(id);
-            if (updateData != null)
+            try
             {
-                updateData.FIdDrug = id;
-                updateData.FDrugCode = viewModel.PharmacyTMedicinesList.FDrugCode;
-                updateData.FGenericName = viewModel.PharmacyTMedicinesList.FGenericName;
-                updateData.FTradeName = viewModel.PharmacyTMedicinesList.FTradeName;
-                updateData.FDrugName = viewModel.PharmacyTMedicinesList.FDrugName;
-                updateData.FPregnancyCategory = viewModel.PharmacyTMedicinesList.FPregnancyCategory;
-                updateData.FDrugDose = viewModel.PharmacyTMedicinesList.FDrugDose;
-                updateData.FMaxDose = viewModel.PharmacyTMedicinesList.FMaxDose;
-                updateData.FDosage = viewModel.PharmacyTMedicinesList.FDosage;
-                updateData.FPrecautions = viewModel.PharmacyTMedicinesList.FPrecautions;
-                updateData.FWarnings = viewModel.PharmacyTMedicinesList.FWarnings;
-                updateData.FStorage = viewModel.PharmacyTMedicinesList.FStorage;
-                updateData.FSupplier = viewModel.PharmacyTMedicinesList.FSupplier;
-                updateData.FBrand = viewModel.PharmacyTMedicinesList.FBrand;
-                await _context.SaveChangesAsync();
-            }
-            else
-            {
-                Console.WriteLine("NotFound");
-                return NotFound();
-            }
+                //先找編輯的主表
+
+                var updateData = _context.PharmacyTMedicinesList.Find(id);
+                if (updateData != null)
+                {
+                    updateData.FIdDrug = id;
+                    updateData.FDrugCode = viewModel.PharmacyTMedicinesList.FDrugCode;
+                    updateData.FGenericName = viewModel.PharmacyTMedicinesList.FGenericName;
+                    updateData.FTradeName = viewModel.PharmacyTMedicinesList.FTradeName;
+                    updateData.FDrugName = viewModel.PharmacyTMedicinesList.FDrugName;
+                    updateData.FPregnancyCategory = viewModel.PharmacyTMedicinesList.FPregnancyCategory;
+                    updateData.FDrugDose = viewModel.PharmacyTMedicinesList.FDrugDose;
+                    updateData.FMaxDose = viewModel.PharmacyTMedicinesList.FMaxDose;
+                    updateData.FDosage = viewModel.PharmacyTMedicinesList.FDosage;
+                    updateData.FPrecautions = viewModel.PharmacyTMedicinesList.FPrecautions;
+                    updateData.FWarnings = viewModel.PharmacyTMedicinesList.FWarnings;
+                    updateData.FStorage = viewModel.PharmacyTMedicinesList.FStorage;
+                    updateData.FSupplier = viewModel.PharmacyTMedicinesList.FSupplier;
+                    updateData.FBrand = viewModel.PharmacyTMedicinesList.FBrand;
+                    await _context.SaveChangesAsync();
+
+                    var updateDataTypeDetail = _context.PharmacyTTypeDetails.FirstOrDefault(x => x.FIdDrug == updateData.FIdDrug);
+                    if (updateDataTypeDetail != null)
+                    {
+                        updateDataTypeDetail.FIdTpye = viewModel.PharmacyTTypeDetails.FIdTpye;
+                    }
+                    await _context.SaveChangesAsync();
+
+                    var updateDataClinicalDetail = await _context.PharmacyTClinicalUseDetails.Where(x => x.FIdDrug == updateData.FIdDrug).ToListAsync();
+                    if (updateDataClinicalDetail.Count > 0)
+                    {
+                        _context.PharmacyTClinicalUseDetails.RemoveRange(updateDataClinicalDetail);
+                    }
+                    if(FIdClicicalUse!=null&& FIdClicicalUse.Any()) 
+                    {
+                        foreach (var clinicalUseId in FIdClicicalUse)
+                        {
+                            var clinicalUseDetails = new PharmacyTClinicalUseDetails { FIdDrug = updateData.FIdDrug, FIdClicicalUse = clinicalUseId };
+                            _context.PharmacyTClinicalUseDetails.Add(clinicalUseDetails);
+                        }
+                    }
+
+                    ////放棄使用EditDrugViewModel viewModel 前端傳值回來viewModel.PharmacyTClinicalUseList都是null
+                    ////foreach (var clinicalUseId in viewModel.PharmacyTClinicalUseList)
+                    ////{
+                    ////    var newClinicalUseDetail = new PharmacyTClinicalUseDetails
+                    ////    {
+                    ////        FIdDrug = updateData.FIdDrug,
+                    ////        FIdClicicalUse = clinicalUseId.FIdClinicalUse
+                    ////    };
+                    ////    _context.PharmacyTClinicalUseDetails.Add(newClinicalUseDetail);
+                    ////}
+                    var updateDataSideEffectDetail = await _context.PharmacyTSideEffectDetails.Where(x => x.FIdDrug == updateData.FIdDrug).ToListAsync();
+                    if(updateDataSideEffectDetail.Count > 0)
+                    {
+                        _context.PharmacyTSideEffectDetails.RemoveRange(updateDataSideEffectDetail);
+
+                    }
+                    if(FIdSideEffect!=null&&FIdSideEffect.Any()) 
+                    {
+                        foreach(var sideEffectId in FIdSideEffect)
+                        {
+                            var sideEffectDetials=new PharmacyTSideEffectDetails { FIdDrug=updateData.FIdDrug,FIdSideEffect=sideEffectId };
+                            _context.PharmacyTSideEffectDetails.Add(sideEffectDetials);
+                        }
+                    }
+                    ////同上原因
+                    ////foreach(var sideEffectId in viewModel.PharmacyTSideEffectDetails)
+                    ////{
+                    ////    var newSideEffectDetail = new PharmacyTSideEffectDetails
+                    ////    {
+                    ////        FIdDrug = updateData.FIdDrug,
+                    ////        FIdSideEffect = sideEffectId.FIdSideEffect
+                    ////    };
+                    ////    _context.PharmacyTSideEffectDetails.Add(newSideEffectDetail);
+                    ////}
+                    await _context.SaveChangesAsync();
+
+                }
+                else
+                {
+                    Console.WriteLine("NotFound");
+                    return NotFound();
+                }
             }
             catch (DbUpdateConcurrencyException ex)
             {
                 Console.WriteLine($"{ex.Message}");
             }
             return View("~/Areas/Drugs/Views/Home/Index.cshtml");
-        }
+        }       
 
-        //////Update回DB
-        ////[HttpPost]
-        ////public async Task<IActionResult> EditDrug(int id,  EditDrugViewModel viewModel)
-        ////{
-        ////    if (id != viewModel.PharmacyTMedicinesList.FIdDrug)
-        ////    {
-        ////        return NotFound();
-        ////    }
-        ////    //if (ModelState.IsValid)
-        ////    //{
-        ////    try
-        ////    {
-        ////        //更新資料庫內容
-        ////        _context.Update(viewModel.PharmacyTMedicinesList);
-        ////        _context.Update(viewModel.PharmacyTTypeDetails);
-
-        ////        //var updateViewModel = await _context.PharmacyTMedicinesList.FindAsync(viewModel.PharmacyTMedicinesList.FIdDrug);
-        ////        //if(updateViewModel == null)
-        ////        //{
-        ////        //    return NotFound();
-        ////        //}
-        ////        //updateViewModel.FDrugCode = viewModel.PharmacyTMedicinesList.FDrugCode;
-        ////        ////viewModel.PharmacyTMedicinesList.FDrugCode=updateViewModel.FDrugCode;
-
-        ////        //_context.Update(updateViewModel);
-        ////        await _context.SaveChangesAsync();
-        ////    }
-        ////    catch (DbUpdateConcurrencyException ex)
-        ////    {
-        ////        if (!PharmacyTMedicinesListExists(viewModel.PharmacyTMedicinesList.FIdDrug))
-        ////        {
-        ////            return NotFound();
-        ////        }
-        ////        else
-        ////        {
-        ////            Console.WriteLine($"Update failed: {ex.Message}");
-        ////        }
-
-        ////    }
-        ////    catch (Exception ex)
-        ////    {
-        ////        Console.WriteLine($"Update failed: {ex.Message}");
-
-        ////    }
-        ////    // }
-        ////    return View("~/Areas/Drugs/Views/Home/Index.cshtml");
-        ////}
-        private bool PharmacyTMedicinesListExists(int id)
-        {
-            return (_context.PharmacyTMedicinesList?.Any(e => e.FIdDrug == id)).GetValueOrDefault();
-        }
-        
         //public async Task<IActionResult> DrugDetails()
         //{
         //    var List=await _context.PharmacyTClinicalUseList.ToListAsync();
@@ -316,6 +325,54 @@ namespace ClinicWeb.Areas.Drugs.Controllers
         //    return PartialView("_DrugDetailsPartial", viewModel);
         //}
 
+        //刪除選中的藥品資訊
+
+        public async Task<IActionResult>DeleteDrug(int id)
+        {
+            using(var transaction = _context.Database.BeginTransaction())
+            {
+                try
+                {
+                    //先刪除劑型明細表 drugId=id
+                    var typeDetials = _context.PharmacyTTypeDetails.FirstOrDefault(x => x.FIdDrug == id);
+                    if(typeDetials!=null)
+                    {
+                        _context.PharmacyTTypeDetails.Remove(typeDetials);
+                    }
+                    //刪除適應症明細表 drugId=id
+                    var clinicalUseDetails = _context.PharmacyTClinicalUseDetails.Where(x => x.FIdDrug == id);
+                    if (clinicalUseDetails.Any())
+                    {
+                        _context.PharmacyTClinicalUseDetails.RemoveRange(clinicalUseDetails);
+                    }
+                    //刪除副作用明細表 drugId=id
+                    var sideEffectDetails = _context.PharmacyTSideEffectDetails.Where(x => x.FIdDrug == id);
+                    if (sideEffectDetails.Any())
+                    {
+                        _context.PharmacyTSideEffectDetails.RemoveRange(sideEffectDetails);
+                    }
+                    await _context.SaveChangesAsync();
+
+                    //最後才能刪除藥品主表
+                    var medicine = _context.PharmacyTMedicinesList.FirstOrDefault(x => x.FIdDrug == id);
+                    if (medicine == null)
+                    {
+                        return NotFound();
+                    }
+                    _context.PharmacyTMedicinesList.Remove(medicine);
+                    await _context.SaveChangesAsync();
+                    transaction.Commit();
+                    return View("~/Areas/Drugs/Views/Home/index.cshtml");
+                }
+                catch(Exception ex)
+                {
+                    transaction.Rollback();
+                    _logger.LogError(ex, "An error occurred while deleting medicine.");
+                    return RedirectToAction("Error", "Home", new { area = "" });
+                    throw;
+                }
+            }
+        }
 
         //------------------------------------------------------------------------------------------------
 
@@ -431,8 +488,8 @@ namespace ClinicWeb.Areas.Drugs.Controllers
 
         public async Task<IActionResult> DeleteClinicalUse(int id)
         {
-            var pharmacyTClinicalUseList=await _context.PharmacyTClinicalUseList.FindAsync(id);
-            if(pharmacyTClinicalUseList == null)
+            var pharmacyTClinicalUseList = await _context.PharmacyTClinicalUseList.FindAsync(id);
+            if (pharmacyTClinicalUseList == null)
             {
                 return NotFound();
             }
@@ -440,6 +497,14 @@ namespace ClinicWeb.Areas.Drugs.Controllers
             await _context.SaveChangesAsync();
             return View("~/Areas/Drugs/Views/Home/ClinicalUse.cshtml");
         }
+
+        //---------------------------------仿單----------------------------------------------------
+        public IActionResult DrugFiles(PharmacyHealthInformation files) 
+        {
+            
+            return Content($"{files.FFileName}-");
+        }
+
 
     }
 }

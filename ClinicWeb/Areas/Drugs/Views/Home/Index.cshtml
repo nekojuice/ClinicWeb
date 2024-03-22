@@ -158,7 +158,7 @@
                         "data": null, title: "操作功能", "width": "20%",
                         render: function (data, type, row) {
                             return '<button type="button" name="Editor" data-id="' + row.id + '" class="btn btn-warning btn-sm"> 編輯 </button>' +
-                                '<button type="button"  name="Delete" class="btn btn-danger btn-sm"> 刪除 </button>'
+                                '<button type="button"  name="Delete" data-id="'+row.id+'" class="btn btn-danger btn-sm"> 刪除 </button>'
                         }
                     }
                 ],
@@ -227,7 +227,21 @@
                     console.log('Error fetching data:', error)
                 }
             });
-        });     
+        });
+
+        // // //
+        // // // 
+        // // var checkBoxValues = [];
+        // // var checkBoxes = document.querySelectorAll('.clinical-use-checkbox input[type=checkbox]');
+        // // checkBoxes.forEach(function (checkbox, index) {
+        // //     if (checkbox.checked) {
+        // //         checkBoxValues.push(index);
+        // //     }
+        // // });
+
+        // // // 將映射後的值設置到表單元素中
+        // // var hiddenInput = document.getElementById('mappedValues');
+        // // hiddenInput.value = checkBoxValues.join(',');
 
         //保存按鈕
         const btnEdit = document.querySelector('#editSaveButton');
@@ -236,7 +250,8 @@
             const id = $('#PharmacyTMedicinesList_FIdDrug').val();
             console.log(id);
             const formData = new FormData($('#form_DrugEdit')[0]);
-           // const jsonData = JSON.stringify(Object.fromEntries(formData));
+                            
+            // const jsonData = JSON.stringify(Object.fromEntries(formData));
            // const fDrugCode = $('#PharmacyTMedicinesList_FDrugCode').val();
 
           //  formData.append('PharmacyTMedicinesList.FDrugCode', fDrugCode);
@@ -254,7 +269,7 @@
                 if (response.ok) {
                     alert('修改成功');
                     QueryDrugDatas();
-                    $('#form_DrugEdit').modal('hide');
+                    $('#DrugEdit').modal('hide');
                 } else {
                     console.error('Update failed, status code:', response.status);
                     const errorData = await response.json();
@@ -265,6 +280,29 @@
             }
 
 
+        })
+
+        //刪除藥品
+        $(document).on('click', 'button[name=Delete]', async (event) => {
+
+            event.preventDefault();
+            var id = $(event.target).data('id');
+            console.log(id);
+            const urlDelete = `/Drugs/DrugsApi/DeleteDrug/${id}`
+            try {
+                const response = await fetch(urlDelete, function () {
+                    method: "POST"
+                });
+                if (response.ok) {
+                    alert('刪除成功');
+                    QueryDrugDatas();
+                } else {
+                    console.error('刪除失敗，狀態碼：', response.status);
+                }
+            }
+            catch (error) {
+                console.error(error);
+            }
         })
 
         //新增藥品
