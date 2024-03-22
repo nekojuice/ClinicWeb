@@ -74,6 +74,33 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
             );
         }
         [HttpPost]
+        public async Task<JsonResult> GURD(string id) //GETRECORDUPDATE
+        {
+            if (!int.TryParse(id, out int MrId))
+            {
+                return Json(new { error = "Invalid id parameter" });
+            }
+
+            var record = await _context.CasesMedicalRecords
+                .FirstOrDefaultAsync(x => x.MrId == MrId);
+
+            if (record == null)
+            {
+                return Json(new { error = "Record not found" });
+            }
+
+            return Json(new
+            {
+                RecordID = record.MrId,
+                BloodPresure = record.Bp,
+                Pulse = record.Pulse,
+                BodyTemparture = record.Bt,
+                ChiefComplaint = record.Cc,
+                Disposal = record.Disposal,
+                Prescribe = record.Prescribe
+            });
+        }
+        [HttpPost]
         public async Task<JsonResult> GRT(string id) //GETREPORT
         {
             return await Task.Run(() =>

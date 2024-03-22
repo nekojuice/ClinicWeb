@@ -12,7 +12,7 @@
                     <form id="recordaddf">
                         @* action="/ClinicWeb/SaveMedicalRecord" method="post" *@
                         <label for="bp">血壓:</label>
-                        <input type="text" class="form-control" id="addbp" name="bp" required>
+                        <input id="addbp" type="text" class="form-control" name="bp" required>
 
                         <label for="pulse">脈搏:</label>
                         <input id="addpulse" type="number" class="form-control" name="pulse">
@@ -32,6 +32,7 @@
                     </form>
                     <br>
                         <button id="submitrd" class="btn btn-primary">新增</button>
+                        <button id="updaterd" class="btn btn-primary">修改</button>
                     </div>
             </div>
         </div>

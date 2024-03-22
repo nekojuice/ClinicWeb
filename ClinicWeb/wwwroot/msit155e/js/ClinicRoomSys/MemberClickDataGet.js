@@ -143,8 +143,6 @@ async function getPrescriptionL(id) {
     //return data;
 }
 
-
-
 //修改主病例資料
 async function uploadFormData(id) {
     const record = {
@@ -181,6 +179,27 @@ async function uploadFormData(id) {
         console.error('Error:', error);
         // 這裡可以處理錯誤，比如提示用户操作失敗
     }
+}
+
+//修改阿巴阿巴
+async function getRecordForm(id) {
+    const response = await fetch(`/ClinicRoomSys/Cases/GURD/${id}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });
+    const data = await response.json();
+    console.log(data);
+    $('#addbp').val(data.bloodPresure);
+    $('#addpulse').val(data.pulse);
+    $('#addbt').val(data.bodyTemparture);
+    $('#addcc').val(data.chiefComplaint);
+    $('#adddisposal').val(data.disposal);
+    $('#addprescribe').val(data.prescribe);
+    $('#recordModal').modal('show');
+    $('#submitrd').hide();
+    $('#updaterd').show();
 }
 
 //日期設定
@@ -406,7 +425,7 @@ document.getElementById("submitrt").addEventListener("click",async function (eve
     }
 });
 
-//新增處方籤-藥單
+//新增處方籤-藥單事件
 document.getElementById("addPL").addEventListener("click",async function (event) {
     await AddNPreL();
     await getPrescriptionL(PID);
@@ -423,6 +442,8 @@ document.getElementById("addrecord").addEventListener("click", function (event) 
     $('#adddisposal').val('');
     $('#addprescribe').val('');
     //$('#recordModal').modal('show');
+    $('#submitrd').show();
+    $('#updaterd').hide();
    
 });
 
@@ -434,13 +455,14 @@ document.getElementById("addreport").addEventListener("click", function (event) 
 
 });
 
-//初始化處方表單
+//初始化處方表單,創建處方籤主表單
 document.getElementById("addpre").addEventListener("click", function (event) {
     $('#addDispensing').val('');
     AddDL();
     AddNPre();
     //$('#recordModal').modal('show');
 });
+
 //看診紀錄資料表按鍵事件
 $('#recordDataTable').on('click', '#Delete', function (e) {
     let data = $('#recordDataTable').DataTable().row(e.target.closest('tr')).data();
@@ -484,11 +506,13 @@ $('#recordDataTable').on('click', '#Delete', function (e) {
 
 });
 
-$('#recordDataTable').on('click', '#Regist', function (e) {
+$('#recordDataTable').on('click', '#Regist',async function (e) {
     let data = $('#recordDataTable').DataTable().row(e.target.closest('tr')).data();
     console.log(data);
     let id = data['recordID'];
-    alert('You clicked regist on :' + id);
+    console.log(id);
+    /*alert('You clicked regist on :' + id);*/
+    await getRecordForm(id);
 
     //$.ajax({
     //    type: 'GET',
@@ -500,6 +524,7 @@ $('#recordDataTable').on('click', '#Regist', function (e) {
     //    }
     //});
 });
+
 //檢查報告資料表按鍵事件
 $('#reportDataTable').on('click', '#Delete', function (e) {
     let data = $('#reportDataTable').DataTable().row(e.target.closest('tr')).data();
@@ -627,4 +652,3 @@ $('#prescriptionDataTable').on('click', '#Regist', function (e) {
     //    }
     //});
 });
-//檢查報告資料表按鍵事件
