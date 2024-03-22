@@ -210,7 +210,7 @@ async function uploadRecordForm(id) {
         // 這裡可以添加一些成功後的操作，比如更新UI或者是頁面導覽
         new PNotify({
             title: '成功',
-            text: '病歷表修改成功',
+            text: '記錄修改成功',
             type: 'info',
             styling: 'bootstrap3',
             setTimeout: 500
