@@ -227,6 +227,28 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
             await _context.SaveChangesAsync();
             return Ok(new { success = true, message = "Record updated successfully" }); 
         }
+        [HttpPost]
+        public async Task<IActionResult> URT(int id, [FromBody] CasesTestReport recordUpdateModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new { success = false, message = "Invalid data" });
+            }
+
+            var recordToUpdate = await _context.CasesTestReport.FirstOrDefaultAsync(x => x.ReportId == id);
+            if (recordToUpdate == null)
+            {
+                return NotFound(new { success = false, message = "Record not found" });
+            }
+            recordToUpdate.TestName = recordUpdateModel.TestName;
+            recordToUpdate.TestDate = recordUpdateModel.TestDate;
+            recordToUpdate.ReportDate = recordUpdateModel.ReportDate;
+            recordToUpdate.Result = recordUpdateModel.Result;
+
+
+            await _context.SaveChangesAsync();
+            return Ok(new { success = true, message = "Record updated successfully" });
+        }
         //新增大隊長
         [HttpPost]
         public async Task<IActionResult> AddMedicalRecord([FromBody] CasesMedicalRecords record)

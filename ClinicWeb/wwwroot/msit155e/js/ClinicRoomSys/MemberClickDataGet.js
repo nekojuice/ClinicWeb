@@ -257,22 +257,26 @@ async function getReportForm(id) {
     $('#addTestDate').val(data.testDate);
     $('#addReportDate').val(data.reportDate);
     $('#addTestResult').val(data.result);
+    $('#TDLabel').show();
+    $('#addReportDate').show();
+    $('#TRLabel').show();
+    $('#addTestResult').show();
+    $('#updatert').show();
+    $('#submitrt').hide();
     $('#reportModal').modal('show');
 }
 
-//修改看診紀錄資料
+//修改檢查報告資料
 async function uploadReportForm(id) {
     const record = {
-        Bp: $('#addbp').val(),
-        Pulse: $('#addpulse').val(),
-        Bt: $('#addbt').val(),
-        Cc: $('#addcc').val(),
-        Disposal: $('#adddisposal').val(),
-        Prescribe: $('#addprescribe').val(),
+        TestName: $('#addTestName').val(),
+        TestDate: $('#addTestDate').val(),
+        ReportDate: $('#addReportDate').val(),
+        Result: $('#addTestResult').val(),
     };
 
     try {
-        const response = await fetch(`/ClinicRoomSys/Cases/URD/${id}`, {
+        const response = await fetch(`/ClinicRoomSys/Cases/URT/${id}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -530,11 +534,6 @@ document.getElementById("addPL").addEventListener("click",async function (event)
 
 //初始化紀錄表單
 document.getElementById("addrecord").addEventListener("click", function (event) {
-    $('#TDLabel').hide();
-    $('#addReportDate').hide();
-    $('#TRLabel').hide();
-    $('#addTestResult').hide();
-    $('#updatert').hide();
     $('#submitrt').show();
     $('#addbp').val('');
     $('#addpulse').val('');
@@ -550,6 +549,12 @@ document.getElementById("addrecord").addEventListener("click", function (event) 
 
 //初始化報告表單
 document.getElementById("addreport").addEventListener("click", function (event) {
+    $('#TDLabel').hide();
+    $('#addReportDate').hide();
+    $('#TRLabel').hide();
+    $('#addTestResult').hide();
+    $('#updatert').hide();
+    $('#submitrt').show();
     $('#addTestName').val('');
     $('#addTestDate').val(datenow);
     //$('#recordModal').modal('show');
@@ -636,11 +641,12 @@ document.getElementById("updaterd").addEventListener("click", async function (ev
 });
 
 //檢查報告資料表按鍵事件
+let Rtid;
 $('#reportDataTable').on('click', '#Delete', function (e) {
     let data = $('#reportDataTable').DataTable().row(e.target.closest('tr')).data();
-    console.log(data);
+/*    console.log(data);*/
     let id = data['reportID'];
-    alert('You clicked delete on :' + id);
+/*    alert('You clicked delete on :' + id);*/
 
     Swal.fire({
         title: "確定要刪除嗎?",
@@ -677,22 +683,22 @@ $('#reportDataTable').on('click', '#Delete', function (e) {
     });
 });
 
-$('#reportDataTable').on('click', '#Regist', function (e) {
+$('#reportDataTable').on('click', '#Regist',async function (e) {
     let data = $('#reportDataTable').DataTable().row(e.target.closest('tr')).data();
-    console.log(data);
-    let id = data['reportID'];
-    alert('You clicked regist on :' + id);
-
-    //$.ajax({
-    //    type: 'GET',
-    //    url: `/MBRecordInfo/GP/${id}`,
-    //    //data: { id: mlaId },
-    //    //cache: false,
-    //    success: function (result) {
-
-    //    }
-    //});
+    /*console.log(data);*/
+    Rtid = data['reportID'];
+    /*alert('You clicked regist on :' + Rtid);*/
+    await getReportForm(Rtid);
 });
+
+document.getElementById("updatert").addEventListener("click", async function (event) {
+    event.preventDefault(); // 防止表單提交
+    const response = await uploadReportForm(Rtid);
+    if (response.ok) {
+        getReport(CASE_ID);
+    }
+});
+
 
 //處方資料表按鍵事件
 $('#prescriptionDataTable').on('click', '#Delete', function (e) {
