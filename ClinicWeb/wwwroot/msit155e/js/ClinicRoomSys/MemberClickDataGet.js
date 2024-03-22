@@ -563,7 +563,7 @@ $('#recordDataTable').on('click', '#Regist',async function (e) {
 
 document.getElementById("updaterd").addEventListener("click", async function (event) {
     event.preventDefault(); // 防止表單提交
-    const response = await uploadRecordForm();
+    const response = await uploadRecordForm(Rid);
     if (response.ok) {
         getRecord(CASE_ID);
     }
