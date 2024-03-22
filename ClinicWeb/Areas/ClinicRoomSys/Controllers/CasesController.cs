@@ -178,6 +178,30 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
             await _context.SaveChangesAsync();
             return Ok(new { success = true, message = "Record updated successfully" });
         }
+        [HttpPost]
+        public async Task<IActionResult> URD(int id, [FromBody] CasesMedicalRecords recordUpdateModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new { success = false, message = "Invalid data" });
+            }
+
+            var recordToUpdate = await _context.CasesMedicalRecords.FirstOrDefaultAsync(x => x.MrId == id);
+            if (recordToUpdate == null)
+            {
+                return NotFound(new { success = false, message = "Record not found" });
+            }
+
+            recordToUpdate.Bp = recordUpdateModel.Bp;
+            recordToUpdate.Pulse = recordUpdateModel.Pulse;
+            recordToUpdate.Bt = recordUpdateModel.Bt;
+            recordToUpdate.Cc = recordUpdateModel.Cc;
+            recordToUpdate.Disposal = recordUpdateModel.Disposal;
+            recordToUpdate.Prescribe = recordUpdateModel.Prescribe;
+
+            await _context.SaveChangesAsync();
+            return Ok(new { success = true, message = "Record updated successfully" }); 
+        }
         //新增大隊長
         [HttpPost]
         public async Task<IActionResult> AddMedicalRecord([FromBody] CasesMedicalRecords record)
@@ -252,6 +276,7 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
             return Ok(new { success = true, message = "Record updated successfully" });
         }
 
+        //取得藥品列表
         public async Task<IActionResult> GetDrugList()
         {
             var drugList = await _context.PharmacyTMedicinesList
@@ -300,7 +325,6 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
 
             return Ok();
         }
-
         [HttpPost]
         public async Task<IActionResult> DPrescription(string id)
         {

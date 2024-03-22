@@ -133,7 +133,7 @@ async function getPrescription(id) {
     $('#prescriptionDataTable').DataTable().clear();
     $('#prescriptionDataTable').DataTable().rows.add(data).draw();
 }
-
+//獲得處方藥單資料
 async function getPrescriptionL(id) {
     const response = await fetch(`/ClinicRoomSys/Cases/GPL/${id}`, { method: "POST" })
     const data = await response.json();
@@ -181,7 +181,47 @@ async function uploadFormData(id) {
     }
 }
 
-//修改阿巴阿巴
+//修改看診紀錄資料
+async function uploadRecordForm(id) {
+    const record = {
+        BloodPresure: $('#addbp').val(),
+        Pulse: $('#addpulse').val(),
+        BodyTemparture: $('#addbt').val(),
+        ChiefComplaint: $('#addcc').val(),
+        Disposal: $('#adddisposal').val(),
+        Prescribe: $('#addprescribe').val(),
+    };
+
+    try {
+        const response = await fetch(`/ClinicRoomSys/Cases/URD/${id}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(record),
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log('Success:', data);
+        // 這裡可以添加一些成功後的操作，比如更新UI或者是頁面導覽
+        new PNotify({
+            title: '成功',
+            text: '病歷表修改成功',
+            type: 'info',
+            styling: 'bootstrap3',
+            setTimeout: 500
+        })
+    } catch (error) {
+        console.error('Error:', error);
+        // 這裡可以處理錯誤，比如提示用户操作失敗
+    }
+}
+
+//獲得欲修改紀錄表單
 async function getRecordForm(id) {
     const response = await fetch(`/ClinicRoomSys/Cases/GURD/${id}`, {
         method: 'POST',
@@ -395,11 +435,6 @@ async function AddDL() {
     }
 }
 
-// 在页面加载完成后调用AddDL()函数
-/*document.addEventListener('DOMContentLoaded', AddDL);*/
-
-
-
 //修改主病例資料-事件
 document.getElementById("submit").addEventListener("click", function (event) {
     event.preventDefault(); // 防止表單提交
@@ -464,6 +499,7 @@ document.getElementById("addpre").addEventListener("click", function (event) {
 });
 
 //看診紀錄資料表按鍵事件
+let Rid;
 $('#recordDataTable').on('click', '#Delete', function (e) {
     let data = $('#recordDataTable').DataTable().row(e.target.closest('tr')).data();
     console.log(data);
@@ -509,10 +545,10 @@ $('#recordDataTable').on('click', '#Delete', function (e) {
 $('#recordDataTable').on('click', '#Regist',async function (e) {
     let data = $('#recordDataTable').DataTable().row(e.target.closest('tr')).data();
     console.log(data);
-    let id = data['recordID'];
-    console.log(id);
+    Rid = data['recordID'];
+    console.log(Rid);
     /*alert('You clicked regist on :' + id);*/
-    await getRecordForm(id);
+    await getRecordForm(Rid);
 
     //$.ajax({
     //    type: 'GET',
@@ -523,6 +559,14 @@ $('#recordDataTable').on('click', '#Regist',async function (e) {
 
     //    }
     //});
+});
+
+document.getElementById("updaterd").addEventListener("click", async function (event) {
+    event.preventDefault(); // 防止表單提交
+    const response = await uploadRecordForm();
+    if (response.ok) {
+        getRecord(CASE_ID);
+    }
 });
 
 //檢查報告資料表按鍵事件
