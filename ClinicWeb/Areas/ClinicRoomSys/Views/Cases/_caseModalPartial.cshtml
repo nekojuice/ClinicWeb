@@ -58,21 +58,15 @@
                         <label for="TestDate">檢查日期:</label>
                         <input type="date" class="form-control" id="addTestDate" name="TestDate">
 
-                  @*       <label for="bt">體溫:</label>
-                        <input type="number" class="form-control" id="addbt" name="bt" step="0.1" required>
+                        <label for="TestDate" id="TDLabel" hidden>報告日期:</label>
+                        <input type="date" class="form-control" id="addReportDate" name="TestDate" hidden>
 
-                        <label for="cc">主述:</label>
-                        <textarea id="addcc" class="form-control" name="cc" required></textarea>
-
-                        <label for="disposal">醫囑:</label>
-                        <textarea id="adddisposal" class="form-control" name="disposal" required></textarea>
-
-                        <label for="prescribe">處方:</label>
-                        <textarea id="addprescribe" class="form-control" name="prescribe"></textarea> *@
-
+                        <label for="TestResult" id="TRLabel" hidden>檢查結果:</label>
+                        <textarea class="form-control" id="addTestResult" name="TestResult" hidden></textarea>
                     </form>
                     <br>
                     <button id="submitrt" class="btn btn-primary">確認</button>
+                    <button id="updatert" class="btn btn-primary" hidden>修改</button>
                 </div>
             </div>
         </div>

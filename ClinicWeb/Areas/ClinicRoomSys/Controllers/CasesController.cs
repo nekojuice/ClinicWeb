@@ -120,6 +120,31 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
             });
         }
         [HttpPost]
+        public async Task<JsonResult> GURT(string id)
+        {
+            if (!int.TryParse(id, out int ReportId))
+            {
+                return Json(new { error = "Invalid id parameter" });
+            }
+
+            var record = await _context.CasesTestReport
+                .FirstOrDefaultAsync(x => x.ReportId == ReportId);
+
+            if (record == null)
+            {
+                return Json(new { error = "Record not found" });
+            }
+
+            return Json(new
+            {
+                ReportID = record.ReportId,
+                TestName = record.TestName,
+                TestDate = record.TestDate.ToString("yyyy-MM-dd"),
+                ReportDate = record.ReportDate.HasValue ? record.ReportDate.Value.ToString("yyyy-MM-dd") : null,
+                Result = record.Result,
+            });
+        }
+        [HttpPost]
         public async Task<JsonResult> GP(string id) //GETPRESCRIPTION
         {
             return await Task.Run(() =>

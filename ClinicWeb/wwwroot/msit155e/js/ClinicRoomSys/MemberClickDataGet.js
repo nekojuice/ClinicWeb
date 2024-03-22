@@ -181,46 +181,6 @@ async function uploadFormData(id) {
     }
 }
 
-//修改看診紀錄資料
-async function uploadRecordForm(id) {
-    const record = {
-        BloodPresure: $('#addbp').val(),
-        Pulse: $('#addpulse').val(),
-        BodyTemparture: $('#addbt').val(),
-        ChiefComplaint: $('#addcc').val(),
-        Disposal: $('#adddisposal').val(),
-        Prescribe: $('#addprescribe').val(),
-    };
-
-    try {
-        const response = await fetch(`/ClinicRoomSys/Cases/URD/${id}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(record),
-        });
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        console.log('Success:', data);
-        // 這裡可以添加一些成功後的操作，比如更新UI或者是頁面導覽
-        new PNotify({
-            title: '成功',
-            text: '記錄修改成功',
-            type: 'info',
-            styling: 'bootstrap3',
-            setTimeout: 500
-        })
-    } catch (error) {
-        console.error('Error:', error);
-        // 這裡可以處理錯誤，比如提示用户操作失敗
-    }
-}
-
 //獲得欲修改紀錄表單
 async function getRecordForm(id) {
     const response = await fetch(`/ClinicRoomSys/Cases/GURD/${id}`, {
@@ -240,6 +200,105 @@ async function getRecordForm(id) {
     $('#recordModal').modal('show');
     $('#submitrd').hide();
     $('#updaterd').show();
+}
+
+//修改看診紀錄資料
+async function uploadRecordForm(id) {
+    const record = {
+        Bp: $('#addbp').val(),
+        Pulse: $('#addpulse').val(),
+        Bt: $('#addbt').val(),
+        Cc: $('#addcc').val(),
+        Disposal: $('#adddisposal').val(),
+        Prescribe: $('#addprescribe').val(),
+    };
+
+    try {
+        const response = await fetch(`/ClinicRoomSys/Cases/URD/${id}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(record),
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        //const data = await response.json();
+        //console.log('Success:', data);
+        // 這裡可以添加一些成功後的操作，比如更新UI或者是頁面導覽
+        new PNotify({
+            title: '成功',
+            text: '記錄修改成功',
+            type: 'info',
+            styling: 'bootstrap3',
+            setTimeout: 500
+        })
+        return response;
+    } catch (error) {
+        console.error('Error:', error);
+        // 這裡可以處理錯誤，比如提示用户操作失敗
+    }
+}
+
+//獲得欲修改報告表單
+async function getReportForm(id) {
+    const response = await fetch(`/ClinicRoomSys/Cases/GURT/${id}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });
+    const data = await response.json();
+    console.log(data);
+    $('#addTestName').val(data.testName);
+    $('#addTestDate').val(data.testDate);
+    $('#addReportDate').val(data.reportDate);
+    $('#addTestResult').val(data.result);
+    $('#reportModal').modal('show');
+}
+
+//修改看診紀錄資料
+async function uploadReportForm(id) {
+    const record = {
+        Bp: $('#addbp').val(),
+        Pulse: $('#addpulse').val(),
+        Bt: $('#addbt').val(),
+        Cc: $('#addcc').val(),
+        Disposal: $('#adddisposal').val(),
+        Prescribe: $('#addprescribe').val(),
+    };
+
+    try {
+        const response = await fetch(`/ClinicRoomSys/Cases/URD/${id}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(record),
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        //const data = await response.json();
+        //console.log('Success:', data);
+        // 這裡可以添加一些成功後的操作，比如更新UI或者是頁面導覽
+        new PNotify({
+            title: '成功',
+            text: '記錄修改成功',
+            type: 'info',
+            styling: 'bootstrap3',
+            setTimeout: 500
+        })
+        return response;
+    } catch (error) {
+        console.error('Error:', error);
+        // 這裡可以處理錯誤，比如提示用户操作失敗
+    }
 }
 
 //日期設定
@@ -293,6 +352,7 @@ async function AddNMR() {
 
 //新增檢查報告
 async function AddNTR() {
+
     const addreport = {
         CaseId: CASE_ID,
         TestName: $('#addTestName').val(),
@@ -470,6 +530,12 @@ document.getElementById("addPL").addEventListener("click",async function (event)
 
 //初始化紀錄表單
 document.getElementById("addrecord").addEventListener("click", function (event) {
+    $('#TDLabel').hide();
+    $('#addReportDate').hide();
+    $('#TRLabel').hide();
+    $('#addTestResult').hide();
+    $('#updatert').hide();
+    $('#submitrt').show();
     $('#addbp').val('');
     $('#addpulse').val('');
     $('#addbt').val('');
