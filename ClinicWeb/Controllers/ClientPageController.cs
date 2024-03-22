@@ -81,7 +81,7 @@ namespace ClinicWeb.Controllers
         public IActionResult LoginTest()
         {
 
-            return View("~/Views/ClientPage/Login/ClientLogin.cshtml");
+            return View("~/Views/ClientPage/Login/LoginTest.cshtml");
 
         }
 
