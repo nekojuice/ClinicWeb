@@ -8,7 +8,7 @@
     </div>
     <div class="x_content">
         <br>
-        <form id="form_DrugEdit" class="form-label-left input_mask">
+        <form id="form_DrugEdit" class="form-label-left input_mask" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="@Model.PharmacyTMedicinesList.FIdDrug" />
 
@@ -48,7 +48,7 @@
                     <!--會出現輸入框但傳不瞭其他List中的所有劑型總類-->
                     <input asp-for="@Model.PharmacyTTypeDetails.FIdTpyeNavigation.FType" class="form-control" placeholder="請選擇劑型" name="FIdTpye" id="test">
 
-                    <select id="selTypes1" name="FIdTpye" class="form-control">
+                    <select id="selTypes1" name="PharmacyTTypeDetails.FIdTpye" class="form-control">
                         <option value="-1">請選擇劑型</option>
                     </select>
                     @* <select id="selTypes" name="FIdTpye" class="form-control">
@@ -125,20 +125,23 @@
                 </div>
             </div>
             <!--適應症-->
-            <div class="form-group row">
+            <!--div增加一個class名稱讓JavaScript接所有的核取方塊-->
+            <div class="form-group row .clinical-use-checkbox">
                 @if (Model != null)
                 {
                     <!--載入適應症清單，並判斷此DrugId是否有勾選此項適應症-->
-                    for (var i = 0; i < Model.PharmacyTClinicalUseList.Count; i++)
+                   @*  for (var i = 0; i < Model.PharmacyTClinicalUseList.Count; i++)
                     {                        
-                        var clinicalUse = Model.PharmacyTClinicalUseList[i];
+                        var clinicalUse = Model.PharmacyTClinicalUseList[i]; *@
+                        foreach(var clinicalUse in Model.PharmacyTClinicalUseList){
                         bool isChecked = Model.PharmacyTClinicalUseDetails.Any(d => d.FIdClicicalUse == clinicalUse.FIdClinicalUse);
 
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="clinicalUse_@clinicalUse.FIdClinicalUse" name="clinicalUse"
+                            <input type="checkbox" class="form-check-input" id="clinicalUse_@clinicalUse.FIdClinicalUse" name="FIdClicicalUse"
                                    value="@clinicalUse.FIdClinicalUse" @(isChecked ? "checked" : "") />
-                            <label class="form-check-label" for="clinicalUse_@clinicalUse.FIdClinicalUse">@clinicalUse.FClinicalUse</label>
+                            <label class="form-check-label" for="clinicalUse_@clinicalUse.FIdClinicalUse">@clinicalUse.FClinicalUse</label>                            
                         </div>
+
                     }
                 }
             </div>
@@ -153,7 +156,7 @@
                         bool isChecked = Model.PharmacyTSideEffectDetails.Any(d => d.FIdSideEffect == sideEffect.FIdSideEffect);
 
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="sideEffect_@sideEffect.FIdSideEffect" name="SideEffect"
+                            <input type="checkbox" class="form-check-input" id="sideEffect_@sideEffect.FIdSideEffect" name="FIdSideEffect"
                                    value="@sideEffect.FIdSideEffect" @(isChecked ? "checked" : "") />
                             <label class="form-check-label" for="sideEffect_@sideEffect.FIdSideEffect">@sideEffect.FSideEffect</label>
                         </div>
