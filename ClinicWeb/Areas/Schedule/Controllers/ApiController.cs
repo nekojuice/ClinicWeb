@@ -56,6 +56,7 @@ namespace ClinicWeb.Areas.Schedule.Controllers
                     //id = x.ClinicInfoId,
                     timeid = x.ClinicTimeId,
                     日期 = x.Date,
+                    星期 = GetDayOfWeek((int)(DateTime.Parse(x.Date)).DayOfWeek),
                     醫師 = x.Doctor.Name,
                     時段 = x.ClinicTime.ClinicShifts,
                     科別 = x.Doctor.Department,
@@ -66,8 +67,31 @@ namespace ClinicWeb.Areas.Schedule.Controllers
             return Json(ThismonthSchedule);
         }
 
-        //匯出月份
-        public IActionResult GetMonth()
+        private static string GetDayOfWeek(int week)
+        {
+            switch (week)
+            {
+                case 0:
+                    return "星期日";
+                case 1:
+                    return "星期一";
+                case 2:
+                    return "星期二";
+                case 3:
+                    return "星期三";
+                case 4:
+                    return "星期四";
+                case 5:
+                    return "星期五";
+                case 6:
+                    return "星期六";
+                default:
+                    return "未知";
+            }
+        }
+
+            //匯出月份
+            public IActionResult GetMonth()
         {
             var month = _context.ScheduleClinicInfo.Select(d => d.Date.Substring(0, 7)).Distinct().OrderBy(m => m); //2023/12
             return Json(month);
