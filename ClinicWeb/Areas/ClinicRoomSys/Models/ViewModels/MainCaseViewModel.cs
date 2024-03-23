@@ -12,4 +12,10 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Models.ViewModels
 
         public double? Weight { get; set; }
     }
+    public class Variable
+    {
+        public string Variable1 { get; set; }
+        public string Variable2 { get; set; }
+    }
+
 }

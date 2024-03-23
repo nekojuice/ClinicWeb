@@ -65,20 +65,19 @@ $('#prescriptionDataTable').DataTable({
     },
 });
 
-var PLDT = $('#prescriptionListDataTable').DataTable({
+$('#prescriptionListDataTable').DataTable({
     searching: false,
     paging: false,
     info: false,
     columns: [
-        { title: "處方ID", data: "prescriptionID", visible: false },
-        { title: "藥品", data: "DrugID" },
+        { title: "處方ID", data: "drugId", visible: false },
+        { title: "藥品", data: "name" },
         { title: "開立天數", data: "days" },
-        { title: "總量", data: "Total" },
+        { title: "總量", data: "totalAmount" },
         {
             data: null, title: "功能",  // 這邊是欄位
             render: function (data, type, row) {
-                return '<button id="Regist" type="button" class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i></button> ' +
-                    '<button id="Delete" type="button" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></button>'
+                return '<button id="Delete" type="button" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></button>'
             }
         },
     ],
@@ -101,7 +100,7 @@ async function getCase(id) {
     document.getElementById("inputWeight").value = data.weight;
     document.getElementById("inputPastHistory").value = data.pastHistory;
     document.getElementById("inputAllergyRecord").value = data.allergyRecord;
-    console.log(data);
+    /*console.log(data);*/
     CASE_ID = data.casesID;
     getRecord(CASE_ID);
     getReport(CASE_ID);
@@ -112,7 +111,7 @@ async function getCase(id) {
 async function getRecord(id) {
     const response = await fetch(`/ClinicRoomSys/Cases/GRD/${id}`, { method: "POST" })
     const data = await response.json();
-    
+    /*console.log(data);*/
     $('#recordDataTable').DataTable().clear();
     $('#recordDataTable').DataTable().rows.add(data).draw();
 }
@@ -120,8 +119,7 @@ async function getRecord(id) {
 async function getReport(id) {
     const response = await fetch(`/ClinicRoomSys/Cases/GRT/${id}`, { method: "POST" })
     const data = await response.json();
-    console.log(data);
-    //return data;
+    /*console.log(data);*/
     $('#reportDataTable').DataTable().clear();
     $('#reportDataTable').DataTable().rows.add(data).draw();
 }
@@ -129,12 +127,20 @@ async function getReport(id) {
 async function getPrescription(id) {
     const response = await fetch(`/ClinicRoomSys/Cases/GP/${id}`, { method: "POST" })
     const data = await response.json();
-    console.log(data);
+    /*console.log(data);*/
     //return data;
     $('#prescriptionDataTable').DataTable().clear();
     $('#prescriptionDataTable').DataTable().rows.add(data).draw();
 }
-
+//獲得處方藥單資料
+async function getPrescriptionL(id) {
+    const response = await fetch(`/ClinicRoomSys/Cases/GPL/${id}`, { method: "POST" })
+    const data = await response.json();
+    console.log(data);
+    $('#prescriptionListDataTable').DataTable().clear();
+    $('#prescriptionListDataTable').DataTable().rows.add(data).draw();
+    //return data;
+}
 
 //修改主病例資料
 async function uploadFormData(id) {
@@ -168,6 +174,179 @@ async function uploadFormData(id) {
             styling: 'bootstrap3',
             setTimeout: 500
         })
+    } catch (error) {
+        console.error('Error:', error);
+        // 這裡可以處理錯誤，比如提示用户操作失敗
+    }
+}
+
+//獲得欲修改紀錄表單
+async function getRecordForm(id) {
+    const response = await fetch(`/ClinicRoomSys/Cases/GURD/${id}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });
+    const data = await response.json();
+    console.log(data);
+    $('#addbp').val(data.bloodPresure);
+    $('#addpulse').val(data.pulse);
+    $('#addbt').val(data.bodyTemparture);
+    $('#addcc').val(data.chiefComplaint);
+    $('#adddisposal').val(data.disposal);
+    $('#addprescribe').val(data.prescribe);
+    $('#recordModal').modal('show');
+    $('#submitrd').hide();
+    $('#updaterd').show();
+}
+
+//修改看診紀錄資料
+async function uploadRecordForm(id) {
+    const record = {
+        Bp: $('#addbp').val(),
+        Pulse: $('#addpulse').val(),
+        Bt: $('#addbt').val(),
+        Cc: $('#addcc').val(),
+        Disposal: $('#adddisposal').val(),
+        Prescribe: $('#addprescribe').val(),
+    };
+
+    try {
+        const response = await fetch(`/ClinicRoomSys/Cases/URD/${id}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(record),
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        //const data = await response.json();
+        //console.log('Success:', data);
+        // 這裡可以添加一些成功後的操作，比如更新UI或者是頁面導覽
+        new PNotify({
+            title: '成功',
+            text: '記錄修改成功',
+            type: 'info',
+            styling: 'bootstrap3',
+            setTimeout: 500
+        })
+        return response;
+    } catch (error) {
+        console.error('Error:', error);
+        // 這裡可以處理錯誤，比如提示用户操作失敗
+    }
+}
+
+//獲得欲修改報告表單
+async function getReportForm(id) {
+    const response = await fetch(`/ClinicRoomSys/Cases/GURT/${id}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });
+    const data = await response.json();
+    console.log(data);
+    $('#addTestName').val(data.testName);
+    $('#addTestDate').val(data.testDate);
+    $('#addReportDate').val(data.reportDate);
+    $('#addTestResult').val(data.result);
+    $('#TDLabel').show();
+    $('#addReportDate').show();
+    $('#TRLabel').show();
+    $('#addTestResult').show();
+    $('#updatert').show();
+    $('#submitrt').hide();
+    $('#reportModal').modal('show');
+}
+
+//修改檢查報告資料
+async function uploadReportForm(id) {
+    const record = {
+        TestName: $('#addTestName').val(),
+        TestDate: $('#addTestDate').val(),
+        ReportDate: $('#addReportDate').val(),
+        Result: $('#addTestResult').val(),
+    };
+
+    try {
+        const response = await fetch(`/ClinicRoomSys/Cases/URT/${id}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(record),
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        //const data = await response.json();
+        //console.log('Success:', data);
+        // 這裡可以添加一些成功後的操作，比如更新UI或者是頁面導覽
+        new PNotify({
+            title: '成功',
+            text: '記錄修改成功',
+            type: 'info',
+            styling: 'bootstrap3',
+            setTimeout: 500
+        })
+        return response;
+    } catch (error) {
+        console.error('Error:', error);
+        // 這裡可以處理錯誤，比如提示用户操作失敗
+    }
+}
+
+//獲得欲修改處方表單
+async function getPrescriptionForm(id) {
+    const response = await fetch(`/ClinicRoomSys/Cases/GUP/${id}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });
+    const data = await response.json();
+    console.log(data);
+    $('#adddispensing').val(data.dispensing);
+}
+
+//修改處方資料
+async function uploadPrescriptionForm(id) {
+    const record = {
+        Dispensing: $('#adddispensing').val(),
+    };
+
+    try {
+        const response = await fetch(`/ClinicRoomSys/Cases/UP/${id}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(record),
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        //const data = await response.json();
+        //console.log('Success:', data);
+        // 這裡可以添加一些成功後的操作，比如更新UI或者是頁面導覽
+        new PNotify({
+            title: '成功',
+            text: '記錄修改成功',
+            type: 'info',
+            styling: 'bootstrap3',
+            setTimeout: 500
+        })
+        return response;
     } catch (error) {
         console.error('Error:', error);
         // 這裡可以處理錯誤，比如提示用户操作失敗
@@ -214,7 +393,8 @@ async function AddNMR() {
             styling: 'bootstrap3',
             setTimeout: 500
         })
-            $('#recordModal').modal('hide');
+        $('#recordModal').modal('hide');
+        return response;
 
     } catch (error) {
         console.error('Error:', error);
@@ -224,6 +404,7 @@ async function AddNMR() {
 
 //新增檢查報告
 async function AddNTR() {
+
     const addreport = {
         CaseId: CASE_ID,
         TestName: $('#addTestName').val(),
@@ -242,7 +423,6 @@ async function AddNTR() {
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
-
         //const data = await response.json();
         //console.log('Success:', data);
         // 這裡可以添加一些成功後的操作，比如更新UI或者是頁面導覽
@@ -254,6 +434,7 @@ async function AddNTR() {
             setTimeout: 500
         })
         $('#reportModal').modal('hide');
+        return response;
 
     } catch (error) {
         console.error('Error:', error);
@@ -306,8 +487,9 @@ async function AddNPreL() {
         PrescriptionId: PID,
         DrugID: $('#medicine').val(),
         Days: $('#adddays').val(),
-        Total: $('#addtotal').val(),
+        TotalAmount: $('#addtotal').val(),
     };
+    console.log(addrecord);
 
     try {
         const response = await fetch(`/ClinicRoomSys/Cases/AddPrescriptionL`, {
@@ -332,8 +514,6 @@ async function AddNPreL() {
             styling: 'bootstrap3',
             setTimeout: 500
         })
-        PLDT.clear();
-        PLDT.rows.add(data).draw();
     } catch (error) {
         console.error('Error:', error);
         // 這裡可以處理錯誤，比如提示用户操作失敗
@@ -367,11 +547,6 @@ async function AddDL() {
     }
 }
 
-// 在页面加载完成后调用AddDL()函数
-/*document.addEventListener('DOMContentLoaded', AddDL);*/
-
-
-
 //修改主病例資料-事件
 document.getElementById("submit").addEventListener("click", function (event) {
     event.preventDefault(); // 防止表單提交
@@ -380,26 +555,34 @@ document.getElementById("submit").addEventListener("click", function (event) {
 });
 
 //新增看診紀錄-事件
-document.getElementById("submitrd").addEventListener("click", function (event) {
+document.getElementById("submitrd").addEventListener("click", async function (event) {
     event.preventDefault(); // 防止表單提交
-    AddNMR();
-    getRecord(CASE_ID);
+    const response = await AddNMR();
+    if (response.ok) {
+        getRecord(CASE_ID);
+    }
 });
 
 //新增檢查報告-事件
-document.getElementById("submitrt").addEventListener("click", function (event) {
+document.getElementById("submitrt").addEventListener("click",async function (event) {
     event.preventDefault(); // 防止表單提交
-    AddNTR();
-    getReport(CASE_ID);
+    const response =await AddNTR();
+    if (response.ok) {
+        getReport(CASE_ID);
+    }
 });
 
-//新增處方籤-藥單
-document.getElementById("addPL").addEventListener("click", function (event) {
-    AddNPreL();
+//新增處方籤-藥單事件
+document.getElementById("addPL").addEventListener("click",async function (event) {
+    await AddNPreL();
+    await getPrescriptionL(PID);
+
+
 });
 
 //初始化紀錄表單
 document.getElementById("addrecord").addEventListener("click", function (event) {
+    $('#submitrt').show();
     $('#addbp').val('');
     $('#addpulse').val('');
     $('#addbt').val('');
@@ -407,25 +590,35 @@ document.getElementById("addrecord").addEventListener("click", function (event) 
     $('#adddisposal').val('');
     $('#addprescribe').val('');
     //$('#recordModal').modal('show');
+    $('#submitrd').show();
+    $('#updaterd').hide();
    
 });
 
 //初始化報告表單
 document.getElementById("addreport").addEventListener("click", function (event) {
+    $('#TDLabel').hide();
+    $('#addReportDate').hide();
+    $('#TRLabel').hide();
+    $('#addTestResult').hide();
+    $('#updatert').hide();
+    $('#submitrt').show();
     $('#addTestName').val('');
     $('#addTestDate').val(datenow);
     //$('#recordModal').modal('show');
 
 });
 
-//初始化處方表單
+//初始化處方表單,創建處方籤主表單
 document.getElementById("addpre").addEventListener("click", function (event) {
     $('#addDispensing').val('');
     AddDL();
     AddNPre();
     //$('#recordModal').modal('show');
 });
+
 //看診紀錄資料表按鍵事件
+let Rid;
 $('#recordDataTable').on('click', '#Delete', function (e) {
     let data = $('#recordDataTable').DataTable().row(e.target.closest('tr')).data();
     console.log(data);
@@ -433,27 +626,27 @@ $('#recordDataTable').on('click', '#Delete', function (e) {
 /*    alert('You clicked delete on :' + id);*/
 
     Swal.fire({
-        title: "Do you want to save the changes?",
+        title: "確定要刪除嗎?",
         showDenyButton: true,
-        showCancelButton: true,
-        confirmButtonText: "Save",
-        denyButtonText: `Don't save`
-    }).then((result) => {
+        showCancelButton: false,
+        confirmButtonText: "確定",
+        denyButtonText: `取消`,
+    }).then(async (result) => {
         /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
             try {
-                const response = fetch(`/ClinicRoomSys/Cases/DMedicalRecord/${id}`, {
+                const response =await fetch(`/ClinicRoomSys/Cases/DMedicalRecord/${id}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify(addreport),
+/*                    body: JSON.stringify(addreport),*/
                 });
-
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
-                Swal.fire("Saved!", "", "success");
+                Swal.fire("已刪除", "", "success");
+                getRecord(CASE_ID);
                 //const data = await response.json();
                 //console.log('Success:', data);
                 // 這裡可以添加一些成功後的操作，比如更新UI或者是頁面導覽
@@ -462,17 +655,19 @@ $('#recordDataTable').on('click', '#Delete', function (e) {
                 // 這裡可以處理錯誤，比如提示用户操作失敗
             }
         } else if (result.isDenied) {
-            Swal.fire("Changes are not saved", "", "info");
+            Swal.fire("取消操作", "", "info");
         }
     });
 
 });
 
-$('#recordDataTable').on('click', '#Regist', function (e) {
+$('#recordDataTable').on('click', '#Regist',async function (e) {
     let data = $('#recordDataTable').DataTable().row(e.target.closest('tr')).data();
     console.log(data);
-    let id = data['recordID'];
-    alert('You clicked regist on :' + id);
+    Rid = data['recordID'];
+    console.log(Rid);
+    /*alert('You clicked regist on :' + id);*/
+    await getRecordForm(Rid);
 
     //$.ajax({
     //    type: 'GET',
@@ -484,37 +679,190 @@ $('#recordDataTable').on('click', '#Regist', function (e) {
     //    }
     //});
 });
+
+document.getElementById("updaterd").addEventListener("click", async function (event) {
+    event.preventDefault(); // 防止表單提交
+    const response = await uploadRecordForm(Rid);
+    if (response.ok) {
+        getRecord(CASE_ID);
+    }
+});
+
 //檢查報告資料表按鍵事件
+let Rtid;
 $('#reportDataTable').on('click', '#Delete', function (e) {
     let data = $('#reportDataTable').DataTable().row(e.target.closest('tr')).data();
-    console.log(data);
+/*    console.log(data);*/
     let id = data['reportID'];
-    alert('You clicked delete on :' + id);
+/*    alert('You clicked delete on :' + id);*/
 
-    //$.ajax({
-    //    type: 'GET',
-    //    url: `/MBRecordInfo/GP/${id}`,
-    //    //data: { id: mlaId },
-    //    //cache: false,
-    //    success: function (result) {
-
-    //    }
-    //});
+    Swal.fire({
+        title: "確定要刪除嗎?",
+        showDenyButton: true,
+        showCancelButton: false,
+        confirmButtonText: "確定",
+        denyButtonText: `取消`,
+    }).then(async (result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+            try {
+                const response = await fetch(`/ClinicRoomSys/Cases/DTestReport/${id}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    /*                    body: JSON.stringify(addreport),*/
+                });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                Swal.fire("已刪除", "", "success");
+                getReport(CASE_ID);
+                //const data = await response.json();
+                //console.log('Success:', data);
+                // 這裡可以添加一些成功後的操作，比如更新UI或者是頁面導覽
+            } catch (error) {
+                console.error('Error:', error);
+                // 這裡可以處理錯誤，比如提示用户操作失敗
+            }
+        } else if (result.isDenied) {
+            Swal.fire("取消操作", "", "info");
+        }
+    });
 });
 
-$('#reportDataTable').on('click', '#Regist', function (e) {
+$('#reportDataTable').on('click', '#Regist',async function (e) {
     let data = $('#reportDataTable').DataTable().row(e.target.closest('tr')).data();
-    console.log(data);
-    let id = data['reportID'];
-    alert('You clicked regist on :' + id);
-
-    //$.ajax({
-    //    type: 'GET',
-    //    url: `/MBRecordInfo/GP/${id}`,
-    //    //data: { id: mlaId },
-    //    //cache: false,
-    //    success: function (result) {
-
-    //    }
-    //});
+    /*console.log(data);*/
+    Rtid = data['reportID'];
+    /*alert('You clicked regist on :' + Rtid);*/
+    await getReportForm(Rtid);
 });
+
+document.getElementById("updatert").addEventListener("click", async function (event) {
+    event.preventDefault(); // 防止表單提交
+    const response = await uploadReportForm(Rtid);
+    if (response.ok) {
+        getReport(CASE_ID);
+    }
+});
+
+
+//處方資料表按鍵事件
+$('#prescriptionDataTable').on('click', '#Delete',async function (e) {
+    let data = $('#prescriptionDataTable').DataTable().row(e.target.closest('tr')).data();
+    console.log(data);
+    let id = data['prescriptionID'];
+    /*    alert('You clicked delete on :' + id);*/
+
+    Swal.fire({
+        title: "確定要刪除嗎?",
+        showDenyButton: true,
+        showCancelButton: false,
+        confirmButtonText: "確定",
+        denyButtonText: `取消`,
+    }).then(async (result) => {
+        /*Read more about isConfirmed, isDenied below*/
+        if (result.isConfirmed) {
+            try {
+                const responsel = await fetch(`/ClinicRoomSys/Cases/DPrescriptionL/${id}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    /*body: JSON.stringify(addreport),*/
+                });
+                if (!responsel.ok) {
+                    throw new Error(`HTTP error! status: ${responsel.status}`);
+                }
+                const response = await fetch(`/ClinicRoomSys/Cases/DPrescription/${id}`, {
+                    method: 'POST',
+                    headers: {
+                     'Content-Type': 'application/json',
+                    },
+                });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                Swal.fire("已刪除", "", "success");
+                getPrescription(CASE_ID);
+                //const data = await response.json();
+                //console.log('Success:', data);
+                // 這裡可以添加一些成功後的操作，比如更新UI或者是頁面導覽
+            } catch (error) {
+                console.error('Error:', error);
+                // 這裡可以處理錯誤，比如提示用户操作失敗
+            }
+        } else if (result.isDenied) {
+            Swal.fire("取消操作", "", "info");
+        }
+    });
+
+});
+
+$('#prescriptionDataTable').on('click', '#Regist', async function (e) {
+    let data = $('#prescriptionDataTable').DataTable().row(e.target.closest('tr')).data();
+    console.log(data);
+    PID = data['prescriptionID'];
+     
+    /*alert('You clicked regist on :' + id);*/
+    await AddDL();
+    await getPrescriptionForm(PID)
+    await getPrescriptionL(PID);
+    $('#preModal').modal('show');
+});
+
+document.getElementById("updatepre").addEventListener("click", async function (event) {
+    event.preventDefault(); // 防止表單提交
+    const response = await uploadPrescriptionForm(PID);
+    if (response.ok) {
+        await getPrescription(CASE_ID);
+    }
+});
+
+$('#prescriptionListDataTable').on('click', '#Delete',async function (e) {
+    let data = $('#prescriptionListDataTable').DataTable().row(e.target.closest('tr')).data();
+    /*    console.log(data);*/
+    let id = data['drugId'];
+    /*    alert('You clicked delete on :' + id);*/
+
+    Swal.fire({
+        title: "確定要刪除嗎?",
+        showDenyButton: true,
+        showCancelButton: false,
+        confirmButtonText: "確定",
+        denyButtonText: `取消`,
+    }).then(async (result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+            try {
+                const data = {
+                    Variable1: id,
+                    Variable2: PID
+                };
+                const response = await fetch(`/ClinicRoomSys/Cases/DPrescriptionLItem/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                Swal.fire("已刪除", "", "success");
+                getPrescriptionL(PID);
+                //const data = await response.json();
+                //console.log('Success:', data);
+                // 這裡可以添加一些成功後的操作，比如更新UI或者是頁面導覽
+            } catch (error) {
+                console.error('Error:', error);
+                // 這裡可以處理錯誤，比如提示用户操作失敗
+            }
+        } else if (result.isDenied) {
+            Swal.fire("取消操作", "", "info");
+        }
+    });
+});
+
+
