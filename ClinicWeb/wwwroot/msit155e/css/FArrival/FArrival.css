@@ -8,3 +8,22 @@
     margin:0 25%;
     padding:20px;
 }
+
+.msgSection {
+    position: fixed;
+    border: 5px solid lightgray;
+    border-radius: 10px;
+    left: 25%;
+    top: 25%;
+    width: 50%;
+    height: 50%;
+    background: #ffe4e1;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+    .msgSection span {
+        align-self: center;
+        font-size:4em;
+    }

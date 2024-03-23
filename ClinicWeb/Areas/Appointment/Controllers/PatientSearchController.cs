@@ -24,11 +24,11 @@ namespace ClinicWeb.Areas.Appointment.Controllers
             //這個不能寫在一起嗎
             if (!Convert.ToBoolean(monthBefore))
             {
-                string thisMonth = DateTime.Now.ToString("yyyy/MM");
+                //string thisMonth = DateTime.Now.ToString("yyyy/MM"); //鎖死2023/12/01
 
 				return Json(_context.ApptClinicList
                 .Where(x => x.MemberId == Convert.ToInt32(memberId)
-                && x.Clinic.Date.CompareTo(thisMonth) >= 0)
+                && x.Clinic.Date.CompareTo("2023/12/01") >= 0)
                 .Include(x => x.Clinic.Doctor)
                 .Include(x => x.Clinic.ClincRoom)
                 .Include(x => x.Clinic.ClinicTime)

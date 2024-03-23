@@ -73,6 +73,8 @@ connection.on("CardInsert", function (ip, memInfo, jsonstring) {
     $("#c_birthday").text(memInfodata.c_birthday);
     $("#apptDataTable").DataTable().clear();
     $("#apptDataTable").DataTable().rows.add(jsondata).draw()
+    $("#dataSection").toggle()
+    $("#msgSection").toggle()
 });
 connection.on("CardPull", function (ip) {
     $("#c_name").text("");
@@ -80,6 +82,8 @@ connection.on("CardPull", function (ip) {
     $("#c_nationalid").text("");
     $("#c_birthday").text("");
     $("#apptDataTable").DataTable().clear().draw()
+    $("#dataSection").toggle()
+    $("#msgSection").toggle()
 })
 connection.start().then(function () {
     //try {
