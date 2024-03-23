@@ -38,8 +38,8 @@ namespace ClinicWeb.ViewModels
         [Display(Name = "懷孕風險藥品分級類別")]
         public string? PregnancyCategory { get; set; }
 
-        [Display(Name = "藥品圖片")]
-        public string? Apperance {  get; set; }
+        //[Display(Name = "藥品圖片")]
+        //public string? Apperance {  get; set; }
 
         [Display(Name = "保存方法")]
         public string? Storage { get; set; }

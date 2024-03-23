@@ -14,9 +14,11 @@ namespace ClinicWeb.Controllers
     public class MBRecordInfoController : Controller
     {
         private readonly ClinicSysContext _context;
-        public MBRecordInfoController(ClinicSysContext context)
+        private readonly ClinicWeb.Areas.Drugs.Models.ClinicSysContext _drugs;
+        public MBRecordInfoController(ClinicSysContext context, Areas.Drugs.Models.ClinicSysContext drugs)
         {
             _context = context;
+            _drugs = drugs;
         }
         public IActionResult Index()
         {
@@ -227,8 +229,8 @@ namespace ClinicWeb.Controllers
         {
             // 取資料放入viewModel中
             var dataFromDb = drugId.HasValue
-                ? _context.PharmacyTMedicinesList.Where(d => d.FIdDrug == drugId).ToList()
-                : _context.PharmacyTMedicinesList.ToList();
+                ? _drugs.PharmacyTMedicinesList.Where(d => d.FIdDrug == drugId).ToList()
+                : _drugs.PharmacyTMedicinesList.ToList();
             
             //不只一筆的適應症及副作用要用List<string>接資料
             if (dataFromDb.Any())
@@ -255,7 +257,7 @@ namespace ClinicWeb.Controllers
                 };
 
                 //使用drugId找TypeDetails的TypeId
-                var typeId=_context.PharmacyTTypeDetails
+                var typeId=_drugs.PharmacyTTypeDetails
                     .Where(x=>x.FIdDrug==drugId)
                     .Select(x=>x.FIdTpye)
                     .FirstOrDefault();
@@ -263,13 +265,13 @@ namespace ClinicWeb.Controllers
                 //將劑型加入ViewModel中
                 if (typeId != default(int))
                 {
-                    viewModel.DrugType=_context.PharmacyTTypeList
+                    viewModel.DrugType=_drugs.PharmacyTTypeList
                         .Where(y=>y.FIdType==typeId)
                         .Select(y=>y.FType) .FirstOrDefault();
                 }
 
                 //使用drugId找ClinicalUseDetails的ClinicalUseId
-                var ClinicalUseId = _context.PharmacyTClinicalUseDetails
+                var ClinicalUseId = _drugs.PharmacyTClinicalUseDetails
                     .Where(x => x.FIdDrug == drugId)
                     .Select(x => x.FIdClicicalUse)
                     .ToList();
@@ -277,7 +279,7 @@ namespace ClinicWeb.Controllers
                 //將適應症加入ViewModel中
                 foreach (var c in ClinicalUseId)
                 {
-                    var clinicalUse=_context.PharmacyTClinicalUseList
+                    var clinicalUse=_drugs.PharmacyTClinicalUseList
                         .Where(y=>y.FIdClinicalUse==c)
                         .Select(y=>y.FClinicalUse) .FirstOrDefault();
                     if (!string.IsNullOrEmpty(clinicalUse))
@@ -287,14 +289,14 @@ namespace ClinicWeb.Controllers
                 }
 
                 //使用drugId找SideEffectDetails的SideEffectId
-                var SideEffectId=_context.PharmacyTSideEffectDetails
+                var SideEffectId=_drugs.PharmacyTSideEffectDetails
                     .Where(x=>x.FIdDrug==drugId)
                     .Select (x=>x.FIdSideEffect)
                     .ToList ();
                 
                 foreach (var s in SideEffectId)
                 {
-                    var sideEffect=_context.PharmacyTSideEffectList
+                    var sideEffect=_drugs.PharmacyTSideEffectList
                         .Where(y=>y.FIdSideEffect==s)
                         .Select(y=>y.FSideEffect) .FirstOrDefault();
                     if (!string.IsNullOrEmpty(sideEffect))

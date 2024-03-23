@@ -2,7 +2,9 @@
 //using ClinicWeb.Models;
 using ClinicWeb.Areas.Drugs.Models;
 using ClinicWeb.Areas.Drugs.ViewModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing.Constraints;
 using Microsoft.EntityFrameworkCore;
 using static ClinicWeb.Areas.Drugs.ViewModels.DrugDetailsViewModel;
 
@@ -11,14 +13,17 @@ namespace ClinicWeb.Areas.Drugs.Controllers
     [Area("Drugs")]
     public class DrugsApiController : Controller
     {
+        //引入 可取得伺服器上的實際路徑的介面
+        private readonly IWebHostEnvironment _webHostEnvironment;
         //引入記錄日誌
         private readonly ILogger<DrugsApiController> _logger;
 
         private readonly ClinicSysContext _context;
-        public DrugsApiController(ClinicSysContext context, ILogger<DrugsApiController> logger)
+        public DrugsApiController(ClinicSysContext context, ILogger<DrugsApiController> logger, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
             _logger = logger;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         //讀取DB藥品部分資訊(只有主表PharmacyTMedicinesList)傳回JSON
@@ -213,7 +218,7 @@ namespace ClinicWeb.Areas.Drugs.Controllers
         }
         //修改主表可以動了 還有部分未完成-->已完成
         [HttpPost]
-        public async Task<IActionResult> EditDrug(int id, [FromForm] EditDrugViewModel viewModel,List<int> FIdClicicalUse, List<int> FIdSideEffect)
+        public async Task<IActionResult> EditDrug(int id, [FromForm] EditDrugViewModel viewModel, List<int> FIdClicicalUse, List<int> FIdSideEffect)
         {
             try
             {
@@ -250,7 +255,7 @@ namespace ClinicWeb.Areas.Drugs.Controllers
                     {
                         _context.PharmacyTClinicalUseDetails.RemoveRange(updateDataClinicalDetail);
                     }
-                    if(FIdClicicalUse!=null&& FIdClicicalUse.Any()) 
+                    if (FIdClicicalUse != null && FIdClicicalUse.Any())
                     {
                         foreach (var clinicalUseId in FIdClicicalUse)
                         {
@@ -270,16 +275,16 @@ namespace ClinicWeb.Areas.Drugs.Controllers
                     ////    _context.PharmacyTClinicalUseDetails.Add(newClinicalUseDetail);
                     ////}
                     var updateDataSideEffectDetail = await _context.PharmacyTSideEffectDetails.Where(x => x.FIdDrug == updateData.FIdDrug).ToListAsync();
-                    if(updateDataSideEffectDetail.Count > 0)
+                    if (updateDataSideEffectDetail.Count > 0)
                     {
                         _context.PharmacyTSideEffectDetails.RemoveRange(updateDataSideEffectDetail);
 
                     }
-                    if(FIdSideEffect!=null&&FIdSideEffect.Any()) 
+                    if (FIdSideEffect != null && FIdSideEffect.Any())
                     {
-                        foreach(var sideEffectId in FIdSideEffect)
+                        foreach (var sideEffectId in FIdSideEffect)
                         {
-                            var sideEffectDetials=new PharmacyTSideEffectDetails { FIdDrug=updateData.FIdDrug,FIdSideEffect=sideEffectId };
+                            var sideEffectDetials = new PharmacyTSideEffectDetails { FIdDrug = updateData.FIdDrug, FIdSideEffect = sideEffectId };
                             _context.PharmacyTSideEffectDetails.Add(sideEffectDetials);
                         }
                     }
@@ -307,7 +312,7 @@ namespace ClinicWeb.Areas.Drugs.Controllers
                 Console.WriteLine($"{ex.Message}");
             }
             return View("~/Areas/Drugs/Views/Home/Index.cshtml");
-        }       
+        }
 
         //public async Task<IActionResult> DrugDetails()
         //{
@@ -327,15 +332,15 @@ namespace ClinicWeb.Areas.Drugs.Controllers
 
         //刪除選中的藥品資訊
 
-        public async Task<IActionResult>DeleteDrug(int id)
+        public async Task<IActionResult> DeleteDrug(int id)
         {
-            using(var transaction = _context.Database.BeginTransaction())
+            using (var transaction = _context.Database.BeginTransaction())
             {
                 try
                 {
                     //先刪除劑型明細表 drugId=id
                     var typeDetials = _context.PharmacyTTypeDetails.FirstOrDefault(x => x.FIdDrug == id);
-                    if(typeDetials!=null)
+                    if (typeDetials != null)
                     {
                         _context.PharmacyTTypeDetails.Remove(typeDetials);
                     }
@@ -364,7 +369,7 @@ namespace ClinicWeb.Areas.Drugs.Controllers
                     transaction.Commit();
                     return View("~/Areas/Drugs/Views/Home/index.cshtml");
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     transaction.Rollback();
                     _logger.LogError(ex, "An error occurred while deleting medicine.");
@@ -498,13 +503,133 @@ namespace ClinicWeb.Areas.Drugs.Controllers
             return View("~/Areas/Drugs/Views/Home/ClinicalUse.cshtml");
         }
 
-        //---------------------------------仿單----------------------------------------------------
-        public IActionResult DrugFiles(PharmacyHealthInformation files) 
+        //新增副作用資料
+        [HttpPost]
+        public async Task<IActionResult> SideEffectCreate(PharmacyTSideEffectList sideEffectList)
         {
-            
-            return Content($"{files.FFileName}-");
+            _context.PharmacyTSideEffectList.Add(sideEffectList);
+            await _context.SaveChangesAsync();
+            return View("~/Areas/Drugs/Views/Home/SideEffect.cshtml");
         }
 
+        //修改副作用資料-->給modal讀單一一筆資料
+        [HttpGet]
+        public async Task<IActionResult> EditSideEffect(int? id)
+        {
+            if (id == null || _context.PharmacyTMedicinesList == null)
+            {
+                return NotFound();
+            }
+            var pharmacyTSideEffectList = await _context.PharmacyTSideEffectList.FindAsync(id);
+            if (pharmacyTSideEffectList == null)
+            {
+                return NotFound();
+            }
+            return PartialView("~/Areas/Drugs/Views/Partial/_SideEffectEditPartial.cshtml", pharmacyTSideEffectList);
+        }
+
+        //update回DB
+        public async Task<IActionResult> EditSideEffect(PharmacyTSideEffectList pharmacyTSideEffectList)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(pharmacyTSideEffectList);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException ex)
+                {
+                    if (!PharmacyTSideEffectListExists(pharmacyTSideEffectList.FIdSideEffect))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Update failed: {ex.Message}");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Update failed: {ex.Message}");
+                }
+            }
+            return View("~/Areas/Drugs/Views/Home/SideEffect.cshtml");
+        }
+        private bool PharmacyTSideEffectListExists(int id)
+        {
+            return (_context.PharmacyTSideEffectList?.Any(e => e.FIdSideEffect == id)).GetValueOrDefault();
+        }
+
+        //刪除選中的副作用清單
+        public async Task<IActionResult>DeleteSideEffect(int id)
+        {
+            var pharmacyTSideEffectList=await _context.PharmacyTSideEffectList.FindAsync(id);
+            if (pharmacyTSideEffectList == null)
+            {
+                return NotFound() ;
+            }
+            _context.PharmacyTSideEffectList.Remove(pharmacyTSideEffectList);
+            await _context.SaveChangesAsync();
+            return View("~/Areas/Drugs/Views/Home/SideEffect.cshtml");
+        }
+
+        //---------------------------------仿單----------------------------------------------------
+
+        //仿單上傳
+        [HttpPost]
+        public async Task<IActionResult> DrugFiles(PharmacyHealthInformation drugUpLoad, IFormFile files)
+        {
+            //檔案傳到根目錄的嘗試
+            try
+            {
+                //開啟的檔名=存進資料庫檔名
+                string fileName = "";
+                if (files != null)
+                {
+                    fileName = files.FileName;
+                }
+                //存至wwwroot
+                string uploadPath = Path.Combine(_webHostEnvironment.WebRootPath, "msit155e", "uploads", fileName);
+                using (var fileStream = new FileStream(uploadPath, FileMode.Create))
+                {
+                    files?.CopyTo(fileStream);
+                }
+                //新增至資料庫
+
+                drugUpLoad.FFileName = fileName;
+                drugUpLoad.FFilePath = uploadPath;
+
+                //轉成二進位
+                byte[]? pdfByte = null;
+                using (var memoryStream = new MemoryStream())
+                {
+                    files?.CopyTo(memoryStream);
+                    pdfByte = memoryStream.ToArray();
+                }
+                drugUpLoad.FFileData = pdfByte;
+                _context.PharmacyHealthInformation.Add(drugUpLoad);
+                await _context.SaveChangesAsync();
+                return View("~/Areas/Drugs/Views/Home/Index2.cshtml");
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Upload failed: {ex.Message}");
+            }
+
+            return BadRequest();
+        }
+        public JsonResult DrugsFileInfo()
+        {
+            return Json(_context.PharmacyHealthInformation.Select(x => new
+            {
+                id = x.FIdDrug,
+                藥品代碼 = x.FIdDrugNavigation.FDrugCode,
+                藥品名稱 = x.FIdDrugNavigation.FDrugName,
+                檔案名稱 = x.FFileName
+            }));
+        }
 
     }
 }
