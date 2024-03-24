@@ -81,6 +81,7 @@
                                     <tr>
                                         <th style ="display:none">timeid</th>
                                         <th>日期</th>
+                                        <th>星期</th>
                                         <th>醫師</th>
                                         <th>時段</th>
                                         <th>科別</th>
@@ -312,6 +313,7 @@
                 columns: [
                     { "data": "timeid", "visible": false },
                     { "data": "日期" },
+                    { "data": "星期" },
                     { "data": "醫師" },
                     { "data": "時段" },
                     { "data": "科別" },
@@ -339,9 +341,9 @@
             const table = $('#datatable').DataTable();
             //alert(selectedDoctor)
             if (selectedDoctor === '全部') {
-                table.column(2).search("").draw();
+                table.column(3).search("").draw();
             } else {
-                table.column(2).search(selectedDoctor).draw();
+                table.column(3).search(selectedDoctor).draw();
             }
 
         }
@@ -357,9 +359,9 @@
             const table = $('#datatable').DataTable();
             //alert(selectedShift);
             if (selectedShift === 'allshift') {
-                table.column(3).search("").draw();
+                table.column(4).search("").draw();
             } else {
-                table.column(3).search(selectedShift).draw();
+                table.column(4).search(selectedShift).draw();
             }
 
         }
@@ -370,9 +372,9 @@
             const selectedDep = $(selDep).val();
             const table = $('#datatable').DataTable();
             if (selectedDep === 'alldep') {
-                table.column(4).search("").draw();
+                table.column(5).search("").draw();
             } else {
-                table.column(4).search(selectedDep).draw();
+                table.column(5).search(selectedDep).draw();
             }
         }
 

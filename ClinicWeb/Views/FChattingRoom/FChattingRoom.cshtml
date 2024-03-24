@@ -184,6 +184,7 @@
             var selfIDText = $("#SelfID").text().trim();
             if (selfIDText !== "管理員") {
                 if (!hasAdmin) {
+                    $("#messageList").empty();
                     Swal.fire("目前沒有客服人員請稍待片刻");
                     revMessageToList("機器人", "目前是機器人為您服務請輸入您的需求。");
                     console.log(adminin);
@@ -194,6 +195,8 @@
                     revMessageToList("管理員", "管理員目前已登入，提出您的問題");
                     console.log(adminin);
                 }
+            } else if (selfIDText === "管理員") {
+                adminin = true;
             }
 
 
@@ -644,6 +647,9 @@
                     Swal.fire("入檔成功");
                     var context = canvas.getContext('2d');
                     context.clearRect(0, 0, canvas.width, canvas.height);
+                    connection.invoke("ClearCanvas").catch(function (err) {
+                        return console.error(err.toString());
+                    });
                 })
                 .catch(error => {
                     console.error('There was a problem with the fetch operation:', error);
@@ -724,27 +730,60 @@
             var messageList = document.getElementById("messageList");
             messageList.scrollTop = messageList.scrollHeight;
         }
+        //轉圈圈
+        function createloding() {
+            var name = "管理員";
+            var imageSrc = "/images/Loading_icon.gif";
+            // 取得現在的時間
+            var currentTime = new Date().toLocaleTimeString();
+            var listItem = $("<li></li>").addClass("d-flex justify-content-end mb-4").attr("id","loding");
+            var card = $("<div></div>").addClass("card");
+            var nameParagraph = $("<p></p>").addClass("fw-bold mb-0").attr("id", "name").text(name).css("margin-right", "20px");
+            // 時間（time）
+            var timeParagraph = $("<p></p>").addClass("text-muted small mb-0").attr("id", "time")
+                .html("<i class='far fa-clock'></i> " + currentTime);
+            var image = $("<img>").addClass("card-img-top").attr("src", imageSrc).attr("alt", "Selected Image").css({ "width": "200px" });
+            card.append($("<div></div>").addClass("card-header d-flex justify-content-end p-3")
+                .append(nameParagraph).append(timeParagraph));
+            card.append($("<div></div>").addClass("card-body").append(image));
+            listItem.append(card);
+            $("#messageList").append(listItem);
+            var messageList = document.getElementById("messageList");
+            messageList.scrollTop = messageList.scrollHeight;
+        }
+
+        // 使用正則表達式將特殊字元移除
+        function removeSpecialCharacters(str) {
+           
+            return str.replace(/[^\w\s\u4e00-\u9fa5]/gi, '');
+        }
         //訊息事件
         $('#sendButton').on('click', async function () {
             let name = $('#SelfID').html();
-            let msg = $('#message').val();
-
+            let msg = $('#message').val();         
             // 檢查訊息是否為空
             if (msg.trim() !== '') {
                 console.log(adminin);
                 if (!adminin) {
-                    senMessageToList(name, msg);
-                    console.log(msg);
-                    const query = msg + "字數不要超過50字";
-                    const response = await fetch('/api/OpenAI/UseChatGPT?query=' + encodeURIComponent(query));
-                    if (response.ok) {
-                        var result = await response.text();
-                        revMessageToList("管理員", result);
-                        console.log("我有病");
+                    // 檢查 msg 是否包含除中文以外的特殊字符
+                    if (/[^a-zA-Z0-9\u4e00-\u9fa5\s]/.test(msg)) {
+                        // 如果包含特殊字符，彈出警告消息
+                        Swal.fire("不能使用特殊字元喔");
                     } else {
-                        revMessageToList("管理員", "忙線中請稍等");
+                        senMessageToList(name, msg);
+                        console.log(msg);
+                        msg = removeSpecialCharacters(msg);
+                        console.log(msg);
+                        const query = msg + "文章與小兒科婦產科診所有關，字數不要超過50字，都是純文字,不要有特殊符號，繁體中文";
+                        const response = await fetch('/api/OpenAI/UseChatGPT?query=' + encodeURIComponent(query));
+                        if (response.ok) {
+                            var result = await response.text();
+                            revMessageToList("管理員", result);
+                            console.log("我有病");
+                        } else {
+                            revMessageToList("管理員", "目前機器人有錯誤，請稍後再輸入資訊 。");
+                        }
                     }
-                    
                 }
             }
         });

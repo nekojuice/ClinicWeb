@@ -1,127 +1,63 @@
-﻿@* @model  MemberMemberList *@
-@model ClinicWeb.Areas.Member.Models.MemberMemberList
-
+﻿@model ClinicWeb.Areas.Member.Models.MemberMemberList
 
 @section Styles {
+    
     <link href="~/msit155e/css/MemberLogin/MemberLogin.css" rel="stylesheet">
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
 
 }
 
 
-<!------ Include the above in your HEAD tag ---------->
-<!--輪播區-->
-<div class="container">
-    <partial name="_SweetAlertPartial" />
-    <div class="row">
-        <!-- 輪播圖 -->
-        <div class="col-md-6">
-            <!-- 輪播圖 -->
-            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src="~/msit155e/images/MemLogin/01Edu.jpg" class="d-block w-100" alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="~/msit155e/images/MemLogin/02Edu.jpg" class="d-block w-100" alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="~/msit155e/images/MemLogin/03Edu.jpg" class="d-block w-100" alt="...">
-                    </div>
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
+
+<partial name="_SweetAlertPartial" />
+<div class="panel">
+    <div class="panel-header">
+        網站會員
+    </div>
+    <div class="panel2">
+        <div class="panel3">
+            <div class="left-side">
+                <!-- Image goes here -->
+                <img src="~/msit155e/images/MemLogin/baby.png" class="d-block w-100" alt="...">
+                @*  <button class="register-btn">註冊</button> *@
             </div>
-        </div>
-
-        <!-- 右側表單區域 -->
-        <div class="col-md-6">
-
-            <div class="panel panel-login" style="margin:10px;block; background-color:white">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-xs-6 " style="margin:10px">
-                            <a href="#" class="active" id="login-form-link">登入</a>
-                        </div>
-
-                    </div>
-                    <hr>
+            <form id="login-form" asp-controller="ClientPage" asp-action="LoginForClient" method="post" role="form" class="right-side">
+                <div class="login-title">
+                    會員登入
                 </div>
-                <div class="panel-body" style="margin:20px">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <form id="login-form" asp-controller="ClientPage" asp-action="LoginForClient" method="post" role="form" style="display: ">
-                                <div class="form-group mb-3">
-                                    <input type="text" asp-for="MemEmail" tabindex="1" class="form-control" placeholder="請輸入信箱" value="">
-                                </div>
-                                <div class="form-group mb-3">
-                                    <input type="password" asp-for="MemPassword" tabindex="2" class="form-control" placeholder="請輸入密碼">
-                                </div>
-                                <!--帳密輸入錯誤的提醒-->
-                                @if (ViewData["ErrorMessage"] != null)
-                                {
-                                    <div class="text-danger" style="color:red">@ViewData["ErrorMessage"]</div>
-                                }
-                                <!--google帳號授權失敗-->
-                                @if (TempData["Msg"] != null)
-                                {
-                                    <div class="alert alert-warning" role="alert">
-                                        @Html.Raw(TempData["Msg"])
-                                    </div>
-                                }
-                                <!--沒有對應帳號的提醒-->
-                                @if (TempData["RegisterPrompt"] != null)
-                                {
-                                    <div class="alert alert-warning" role="alert">
-                                        @Html.Raw(TempData["RegisterPrompt"])
-                                    </div>
-                                }
-
-
-                                @*   <a asp-controller="LoginGoogletest" asp-action="Logingoogle">
-                                <img src="~/msit155e/images/MemLogin/Fa-Team-Fontawesome-Brands-FontAwesome-Brands-Google-Plus.512.png" alt="Google 登入" style="width: 24px; height: 24px;" />
-                                </a> *@
-                               @*  <div id="g_id_onload"
-                                     data-client_id="526974450781-r15eef63hrf196gkhsn0tjuqkvk49vjm.apps.googleusercontent.com"
-                                     data-context="signin"
-                                     data-ux_mode="popup"
-                                     data-login_uri="https://localhost:7071/LoginGoogletest/GoogleResponse"
-                                     data-auto_prompt="false">
-                                </div>
-
-                                <div class="g_id_signin"
-                                     data-type="standard"
-                                     data-shape="rectangular"
-                                     data-theme="outline"
-                                     data-text="signin_with"
-                                     data-size="large"
-                                     data-logo_alignment="left">
-                                </div>
-
-                                <div id="g_id_onload"
-                                     data-client_id="526974450781-r15eef63hrf196gkhsn0tjuqkvk49vjm.apps.googleusercontent.com"
-                                     data-context="signin"
-                                     data-ux_mode="popup"
-                                     data-login_uri="https://localhost:7071/LoginGoogletest/LoginGoogle2"
-                                     data-auto_prompt="false">
-                                </div>
-
-                                <div class="g_id_signin"
-                                     data-type="icon"
-                                     data-shape="square"
-                                     data-theme="outline"
-                                     data-text="signin_with"
-                                     data-size="large">
-                                </div> *@
-                                <a asp-controller="LoginGoogletest" asp-action="Logingoogle">
-                                    <button type="button" style="border: none;background-color: transparent;">
-                                        <div style="
+                <div class="welcome-message">
+                    歡迎來到寶育婦幼
+                </div>
+                @*   <form id="login-form" asp-controller="ClientPage" asp-action="LoginForClient" method="post" role="form" style="display: "> *@
+                <div class="input-group">
+                    <input type="text" asp-for="MemEmail" placeholder="信箱">
+                </div>
+                <div class="input-group">
+                    <input type="password" asp-for="MemPassword" placeholder="密碼">
+                </div>
+                <!--帳密輸入錯誤的提醒-->
+                @if (ViewData["ErrorMessage"] != null)
+                {
+                    <div class="text-danger input" style="color:red">@ViewData["ErrorMessage"]</div>
+                }
+                <!--google帳號授權失敗-->
+                @if (TempData["Msg"] != null)
+                {
+                    <div class="alert alert-warning input" role="alert">
+                        @Html.Raw(TempData["Msg"])
+                    </div>
+                }
+                <!--沒有對應帳號的提醒-->
+                @if (TempData["RegisterPrompt"] != null)
+                {
+                    <div class="alert alert-warning input" role="alert">
+                        @Html.Raw(TempData["RegisterPrompt"])
+                    </div>
+                }
+                <div class="google-btn-container">
+                <a asp-controller="LoginGoogletest" asp-action="GenerateGoogleLoginUrl">
+                @* <a asp-controller="LoginGoogletest" asp-action="Logingoogle"> *@
+                    <button type="button" style="border: none;background-color: transparent;">
+                        <div style="
                                             display: flex;
                                             transition: background-color .218s, border-color .218s;
                                             -webkit-user-select: none;
@@ -137,85 +73,38 @@
                                             letter-spacing: 0.25px;
                                             outline: none;
                                             overflow: hidden;
-                                            padding: 0 12px;
+                                            padding: 5px 12px;
+                                            margin: 0 0 13px -7px;
                                             position: relative;
                                             text-align: center;
                                             vertical-align: middle;
                                             white-space: nowrap;
                                             width: auto;
-                                            align-items: center;
+                                            /* align-items: center; */
                                             border-radius: 4px;">
-                                            <div style="height:18px;margin-right:8px;min-width:18px;width:18px;">
-                                                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" class="LgbsSe-Bz112c"><g><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"></path><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"></path><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"></path><path fill="none" d="M0 0h48v48H0z"></path></g></svg>
-                                            </div>
-                                            <span style="font-weight: 500;font-family: 'Google Sans', arial, sans-serif;letter-spacing: 0.25px;">
-                                                使用 Google 帳戶登入
-                                            </span>
-                                        </div>
-                                    </button>
-                                </a>
-
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="text-center">
-                                                <button type="submit" class="login-content_submit">登入</button>
-                                            </div>
-
-                                            <div class="text-center">
-                                                <a asp-controller="ForgotPassword" asp-action="ForgotPasswordIndex" class="forgot-password">忘記密碼?</a>
-                                            </div>
-                                            <div class="text-center">
-                                                <a asp-controller="ClientPage" asp-action="Register" class="forgot-password">還不是會員? 前往註冊</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-
-
-
+                            <div style="height:18px;margin-right:8px;min-width:18px;width:18px;">
+                                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" class="LgbsSe-Bz112c"><g><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"></path><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"></path><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"></path><path fill="none" d="M0 0h48v48H0z"></path></g></svg>
+                            </div>
+                            <span style="font-weight: 500;font-family: 'Google Sans', arial, sans-serif;letter-spacing: 0.25px;">
+                                使用 Google 帳戶登入
+                            </span>
                         </div>
-                    </div>
+                    </button>
+                </a>
                 </div>
-            </div>
+
+
+                <button class="login-btn">登入</button>
+                <div class="forgot-password-container">
+                    <a asp-controller="ForgotPassword" asp-action="ForgotPasswordIndex" class="forgot-password">忘記密碼?</a>
+                </div>
+                <div class="forgot-password-container">
+                <a asp-controller="ClientPage" asp-action="Register" class="forgot-password">還不是會員? 前往註冊</a>
+                </div>
+            </form>
+
         </div>
     </div>
 </div>
 
-
-@* @section Scripts
-{ *@
-
-
-@*  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script> *@
-@*  @if (TempData["Error"] != null)
-    {
-        <script>
-            swal.fire({
-                position: "center",
-                icon: "error",
-                title: "@TempData["Error"]",
-                showComfirmButton: true,
-
-            });
-        </script>
-    } *@
-
-@*  @if (TempData["Msg"] != null)
-    {
-        <script type="text/javascript">
-
-            alert("@Html.Raw(TempData["Msg"])");
-        </script>
-    }
-    @if (TempData["RegisterPrompt"] != null)
-    {
-        <script type="text/javascript">
-            alert("@Html.Raw(TempData["RegisterPrompt"])");
-        </script>
-    } *@
-
-
-@* } *@
 

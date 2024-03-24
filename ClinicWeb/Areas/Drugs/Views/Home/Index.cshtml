@@ -120,7 +120,9 @@
     <script src="~/vendors/pdfmake/build/pdfmake.min.js"></script>
     <script src="~/vendors/pdfmake/build/vfs_fonts.js"></script>
     <!-- Collapse折疊 -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+
+   @*  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script> *@
 
 }
 
@@ -158,7 +160,7 @@
                         "data": null, title: "操作功能", "width": "20%",
                         render: function (data, type, row) {
                             return '<button type="button" name="Editor" data-id="' + row.id + '" class="btn btn-warning btn-sm"> 編輯 </button>' +
-                                '<button type="button"  name="Delete" class="btn btn-danger btn-sm"> 刪除 </button>'
+                                '<button type="button"  name="Delete" data-id="'+row.id+'" class="btn btn-danger btn-sm"> 刪除 </button>'
                         }
                     }
                 ],
@@ -170,16 +172,6 @@
                 }
             });
 
-            // $(document).on('keydown', function (event) {
-            //     // 获取当前可见的模态框
-            //     console.log
-            //     var visibleModal = $('.modal:visible').last();
-            //     // 如果按下的是 Esc 键并且有可见的模态框
-            //     if (event.key === 'Escape' && visibleModal.length > 0) {
-            //         // 关闭最顶层的模态框
-            //         visibleModal.modal('hide');
-            //     }
-            // });
         }
         QueryDrugDatas();
 
@@ -227,7 +219,21 @@
                     console.log('Error fetching data:', error)
                 }
             });
-        });     
+        });
+
+        // // //
+        // // // 
+        // // var checkBoxValues = [];
+        // // var checkBoxes = document.querySelectorAll('.clinical-use-checkbox input[type=checkbox]');
+        // // checkBoxes.forEach(function (checkbox, index) {
+        // //     if (checkbox.checked) {
+        // //         checkBoxValues.push(index);
+        // //     }
+        // // });
+
+        // // // 將映射後的值設置到表單元素中
+        // // var hiddenInput = document.getElementById('mappedValues');
+        // // hiddenInput.value = checkBoxValues.join(',');
 
         //保存按鈕
         const btnEdit = document.querySelector('#editSaveButton');
@@ -236,7 +242,8 @@
             const id = $('#PharmacyTMedicinesList_FIdDrug').val();
             console.log(id);
             const formData = new FormData($('#form_DrugEdit')[0]);
-           // const jsonData = JSON.stringify(Object.fromEntries(formData));
+                            
+            // const jsonData = JSON.stringify(Object.fromEntries(formData));
            // const fDrugCode = $('#PharmacyTMedicinesList_FDrugCode').val();
 
           //  formData.append('PharmacyTMedicinesList.FDrugCode', fDrugCode);
@@ -253,8 +260,9 @@
                 });
                 if (response.ok) {
                     alert('修改成功');
+                    $('#DrugEdit').modal('hide');
                     QueryDrugDatas();
-                    $('#form_DrugEdit').modal('hide');
+                  
                 } else {
                     console.error('Update failed, status code:', response.status);
                     const errorData = await response.json();
@@ -265,6 +273,29 @@
             }
 
 
+        })
+
+        //刪除藥品
+        $(document).on('click', 'button[name=Delete]', async (event) => {
+
+            event.preventDefault();
+            var id = $(event.target).data('id');
+            console.log(id);
+            const urlDelete = `/Drugs/DrugsApi/DeleteDrug/${id}`
+            try {
+                const response = await fetch(urlDelete, function () {
+                    method: "POST"
+                });
+                if (response.ok) {
+                    alert('刪除成功');
+                    QueryDrugDatas();
+                } else {
+                    console.error('刪除失敗，狀態碼：', response.status);
+                }
+            }
+            catch (error) {
+                console.error(error);
+            }
         })
 
         //新增藥品
@@ -289,17 +320,7 @@
             const optType = datas.map(list => `<option value="${list.id}">${list.劑型代碼}  - ${list.劑型名稱}</option>`).join('');
             selTypes_Create.innerHTML += optType;
             selTypes_Edit.innerHTML += optType;
-            //typeList.innerHTML = optType;
-
-            // $('#detailsModal').on('shown.bs.modal', function () {
-            //     console.log('click');
-            //     $(document).on('keydown', function (event) {
-            //         if (event.key === 'Escape') {
-            //             document.getElementById('detailsModal').style.display = 'none';
-            //             $('#detailsModal').modal('hide');
-            //         }
-            //     });
-            // })
+            //typeList.innerHTML = optType;           
           
         }
         const loadList = async () => {
@@ -333,25 +354,6 @@
             SEList.innerHTML = dispaly1;
         }
 
-        // $('#detailsModal').on('shown.bs.modal', function () {
-        //     console.log('click');
-        //     $(this).on('keydown', function (event) {
-        //         if (event.key === 'Escape') {
-        //             $('#detailsModal').modal('hide');
-        //         }
-        //     });
-        // })
-        // $(document).on('keydown', function (event) {
-        //     // 获取当前可见的模态框
-        //     console.log
-        //     var visibleModal = $('.modal:visible').last();
-        //     // 如果按下的是 Esc 键并且有可见的模态框
-        //     if (event.key === 'Escape' && visibleModal.length > 0) {
-        //         // 关闭最顶层的模态框
-        //         visibleModal.modal('hide');
-        //     }
-        // });
-
         const btnSubmit = document.querySelector('#saveMedicineButton');
         btnSubmit.addEventListener('click', async (event) => {
             // alert('儲存');
@@ -383,15 +385,12 @@
             document.getElementById('DrugForm').reset();
         }
 
-        //新增按鈕按下後關閉modal視窗 -->不知道為什麼沒有效果
+        //新增按鈕按下後關閉modal視窗 -->不知道為什麼沒有效果，摺疊使用bootstrap5與_Layout的bootstrap4衝突
         function addModalClose() {
             console.log('close');
-            $('#DrugCreate').modal('hide');
-            //document.getElementById('DrugForm').close();
-            
-            // $('#DrugCreate').modal('hide').on('hidden.bs.modal', function () {
-            //     alert('新增成功');
-            // });
+
+           // $('#DrugCreate').hide(); //會導致Modal關閉後背景仍維持data-backdrop="static"
+            $('#DrugCreate').modal('hide');           
         }
         
         

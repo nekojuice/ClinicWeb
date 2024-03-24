@@ -3,80 +3,101 @@
 @{
     ViewData["Title"] = "藥品明細表";
 }
-@section Styles{
+@section Styles {
     <style>
         /* 格式還是有點問題 */
-        .texts{
-            font-size:20px;
-            margin-top:3px;
-            
-            border-bottom:solid 1px
+        .texts {
+            font-size: 20px;
+            margin-top: 3px;
+            border-bottom: solid 1px
+        }
+
+        .center {
+            text-align: center;
         }
 
     </style>
 }
+@{
+    //渲染藥品懷孕部分的HTML結構
+    string pregnancyCategoryHtml = "";
+    if (!string.IsNullOrEmpty(Model?.PregnancyCategory))
+    {
+        pregnancyCategoryHtml = $@"
+ <div class='row texts mb-3'><dt class='col-sm-3'><strong>懷孕風險藥品分級類別:</strong></dt><dd class='col-sm-9'><a href='{Url.Content("~/FHealthInformation/pregnancycategory")}' asp-append-version='true'>{Model?.PregnancyCategory}</a></dd></div>";
+    }
 
-<h2>藥品明細表-@Model?.DrugName</h2>
-<br /><hr />
+}
+
+<!--h2的class將按紐移至畫面右方-->
+<h2 class="d-flex justify-content-between align-items-center">
+    藥品明細表-@Model?.DrugName
+    <!--加入仿單PDF按紐-->
+    <button id="openPDF" type="button" class="btn btn-primary ml-auto" data-drugid="@Model?.DrugId">打開仿單</button>
+</h2>
+
+<br />
+<hr />
 
 <form asp-controller="MBRecordInfo" asp-action="GetData" method="get">
     <div>
         <div class="from-group">
-            <dl>
+            <dl id="createExcel">
                 <!--藥品ID-->
-                <div class="row texts mb-3" > @* mb- 調整邊界距離*@
-                <dt class="col-sm-3">
-                    <strong>
-                        @Html.DisplayNameFor(model => model.DrugId) :
-                    </strong>
-                </dt>
-                <dd class="col-sm-9">
-                    @Model?.DrugId
-                </dd>
+                <div class="row texts mb-3">
+                    @* mb- 調整邊界距離*@
+                    <dt class="col-sm-3">
+                        <strong>
+                            @Html.DisplayNameFor(model => model.DrugId) :
+                        </strong>
+                    </dt>
+                    <dd class="col-sm-9">
+                        @Model?.DrugId
+                    </dd>
                 </div>
                 <!--藥品代碼-->
                 <div class="row texts mb-3">
-                <dt class="col-sm-3">
-                    <strong>
-                        @Html.DisplayNameFor(model => model.DrugCode) :
-                    </strong>
-                </dt>
-                <dd class="col-sm-9">
-                    @Model?.DrugCode
-                </dd>
+                    <dt class="col-sm-3">
+                        <strong>
+                            @Html.DisplayNameFor(model => model.DrugCode) :
+                        </strong>
+                    </dt>
+                    <dd class="col-sm-9">
+                        @Model?.DrugCode
+                    </dd>
                 </div>
                 <!--藥品學名-->
                 <div class="row texts mb-3">
-                <dt class="col-sm-3">
-                    <strong>
-                        @Html.DisplayNameFor(model => model.GenericName) :
-                    </strong>
-                </dt>
-                <dd class="col-sm-9">
-                    @Model?.GenericName
-                </dd>
+                    <dt class="col-sm-3">
+                        <strong>
+                            @Html.DisplayNameFor(model => model.GenericName) :
+                        </strong>
+                    </dt>
+                    <dd class="col-sm-9">
+                        @Model?.GenericName
+                    </dd>
                 </div>
                 <!--藥品商品名-->
                 <div class="row texts mb-3">
-                <dt class="col-sm-3">
-                    <strong>
-                        @Html.DisplayNameFor(model => model.TradeName) :
-                    </strong>
-                </dt>
-                <dd class="col-sm-9">
-                    @Model?.TradeName
-                </dd>
+                    <dt class="col-sm-3">
+                        <strong>
+                            @Html.DisplayNameFor(model => model.TradeName) :
+                        </strong>
+                    </dt>
+                    <dd class="col-sm-9">
+                        @Model?.TradeName
+                    </dd>
                 </div>
                 <!--藥品中文名-->
                 <div class="row texts mb-3">
-                <dt class="col-sm-3">
-                    <strong>
-                        @Html.DisplayNameFor(model => model.DrugName) :
-                    </strong>
-                </dt>
-                <dd class="col-sm-9">
-                    @Model?.DrugName
-                </dd>
+                    <dt class="col-sm-3">
+                        <strong>
+                            @Html.DisplayNameFor(model => model.DrugName) :
+                        </strong>
+                    </dt>
+                    <dd class="col-sm-9">
+                        @Model?.DrugName
+                    </dd>
                 </div>
                 <!--藥品適應症-->
                 <div class="row texts mb-3">
@@ -86,10 +107,10 @@
                         </strong>
                     </dt>
                     <dd class="col-sm-9">
-                        @if(Model?.ClinicalUse!=null && Model.ClinicalUse.Any())
+                        @if (Model?.ClinicalUse != null && Model.ClinicalUse.Any())
                         {
                             <ul>
-                                @foreach(var list in Model.ClinicalUse)
+                                @foreach (var list in Model.ClinicalUse)
                                 {
                                     <li>@list</li>
                                 }
@@ -126,119 +147,194 @@
                 </div>
                 <!--藥品劑型-->
                 <div class="row texts mb-3">
-                <dt class="col-sm-3">
-                    <strong>
-                        @Html.DisplayNameFor(model => model.DrugType) :
-                    </strong>
-                </dt>
-                <dd class="col-sm-9">
-                    @Model?.DrugType
-                </dd>
+                    <dt class="col-sm-3">
+                        <strong>
+                            @Html.DisplayNameFor(model => model.DrugType) :
+                        </strong>
+                    </dt>
+                    <dd class="col-sm-9">
+                        @Model?.DrugType
+                    </dd>
                 </div>
                 <!--藥品常用劑量-->
                 <div class="row texts mb-3">
-                <dt class="col-sm-3">
-                    <strong>
-                        @Html.DisplayNameFor(model => model.DrugDose) :
-                    </strong>
-                </dt>
-                <dd class="col-sm-9">
-                    @Model?.DrugDose
-                </dd>
+                    <dt class="col-sm-3">
+                        <strong>
+                            @Html.DisplayNameFor(model => model.DrugDose) :
+                        </strong>
+                    </dt>
+                    <dd class="col-sm-9">
+                        @Model?.DrugDose
+                    </dd>
                 </div>
                 <!--藥品最大劑量-->
                 <div class="row texts mb-3">
-                <dt class="col-sm-3">
-                    <strong>
-                        @Html.DisplayNameFor(model => model.MaxDose) :
-                    </strong>
-                </dt>
-                <dd class="col-sm-9">
-                    @Model?.MaxDose
-                </dd>
+                    <dt class="col-sm-3">
+                        <strong>
+                            @Html.DisplayNameFor(model => model.MaxDose) :
+                        </strong>
+                    </dt>
+                    <dd class="col-sm-9">
+                        @Model?.MaxDose
+                    </dd>
                 </div>
                 <!--藥品警語/禁忌-->
                 <div class="row texts mb-3">
-                <dt class="col-sm-3">
-                    <strong>
-                        @Html.DisplayNameFor(model => model.Precautions) :
-                    </strong>
-                </dt>
-                <dd class="col-sm-9">
-                    @Model?.Precautions
-                </dd>
+                    <dt class="col-sm-3">
+                        <strong>
+                            @Html.DisplayNameFor(model => model.Precautions) :
+                        </strong>
+                    </dt>
+                    <dd class="col-sm-9">
+                        @Model?.Precautions
+                    </dd>
                 </div>
                 <!--藥品注意事項-->
                 <div class="row texts mb-3">
-                <dt class="col-sm-3">
-                    <strong>
-                        @Html.DisplayNameFor(model => model.Warnings) :
-                    </strong>
-                </dt>
-                <dd class="col-sm-9">
-                    @Model?.Warnings
-                </dd>
+                    <dt class="col-sm-3">
+                        <strong>
+                            @Html.DisplayNameFor(model => model.Warnings) :
+                        </strong>
+                    </dt>
+                    <dd class="col-sm-9">
+                        @Model?.Warnings
+                    </dd>
                 </div>
                 <!--藥品懷孕-->
+                @* @Html.Raw(pregnancyCategoryHtml) *@
                 <div class="row texts mb-3">
-                <dt class="col-sm-3">
-                    <strong>
-                        @Html.DisplayNameFor(model => model.PregnancyCategory) :
-                    </strong>
-                </dt>
-                <dd class="col-sm-9">
-                    <a href="@Url.Content("~/FHealthInformation/pregnancycategory")" asp-append-version="true">
-                        @Model?.PregnancyCategory
-                    </a>
-                </dd>
+                    <dt class="col-sm-3">
+                        <strong>
+                            @Html.DisplayNameFor(model => model.PregnancyCategory) :
+                        </strong>
+                    </dt>
+                    <dd class="col-sm-9">
+                        <a href="@Url.Content("~/FHealthInformation/pregnancycategory")" asp-append-version="true">
+                            @Model?.PregnancyCategory
+                        </a>
+                    </dd>
                 </div>
                 <!--保存方法-->
                 <div class="row texts mb-3">
-                <dt class="col-sm-3">
-                    <strong>
-                        @Html.DisplayNameFor(model => model.Storage) :
-                    </strong>
-                </dt>
-                <dd class="col-sm-9">
-                    @Model?.Storage
-                </dd>
+                    <dt class="col-sm-3">
+                        <strong>
+                            @Html.DisplayNameFor(model => model.Storage) :
+                        </strong>
+                    </dt>
+                    <dd class="col-sm-9">
+                        @Model?.Storage
+                    </dd>
                 </div>
                 <!--藥商-->
                 <div class="row texts mb-3">
-                <dt class="col-sm-3">
-                    <strong>
-                        @Html.DisplayNameFor(model => model.Supplier) :
-                    </strong>
-                </dt>
-                <dd class="col-sm-9">
-                    @Model?.Supplier
-                </dd>
+                    <dt class="col-sm-3">
+                        <strong>
+                            @Html.DisplayNameFor(model => model.Supplier) :
+                        </strong>
+                    </dt>
+                    <dd class="col-sm-9">
+                        @Model?.Supplier
+                    </dd>
                 </div>
                 <!--廠牌-->
                 <div class="row texts mb-3">
-                <dt class="col-sm-3">
-                    <strong>
-                        @Html.DisplayNameFor(model => model.Brand) :
-                    </strong>
-                </dt>
-                <dd class="col-sm-9">
-                    @Model?.Brand
-                </dd>
+                    <dt class="col-sm-3">
+                        <strong>
+                            @Html.DisplayNameFor(model => model.Brand) :
+                        </strong>
+                    </dt>
+                    <dd class="col-sm-9">
+                        @Model?.Brand
+                    </dd>
                 </div>
                 <!--用法-->
                 <div class="row texts mb-3">
-                <dt class="col-sm-3">
-                    <strong>
-                        @Html.DisplayNameFor(model => model.Dosage) :
-                    </strong>
-                </dt>
-                <dd class="col-sm-9">
-                    @Model?.Dosage
-                </dd>
+                    <dt class="col-sm-3">
+                        <strong>
+                            @Html.DisplayNameFor(model => model.Dosage) :
+                        </strong>
+                    </dt>
+                    <dd class="col-sm-9">
+                        @Model?.Dosage
+                    </dd>
                 </div>
             </dl>
         </div>
     </div>
 </form>
+<div class="center">
+    <button class="btn btn-success " id="downloadExcel">下載EXCEL</button>
+</div>
+
 
 @* 適應症&副作用沒有的情況沒測試 *@
+@section Scripts {
+    <!--引入Sheetjs-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.3/xlsx.full.min.js"></script>
+
+    <script>
+
+        //再考慮一下要修改成怎樣，目前中間還有換頁才能點選後跳出PDF
+        $('#openPDF').click(function () {
+            //獲取drugId
+            var drugId = $(this).data('drugid');
+
+            //創建一個<a>元素開啟PDF仿單
+            var link = document.createElement('a');
+            link.href = '@Url.Action("GetPdf", "MBRecordInfo")' + '?drugId=' + drugId;
+            link.target = '_blank';
+            document.body.appendChild(link);
+
+            link.click();
+
+            document.body.removeChild(link);
+        });
+
+        //加入藥品明細下載成EXCEL功能
+        const download = document.getElementById('downloadExcel');
+        download.addEventListener('click', function () {
+
+
+            //創建EXCEL
+            var wb = XLSX.utils.book_new();
+            wb.Props = {
+                Title: "Drug List",         //工作表1的名稱
+                Author: "Your Name",       //EXCEL的作者名稱
+                CreatedDate: new Date()   //抓創建日期
+            };
+
+            var wsData = [];
+            var rows = document.querySelectorAll('dt, dd');
+            for (var i = 0; i < rows.length; i += 2) {
+                var term = rows[i].innerText;
+                var description = rows[i + 1].innerText;
+                wsData.push([term, description]);
+            }
+
+            var ws = XLSX.utils.aoa_to_sheet(wsData);
+            XLSX.utils.book_append_sheet(wb, ws, "Drug Details");
+
+            var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+
+            function s2ab(s) {
+                var buf = new ArrayBuffer(s.length);
+                var view = new Uint8Array(buf);
+                for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+                return buf;
+            }
+
+            saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), 'data.xlsx');
+        });
+
+        function saveAs(blob, fileName) {
+            var a = document.createElement("a");
+            document.body.appendChild(a);
+            a.style = "display:none";
+            var url = window.URL.createObjectURL(blob);
+            a.href = url;
+            a.download = fileName;
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+    </script>
+}

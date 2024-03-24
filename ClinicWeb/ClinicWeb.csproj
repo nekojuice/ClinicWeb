@@ -274,6 +274,7 @@
     <Folder Include="wwwroot\msit155e\js\Drugs\" />
     <Folder Include="wwwroot\msit155e\js\Room\" />
     <Folder Include="wwwroot\msit155e\js\Shop\" />
+    <Folder Include="wwwroot\msit155e\uploads\" />
   </ItemGroup>
 
   <ItemGroup>
