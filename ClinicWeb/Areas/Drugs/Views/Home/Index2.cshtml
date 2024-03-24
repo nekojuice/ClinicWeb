@@ -1,59 +1,96 @@
-﻿<div class="col-md-5 col-sm-5 ">
-<div class="x_panel">
-    <div class="x_title">
-        <h2>上傳仿單</h2>
-        <div class="clearfix"></div>
-    </div>
-    <div class="x_content">
-        
-        <br>
-        <form id="form_File" class="form-label-left input_mask" enctype="multipart/form-data">
-            <!--藥品仿單-->
-            <div class="form-group row">
-                <label  class="col-form-label col-md-3 col-sm-3 ">選擇檔案：</label>
-                <div class="col-md-9 col-sm-9 ">
-                    <input  type="file" class="form-control" placeholder="藥品代碼" name="PharmacyTMedicinesList.FDrugCode">
-                </div>
-            </div>
-            <!--按鈕-->
-            <div class="form-group row" style="margin-top:30px;margin-bottom:5px">
-                <div class="col-md-9 col-sm-9  offset-md-8">
+﻿@{
+    ViewData["Title"] = "藥師管理系統";
+}
 
-                    <button id="CloseButton" type="button" class="btn btn-secondary"> 關閉 </button>
-                    @* <button class="btn btn-primary" type="reset"> 清除 </button> *@
-                    <button id="SubmitButton" type="button" class="btn btn-primary"> 保存 </button>
-                </div>
-            </div>
 
-        </form>
-        
+
+<div class="col-md-5 col-sm-5 ">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>上傳仿單</h2>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+
+            <br>
+            <form id="form_File" class="form-label-left input_mask" enctype="multipart/form-data">
+                <!--藥品名稱-->
+                <div class="form-group row">
+                    <label class="col-form-label col-md-3 col-sm-3 ">藥品名稱</label>
+                    <div class="col-md-9 col-sm-9 ">
+                        <select id="selDrugName" name="FIdDrug" class=" form-control">
+                            <option value="-1">請選擇要上傳仿單的藥品</option>
+                        </select>
+                    </div>
+                </div>
+                <!--藥品仿單-->
+                <div class="form-group row">
+                    <label class="col-form-label col-md-3 col-sm-3 ">選擇檔案：</label>
+                    <div class="col-md-9 col-sm-9 ">
+                        <input type="file" class="form-control" placeholder="請選擇要上傳的仿單" name="files" multiple>
+                    </div>
+                </div>
+                <!--按鈕-->
+                <div class="form-group row" style="margin-top:30px;margin-bottom:5px">
+                    <div class="col-md-9 col-sm-9  offset-md-8">
+
+                        <button id="CloseButton" type="button" class="btn btn-secondary"> 關閉 </button>
+                        @* <button class="btn btn-primary" type="reset"> 清除 </button> *@
+                        <button id="SubmitButton" type="button" class="btn btn-primary"> 保存 </button>
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
     </div>
 </div>
-</div>
+
+
 
 @section Scripts {
     <script>
-        const btnSubmit = document.getElementById('SubmitButton');
-        const Info1 =
-            btnSubmit.addEventListener('click', async (event) =>{
-                event.preventDefault(); //停止預設行為
-                alert('click');
-                const formData = new FormData(document.querySelector('#form_File');
-                const urlFile = `@Url.Content("~/Drugs/DrugsApi/DrugFiles")`;
-                try {
-                    const response = await fetch(urlFile, {
-                        method:"POST",
-                        body:formData
-                    })
-                    if (response.ok) {
-                        alert('上傳成功')
-                    }
-                }
-               
-                
-               
+        //載入畫面時即執行生成藥品名稱的下拉選單
+        (async () => {
+            const selDrugName = document.getElementById('selDrugName');
+            const url = `@Url.Content("~/Drugs/DrugsApi/DrugsInfo")`;
+            const response = await fetch(url);
+            const datas = await response.json();
+            const optDrugName = datas.map(list => `<option value="${list.id}">${list.藥品代碼}-${list.中文名}</option>`).join('');
+            selDrugName.innerHTML += optDrugName;
+        })();
 
-                
-            })
+        const btnSubmit = document.getElementById('SubmitButton');
+        //const Info1 =;
+
+        //上傳檔案
+        btnSubmit.addEventListener('click', async (event) => {
+            event.preventDefault(); //停止預設行為
+            alert('click');
+            const formData = new FormData(document.querySelector('#form_File'));
+            //讀取formData中的內容-->存開啟的檔名
+            for (const pair of formData.entries()) {
+                console.log(pair[0]);
+                console.log(pair[1]);
+            }
+            const urlFile = `@Url.Content("~/Drugs/DrugsApi/DrugFiles")`;
+            try {
+                const response = await fetch(urlFile, {
+                    method: "POST",
+                    body: formData
+                })
+                if (response.ok) {
+                    alert('上傳成功')
+                }
+                else {
+                    console.error('上傳失敗，狀態碼:', response.status);
+                }
+            }
+            catch (error) {
+                console.log(error);
+            }
+        })
+
+        
     </script>
 }
