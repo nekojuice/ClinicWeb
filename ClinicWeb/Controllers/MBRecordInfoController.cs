@@ -309,7 +309,21 @@ namespace ClinicWeb.Controllers
             }
             throw new Exception("");
         }
+        // 分支:Drugs_20240321
+       
+        public async Task<IActionResult> GetPdf(int drugId)
+        {
+            
+            var pdf = await _drugs.PharmacyHealthInformation.Where(x=>x.FIdDrug==drugId).FirstOrDefaultAsync();
 
+            if (pdf == null)
+            {
+                return NotFound();
+            }
 
+            // 返回 PDF 文件的二進位數據
+            return File(pdf.FFileData, "application/pdf");
+        }
     }
 }
+

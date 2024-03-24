@@ -417,6 +417,9 @@ namespace ClinicWeb.Areas.Drugs.Controllers
             }));
         }
 
+        //------------------------------------------------------------------------------------------------
+
+        //新增劑型資料
 
         //新增適應症資料
         [HttpPost]
@@ -578,37 +581,60 @@ namespace ClinicWeb.Areas.Drugs.Controllers
 
         //仿單上傳
         [HttpPost]
-        public async Task<IActionResult> DrugFiles(PharmacyHealthInformation drugUpLoad, IFormFile files)
+        public async Task<IActionResult> DrugFiles(PharmacyHealthInformation drugUpLoad, List<IFormFile> files,int FIdDrug)
         {
             //檔案傳到根目錄的嘗試
             try
             {
-                //開啟的檔名=存進資料庫檔名
-                string fileName = "";
-                if (files != null)
+                if (files == null || files.Count == 0)
                 {
-                    fileName = files.FileName;
+                    // 如果沒有文件被上傳，可能需要返回相應的錯誤訊息或採取其他操作
+                    return BadRequest("No files uploaded.");
                 }
-                //存至wwwroot
-                string uploadPath = Path.Combine(_webHostEnvironment.WebRootPath, "msit155e", "uploads", fileName);
-                using (var fileStream = new FileStream(uploadPath, FileMode.Create))
-                {
-                    files?.CopyTo(fileStream);
-                }
-                //新增至資料庫
 
-                drugUpLoad.FFileName = fileName;
-                drugUpLoad.FFilePath = uploadPath;
-
-                //轉成二進位
-                byte[]? pdfByte = null;
-                using (var memoryStream = new MemoryStream())
+                //允許多檔上傳
+                foreach (var file in files)
                 {
-                    files?.CopyTo(memoryStream);
-                    pdfByte = memoryStream.ToArray();
+                    if (file != null && file.Length > 0)
+                    {
+                        //創建一個新的 PharmacyHealthInformation();
+                        var newDrugUpload = new PharmacyHealthInformation();
+
+                        //開啟的檔名=存進資料庫檔名
+                        
+                        string  fileName = file.FileName;
+                        
+                        //存至wwwroot
+                        string uploadPath = Path.Combine(_webHostEnvironment.WebRootPath, "msit155e", "uploads", fileName);
+                        using (var fileStream = new FileStream(uploadPath, FileMode.Create))
+                        {
+                            file?.CopyTo(fileStream);
+                        }
+                        
+                        // 設置新的 PharmacyHealthInformation 物件的屬性值
+                        newDrugUpload.FFileName = fileName;
+                        newDrugUpload.FFilePath = uploadPath;
+                        newDrugUpload.FIdDrug = FIdDrug;
+
+                        ////新增至資料庫
+
+                        //drugUpLoad.FFileName = fileName;
+                        //drugUpLoad.FFilePath = uploadPath;
+
+                        //轉成二進位
+                        byte[]? pdfByte = null;
+                        using (var memoryStream = new MemoryStream())
+                        {
+                            file?.CopyTo(memoryStream);
+                            pdfByte = memoryStream.ToArray();
+                        }
+                        newDrugUpload.FFileData = pdfByte;
+                       // drugUpLoad.FFileData = pdfByte;
+                        _context.PharmacyHealthInformation.Add(newDrugUpload);
+                       
+                    }
                 }
-                drugUpLoad.FFileData = pdfByte;
-                _context.PharmacyHealthInformation.Add(drugUpLoad);
+               
                 await _context.SaveChangesAsync();
                 return View("~/Areas/Drugs/Views/Home/Index2.cshtml");
 
