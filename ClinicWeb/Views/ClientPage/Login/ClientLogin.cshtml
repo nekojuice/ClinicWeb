@@ -31,6 +31,7 @@
                 <div class="input-group">
                     <input type="text" asp-for="MemEmail" placeholder="信箱">
                 </div>
+               
                 <div class="input-group">
                     <input type="password" asp-for="MemPassword" placeholder="密碼">
                 </div>
@@ -101,10 +102,29 @@
                 <div class="forgot-password-container">
                 <a asp-controller="ClientPage" asp-action="Register" class="forgot-password">還不是會員? 前往註冊</a>
                 </div>
+
+                <div class="demo-buttons-container" style="margin-top: 20px; display: flex; justify-content: space-around; width: 100%;">
+                    <button type="button" id="fillDemoUser1" class="demo-btn">1001 李嘉欣</button>
+                    <button type="button" id="fillDemoUser2" class="demo-btn">新註冊</button>
+                </div>
+
+
             </form>
 
         </div>
     </div>
 </div>
 
+               
+<script>
+    document.getElementById('fillDemoUser1').addEventListener('click', function () {
+        document.getElementById('MemEmail').value = 'jiaxin.li@example.com';
+        document.getElementById('MemPassword').value = 'pass1234';
+    });
 
+    document.getElementById('fillDemoUser2').addEventListener('click', function () {
+        document.getElementById('MemEmail').value = 'kiratasi@gmail.com';
+        document.getElementById('MemPassword').value = 'password123';
+    });
+
+</script>
