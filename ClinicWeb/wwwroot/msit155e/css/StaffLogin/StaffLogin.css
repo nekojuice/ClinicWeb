@@ -80,3 +80,36 @@
     display: block; 
     margin: 0 auto; 
 }
+
+.demo {
+    background-color: white;
+    border: 1px solid #cc9999;
+    color: #cc9999;
+    padding: 10px 20px; /* 初始内边距，可以调整 */
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+    /* 自定义按钮大小 */
+    width: auto; /* 或者使用具体的宽度，如100px */
+    height: auto; /* 或者使用具体的高度，如50px */
+    margin: 0 100px;
+}
+
+    .demo:hover {
+        background-color: #cc9999;
+        color: white;
+    }
+
+.demo-container {
+    display: flex;
+    justify-content: space-between;
+    
+    align-items: center;
+    text-align: center;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    top: 65%;
+}

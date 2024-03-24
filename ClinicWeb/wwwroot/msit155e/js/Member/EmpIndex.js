@@ -427,7 +427,7 @@ function fillDemoData() {
     // 電話 
     document.querySelector('input[name="Phone"]').value = '0912345678';
     // 信箱 
-    document.querySelector('input[name="EmpMail"]').value = '123@gmail.com';
+   /* document.querySelector('input[name="EmpMail"]').value = '123@gmail.com';*/
     // 性別 
     document.querySelector('select[name="Gender"]').value = "True";// 男
     // 血型
@@ -437,7 +437,7 @@ function fillDemoData() {
     // 聯絡地址 
     document.querySelector('input[name="ContactAddress"]').value = '臺南市 ';
     // 密碼 
-    document.querySelector('input[name="EmpPassword"]').value = 'Password123!';
+    document.querySelector('input[name="EmpPassword"]').value = 'aeew234';
     // 生日
     document.querySelector('input[name="BirthDate"]').value = '1980-01-01';
     // 員工類比

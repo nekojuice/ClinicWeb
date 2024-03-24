@@ -172,11 +172,13 @@ namespace ClinicWeb.Controllers
         {
             // 
             var expectedState = TempData["oauth-state"] as string;
-
+            
             // 驗證STATE
             if (state != expectedState)
             {
-                return BadRequest("State不同 ,可能有CSRF攻擊 ");
+                TempData["Error"] = "State不同 ,可能有CSRF攻擊";
+                return View("~/Views/ClientPage/Login/ClientLogin.cshtml");
+                //return BadRequest("State不同 ,可能有CSRF攻擊 ");
             }
 
             // Google token endpoint
@@ -209,7 +211,9 @@ namespace ClinicWeb.Controllers
                     if (email == null)
                     {
                         // 如果無法從token中獲取email，可能需要處理錯誤或重定向
-                        return BadRequest("無法從ID token取得email");
+                        TempData["Error"] = "無法從ID token取得email";
+                        return View("~/Views/ClientPage/Login/ClientLogin.cshtml");
+                        //return BadRequest("無法從ID token取得email");
                     }
 
                     var dbMember = _context.MemberMemberList.SingleOrDefault(m => m.MemEmail == email);
@@ -243,6 +247,7 @@ namespace ClinicWeb.Controllers
                 {
                     // 處理錯誤狀態碼
                     var statusCode = response.StatusCode;
+                    
                     return StatusCode((int)statusCode);
                 }
             }
