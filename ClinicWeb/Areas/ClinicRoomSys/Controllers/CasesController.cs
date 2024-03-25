@@ -120,6 +120,31 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
             });
         }
         [HttpPost]
+        public async Task<JsonResult> GURT(string id)
+        {
+            if (!int.TryParse(id, out int ReportId))
+            {
+                return Json(new { error = "Invalid id parameter" });
+            }
+
+            var record = await _context.CasesTestReport
+                .FirstOrDefaultAsync(x => x.ReportId == ReportId);
+
+            if (record == null)
+            {
+                return Json(new { error = "Record not found" });
+            }
+
+            return Json(new
+            {
+                ReportID = record.ReportId,
+                TestName = record.TestName,
+                TestDate = record.TestDate.ToString("yyyy-MM-dd"),
+                ReportDate = record.ReportDate.HasValue ? record.ReportDate.Value.ToString("yyyy-MM-dd") : null,
+                Result = record.Result,
+            });
+        }
+        [HttpPost]
         public async Task<JsonResult> GP(string id) //GETPRESCRIPTION
         {
             return await Task.Run(() =>
@@ -134,6 +159,29 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
                     })
                     .ToList()
                 );
+            });
+        }
+        [HttpPost]
+        public async Task<JsonResult> GUP(string id) //GETUPDATEPRESCRIPTION
+        {
+            if (!int.TryParse(id, out int PrescriptionId))
+            {
+                return Json(new { error = "Invalid id parameter" });
+            }
+
+            var record = await _context.CasesPrescription
+                .FirstOrDefaultAsync(x => x.PrescriptionId == PrescriptionId);
+
+            if (record == null)
+            {
+                return Json(new { error = "Record not found" });
+            }
+
+            return Json(new
+            {
+                //PrescriptionID = record.PrescriptionId,
+                //PrescriptionDate = record.PrescriptionDate.ToString("yyyy-MM-dd"),
+                Dispensing = record.Dispensing,
             });
         }
         [HttpPost]
@@ -201,6 +249,46 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
 
             await _context.SaveChangesAsync();
             return Ok(new { success = true, message = "Record updated successfully" }); 
+        }
+        [HttpPost]
+        public async Task<IActionResult> URT(int id, [FromBody] CasesTestReport recordUpdateModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new { success = false, message = "Invalid data" });
+            }
+
+            var recordToUpdate = await _context.CasesTestReport.FirstOrDefaultAsync(x => x.ReportId == id);
+            if (recordToUpdate == null)
+            {
+                return NotFound(new { success = false, message = "Record not found" });
+            }
+            recordToUpdate.TestName = recordUpdateModel.TestName;
+            recordToUpdate.TestDate = recordUpdateModel.TestDate;
+            recordToUpdate.ReportDate = recordUpdateModel.ReportDate;
+            recordToUpdate.Result = recordUpdateModel.Result;
+
+
+            await _context.SaveChangesAsync();
+            return Ok(new { success = true, message = "Record updated successfully" });
+        }
+        [HttpPost]
+        public async Task<IActionResult> UP(int id, [FromBody] CasesPrescription recordUpdateModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new { success = false, message = "Invalid data" });
+            }
+
+            var recordToUpdate = await _context.CasesPrescription.FirstOrDefaultAsync(x => x.PrescriptionId == id);
+            if (recordToUpdate == null)
+            {
+                return NotFound(new { success = false, message = "Record not found" });
+            }
+            recordToUpdate.Dispensing = recordUpdateModel.Dispensing;
+
+            await _context.SaveChangesAsync();
+            return Ok(new { success = true, message = "Record updated successfully" });
         }
         //新增大隊長
         [HttpPost]
@@ -354,6 +442,24 @@ namespace ClinicWeb.Areas.ClinicRoomSys.Controllers
             if (entities != null && entities.Count > 0)
             {
                 _context.CasesPrescriptionlist.RemoveRange(entities);
+                await _context.SaveChangesAsync();
+            }
+
+            return Ok();
+        }
+        [HttpPost]
+        public async Task<IActionResult> DPrescriptionLItem([FromBody] Variable vb)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new { success = false, message = "Invalid data" });
+            }
+            var didInt = Convert.ToInt32(vb.Variable1);
+            var pidInt = Convert.ToInt32(vb.Variable2);
+            var entity = _context.CasesPrescriptionlist.FirstOrDefault(e => e.DrugId == didInt && e.PrescriptionId == pidInt);
+            if (entity != null)
+            {
+                _context.CasesPrescriptionlist.Remove(entity);
                 await _context.SaveChangesAsync();
             }
 

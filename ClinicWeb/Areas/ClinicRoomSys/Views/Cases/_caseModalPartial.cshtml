@@ -58,21 +58,15 @@
                         <label for="TestDate">檢查日期:</label>
                         <input type="date" class="form-control" id="addTestDate" name="TestDate">
 
-                  @*       <label for="bt">體溫:</label>
-                        <input type="number" class="form-control" id="addbt" name="bt" step="0.1" required>
+                        <label for="TestDate" id="TDLabel" >報告日期:</label>
+                        <input type="date" class="form-control" id="addReportDate" name="TestDate" >
 
-                        <label for="cc">主述:</label>
-                        <textarea id="addcc" class="form-control" name="cc" required></textarea>
-
-                        <label for="disposal">醫囑:</label>
-                        <textarea id="adddisposal" class="form-control" name="disposal" required></textarea>
-
-                        <label for="prescribe">處方:</label>
-                        <textarea id="addprescribe" class="form-control" name="prescribe"></textarea> *@
-
+                        <label for="TestResult" id="TRLabel">檢查結果:</label>
+                        <textarea class="form-control" id="addTestResult" name="TestResult" ></textarea>
                     </form>
                     <br>
                     <button id="submitrt" class="btn btn-primary">確認</button>
+                    <button id="updatert" class="btn btn-primary" >修改</button>
                 </div>
             </div>
         </div>
@@ -91,7 +85,7 @@
             <div class="modal-body">
                 <div class="col-sm-12">
                     <form id="preadd">
-                        <label for="dispensing" style="font-size:24px">醫囑:</label>
+                        <label for="dispensing" style="font-size:24px">調劑方式:</label>
                         <input type="text" class="form-control" id="adddispensing" name="dispensing">
                     </form>
                     <div class="container" style="margin-top:6px;margin-bottom:6px">
@@ -121,6 +115,7 @@
                             </tr>
                         </thead>
                     </table>
+                <button id="updatepre" class="btn btn-primary">修改</button>
 @*                     <br>
                     <button id="submitpre" class="btn btn-primary">送出</button> *@
                 </div>
