@@ -314,7 +314,21 @@ namespace ClinicWeb.Controllers
         public async Task<IActionResult> GetPdf(int drugId)
         {
             
-            var pdf = await _drugs.PharmacyHealthInformation.Where(x=>x.FIdDrug==drugId).FirstOrDefaultAsync();
+            var pdf = await _drugs.PharmacyHealthInformation.Where(x=>x.FIdDrug==drugId&&x.FFileName.Contains("仿單")).FirstOrDefaultAsync();
+
+            if (pdf == null)
+            {
+                return NotFound();
+            }
+
+            // 返回 PDF 文件的二進位數據
+            return File(pdf.FFileData, "application/pdf");
+        }
+
+        public async Task<IActionResult> GetOtherPdf(int drugId)
+        {
+
+            var pdf = await _drugs.PharmacyHealthInformation.Where(x => x.FIdDrug == drugId && x.FFileName.Contains("用藥教育")).FirstOrDefaultAsync();
 
             if (pdf == null)
             {
