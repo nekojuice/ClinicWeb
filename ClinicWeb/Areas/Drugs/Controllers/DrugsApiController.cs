@@ -420,6 +420,29 @@ namespace ClinicWeb.Areas.Drugs.Controllers
         //------------------------------------------------------------------------------------------------
 
         //新增劑型資料
+        [HttpPost]
+        public IActionResult TypeCreate(PharmacyTTypeList pharmacyTTypeList)
+        {
+            _context.PharmacyTTypeList.Add(pharmacyTTypeList);
+            _context.SaveChanges();
+            return View("~/Areas/Drugs/Views/Home/Type.cshtml");
+        }
+
+        //修改劑型資料-->給modal讀單一一筆資料
+        [HttpGet]
+        public async Task<IActionResult> EditType(int? id)
+        {
+            if (id == null || _context.PharmacyTTypeList == null)
+            {
+                return NotFound();
+            }
+            var pharmacyTTypeList = await _context.PharmacyTTypeList.FindAsync(id);
+            if (pharmacyTTypeList == null)
+            {
+                NotFound();
+            }
+            return PartialView("~/Areas/Drugs/Views/Partial/_TypeEditPartial.cshtml", pharmacyTTypeList);
+        }
 
         //新增適應症資料
         [HttpPost]
