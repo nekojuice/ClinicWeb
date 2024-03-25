@@ -106,6 +106,8 @@
                 <div class="demo-buttons-container" style="margin-top: 20px; display: flex; justify-content: space-around; width: 100%;">
                     <button type="button" id="fillDemoUser1" class="demo-btn">1001 李嘉欣</button>
                     <button type="button" id="fillDemoUser2" class="demo-btn">新註冊</button>
+                    <button type="button" id="fillDemoUser3" class="demo-btn">諮詢管理員</button>
+                    <button type="button" id="fillDemoUser4" class="demo-btn">吳仁瀚</button>
                 </div>
 
 
@@ -127,4 +129,13 @@
         document.getElementById('MemPassword').value = 'password123';
     });
 
+    document.getElementById('fillDemoUser3').addEventListener('click', function () {
+        document.getElementById('MemEmail').value = 'admin';
+        document.getElementById('MemPassword').value = '1234';
+    });
+
+    document.getElementById('fillDemoUser4').addEventListener('click', function () {
+        document.getElementById('MemEmail').value = 'joseapple7@gmail.com';
+        document.getElementById('MemPassword').value = '1234';
+    });
 </script>
