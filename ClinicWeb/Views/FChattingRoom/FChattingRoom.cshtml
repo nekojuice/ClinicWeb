@@ -269,7 +269,7 @@
             var currentTime = new Date().toLocaleTimeString();
 
             // 生成新的列表項目
-            var listItem = $("<li></li>").addClass("d-flex justify-content-between mb-4");
+            var listItem = $("<li></li>").addClass("d-flex justify-content-end mb-4");
 
             // 生成卡片元素
             var card = $("<div></div>").addClass("card");
@@ -309,7 +309,7 @@
             var currentTime = new Date().toLocaleTimeString();
 
             // 生成新的列表項目
-            var listItem = $("<li></li>").addClass("d-flex justify-content-end mb-4");
+            var listItem = $("<li></li>").addClass("d-flex justify-content-between mb-4");
 
             // 生成卡片元素
             var card = $("<div></div>").addClass("card");
@@ -406,7 +406,7 @@
             var imageSrc = data.image;
             // 取得現在的時間
             var currentTime = new Date().toLocaleTimeString();
-            var listItem = $("<li></li>").addClass("d-flex justify-content-between mb-4");
+            var listItem = $("<li></li>").addClass("d-flex justify-content-end mb-4");
             var card = $("<div></div>").addClass("card");
             var nameParagraph = $("<p></p>").addClass("fw-bold mb-0").attr("id", "name").text(name).css("margin-right", "20px");
             // 時間（time）
@@ -427,7 +427,7 @@
             var imageSrc = data.image;
             // 取得現在的時間
             var currentTime = new Date().toLocaleTimeString();
-            var listItem = $("<li></li>").addClass("d-flex justify-content-end mb-4");
+            var listItem = $("<li></li>").addClass("d-flex justify-content-between mb-4");
             var card = $("<div></div>").addClass("card");
             var nameParagraph = $("<p></p>").addClass("fw-bold mb-0").attr("id", "name").text(name).css("margin-right", "20px");
             // 時間（time）
@@ -668,7 +668,7 @@
             var currentTime = new Date().toLocaleTimeString();
 
             // 生成新的列表項目
-            var listItem = $("<li></li>").addClass("d-flex justify-content-end mb-4");
+            var listItem = $("<li></li>").addClass("d-flex justify-content-between mb-4");
 
             // 生成卡片元素
             var card = $("<div></div>").addClass("card");
@@ -702,7 +702,7 @@
             var currentTime = new Date().toLocaleTimeString();
 
             // 生成新的列表項目
-            var listItem = $("<li></li>").addClass("d-flex justify-content-between mb-4");
+            var listItem = $("<li></li>").addClass("d-flex justify-content-end mb-4");
 
             // 生成卡片元素
             var card = $("<div></div>").addClass("card");
@@ -778,10 +778,10 @@
                         const response = await fetch('/api/OpenAI/UseChatGPT?query=' + encodeURIComponent(query));
                         if (response.ok) {
                             var result = await response.text();
-                            revMessageToList("管理員", result);
+                            revMessageToList("機器人", result);
                             console.log("我有病");
                         } else {
-                            revMessageToList("管理員", "目前機器人有錯誤，請稍後再輸入資訊 。");
+                            revMessageToList("機器人", "目前機器人有錯誤，請稍後再輸入資訊 。");
                         }
                     }
                 }
