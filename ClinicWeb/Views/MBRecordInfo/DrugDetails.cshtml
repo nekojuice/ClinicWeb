@@ -32,8 +32,12 @@
 <!--h2的class將按紐移至畫面右方-->
 <h2 class="d-flex justify-content-between align-items-center">
     藥品明細表-@Model?.DrugName
+    <div>
     <!--加入仿單PDF按紐-->
-    <button id="openPDF" type="button" class="btn btn-primary ml-auto" data-drugid="@Model?.DrugId">打開仿單</button>
+        <button id="openPDF_off-label_use" type="button" class="btn btn-primary ml-auto" data-drugid="@Model?.DrugId">打開仿單</button>
+        <!--加入用藥教育PDF按紐-->
+        <button id="openPDF_clinic" type="button" class="btn btn-primary ml-auto" data-drugid="@Model?.DrugId">打開用藥教育</button>
+    </div>
 </h2>
 
 <br />
@@ -275,13 +279,28 @@
     <script>
 
         //再考慮一下要修改成怎樣，目前中間還有換頁才能點選後跳出PDF
-        $('#openPDF').click(function () {
+        $('#openPDF_off-label_use').click(function () {
             //獲取drugId
             var drugId = $(this).data('drugid');
 
             //創建一個<a>元素開啟PDF仿單
             var link = document.createElement('a');
             link.href = '@Url.Action("GetPdf", "MBRecordInfo")' + '?drugId=' + drugId;
+            link.target = '_blank';
+            document.body.appendChild(link);
+
+            link.click();
+
+            document.body.removeChild(link);
+        });
+
+        $('#openPDF_clinic').click(function () {
+            //獲取drugId
+            var drugId = $(this).data('drugid');
+
+            //創建一個<a>元素開啟PDF仿單
+            var link = document.createElement('a');
+            link.href = '@Url.Action("GetOtherPdf", "MBRecordInfo")' + '?drugId=' + drugId;
             link.target = '_blank';
             document.body.appendChild(link);
 
