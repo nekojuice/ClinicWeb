@@ -32,12 +32,18 @@ namespace CardReader
             HttpClientHandler clientHandler = new HttpClientHandler();
             clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
             HttpClient httpClient = new HttpClient(clientHandler);
-
-            HttpResponseMessage response = await httpClient.GetAsync($"{serverUrl}/{insertCardUrl}/{Arrivaldate}/{nationalId}/{ip}");
-            if (response.IsSuccessStatusCode)
+            try
             {
-                string content = await response.Content.ReadAsStringAsync();
-                return content;
+                HttpResponseMessage response = await httpClient.GetAsync($"{serverUrl}/{insertCardUrl}/{Arrivaldate}/{nationalId}/{ip}");
+                if (response.IsSuccessStatusCode)
+                {
+                    string content = await response.Content.ReadAsStringAsync();
+                    return content;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
             }
             return null;
         }
