@@ -90,6 +90,7 @@
                                     <tr>
                                         <th style ="display:none">id</th>
                                         <th style="display:none">Week</th>
+                                        <th style="display:none">Timeid</th>
                                         <th>星期</th>
                                         <th>醫師</th>
                                         <th>時段</th>
@@ -376,6 +377,7 @@
                 columns: [
                     { "data": "id", "visible": false },
                     {"data":"week","visible":false},
+                    { "data": "timeid", "visible": false },
                     { "data": "星期" },
                     { "data": "醫師" },
                     { "data": "時段" },
@@ -396,8 +398,9 @@
                 language: {
                     url: "https://cdn.datatables.net/plug-ins/1.13.7/i18n/zh-HANT.json"
                 },
-                order: [[1, 'asc']]
-            });
+                order:[ [1, 'asc']
+                ,[2, 'asc']]
+                    });
 
         }
         QueryWeekSchedule();
@@ -410,9 +413,9 @@
             const table = $('#datatable').DataTable();
             //alert(selectedDoctor)
             if (selectedDoctor === '全部') {
-                table.column(3).search("").draw();
+                table.column(4).search("").draw();
             } else {
-                table.column(3).search(selectedDoctor).draw();
+                table.column(4).search(selectedDoctor).draw();
             }
 
         }
@@ -423,9 +426,9 @@
             const table = $('#datatable').DataTable();
             //alert(selectedShift);
             if (selectedShift === 'allshift') {
-                table.column(4).search("").draw();
+                table.column(5).search("").draw();
             } else {
-                table.column(4).search(selectedShift).draw();
+                table.column(5).search(selectedShift).draw();
             }
 
         }
@@ -436,21 +439,21 @@
             const selectedDep = $(selDep).val();
             const table = $('#datatable').DataTable();
             if (selectedDep === 'alldep') {
-                table.column(5).search("").draw();
+                table.column(6).search("").draw();
             } else {
-                table.column(5).search(selectedDep).draw();
+                table.column(6).search(selectedDep).draw();
             }
         }
-
+        
         //星期搜尋
         selWeek.addEventListener('change', () => { searchWeek(); });
         function searchWeek() {
             const selectedWeek = $('#selectedWeek option:selected').text();
             const table = $('#datatable').DataTable();
             if (selectedWeek === '全部') {
-                table.column(2).search("").draw();
+                table.column(3).search("").draw();
             } else {
-                table.column(2).search(selectedWeek).draw();
+                table.column(3).search(selectedWeek).draw();
             }
         }
 
@@ -460,6 +463,7 @@
             const url = '@Url.Content("~/Schedule/api/SelectedDoctorName")';
             const response = await fetch(url);
             const datas = await response.json();
+            console.log(datas);
 
             const optDoctornames = datas.map(name => `<option value=${name.empId}>${name.name}</option>`);
             optDoctornames.unshift('<option value="none">請選擇</option>');
@@ -512,13 +516,15 @@
             try {
                 const response = await fetch(`/Schedule/ClinicInfo/AddClinic/${selectedDoctor}/${selectedWeek}/${selectedShift}/${selectedRoom}`);
                 const data = await response.text();
+                
 
                 if (response.ok) {
-                 
+                  
                     $('#ClinicAdd').modal('hide')
                     // 門診新增
                     swal("門診新增成功！", "已成功新增門診！", "success", { button: "確定" });
                     QueryWeekSchedule();
+           
                     
                 } else {
                     // 重複新增

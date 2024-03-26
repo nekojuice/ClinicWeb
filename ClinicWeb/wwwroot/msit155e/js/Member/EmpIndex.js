@@ -26,8 +26,8 @@ function QueryEmpInfo() {
                 {
                     "data": "修改",
                     "render": function (data, type, row) {
-                        return '<button type="button"  class="btn btn-round btn-info indexSelector" style="border: none;" data-toggle="modal" data-target="#EmpEdit" onclick="handleButtonClick(' + row.員工id + ')">編輯</button>' +
-                            '<button type="button" class="btn btn-round btn-warning indexSelector" style="border: none;" data-toggle="modal" data-target="#EmpView" onclick="handleViewButtonClick(' + row.員工id + ')">檢視</button>';
+                        return '<button type="button"  class="btn btn-round btn-info indexSelector" style="border: none;" data-toggle="modal" data-target="#EmpEdit" onclick="handleButtonClick(' + row.員工id + ')">編輯</button>'
+                            /*+'<button type="button" class="btn btn-round btn-warning indexSelector" style="border: none;" data-toggle="modal" data-target="#EmpView" onclick="handleViewButtonClick(' + row.員工id + ')">檢視</button>'*/;
                     }
                 }
             ],

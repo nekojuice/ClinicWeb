@@ -45,7 +45,7 @@ namespace ClinicWeb.Areas.Schedule.Controllers
             var ShowNurseSchedule = _context.ScheduleNurseSchedule.Where(d => d.Clinic.Date.StartsWith($"{year}/{month}"))
                 .Select(x => new
                 {
-                    //id = x.ClinicInfoId,
+                    ClinicTimeId = x.Clinic.ClinicTimeId,
                     日期 = x.Clinic.Date,
                     護士 = x.Emp.Name,
                     醫師 = x.Clinic.Doctor.Name,

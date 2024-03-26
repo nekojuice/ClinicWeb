@@ -1,5 +1,272 @@
 ﻿@{
 	ViewData["Title"] = "首頁";
 }
+@section ModulesStyles
+{
+    <!-- iCheck -->
+    <link href="~/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
 
-<h2>這是首頁，想想放甚麼</h2>
+    <!-- bootstrap-progressbar -->
+    <link href="~/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+    <!-- JQVMap -->
+    <link href="~/vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet" />
+    <!-- bootstrap-daterangepicker -->
+    <link href="~/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+}
+@section Styles{
+	<!-- Font Awesome -->
+	<link href="~/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+}
+
+<style>
+    ﻿.star-rating {
+        line-height: 32px;
+        font-size: 5em;
+    }
+
+    .star-rating .fa-star{
+        color: yellow;
+    }
+
+    .fa-star-half-o{
+        color: yellow;
+    }
+    </style>
+
+
+
+<h2>後台首頁</h2>
+
+<!-- top tiles -->
+<div class="row" style="display: inline-block;" >
+    <div class="tile_count row">
+        <div class="col-md-3 col-sm-6  tile_stats_count">
+            <span class="count_top"><i class="fa fa-stethoscope "></i> 就診滿意度</span>
+            <div class="count" id="scorep"></div>
+                <div class="star-rating" id="PatientSatisfaction">
+                    <span class="fa fa-star-o" data-rating="1" style="font-size:1.5em"></span>
+                    <span class="fa fa-star-o" data-rating="2" style="font-size:1.5em"></span>
+                    <span class="fa fa-star-o" data-rating="3" style="font-size:1.5em"></span>
+                    <span class="fa fa-star-o" data-rating="4" style="font-size:1.5em"></span>
+                    <span class="fa fa-star-o" data-rating="5" style="font-size:1.5em"></span>
+                </div>
+        </div>
+        <div class="col-md-3 col-sm-6  tile_stats_count">
+            <span class="count_top"><i class="fa fa-user-md "></i> 醫師積極度</span>
+            <div class="count" id="scored"></div>
+            <div class="star-rating" id="DocSatisfaction">
+                <span class="fa fa-star-o" data-rating="1" style="font-size:1.5em"></span>
+                <span class="fa fa-star-o" data-rating="2" style="font-size:1.5em"></span>
+                <span class="fa fa-star-o" data-rating="3" style="font-size:1.5em"></span>
+                <span class="fa fa-star-o" data-rating="4" style="font-size:1.5em"></span>
+                <span class="fa fa-star-o" data-rating="5" style="font-size:1.5em"></span>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6  tile_stats_count">
+            <span class="count_top"><i class="fa fa-medkit "></i> 診間整潔度</span>
+            <div class="count" id="scorec"></div>
+            <div class="star-rating" id="ClinicSatisfaction">
+                <span class="fa fa-star-o" data-rating="1" style="font-size:1.5em"></span>
+                <span class="fa fa-star-o" data-rating="2" style="font-size:1.5em"></span>
+                <span class="fa fa-star-o" data-rating="3" style="font-size:1.5em"></span>
+                <span class="fa fa-star-o" data-rating="4" style="font-size:1.5em"></span>
+                <span class="fa fa-star-o" data-rating="5" style="font-size:1.5em"></span>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6 tile_stats_count">
+            <span class="count_top"><i class="fa fa-user"></i> 系統滿意度</span>
+            <div class="count" id="scores"></div>
+            <div class="star-rating" id="SysSatisfaction">
+                <span class="fa fa-star-o" data-rating="1" style="font-size:1.5em"></span>
+                <span class="fa fa-star-o" data-rating="2" style="font-size:1.5em"></span>
+                <span class="fa fa-star-o" data-rating="3" style="font-size:1.5em"></span>
+                <span class="fa fa-star-o" data-rating="4" style="font-size:1.5em"></span>
+                <span class="fa fa-star-o" data-rating="5" style="font-size:1.5em"></span>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /top tiles -->
+
+
+
+
+
+
+
+@* <div class="rating-lists" >
+    <label class="title" for="comment" style="font-size:20px">就診整體滿意度：</label>
+    <label class="title" for="comment" style="font-size:25px; color:firebrick" id="scorep"></label>
+    <div class="col">
+        <div class="star-rating" id="PatientSatisfaction">
+            <span class="fa fa-star-o" data-rating="1" style="font-size:2em"></span>
+            <span class="fa fa-star-o" data-rating="2" style="font-size:2em"></span>
+            <span class="fa fa-star-o" data-rating="3" style="font-size:2em"></span>
+            <span class="fa fa-star-o" data-rating="4" style="font-size:2em"></span>
+            <span class="fa fa-star-o" data-rating="5" style="font-size:2em"></span>
+        </div>
+    </div>
+</div>
+
+<div class="rating-lists">
+    <label class="title" for="comment" style="font-size:20px">醫師整體積極度：</label>
+    <label class="title" for="comment" style="font-size:25px; color:firebrick" id="scored"></label>
+    <div class="col">
+        <div class="star-rating" id="DocSatisfaction">
+            <span class="fa fa-star-o" data-rating="1" style="font-size:2em"></span>
+            <span class="fa fa-star-o" data-rating="2" style="font-size:2em"></span>
+            <span class="fa fa-star-o" data-rating="3" style="font-size:2em"></span>
+            <span class="fa fa-star-o" data-rating="4" style="font-size:2em"></span>
+            <span class="fa fa-star-o" data-rating="5" style="font-size:2em"></span>
+        </div>
+    </div>
+</div>
+<div class="rating-lists">
+    <label class="title" for="comment" style="font-size:20px">診間整體整潔度：</label>
+    <label class="title" for="comment" style="font-size:25px; color:firebrick" id="scorec"></label>
+    <div class="col">
+        <div class="star-rating" id="ClinicSatisfaction">
+            <span class="fa fa-star-o" data-rating="1" style="font-size:2em"></span>
+            <span class="fa fa-star-o" data-rating="2" style="font-size:2em"></span>
+            <span class="fa fa-star-o" data-rating="3" style="font-size:2em"></span>
+            <span class="fa fa-star-o" data-rating="4" style="font-size:2em"></span>
+            <span class="fa fa-star-o" data-rating="5" style="font-size:2em"></span>
+        </div>
+    </div>
+</div>
+<div class="rating-lists">
+    <label class="title" for="comment" style="font-size:20px">系統整體滿意度：</label>
+    <label class="title" for="comment" style="font-size:25px; color:firebrick" id="scores"></label>
+    <div class="col">
+        <div class="star-rating" id="SysSatisfaction">
+            <span class="fa fa-star-o" data-rating="1" style="font-size:2em"></span>
+            <span class="fa fa-star-o" data-rating="2" style="font-size:2em"></span>
+            <span class="fa fa-star-o" data-rating="3" style="font-size:2em"></span>
+            <span class="fa fa-star-o" data-rating="4" style="font-size:2em"></span>
+            <span class="fa fa-star-o" data-rating="5" style="font-size:2em"></span>
+        </div>
+    </div>
+</div> *@
+
+
+
+
+@section Modules
+{
+    <!-- Chart.js -->
+    <script src="~/vendors/Chart.js/dist/Chart.min.js"></script>
+    <!-- gauge.js -->
+    <script src="~/vendors/gauge.js/dist/gauge.min.js"></script>
+    <!-- bootstrap-progressbar -->
+    <script src="~/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+    <!-- iCheck -->
+    <script src="~/vendors/iCheck/icheck.min.js"></script>
+    <!-- Skycons -->
+    <script src="~/vendors/skycons/skycons.js"></script>
+    <!-- Flot -->
+    <script src="~/vendors/Flot/jquery.flot.js"></script>
+    <script src="~/vendors/Flot/jquery.flot.pie.js"></script>
+    <script src="~/vendors/Flot/jquery.flot.time.js"></script>
+    <script src="~/vendors/Flot/jquery.flot.stack.js"></script>
+    <script src="~/vendors/Flot/jquery.flot.resize.js"></script>
+    <!-- Flot plugins -->
+    <script src="~/vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
+    <script src="~/vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
+    <script src="~/vendors/flot.curvedlines/curvedLines.js"></script>
+    <!-- DateJS -->
+    <script src="~/vendors/DateJS/build/date.js"></script>
+    <!-- JQVMap -->
+    <script src="~/vendors/jqvmap/dist/jquery.vmap.js"></script>
+    <script src="~/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+    <script src="~/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
+    <!-- bootstrap-daterangepicker -->
+    <script src="~/vendors/moment/min/moment.min.js"></script>
+    <script src="~/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+}
+
+
+
+
+
+
+
+
+
+
+@section Scripts{
+	<script>
+		(async() => {
+            const url = '@Url.Content("~/Employee/Main/Show_Satisfaction")';
+			const response = await fetch(url, { method:"POST" });
+            const datas = await response.json();
+			//console.log(datas);
+
+            const docScore = datas.docSatisfaction;
+            const patScore = datas.patientSatisfaction;
+            const cliScore = datas.clinicSatisfaction;
+            const sysScore = datas.sysSatisfaction;
+
+            //滿意度評分
+            const scoredLabelp = document.getElementById('scorep');
+            scoredLabelp.textContent = patScore;
+            const scoredLabeld = document.getElementById('scored');
+            scoredLabeld.textContent = docScore;
+            const scoredLabelc = document.getElementById('scorec');
+            scoredLabelc.textContent = cliScore;
+            const scoredLabels = document.getElementById('scores');
+            scoredLabels.textContent = sysScore;
+
+         
+            //就診滿意度星星
+            const patSatisfaction = document.getElementById('PatientSatisfaction');
+            const starsp = patSatisfaction.getElementsByClassName('fa');
+            // for (let i = 0; i < patScore; i++) {
+            //     starsp[i].classList.remove('fa-star-o');
+            //     starsp[i].classList.add('fa-star');
+            // }
+             updateStarRating(starsp, patScore);
+
+            //醫師積極度星星
+            const docSatisfaction = document.getElementById('DocSatisfaction');
+            const starsd = docSatisfaction.getElementsByClassName('fa');
+            updateStarRating(starsd, docScore);
+
+            //診間整潔度星星
+            const cliSatisfaction = document.getElementById('ClinicSatisfaction');
+            const starsc = cliSatisfaction.getElementsByClassName('fa');
+            updateStarRating(starsc, cliScore);
+
+            //系統滿意度星星
+            const sysSatisfaction = document.getElementById('SysSatisfaction');
+            const starss = sysSatisfaction.getElementsByClassName('fa');
+            updateStarRating(starss, sysScore);
+
+
+            // 根據評分更新星星
+            function updateStarRating(stars, rating) {
+                const fullStars = Math.floor(rating);
+                const hasHalfStar = rating - fullStars >= 0.5;
+
+                for (let i = 0; i < stars.length; i++) {
+                    if (i < fullStars) {
+                        stars[i].classList.remove('fa-star-o');
+                        stars[i].classList.add('fa-star');
+                    } else if (i === fullStars && hasHalfStar) {
+                        stars[i].classList.remove('fa-star-o');
+                        stars[i].classList.add('fa-star-half-o');
+                    } else {
+                        stars[i].classList.remove('fa-star');
+                        stars[i].classList.remove('fa-star-half-o');
+                        stars[i].classList.add('fa-star-o');
+                    }
+                }
+            }
+           
+
+
+
+
+		})();
+
+	</script>
+}

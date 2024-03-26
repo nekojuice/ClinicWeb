@@ -25,7 +25,7 @@
 		<li><a asp-area="Attend" asp-controller="Att" asp-action="Index">上下班及差勤資訊</a></li>
 		<li><a asp-area="Attend" asp-controller="Att" asp-action="Leave">請假查詢</a></li>
 		<li><a asp-area="Attend" asp-controller="Att" asp-action="ExpenseRequests">費用查詢</a></li>
-		<li><a asp-area="Attend" asp-controller="Att" asp-action="Check">審核批准</a></li>
+		@* <li><a asp-area="Attend" asp-controller="Att" asp-action="Check">審核批准</a></li> *@
 	</ul>
 </li>
 <li class="Appointmentsec" @if (ViewBag.AREA == "Appointment")
@@ -60,7 +60,7 @@
 		@("style=display:block;")
 >
 		<li><a asp-area="Cases" asp-controller="Home" asp-action="Index">功能首頁</a></li>
-		<li><a asp-area="Cases" asp-controller="Home" asp-action="Index2">連結模板</a></li>
+		@* <li><a asp-area="Cases" asp-controller="Home" asp-action="Index2">連結模板</a></li> *@
 	</ul>
 </li>
 <li class="Drugssec" @if (ViewBag.AREA == "Drugs")
@@ -71,10 +71,11 @@
 		@("style=display:block;")
 >
 		<li><a asp-area="Drugs" asp-controller="Home" asp-action="Index">藥品資訊一覽表</a></li>
+		<li><a asp-area="Drugs" asp-controller="Home" asp-action="Index2">藥品仿單管理</a></li>
 		<li><a asp-area="Drugs" asp-controller="Home" asp-action="Type">劑型管理</a></li>
 		<li><a asp-area="Drugs" asp-controller="Home" asp-action="ClinicalUse">適應症管理</a></li>
 		<li><a asp-area="Drugs" asp-controller="Home" asp-action="SideEffect">副作用管理</a></li>
-		<li><a asp-area="Drugs" asp-controller="Home" asp-action="Index2">連結模板</a></li>
+		
 	</ul>
 </li>
 @* <li @if (ViewBag.AREA == "Shop")
@@ -113,7 +114,7 @@
 </li>
 
 
-<li @if (ViewBag.AREA == "Chatroom")
+@* <li @if (ViewBag.AREA == "Chatroom")
 	@("class=active")
 >
 	<a><i class="fa fa-cubes"></i> 線上諮詢 <span class="fa fa-chevron-down"></span></a>
@@ -122,4 +123,4 @@
 >
 		<li><a asp-area="Chatroom" asp-controller="Chat" asp-action="Index">聊天室</a></li>
 	</ul>
-</li>
+</li> *@

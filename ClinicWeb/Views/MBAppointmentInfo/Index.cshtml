@@ -11,7 +11,8 @@
     <!-- Datatables -->
     <link href="~/lib/datatables/css/datatables.bootstrap.min.css" rel="stylesheet" />
     <link href="~/lib/datatables/css/jquery.datatables.min.css" rel="stylesheet" />
-    <link href="//cdn.datatables.net/plug-ins/2.0.1/integration/font-awesome/dataTables.fontAwesome.css" rel="stylesheet">
+    @* <link href="//cdn.datatables.net/plug-ins/2.0.1/integration/font-awesome/dataTables.fontAwesome.css" rel="stylesheet"> *@
+    <link href="~/lib/datatables.fontawesome.min.css" rel="stylesheet" />
 
     <!-- Font Awesome -->
     <link href="~/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
@@ -90,8 +91,20 @@
         const __checkLoginURL = '@Url.Content("~/MBAppointmentInfo/Get_MemberStatus")'
         const __getApptListURL = '@Url.Content("~/MBAppointmentInfo/Get_MemberAppt")'
         const __cancelApptURL = '@Url.Content("~/MBAppointmentInfo/Put_CancelMemberAppt")'
+        const __isSuccessString = '@ViewBag.isSuccessString'
     </script>
 
     <script src="~/msit155e/js/appointmentsearch/apptsearch.js"></script>
     <script src="~/msit155e/js/appointmentsearch/paymentsearch.js"></script>
+
+    <script>
+        if (__isSuccessString == 'CatReceivedMoney') {
+            new PNotify({
+                title: '已成功付款!',
+                type: 'success',
+                styling: 'bootstrap3'
+            });
+            $("#v-pills-profile-tab").click()
+        }
+    </script>
 }

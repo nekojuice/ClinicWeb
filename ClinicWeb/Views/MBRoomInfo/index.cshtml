@@ -1,0 +1,80 @@
+﻿@model ClinicWeb.Areas.Room.Models.ShowAppointmentRoomSchedule
+
+<div class="container">
+    <form asp-action="Create" method="post">
+        <div class="form-group">
+            <label asp-for="StartDate">開始日期:</label>
+            <input asp-for="StartDate" id="start-date" class="form-control" type="date" required />
+            <span asp-validation-for="StartDate" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="EndDate">結束日期:</label>
+            <input asp-for="EndDate" id="end-date" class="form-control" type="date" required />
+            <span asp-validation-for="EndDate" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="RoomId">房間:</label>
+            <select asp-for="RoomId" class="form-control" asp-items="@ViewBag.Rooms"></select>
+        </div>
+        <div class="form-group">
+            <label asp-for="DoctorId">醫生:</label>
+            <select asp-for="DoctorId" class="form-control" asp-items="@(new SelectList(ViewBag.Doctors, "EmpId", "Name"))"></select>
+        </div>
+        <div class="form-group">
+            <label asp-for="NurseId">護士:</label>
+            <select asp-for="NurseId" class="form-control" asp-items="@(new SelectList(ViewBag.Nurses, "EmpId", "Name"))"></select>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-3" onclick="return checkDateRange()">預約</button>
+        <input asp-for="StartDate" id="start-date-hidden" name="StartDate" class="form-control" type="date" style="display: none;" />
+        <input asp-for="EndDate" id="end-date-hidden" name="EndDate" class="form-control" type="date" style="display: none;" />
+
+    </form>
+</div>
+
+@{
+    var successMessage = TempData["SuccessMessage"] as string;
+    var errorMessage = TempData["ErrorMessage"] as string;
+}
+
+@if (!string.IsNullOrEmpty(successMessage))
+{
+    <div class="alert alert-success" role="alert">
+        @successMessage
+    </div>
+}
+
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <div class="alert alert-danger" role="alert">
+        @errorMessage
+    </div>
+}
+
+<script>
+    function checkDateRange() {
+        var startDateInput = document.getElementById("start-date-hidden");
+        var endDateInput = document.getElementById("end-date-hidden");
+
+        var startDate = new Date(startDateInput.value.replace(/-/g, '/')); // 将日期字符串中的 '-' 替换为 '/'
+        var endDate = new Date(endDateInput.value.replace(/-/g, '/'));
+
+        if (endDate <= startDate) {
+            alert("結束日期必須大於開始日期");
+            return false;
+        }
+        return true;
+    }
+</script>
+
+
+
+
+        <!--
+
+        JavaScript
+        讀取使用者輸入的開始日期及結束日期
+        判斷結束日期要大於開始日期
+        
+        -->
+

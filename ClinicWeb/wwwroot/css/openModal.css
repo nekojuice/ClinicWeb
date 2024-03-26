@@ -1,0 +1,26 @@
+﻿.modal {
+    display: none;
+    position: fixed; 
+    z-index: 1;
+    background-color: #fefefe;
+    border: 1px solid #888;
+    padding: 20px;
+    width: 600px;
+    height: 500px;
+    /
+}
+
+
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+    .close:hover,
+    .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
