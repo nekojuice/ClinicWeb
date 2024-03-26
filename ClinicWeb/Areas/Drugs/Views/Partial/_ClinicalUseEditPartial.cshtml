@@ -12,15 +12,15 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="FIdClinicalUse" />
             <!--適應症編號-->
-            <div class="form-group">
-                <label asp-for="FClinicalUseCode" class="control-label">適應症編號</label>
-                <input asp-for="FClinicalUseCode" class="form-control" />
+            <div class="form-group row">
+                <label asp-for="FClinicalUseCode" class="col-form-label col-md-3 col-sm-3">適應症編號</label>
+                <input asp-for="FClinicalUseCode" class="col-md-9 col-sm-9 form-control" />
                 <span asp-validation-for="FClinicalUseCode" class="text-danger"></span>
             </div>
             <!--適應症名稱-->
-            <div class="form-group">
-                <label asp-for="FClinicalUse" class="control-label">適應症名稱</label>
-                <input asp-for="FClinicalUse" class="form-control" />
+            <div class="form-group row">
+                <label asp-for="FClinicalUse" class="col-form-label col-md-3 col-sm-3">適應症名稱</label>
+                <input asp-for="FClinicalUse" class="col-md-9 col-sm-9 form-control" />
                 <span asp-validation-for="FClinicalUse" class="text-danger"></span>
             </div>
             <!--按鈕-->

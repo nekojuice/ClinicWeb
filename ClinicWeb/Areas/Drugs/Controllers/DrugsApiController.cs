@@ -420,6 +420,78 @@ namespace ClinicWeb.Areas.Drugs.Controllers
         //------------------------------------------------------------------------------------------------
 
         //新增劑型資料
+        [HttpPost]
+        public IActionResult TypeCreate(PharmacyTTypeList pharmacyTTypeList)
+        {
+            _context.PharmacyTTypeList.Add(pharmacyTTypeList);
+            _context.SaveChanges();
+            return View("~/Areas/Drugs/Views/Home/Type.cshtml");
+        }
+
+        //修改劑型資料-->給modal讀單一一筆資料
+        [HttpGet]
+        public async Task<IActionResult> EditType(int? id)
+        {
+            if (id == null || _context.PharmacyTTypeList == null)
+            {
+                return NotFound();
+            }
+            var pharmacyTTypeList = await _context.PharmacyTTypeList.FindAsync(id);
+            if (pharmacyTTypeList == null)
+            {
+                NotFound();
+            }
+            return PartialView("~/Areas/Drugs/Views/Partial/_TypeEditPartial.cshtml", pharmacyTTypeList);
+        }
+
+        //update回DB
+        [HttpPost]
+        public async Task<IActionResult>EditType(PharmacyTTypeList pharmacyTTypeList)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(pharmacyTTypeList);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException ex)
+                {
+                    if (!PharmacyTTypeListExists(pharmacyTTypeList.FIdType))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Update failed: {ex.Message}");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Update failed: {ex.Message}");
+                }
+
+            }
+            return View("~/Areas/Drugs/Views/Home/Type.cshtml");
+        }
+        private bool PharmacyTTypeListExists(int id)
+        {
+            return (_context.PharmacyTTypeList?.Any(e => e.FIdType == id)).GetValueOrDefault();
+        }
+
+        //刪除選中的劑型清單
+
+        public async Task<IActionResult>DeleteType(int id)
+        {
+            var pharmacyTTypeList =await _context.PharmacyTTypeList.FindAsync(id);
+            if(pharmacyTTypeList == null)
+            {
+                return NotFound();
+            }
+            _context.PharmacyTTypeList.Remove(pharmacyTTypeList);
+            await _context.SaveChangesAsync();
+            return View("~/Areas/Drugs/Views/Home/Type.cshtml");
+        }
 
         //新增適應症資料
         [HttpPost]
