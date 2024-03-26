@@ -13,15 +13,15 @@
             <span asp-validation-for="EndDate" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label asp-for="RoomId">Room:</label>
+            <label asp-for="RoomId">房間:</label>
             <select asp-for="RoomId" class="form-control" asp-items="@ViewBag.Rooms"></select>
         </div>
         <div class="form-group">
-            <label asp-for="DoctorId">Doctor:</label>
+            <label asp-for="DoctorId">醫生:</label>
             <select asp-for="DoctorId" class="form-control" asp-items="@(new SelectList(ViewBag.Doctors, "EmpId", "Name"))"></select>
         </div>
         <div class="form-group">
-            <label asp-for="NurseId">Nurse:</label>
+            <label asp-for="NurseId">護士:</label>
             <select asp-for="NurseId" class="form-control" asp-items="@(new SelectList(ViewBag.Nurses, "EmpId", "Name"))"></select>
         </div>
 
