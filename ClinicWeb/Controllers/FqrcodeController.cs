@@ -4,6 +4,7 @@ using System.Net;
 using QRCoder;
 using ClinicWeb.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Text.RegularExpressions;
 
 namespace ClinicWeb.Controllers
 {
@@ -151,5 +152,25 @@ namespace ClinicWeb.Controllers
 
 
         }
+
     }
+    //public async Task<IActionResult> AIScan(string imageData)
+    //{
+    //    var base64Data = Regex.Match(imageData, @"data:image/(?<type>.+?),(?<data>.+)").Groups["data"].Value;
+    //    var binData = Convert.FromBase64String(base64Data);
+
+    //    using (var stream = new MemoryStream(binData))
+    //    {
+    //        var faceClient = new FaceClient(new ApiKeyServiceClientCredentials("<Your Subscription Key>"))
+    //        {
+    //            Endpoint = "<Your Endpoint>"
+    //        };
+
+    //        var faces = await faceClient.Face.DetectWithStreamAsync(stream);
+    //        // 在這裡處理辨識到的臉部資訊
+    //    }
+
+    //    return View();
+    //}
+
 }

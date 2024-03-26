@@ -209,3 +209,25 @@ function out(empID) {
 	});
 
 }
+
+function AICheck() {
+	navigator.mediaDevices.getUserMedia({ video: true })
+		.then(function (stream) {
+			var video = document.querySelector('video');
+			video.srcObject = stream;
+			video.onloadedmetadata = function (e) {
+				video.play();
+			};
+		})
+		.catch(function (err) {
+			console.log(err.name + ": " + err.message);
+		});
+
+	document.getElementById('capture').addEventListener('click', function () {
+		var canvas = document.getElementById('canvas');
+		var video = document.querySelector('video');
+		canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+		var imgData = canvas.toDataURL();
+		// 在這裡將imgData發送到後端
+	});
+}
