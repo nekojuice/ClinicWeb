@@ -236,6 +236,7 @@ async function uploadRecordForm(id) {
             setTimeout: 500
         })
         return response;
+        $('#recordModal').modal('hide');
     } catch (error) {
         console.error('Error:', error);
         // 這裡可以處理錯誤，比如提示用户操作失敗
@@ -292,11 +293,12 @@ async function uploadReportForm(id) {
         // 這裡可以添加一些成功後的操作，比如更新UI或者是頁面導覽
         new PNotify({
             title: '成功',
-            text: '記錄修改成功',
+            text: '報告修改成功',
             type: 'info',
             styling: 'bootstrap3',
             setTimeout: 500
         })
+        $('#reportModal').modal('hide');
         return response;
     } catch (error) {
         console.error('Error:', error);
@@ -341,7 +343,7 @@ async function uploadPrescriptionForm(id) {
         // 這裡可以添加一些成功後的操作，比如更新UI或者是頁面導覽
         new PNotify({
             title: '成功',
-            text: '記錄修改成功',
+            text: '處方籤修改成功',
             type: 'info',
             styling: 'bootstrap3',
             setTimeout: 500
@@ -388,7 +390,7 @@ async function AddNMR() {
         // 這裡可以添加一些成功後的操作，比如更新UI或者是頁面導覽
         new PNotify({
             title: '成功',
-            text: '新增成功',
+            text: '新增紀錄成功',
             type: 'info',
             styling: 'bootstrap3',
             setTimeout: 500
@@ -428,7 +430,7 @@ async function AddNTR() {
         // 這裡可以添加一些成功後的操作，比如更新UI或者是頁面導覽
         new PNotify({
             title: '成功',
-            text: '新增檢查報告成功',
+            text: '新增報告成功',
             type: 'info',
             styling: 'bootstrap3',
             setTimeout: 500
@@ -501,6 +503,13 @@ async function AddNPreL() {
         });
 
         if (!response.ok) {
+            new PNotify({
+                title: '失敗',
+                text: '處方籤藥品重複添加',
+                type: 'error',
+                styling: 'bootstrap3',
+                setTimeout: 500
+            })
             throw new Error(`HTTP error! status: ${response.status}`);
         }
 
@@ -509,7 +518,7 @@ async function AddNPreL() {
         // 這裡可以添加一些成功後的操作，比如更新UI或者是頁面導覽
         new PNotify({
             title: '成功',
-            text: '新增成功',
+            text: '新增藥品成功',
             type: 'info',
             styling: 'bootstrap3',
             setTimeout: 500
@@ -865,4 +874,12 @@ $('#prescriptionListDataTable').on('click', '#Delete',async function (e) {
     });
 });
 
-
+//demo按鍵
+document.getElementById("demord").addEventListener("click", function (event) {
+   $('#addbp').val('120/80');
+    $('#addpulse').val('80');
+    $('#addbt').val('36.5');
+    $('#addcc').val('頭痛');
+    $('#adddisposal').val('休息');
+    $('#addprescribe').val('開立處方籤');
+});
