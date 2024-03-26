@@ -113,6 +113,10 @@ function rebindAll_create() {
     document.getElementById('closeButton').addEventListener('click', function () {
         deleteCreateForm();
     });
+
+    document.getElementById('MemfillDemoButton').addEventListener('click', function () {
+        fillDemoData();
+    });
 }
 
 //宣告事件綁定為一方法，給裡頭遞迴使用
@@ -338,4 +342,36 @@ async function buttonEventFunc() {
         $('#memdatatable').DataTable().page(currentPage).draw('page')
 
     });
+
+    
 }
+function fillDemoData() {
+
+    // 名字
+    document.querySelector('input[name="Name"]').value = '蔡文綺 ';
+    // 身份證號 
+    document.querySelector('input[name="NationalId"]').value = 'A230156794';
+    // 電話 
+    document.querySelector('input[name="Phone"]').value = '0912345678';
+    // 信箱 
+    document.querySelector('input[name="MemEmail"]').value = 'vcie2210@gmail.com';
+    // 性別 
+    document.querySelector('select[name="Gender"]').value = "False";// 女
+    // 血型
+    document.querySelector('select[name="BloodType"]').value = 'B';
+    // 戶籍地址 
+    document.querySelector('input[name="Address"]').value = '臺北市南港區 ';
+    // 聯絡地址 
+    document.querySelector('input[name="ContactAddress"]').value = '臺北市南港區 ';
+    // 密碼 
+    document.querySelector('input[name="MemPassword"]').value = '臺北市南港區';
+    // 生日
+    document.querySelector('input[name="BirthDate"]').value = '2000-10-22';
+    //
+    document.querySelector('input[name="IceName"]').value = '李四';
+
+    document.querySelector('input[name="IceNumber"]').value = '0987654321';
+
+
+
+};
