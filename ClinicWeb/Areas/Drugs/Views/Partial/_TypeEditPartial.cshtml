@@ -1,1 +1,37 @@
-﻿
+﻿@model ClinicWeb.Areas.Drugs.Models.PharmacyTTypeList
+
+<div class="x_panel">
+    <div class="x_title">
+        <h2>修改劑型資料</h2>
+
+        <div class="clearfix"></div>
+    </div>
+    <div class="x_content">
+        <br>
+        <form id="form_TypeEdit" class="form-label-left input_mask">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="FIdType" />
+            <!--劑型編號-->
+            <div class="form-group row">
+                <label asp-for="FTypeCode" class="col-form-label col-md-3 col-sm-3">劑型編號</label>
+                <input asp-for="FTypeCode" class="col-md-9 col-sm-9 form-control" />
+                <span asp-validation-for="FTypeCode" class="text-danger"></span>
+            </div>
+            <!--劑型名稱-->
+            <div class="form-group row">
+                <label asp-for="FType" class="col-form-label col-md-3 col-sm-3">劑型名稱</label>
+                <input asp-for="FType" class="col-md-9 col-sm-9 form-control" />
+                <span asp-validation-for="FType" class="text-danger"></span>
+            </div>
+            <!--按鈕-->
+            <div class="form-group row" style="margin-top:30px;margin-bottom:5px">
+                <div class="col-md-9 col-sm-9  offset-md-8">
+
+                    <button id="editCloseButton" type="button" class="btn btn-secondary" data-dismiss="modal"> 關閉 </button>
+                    @* <button class="btn btn-primary" type="reset"> 清除 </button> *@
+                    <button id="editSaveButton" type="button" class="btn btn-primary"> 保存 </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

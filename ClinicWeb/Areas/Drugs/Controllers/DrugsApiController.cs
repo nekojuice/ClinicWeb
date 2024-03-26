@@ -444,6 +444,55 @@ namespace ClinicWeb.Areas.Drugs.Controllers
             return PartialView("~/Areas/Drugs/Views/Partial/_TypeEditPartial.cshtml", pharmacyTTypeList);
         }
 
+        //update回DB
+        [HttpPost]
+        public async Task<IActionResult>EditType(PharmacyTTypeList pharmacyTTypeList)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(pharmacyTTypeList);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException ex)
+                {
+                    if (!PharmacyTTypeListExists(pharmacyTTypeList.FIdType))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Update failed: {ex.Message}");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Update failed: {ex.Message}");
+                }
+
+            }
+            return View("~/Areas/Drugs/Views/Home/Type.cshtml");
+        }
+        private bool PharmacyTTypeListExists(int id)
+        {
+            return (_context.PharmacyTTypeList?.Any(e => e.FIdType == id)).GetValueOrDefault();
+        }
+
+        //刪除選中的劑型清單
+
+        public async Task<IActionResult>DeleteType(int id)
+        {
+            var pharmacyTTypeList =await _context.PharmacyTTypeList.FindAsync(id);
+            if(pharmacyTTypeList == null)
+            {
+                return NotFound();
+            }
+            _context.PharmacyTTypeList.Remove(pharmacyTTypeList);
+            await _context.SaveChangesAsync();
+            return View("~/Areas/Drugs/Views/Home/Type.cshtml");
+        }
+
         //新增適應症資料
         [HttpPost]
         public IActionResult ClinicalUseCreate(PharmacyTClinicalUseList clinicalUseList)

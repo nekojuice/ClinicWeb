@@ -59,6 +59,15 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="card-box table-responsive">
+                        <!--編輯畫面的內容-->
+                        <div class="modal fade" id="TypeEdit" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content" id="divEditInfo">
+                                    <partial name="~/Areas/Drugs/Views/Partial/_TypeEditPartial.cshtml" />
+                                </div>
+                            </div>
+                        </div>
+
                         <table id="dtType" class="table table-striped table-bordered" style="width:100%">
                             <thead>
                                 <tr>
@@ -100,8 +109,8 @@
                     {
                         "data": null, title: "操作功能", "width": "20%",
                         render: function (data, type, row) {
-                            return '<button type="button" name="Editor" class="btn btn-warning btn-sm"> 編輯 </button>' + 
-                                   '<button type="button" name="Delete" data-id="'+row.id+'" class="btn btn-danger btn-sm"> 刪除 </button>'
+                            return '<button type="button" name="Edit" data-id="' +row.id+ '"class="btn btn-warning btn-sm"> 編輯 </button>' +
+                                '<button type="button" name="Delete" data-id="'+row.id+'" class="btn btn-danger btn-sm"> 刪除 </button>'
                         },
                     }
                 ],
@@ -115,6 +124,125 @@
         }
         QueryTypeInfo();
         
+        //修改劑型按鈕-->彈出 modal
+        $(document).on('click', 'button[name=Edit]', function () {
+            var id = $(this).data('id');
+            console.log(id);
+            //AJAX讀取選到的DB
+            $.ajax({
+                type: 'GET',
+                url: '/Drugs/DrugsApi/EditType/' + id,
+                success: function (data) {
+                    //成功拿到的話將資料代入modal中
+                    $('#TypeEdit .modal-content').html(data);
+                    //顯示modal視窗
+                    $('#TypeEdit').modal('show');
+                },
+                error: function (error) {
+                    console.log('Error fetching data:', error)
+                }
+            });
+        });
+        //保存按鈕
+        const btnEdit = document.querySelector('#editSaveButton');
+        $(document).on('click', '#editSaveButton', async (event) => {
+            event.preventDefault();
+            const id=$('#FIdType').val()
+            const formData = new FormData($('form_TypeEdit')[0]);
+            for (const pair of formData.entries()) {
+                console.log(pair[0]);
+                console.log(pair[1]);
+            }
+            const urlEdit = `/Drugs/DrugsApi/EditType/${id}`;
+            try {
+                const response = await fetch(urlEdit, {
+                    "method": "POST",
+                    "body": formData
+                });
+                if (response.ok) {
+                    
+                    alert('修改成功');
+                    QueryTypeInfo();
+                    $('#TypeEdit').modal('hide');
+                } else {
+                    console.error('Update failed, status code:', response.status);
+                    const errorData = await response.json();
+                    console.error('修改失敗，狀態碼：', response.status);
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        })
+
+        //刪除劑型按鈕
+        $(document).on('click', 'button[name=Delete]', async (event) => {
+            event.preventDefault();
+            var id = $(event.target).data('id');
+            console.log(id);
+            if (confirm('確定要刪除嗎?')) {
+                const urlDelete = `/Drugs/DrugsApi/DeleteType/${id}`;
+                try {
+                    const response = await fetch(urlDelete, function () {
+                        method: "POST"
+                    });
+                    if (response.ok) {
+                        alert('刪除成功');
+                        QueryTypeInfo();
+                    } else {
+                        console.error('刪除失敗，狀態碼：', response.status);
+                    }
+                }
+                catch (error) {
+                    console.error(error);
+                }
+            }
+        })
+
+        //新增劑型按鈕
+        const btnSubmit = document.querySelector('#saveButton');
+
+        btnSubmit.addEventListener('click', async (event) => {
+            console.log(btnSubmit);
+            event.preventDefault(); //停止預設行為
+
+            //FormData
+            const formData = new FormData(document.querySelector('#TypeForm'));
+
+            //測試是否有抓取Form上的值
+            for(const pair of formData.entries()){
+                console.log(pair[0]);
+                console.log(pair[1]);
+            }
+            try {
+                const url = '@Url.Content("~/Drugs/DrugsApi/TypeCreate")'
+                const response = await fetch(url, {
+                    "method": "POST",
+                    "body": formData
+                });
+                if (response.ok) {
+                    const data = await response.text();
+                    clearForm();
+                    addModalClose();
+                    alert('新增成功');
+
+                    QueryTypeInfo();
+                } else {
+                    console.error('發生錯誤，狀態碼:', response.status);
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        })
+
+        //新增按鈕按下後會清空modal內容
+        function clearForm() {
+            document.getElementById('TypeForm').reset();
+        }
+
+        //新增按鈕按下後關閉modal視窗
+        function addModalClose() {
+            $('#TypeCreate').modal('hide');
+        }
     </script>
 }
 

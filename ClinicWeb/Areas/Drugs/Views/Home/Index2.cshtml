@@ -34,8 +34,8 @@
                 <div class="form-group row" style="margin-top:30px;margin-bottom:5px">
                     <div class="col-md-9 col-sm-9  offset-md-8">
 
-                        <button id="CloseButton" type="button" class="btn btn-secondary"> 關閉 </button>
-                        @* <button class="btn btn-primary" type="reset"> 清除 </button> *@
+                        @* <button id="CloseButton" type="button" class="btn btn-secondary"> 關閉 </button> *@
+                        <button class="btn btn-primary" type="reset"> 清除 </button> 
                         <button id="SubmitButton" type="button" class="btn btn-primary"> 保存 </button>
                     </div>
                 </div>
@@ -68,10 +68,12 @@
             event.preventDefault(); //停止預設行為
             //alert('click');
             const formData = new FormData(document.querySelector('#form_File'));
+            let filenames = [];
             //讀取formData中的內容-->存開啟的檔名
             for (const pair of formData.entries()) {
                 console.log(pair[0]);
-                console.log(pair[1]);
+                console.log(pair[1].name);
+                filenames.push(pair[1].name);
             }
             const urlFile = `@Url.Content("~/Drugs/DrugsApi/DrugFiles")`;
             try {
@@ -80,7 +82,10 @@
                     body: formData
                 })
                 if (response.ok) {
-                    alert('上傳成功')
+                    alert('上傳成功\n文件名：' + filenames.join(' / ')); 
+                    const form = document.querySelector('#form_File');
+                    form.reset();
+
                 }
                 else {
                     console.error('上傳失敗，狀態碼:', response.status);
