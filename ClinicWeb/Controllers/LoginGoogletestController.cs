@@ -247,8 +247,10 @@ namespace ClinicWeb.Controllers
                 {
                     // 處理錯誤狀態碼
                     var statusCode = response.StatusCode;
-                    
-                    return StatusCode((int)statusCode);
+                    var errorMessage = "Google登入發生未知錯誤。錯誤碼: " + response.StatusCode;
+                    TempData["Error"] = errorMessage;
+                    return View("~/Views/ClientPage/Login/ClientLogin.cshtml");
+                    //return StatusCode((int)statusCode);
                 }
             }
         }
