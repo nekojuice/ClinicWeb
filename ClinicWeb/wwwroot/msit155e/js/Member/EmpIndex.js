@@ -111,7 +111,24 @@ function EmpType() {
         $('#empdatatable').DataTable().column(9).search($("#employeeType").find(":selected").text()).draw();
     }
 }
+//控制對於密碼輸入欄位眼睛的顯示
+function hideshow() {
+    var password = document.getElementById("EmpPassword");
+    var slash = document.getElementById("slash");
+    var eye = document.getElementById("eye");
 
+    if (password.type === 'password') {
+        password.type = "text";
+        slash.style.display = "block";
+        eye.style.display = "none";
+    }
+    else {
+        password.type = "password";
+        slash.style.display = "none";
+        eye.style.display = "block";
+    }
+
+}
 
 //-------------------------------------------------
 //新增
@@ -427,7 +444,7 @@ function fillDemoData() {
     // 電話 
     document.querySelector('input[name="Phone"]').value = '0912345678';
     // 信箱 
-   /* document.querySelector('input[name="EmpMail"]').value = '123@gmail.com';*/
+    document.querySelector('input[name="EmpMail"]').value = 'ethon234@gmail.com';
     // 性別 
     document.querySelector('select[name="Gender"]').value = "True";// 男
     // 血型
@@ -441,9 +458,9 @@ function fillDemoData() {
     // 生日
     document.querySelector('input[name="BirthDate"]').value = '1980-01-01';
     // 員工類比
-    document.querySelector('select[name="EmpType"]').value = '醫生';
-    // 部門
-    document.querySelector('select[name="Department"]').value = '小兒科';
+    //document.querySelector('select[name="EmpType"]').value = '醫生';
+    //// 部門
+    //document.querySelector('select[name="Department"]').value = '小兒科';
 
     document.querySelector('#Quit').checked = true;
 };
