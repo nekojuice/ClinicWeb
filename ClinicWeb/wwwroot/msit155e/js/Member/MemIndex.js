@@ -364,7 +364,7 @@ function fillDemoData() {
     // 聯絡地址 
     document.querySelector('input[name="ContactAddress"]').value = '臺北市南港區 ';
     // 密碼 
-    document.querySelector('input[name="MemPassword"]').value = '臺北市南港區';
+    document.querySelector('input[name="MemPassword"]').value = 'password123';
     // 生日
     document.querySelector('input[name="BirthDate"]').value = '2000-10-22';
     //
