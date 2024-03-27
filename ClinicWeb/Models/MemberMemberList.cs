@@ -68,6 +68,11 @@ public partial class MemberMemberList
 
     public bool? Verification { get; set; }
 
+    [StringLength(50)]
+    public string ActivateToken { get; set; }
+
+    public string MemPhoto { get; set; }
+
     [InverseProperty("Member")]
     public virtual ICollection<AppointmentRoomSchedule> AppointmentRoomSchedule { get; set; } = new List<AppointmentRoomSchedule>();
 

@@ -31,7 +31,7 @@
                         <li><a class="nav-link" href="http://localhost:4200/appt?id=@{if (User.Identity.IsAuthenticated){@User.Claims.FirstOrDefault(c => c.Type == "MemberID")?.Value}}">掛號預約</a></li>
                         <li><a class="nav-link" asp-controller="FClinicSchedule" asp-action="FClinicSchedule">門診表</a></li>
                         <li><a class="nav-link" asp-controller="FHealthInformation" asp-action="FHealthInformation">衛教資訊</a></li>
-                        <li><a class="nav-link" asp-controller="FChattingRoom" asp-action="FChattingRoom">聊天室</a></li>
+                        <li><a class="nav-link" asp-controller="FChattingRoom" asp-action="FChattingRoom">線上諮詢</a></li>
                     </ul>
 
 					<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
@@ -53,7 +53,7 @@
         <div class="container relative">
             <div class="row g-5 mb-5">
                 <div class="col-lg-9">
-                    <div class="mb-4 footer-logo-wrap"><a href="#" class="footer-logo">寶育婦幼</a></div>
+                    <div class="mb-4 footer-logo-wrap"><a href="#" class="footer-logo">寶育婦幼</a>   <a href="@Url.Content("~/")">回demo連結首頁</a></div>
                     <h6 class=""><i class="fa-solid fa-location-dot"></i> 106台北市大安區復興南路一段390號2樓 (資展國際股份有限公司)</h6>
                     <h6><i class="fa-solid fa-phone"></i> 聯絡我們: (02)6631-6588</h6>
                 </div>

@@ -56,14 +56,11 @@ public partial class PharmacyTMedicinesList
     [Unicode(false)]
     public string FPregnancyCategory { get; set; }
 
-    [Required]
     [Column("fApperance")]
-    [StringLength(50)]
-    public string FApperance { get; set; }
+    public byte[] FApperance { get; set; }
 
     [Column("fImages")]
-    [StringLength(50)]
-    public string FImages { get; set; }
+    public byte[] FImages { get; set; }
 
     [Required]
     [Column("fStorage")]
@@ -94,6 +91,9 @@ public partial class PharmacyTMedicinesList
 
     [Column("fQty")]
     public int? FQty { get; set; }
+
+    [InverseProperty("FIdDrugNavigation")]
+    public virtual ICollection<PharmacyHealthInformation> PharmacyHealthInformation { get; set; } = new List<PharmacyHealthInformation>();
 
     [InverseProperty("FIdDrugNavigation")]
     public virtual ICollection<PharmacyTClinicalUseDetails> PharmacyTClinicalUseDetails { get; set; } = new List<PharmacyTClinicalUseDetails>();

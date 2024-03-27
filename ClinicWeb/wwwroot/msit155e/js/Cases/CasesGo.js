@@ -12,8 +12,8 @@
 		{
 			data: null, title: "操作功能",  // 這邊是欄位
 			render: function (data, type, row) {
-				return '<button id="Regist" type="button" class="btn btn-warning btn-sm">編輯</button> ' +
-					'<button id="Delete" type="button" class="btn btn-danger btn-sm">刪除</button>'
+				return '<button id="Regist" type="button" class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i></button> ' +
+					'<button id="Delete" type="button" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></button>'
 			}
 		},
 	],

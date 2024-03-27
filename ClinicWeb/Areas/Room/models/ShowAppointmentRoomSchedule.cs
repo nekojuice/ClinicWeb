@@ -14,9 +14,9 @@ namespace ClinicWeb.Areas.Room.Models
 
         public string? MemberName { get; set; }
 
-        public string? StartDate { get; set; }
+        public DateTime? StartDate { get; set; }
 
-        public string? EndDate { get; set; }
+        public DateTime? EndDate { get; set; }
 
         public int? DoctorId { get; set; }
         public string? DoctorName { get; set; }

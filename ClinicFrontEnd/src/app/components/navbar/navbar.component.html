@@ -13,15 +13,15 @@
         <li><a class="nav-link" href="https://localhost:7071/ClientPage/Index">首頁</a></li>
         <li><a class="nav-link" href="http://localhost:4200/">掛號預約</a></li>
         <li><a class="nav-link" href="https://localhost:7071/FClinicSchedule/FClinicSchedule">門診表</a></li>
-        <li><a class="nav-link" href="https://localhost:7071/FHealthInformation/FClinicSchedule">衛教資訊</a></li>
-        <li><a class="nav-link" href="https://localhost:7071/FHealthInformation/FClinicSchedule">聊天室</a></li>
+        <li><a class="nav-link" href="https://localhost:7071/FHealthInformation/FHealthInformation">衛教資訊</a></li>
+        <li><a class="nav-link" href="https://localhost:7071/FChattingRoom/FChattingRoom">聊天室</a></li>
       </ul>
 
       <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
-        <li><a class="nav-link" href="https://localhost:7071/ClientPage/Login"><img src="https://localhost:7071/images/user.svg"></a></li>
+        <li><a class="nav-link" href="https://localhost:7071/MBMemberInfo"><img src="https://localhost:7071/images/user.svg"></a></li>
 
         <li class="nav-item" *ngIf="memName">
-          <a class="nav-link text-dark" href="https://localhost:7071/ClientPage/Login">歡迎 {{memName}}</a>
+          <a class="nav-link text-dark" href="https://localhost:7071/MBMemberInfo">歡迎 {{memName}}</a>
         </li>
         <li class="nav-item" *ngIf="memName">
           <a class="nav-link" href="https://localhost:7071/ClientPage/Logout">登出</a>

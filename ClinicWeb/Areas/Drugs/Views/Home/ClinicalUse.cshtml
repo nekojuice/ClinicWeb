@@ -31,7 +31,7 @@
             <ul class="nav navbar-right panel_toolbox">
                 <li>
                     <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                </li>               
+                </li>
                 <li>
                     <a class="close-link"><i class="fa fa-close"></i></a>
                 </li>
@@ -53,7 +53,7 @@
                 </div>
             </div>
         </div>
-        <!--如果要加搜尋選項放這裡-->        
+        <!--如果要加搜尋選項放這裡-->
         <div class="x_content">
             <div class="row">
                 <div class="col-sm-12">
@@ -72,7 +72,7 @@
                                 <tr>
                                     <th style="display:none">id</th>
                                     <th>適應症代碼</th>
-                                    <th>適應症名稱</th>    
+                                    <th>適應症名稱</th>
                                     <th>操作功能</th>
                                 </tr>
                             </thead>
@@ -86,9 +86,9 @@
     </div>
 </div>
 @* 沒有用到model暫時保留 *@
-@* <div class="row">   
+@* <div class="row">
     <div class="col-md-10">
-        <form asp-area="Drugs" asp-controller="DrugsApi" asp-action="Details">           
+        <form asp-area="Drugs" asp-controller="DrugsApi" asp-action="Details">
             <div class="form-group">
                 <label class="control-label"> 適應症代碼 </label>
                 <input class="form-control" id="fClinicalUseCode" />
@@ -97,7 +97,7 @@
             </div>
         </form>
     </div>
-   
+
 </div> *@
 
 
@@ -133,7 +133,7 @@
     }
     <script>
         //進入畫面時或新增刪出修改完畢，載入DB中適應症的資料
-        function QueryClinicalUseInfo(){
+        function QueryClinicalUseInfo() {
             //alert("CUList");
             $('#dtCU').dataTable({
 
@@ -150,8 +150,8 @@
                     {
                         "data": null, title: "操作功能", "width": "20%",
                         render: function (data, type, row) {
-                            return '<button type="button" name="Editor" data-id="'+row.id+'" class="btn btn-warning btn-sm"> 編輯 </button>'+
-                                   '<button type="button"  name="Delete" class="btn btn-danger btn-sm"> 刪除 </button>'
+                            return '<button type="button" name="Editor" data-id="' + row.id + '" class="btn btn-warning btn-sm"> 編輯 </button>' +
+                                '<button type="button" name="Delete" data-id="' + row.id + '" class="btn btn-danger btn-sm"> 刪除 </button>'
                         },
                     }
                 ],
@@ -165,7 +165,7 @@
 
         }
         QueryClinicalUseInfo();
-        
+
         //修改適應症按鈕-->彈出 modal
         $(document).on('click', 'button[name=Editor]', function () {
             var id = $(this).data('id');
@@ -173,7 +173,7 @@
             //AJAX讀選取到的DB
             $.ajax({
                 type: 'GET',
-                url: '/Drugs/DrugsApi/EditClinicalUse/'+id,
+                url: '/Drugs/DrugsApi/EditClinicalUse/' + id,
                 //dataType: 'json',
                 success: function (data) {
                     //成功拿到的話將資料代入modal中
@@ -200,10 +200,10 @@
                     "body": formData
                 });
                 if (response.ok) {
-                    alert('修改成功'); 
+                    alert('修改成功');
                     QueryClinicalUseInfo();
                     $('#ClinicalUseEdit').modal('hide');
-                   
+
                 } else {
                     console.error('Update failed, status code:', response.status);
                     const errorData = await response.json();
@@ -214,8 +214,34 @@
             }
         })
 
-       
+        //刪除適應症按鈕
+        $(document).on('click', 'button[name=Delete]', async (event) => {
 
+            event.preventDefault();
+            var id = $(event.target).data('id');
+            console.log(id);
+            const urlDelete = `/Drugs/DrugsApi/DeleteClinicalUse/${id}`;
+
+            try {
+                const response = await fetch(urlDelete, function () {
+                    method: "POST"
+                });
+                if (response.ok) {
+                    alert('刪除成功');
+                    QueryClinicalUseInfo();                    
+                } else {
+                    console.error('刪除失敗，狀態碼：', response.status);
+                }
+            }
+            catch (error) {
+                console.error(error);
+            }
+        })
+                                            //AJAX讀選取到的DB
+                                            // $.ajax({
+                                            //     type: 'GET',
+                                            //     url: '/Drugs/DrugsApi/EditClinicalUse/' + id,
+                                            //})
 
         //保存按鈕
         // const btnEdit = document.querySelector('#editSaveButton');
@@ -237,24 +263,24 @@
         // })
 
         //新增適應症按鈕
-        
-        const btnSubmit = document.querySelector('#saveButton');        
-        
-        
-        btnSubmit.addEventListener('click', async (event)=> {
+
+        const btnSubmit = document.querySelector('#saveButton');
+
+
+        btnSubmit.addEventListener('click', async (event) => {
             console.log(btnSubmit); //測始有無抓到按鈕;
             //alert('儲存');
             event.preventDefault(); //停止預設行為
-            
+
             //FormData
             const formData = new FormData(document.querySelector('#ClinicalUseForm'));
-           
+
             //測試是否有抓取Form上的值
-            for(const pair of formData.entries()){
+            for (const pair of formData.entries()) {
                 console.log(pair[0]);
                 console.log(pair[1]);
             }
-            const url='@Url.Content("~/Drugs/DrugsApi/ClinicalUseCreate")';
+            const url = '@Url.Content("~/Drugs/DrugsApi/ClinicalUseCreate")';
             const response = await fetch(url, {
                 "method": "POST",
                 "body": formData
@@ -264,15 +290,15 @@
             clearForm();
             addModalClose();
             alert('新增成功');
-            
+
             QueryClinicalUseInfo();
         })
-        
+
         //新增按鈕按下後會清空modal內容
         function clearForm() {
             document.getElementById('ClinicalUseForm').reset();
         }
-        
+
         //新增按鈕按下後關閉modal視窗
         function addModalClose() {
             $('#ClinicalUseCreate').modal('hide');
