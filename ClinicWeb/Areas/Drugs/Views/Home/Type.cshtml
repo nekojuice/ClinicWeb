@@ -148,7 +148,7 @@
         $(document).on('click', '#editSaveButton', async (event) => {
             event.preventDefault();
             const id=$('#FIdType').val()
-            const formData = new FormData($('form_TypeEdit')[0]);
+            const formData = new FormData($('#form_TypeEdit')[0]);
             for (const pair of formData.entries()) {
                 console.log(pair[0]);
                 console.log(pair[1]);

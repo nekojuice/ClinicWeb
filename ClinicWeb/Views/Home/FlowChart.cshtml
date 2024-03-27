@@ -2,5 +2,19 @@
 	Layout = null;
 }
 <div>
-	<img src="~/images/流程圖.png" style="width:98vw;"/>
+    <img id="flow" src="~/images/流程圖.png" style="height:95vh;" />
 </div>
+<script>
+	let i = 0;
+	const chart = document.getElementById("flow");
+	chart.addEventListener("click", function(){
+		i++;
+		console.log(i);
+		const src = "@Url.Content("~/images/FlowChart/flow")";
+		chart.src = `${src}${i}.png`;
+		console.log(chart.src);
+		if (i === 10) {
+			i = 0;
+		}
+    });
+</script>
