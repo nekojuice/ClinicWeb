@@ -220,28 +220,30 @@
             event.preventDefault();
             var id = $(event.target).data('id');
             console.log(id);
-            const urlDelete = `/Drugs/DrugsApi/DeleteClinicalUse/${id}`;
+            if (confirm('確定要刪除嗎?')) {
+                const urlDelete = `/Drugs/DrugsApi/DeleteClinicalUse/${id}`;
 
-            try {
-                const response = await fetch(urlDelete, function () {
-                    method: "POST"
-                });
-                if (response.ok) {
-                    alert('刪除成功');
-                    QueryClinicalUseInfo();                    
-                } else {
-                    console.error('刪除失敗，狀態碼：', response.status);
+                try {
+                    const response = await fetch(urlDelete, function () {
+                        method: "POST"
+                    });
+                    if (response.ok) {
+                        alert('刪除成功');
+                        QueryClinicalUseInfo();
+                    } else {
+                        console.error('刪除失敗，狀態碼：', response.status);
+                    }
+                }
+                catch (error) {
+                    console.error(error);
                 }
             }
-            catch (error) {
-                console.error(error);
-            }
         })
-                                            //AJAX讀選取到的DB
-                                            // $.ajax({
-                                            //     type: 'GET',
-                                            //     url: '/Drugs/DrugsApi/EditClinicalUse/' + id,
-                                            //})
+        //AJAX讀選取到的DB
+        // $.ajax({
+        //     type: 'GET',
+        //     url: '/Drugs/DrugsApi/EditClinicalUse/' + id,
+        //})
 
         //保存按鈕
         // const btnEdit = document.querySelector('#editSaveButton');
@@ -280,18 +282,27 @@
                 console.log(pair[0]);
                 console.log(pair[1]);
             }
-            const url = '@Url.Content("~/Drugs/DrugsApi/ClinicalUseCreate")';
-            const response = await fetch(url, {
-                "method": "POST",
-                "body": formData
-            });
-            const data = await response.text();
-            //console.log(data); --> <html>內容
-            clearForm();
-            addModalClose();
-            alert('新增成功');
+            try {
+                const url = '@Url.Content("~/Drugs/DrugsApi/ClinicalUseCreate")';
+                const response = await fetch(url, {
+                    "method": "POST",
+                    "body": formData
+                });
 
-            QueryClinicalUseInfo();
+                if (response.ok) {
+                    const data = await response.text();
+                    //console.log(data); --> <html>內容
+                    clearForm();
+                    addModalClose();
+                    alert('新增成功');
+
+                    QueryClinicalUseInfo();
+                } else {
+                    console.error('發生錯誤，狀態碼:', response.status);
+                }
+            } catch (error) {
+                console.error(error);
+            }
         })
 
         //新增按鈕按下後會清空modal內容

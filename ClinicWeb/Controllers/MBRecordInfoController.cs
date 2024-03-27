@@ -314,7 +314,7 @@ namespace ClinicWeb.Controllers
         public async Task<IActionResult> GetPdf(int drugId)
         {
             
-            var pdf = await _drugs.PharmacyHealthInformation.Where(x=>x.FIdDrug==drugId).FirstOrDefaultAsync();
+            var pdf = await _drugs.PharmacyHealthInformation.Where(x=>x.FIdDrug==drugId&&x.FFileName.Contains("仿單")).FirstOrDefaultAsync();
 
             if (pdf == null)
             {
@@ -324,6 +324,55 @@ namespace ClinicWeb.Controllers
             // 返回 PDF 文件的二進位數據
             return File(pdf.FFileData, "application/pdf");
         }
+
+        public async Task<IActionResult> GetOtherPdf(int drugId)
+        {
+
+            var pdf = await _drugs.PharmacyHealthInformation.Where(x => x.FIdDrug == drugId && x.FFileName.Contains("用藥教育")).FirstOrDefaultAsync();
+
+            if (pdf == null)
+            {
+                return NotFound();
+            }
+
+            // 返回 PDF 文件的二進位數據
+            return File(pdf.FFileData, "application/pdf");
+        }
+
+        //補上確認是否找到此drugId檔名是否有 仿單
+        public async Task<IActionResult> CheckPdfExistence(int drugId)
+        {
+            var pdf = await _drugs.PharmacyHealthInformation
+                .Where(x => x.FIdDrug == drugId && x.FFileName.Contains("仿單")).FirstOrDefaultAsync();
+            if (pdf == null)
+            {
+                //如果找不到仿單，返回不存在
+                return Json(new {exists=false});
+            }
+            else
+            {
+                //如果找的到訪單，返回存在
+                return Json(new {exists=true});
+            }
+        }
+
+        //補上確認是否找到此drugId檔案是否有 用藥教育
+        public async Task<IActionResult> CheckOtherPdfExistence(int drugId)
+        {
+            var otherPdf = await _drugs.PharmacyHealthInformation
+                .Where(x => x.FIdDrug == drugId && x.FFileName.Contains("用藥教育")).FirstOrDefaultAsync();
+            if(otherPdf == null)
+            {
+                //如果找不到用藥教育，返回不存在
+                return Json (new { exists = false });
+            }
+            else
+            {
+                //如果找的到用藥教育，返回存在
+                return Json(new { exists=true});
+            }
+        }
+
     }
 }
 

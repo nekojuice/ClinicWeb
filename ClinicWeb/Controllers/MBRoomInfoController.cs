@@ -5,9 +5,11 @@ using Microsoft.AspNetCore.Mvc;
 using ClinicWeb.Areas.Room.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ClinicWeb.Controllers.MBRoomInfoController
 {
+    [Authorize(Policy = "frontendpolicy")]
     public class MBRoomInfoController : Controller
     {
         private readonly ClinicSysContext _context;
@@ -17,7 +19,8 @@ namespace ClinicWeb.Controllers.MBRoomInfoController
             _context = context;
         }
 
-        public IActionResult Index()
+        [HttpGet]
+        public IActionResult Index() 
         {
             var rooms = _context.RoomList.Where(r => r.TypeId == 4).ToList();
             ViewData["Rooms"] = new SelectList(rooms, "RoomId", "Name");
@@ -31,24 +34,30 @@ namespace ClinicWeb.Controllers.MBRoomInfoController
         {
             if (ModelState.IsValid)
             {
+                
+                string userName = User.Identity.Name; 
+
                 if (order.StartDate >= order.EndDate)
                 {
                     TempData["ErrorMessage"] = "結束日期必須大於開始日期";
                     return RedirectToAction(nameof(Index));
                 }
 
-               var existingAppointments = _context.AppointmentRoomSchedule
-    .Where(a => a.RoomId == order.RoomId &&
-                ((a.StartDate < order.EndDate && a.EndDate > order.StartDate) ||
-                 (a.StartDate <= order.StartDate && a.EndDate >= order.EndDate)))
-    .ToList();
-
+                var existingAppointments = _context.AppointmentRoomSchedule
+                    .Where(a => a.RoomId == order.RoomId &&
+                                ((a.StartDate < order.EndDate && a.EndDate > order.StartDate) ||
+                                (a.StartDate <= order.StartDate && a.EndDate >= order.EndDate)))
+                    .ToList();
 
                 if (existingAppointments.Any())
                 {
                     TempData["ErrorMessage"] = "該時間段已有預約";
                     return RedirectToAction(nameof(Index));
                 }
+
+                int memid = _context.MemberMemberList.Where(x => x.Name == userName).Select(x=>x.MemberId).FirstOrDefault();
+                //order.Member.Name = userName;
+                order.MemberId = memid;
 
                 _context.AppointmentRoomSchedule.Add(order);
                 _context.SaveChanges();
@@ -67,6 +76,7 @@ namespace ClinicWeb.Controllers.MBRoomInfoController
             ViewData["Nurses"] = _context.MemberEmployeeList.Where(e => e.EmpType == "護士").ToList();
             return View("Index", order);
         }
-
     }
+
 }
+

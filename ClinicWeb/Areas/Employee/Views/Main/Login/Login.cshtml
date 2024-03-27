@@ -165,10 +165,15 @@
 
     </div>
 
-    <div>
-        <button type="button" onclick="fillDemo('1001', 'aeew234')">1001 護士 陳小華 </button>
-        <button type="button" onclick="fillDemo('1004', 'aeew234')">1004 行政 黃小勇</button>
-        <button type="button" onclick="fillDemo('1010', 'aeew234')">1010 管理員 張秀娟</button>
+    <div class="demo-container">
+        <button class="demo" type="button" onclick="fillDemo('1004', 'aeew234')">1004 行政 黃小勇 </button>
+        <button class="demo" type="button" onclick="fillDemo('1010', 'aeew234')">1010 管理員 張秀娟 </button>
+        <button class="demo" type="button" onclick="fillDemo('1019', 'aeew234')">1019 醫生 吳予成</button>
+        <button class="demo" type="button" onclick="fillDemo('1021', 'aeew234')">1021 醫生 趙美琴</button>
+    </div>
+
+    <div style="bottom: 0;position: fixed;">
+        <a href="@Url.Content("~/")">回demo連結首頁</a>
     </div>
 
     <script>

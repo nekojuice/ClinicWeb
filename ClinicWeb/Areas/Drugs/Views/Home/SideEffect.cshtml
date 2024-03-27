@@ -29,7 +29,7 @@
             <ul class="nav navbar-right panel_toolbox">
                 <li>
                     <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                </li>               
+                </li>
                 <li>
                     <a class="close-link"><i class="fa fa-close"></i></a>
                 </li>
@@ -38,7 +38,7 @@
         </div>
         <!--新增按鈕的排版-->
         <div class="mb-6" style="overflow: auto">
-            <div class="col-md-2">
+            <div class="col-md-6">
                 <label class="form-label"> </label>
                 <button id="newSideEffectbtn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#SideEffectCreate">新增副作用</button>
             </div>
@@ -56,6 +56,14 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="card-box table-responsive">
+                        <!--編輯畫面的內容-->
+                        <div class="modal fade" id="SideEffectEdit" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content" id="divEditInfo">
+                                    <partial name="~/Areas/Drugs/Views/Partial/_SideEffectEditPartial.cshtml" />
+                                </div>
+                            </div>
+                        </div>
                         <table id="dtSE" class="table table-striped table-bordered" style="width:100%">
                             <thead>
                                 <tr>
@@ -98,8 +106,8 @@
                     {
                         "data": null, title: "操作功能", "width": "20%",
                         render: function (data, type, row) {
-                            return '<button type="button" name="Editor" data-id="'+row.id+'" class="btn btn-warning btn-sm"> 編輯 </button>' +
-                                '<button type="button" name="Delete" data-id="'+row.id+'" class="btn btn-danger btn-sm"> 刪除 </button>'
+                            return '<button type="button" name="Edit" data-id="' + row.id + '" class="btn btn-warning btn-sm"> 編輯 </button>' +
+                                '<button type="button" name="Delete" data-id="' + row.id + '" class="btn btn-danger btn-sm"> 刪除 </button>'
                         },
                     }
                 ],
@@ -113,6 +121,76 @@
         }
         QuerySideEffectInfo();
 
+        //修改副作用按鈕-->彈出 modal
+        $(document).on('click', 'button[name=Edit]', function () {
+            var id = $(this).data('id');
+            console.log(id);
+            //AJAX讀選取到的DB
+            $.ajax({
+                type: 'GET',
+                url: '/Drugs/DrugsApi/EditSideEffect/' + id,
+                success: function (data) {
+                    //成功拿到資料的話將資料代入modal中
+                    $('#SideEffectEdit .modal-content').html(data);
+                    //顯示modal視窗
+                    $('#SideEffectEdit').modal('show');
+                },
+                error: function (error) {
+                    console.log('Error fetching data:', error);
+                }
+            });
+        });
+
+        //保存按鈕
+        const btnEdit = document.querySelector('#editSaveButton');
+        $(document).on('click', '#editSaveButton', async (event) => {
+            event.preventDefault();
+            const id = $('#FIdSideEffect').val();
+            const formData = new FormData($('#form_SideEffectEdit')[0]);            
+            const urlEdit = `/Drugs/DrugsApi/EditSideEffect/${id}`;
+            try {
+                const response = await fetch(urlEdit, {
+                    "method": "POST",
+                    "body": formData
+                });
+                if (response.ok) {
+                    alert('修改成功');
+                    QuerySideEffectInfo();
+                    $('#SideEffectEdit').modal('hide');
+                } else {
+                    console.error('Update failed, status code:', response.status);
+                    const errorData = await response.json();
+                    console.error('修改失敗，狀態碼：', response.status);
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        })
+
+        //刪除副作用按鈕
+        $(document).on('click', 'button[name=Delete]', async (event) => {
+            event.preventDefault(); //停止預設行為
+            var id = $(event.target).data('id');
+            console.log(id);
+            if (confirm('確定要刪除嗎?')) {
+                const urlDelete = `/Drugs/DrugsApi/DeleteSideEffect/${id}`;
+                try {
+                    const response = await fetch(urlDelete, function () {
+                        method: "POST"
+                    });
+                    if (response.ok) {
+                        alert('刪除成功');
+                        QuerySideEffectInfo();
+                    } else {
+                        console.error('刪除失敗，狀態碼:', response.status);
+                    }
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+        })
+
+
         //新增副作用按鈕
 
         const btnSumbit = document.querySelector('#saveButton');
@@ -123,8 +201,40 @@
             //FormData
             const formData = new FormData(document.querySelector('#SideEffectForm'));
 
+            //測試是否有抓取Form上的值
+            for (const pair of formData.entries()) {
+                console.log(pair[0] + ':' + pair[1]);
+            }
+            try {
+                const url = `@Url.Content("~/Drugs/DrugsApi/SideEffectCreate")`;
+                const response = await fetch(url, {
+                    method: "POST",
+                    body: formData
+                });
+                if (response.ok) {
+                    const data = await response.text();
+                    clearForm();
+                    addModalClose();
+                    alert('新增成功');
+                    QuerySideEffectInfo();
+                } else {
+                    console.error('發生錯誤，狀態碼:', response.status);
+                }
+            } catch (error) {
+                console.error(error);
+            }
         })
-        
+
+        //新增按鈕按下後會清空modal內容
+        function clearForm() {
+            document.getElementById('SideEffectForm').reset();
+        }
+
+        //新增按鈕按下後關閉modal視窗
+        function addModalClose() {
+            $('#SideEffectCreate').modal('hide');
+        }
+
     </script>
 }
 

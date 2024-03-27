@@ -32,8 +32,12 @@
 <!--h2的class將按紐移至畫面右方-->
 <h2 class="d-flex justify-content-between align-items-center">
     藥品明細表-@Model?.DrugName
+    <div>
     <!--加入仿單PDF按紐-->
-    <button id="openPDF" type="button" class="btn btn-primary ml-auto" data-drugid="@Model?.DrugId">打開仿單</button>
+        <button id="openPDF_off-label_use" type="button" class="btn btn-primary ml-auto" data-drugid="@Model?.DrugId">打開仿單</button>
+        <!--加入用藥教育PDF按紐-->
+        <button id="openPDF_clinic" type="button" class="btn btn-primary ml-auto" data-drugid="@Model?.DrugId">打開用藥教育</button>
+    </div>
 </h2>
 
 <br />
@@ -273,15 +277,74 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.3/xlsx.full.min.js"></script>
 
     <script>
+        $(document).ready(function () {
+            //網頁載入時執行此ajax，判斷資料庫是否有值
+            var drugId = $('#openPDF_off-label_use').data('drugid');
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("CheckPdfExistence", "MBRecordInfo")',
+                data: { drugId: drugId },
+                success: function (data) {
+                    if (data.exists) {
+                        console.log(data.exists);
+                        //如果有這筆資料，啟用按鈕
+                        $('#openPDF_off-label_use').prop('disabled', false);
+                    } else {
+                        //如果沒有這筆資料，禁用按鈕
+                        console.log(data.exists);
+                        $('#openPDF_off-label_use').prop('disabled', true);
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    //jqXHR:jQuery的XMLHttpRequest對象錯誤訊息
+                    //textStatus:請求的狀態，例如timeout(超時)、error(錯誤)、abort(中止)
+                    //errorThrown:伺服器返回錯誤訊息或由瀏覽器引發的異常訊息
+                    console.log('Ajax request error:', textStatus, errorThrown);
+                    //不用做任何操作，按鈕保持啟用狀態
+                }
+            });
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("CheckOtherPdfExistence", "MBRecordInfo")',
+                data: { drugId: drugId },
+                success: function (data) {
+                    if (data.exists) {
+                        console.log(data.exists);
+                        $('#openPDF_clinic').prop('disabled', false);
+                    } else {
+                        console.log(data.exists);
+                        $('#openPDF_clinic').prop('disabled', true);
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log('Ajax request error:', textStatus, errorThrown);
+                }
+            })
+        })
 
-        //再考慮一下要修改成怎樣，目前中間還有換頁才能點選後跳出PDF
-        $('#openPDF').click(function () {
+        
+        $('#openPDF_off-label_use').click(function () {
             //獲取drugId
             var drugId = $(this).data('drugid');
 
             //創建一個<a>元素開啟PDF仿單
             var link = document.createElement('a');
             link.href = '@Url.Action("GetPdf", "MBRecordInfo")' + '?drugId=' + drugId;
+            link.target = '_blank';
+            document.body.appendChild(link);
+            
+            link.click();
+
+            document.body.removeChild(link);           
+        });
+
+        $('#openPDF_clinic').click(function () {
+            //獲取drugId
+            var drugId = $(this).data('drugid');
+
+            //創建一個<a>元素開啟PDF仿單
+            var link = document.createElement('a');
+            link.href = '@Url.Action("GetOtherPdf", "MBRecordInfo")' + '?drugId=' + drugId;
             link.target = '_blank';
             document.body.appendChild(link);
 

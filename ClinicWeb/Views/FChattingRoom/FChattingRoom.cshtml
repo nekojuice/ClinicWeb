@@ -165,24 +165,24 @@
             $('#sendToID').hide();
             //簽章按鈕顯示
             var btnuserName = document.getElementById("SelfID").textContent.trim();
-            if (btnuserName === "管理員") {
+            if (btnuserName === "客服人員") {
                 $("#openModalBtn").css("display", "initial");
             }
-            var hasAdmin = false; // 增加一個變數來追蹤是否有管理員
+            var hasAdmin = false; // 增加一個變數來追蹤是否有客服人員
 
             for (i = 0; i < list.length; i++) {
                 // $("#IDList").append($("<li></li>").attr("class", "list-group-item").attr("onclick", "ccon(this)").text(list[i].Name));
                 var listItem = $("<li></li>").attr("class", "list-group-item").attr("onclick", "ccon(this)").text(list[i].Name).attr("id", list[i].Name);
                 $("#IDList").append(listItem);
 
-                // 檢查是否有管理員
-                if (list[i].Name === "管理員") {
+                // 檢查是否有客服人員
+                if (list[i].Name === "客服人員") {
                     hasAdmin = true;
                 }
             }
-            //管理員是否在線
+            //客服人員是否在線
             var selfIDText = $("#SelfID").text().trim();
-            if (selfIDText !== "管理員") {
+            if (selfIDText !== "客服人員") {
                 if (!hasAdmin) {
                     $("#messageList").empty();
                     Swal.fire("目前沒有客服人員請稍待片刻");
@@ -192,18 +192,18 @@
                     Swal.fire("請輸入想諮詢的問題，專人會幫您服務");
                      adminin = true;
                     $("#messageList").empty();
-                    revMessageToList("管理員", "管理員目前已登入，提出您的問題");
+                    revMessageToList("客服人員", "客服人員目前已登入，提出您的問題");
                     console.log(adminin);
                 }
-            } else if (selfIDText === "管理員") {
+            } else if (selfIDText === "客服人員") {
                 adminin = true;
             }
 
 
             var selfIDText = $("#SelfID").text().trim();
-            if (selfIDText !== "管理員") {
-                // 設定#sendToID的值為"管理員"
-                $('#sendToID').val("管理員");
+            if (selfIDText !== "客服人員") {
+                // 設定#sendToID的值為"客服人員"
+                $('#sendToID').val("客服人員");
             } else {
                 // 否則，設定#sendToID的值為所點擊元素的文字內容
                 $('#sendToID').val($(element).text());
@@ -214,7 +214,7 @@
 
         function ccon(element) {
             var selfIDText = $("#SelfID").text().trim();
-            if (selfIDText !== "管理員") {
+            if (selfIDText !== "客服人員") {
                 $("#messageList").empty();
             }
             $("#IDList li.selected").removeClass("selected");
@@ -233,7 +233,7 @@
         console.log(userName);
 
 
-        if (userName === "管理員") {
+        if (userName === "客服人員") {
             leftbox1.style.display = "block";
             leftbox2.style.display = "none";
         } else {
@@ -269,7 +269,7 @@
             var currentTime = new Date().toLocaleTimeString();
 
             // 生成新的列表項目
-            var listItem = $("<li></li>").addClass("d-flex justify-content-between mb-4");
+            var listItem = $("<li></li>").addClass("d-flex justify-content-end mb-4");
 
             // 生成卡片元素
             var card = $("<div></div>").addClass("card");
@@ -309,7 +309,7 @@
             var currentTime = new Date().toLocaleTimeString();
 
             // 生成新的列表項目
-            var listItem = $("<li></li>").addClass("d-flex justify-content-end mb-4");
+            var listItem = $("<li></li>").addClass("d-flex justify-content-between mb-4");
 
             // 生成卡片元素
             var card = $("<div></div>").addClass("card");
@@ -406,7 +406,7 @@
             var imageSrc = data.image;
             // 取得現在的時間
             var currentTime = new Date().toLocaleTimeString();
-            var listItem = $("<li></li>").addClass("d-flex justify-content-between mb-4");
+            var listItem = $("<li></li>").addClass("d-flex justify-content-end mb-4");
             var card = $("<div></div>").addClass("card");
             var nameParagraph = $("<p></p>").addClass("fw-bold mb-0").attr("id", "name").text(name).css("margin-right", "20px");
             // 時間（time）
@@ -427,7 +427,7 @@
             var imageSrc = data.image;
             // 取得現在的時間
             var currentTime = new Date().toLocaleTimeString();
-            var listItem = $("<li></li>").addClass("d-flex justify-content-end mb-4");
+            var listItem = $("<li></li>").addClass("d-flex justify-content-between mb-4");
             var card = $("<div></div>").addClass("card");
             var nameParagraph = $("<p></p>").addClass("fw-bold mb-0").attr("id", "name").text(name).css("margin-right", "20px");
             // 時間（time）
@@ -530,10 +530,10 @@
         //             console.error('There was a problem with the fetch operation:', error);
         //         });
         // });
-        //管理員按鈕
+        //客服人員按鈕
         document.getElementById("openModalBtn").addEventListener("click", function () {
             var userName = document.getElementById("SelfID").textContent.trim();
-            if (userName === "管理員") {
+            if (userName === "客服人員") {
                 document.getElementById("savesign").style.display = "block";
             }
         });
@@ -668,7 +668,7 @@
             var currentTime = new Date().toLocaleTimeString();
 
             // 生成新的列表項目
-            var listItem = $("<li></li>").addClass("d-flex justify-content-end mb-4");
+            var listItem = $("<li></li>").addClass("d-flex justify-content-between mb-4");
 
             // 生成卡片元素
             var card = $("<div></div>").addClass("card");
@@ -702,7 +702,7 @@
             var currentTime = new Date().toLocaleTimeString();
 
             // 生成新的列表項目
-            var listItem = $("<li></li>").addClass("d-flex justify-content-between mb-4");
+            var listItem = $("<li></li>").addClass("d-flex justify-content-end mb-4");
 
             // 生成卡片元素
             var card = $("<div></div>").addClass("card");
@@ -732,7 +732,7 @@
         }
         //轉圈圈
         function createloding() {
-            var name = "管理員";
+            var name = "客服人員";
             var imageSrc = "/images/Loading_icon.gif";
             // 取得現在的時間
             var currentTime = new Date().toLocaleTimeString();
@@ -778,10 +778,10 @@
                         const response = await fetch('/api/OpenAI/UseChatGPT?query=' + encodeURIComponent(query));
                         if (response.ok) {
                             var result = await response.text();
-                            revMessageToList("管理員", result);
+                            revMessageToList("機器人", result);
                             console.log("我有病");
                         } else {
-                            revMessageToList("管理員", "目前機器人有錯誤，請稍後再輸入資訊 。");
+                            revMessageToList("機器人", "目前機器人有錯誤，請稍後再輸入資訊 。");
                         }
                     }
                 }
